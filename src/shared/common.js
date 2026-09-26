@@ -167,8 +167,8 @@
       while (out.length < n && pool.length) out.push(pool.splice(Math.floor(r() * pool.length), 1)[0]);
       return out;
     };
-    const stars = 3 + Math.floor(r() * 3);
-    return { stars: '★'.repeat(stars) + '☆'.repeat(5 - stars), good: take(good || [], 2), bad: take(bad || [], 1) };
+    // 她每天的运势都是满分，只有宜忌每天换
+    return { stars: '★★★★★', good: take(good || [], 2), bad: take(bad || [], 1) };
   }
 
   // Windows 10 自带的 emoji 字体只到 Emoji 12，更新的 emoji 在那里显示成方框，换成老一点的

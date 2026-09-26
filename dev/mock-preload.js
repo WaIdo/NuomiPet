@@ -325,7 +325,7 @@ contextBridge.exposeInMainWorld('mochi', {
     isVisible: () => Promise.resolve(true),
   },
   reminderAck: (id, action) => log.push({ type: 'reminderAck', id, action }),
-  fortune: () => Promise.resolve({ stars: '★★★★☆', good: ['喝奶茶', '早点睡'], bad: ['熬夜'] }), // i18n-ignore: 模拟数据
+  fortune: () => Promise.resolve({ stars: '★★★★★', good: ['喝奶茶', '早点睡'], bad: ['熬夜'] }), // i18n-ignore: 模拟数据
 
   pomodoro: {
     get: () => Promise.resolve(clone(pomo)),

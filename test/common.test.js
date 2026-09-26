@@ -42,3 +42,15 @@ test('emoji 替代表：替代品和原来的不同，而且自己不会再被�
   // 零食目录里的奶茶会被替换
   assert.ok(catalog.foods.some((f) => f.emoji in C.EMOJI_FALLBACK));
 });
+
+test('今日运势每天都是满星，宜忌每天按种子挑', () => {
+  const good = ['a', 'b', 'c', 'd', 'e'];
+  const bad = ['x', 'y', 'z'];
+  for (let d = 1; d <= 60; d++) {
+    const f = C.fortune(`2026-10-${d}` + '宝贝', good, bad); // i18n-ignore
+    assert.strictEqual(f.stars, '★★★★★');
+    assert.strictEqual(f.good.length, 2);
+    assert.strictEqual(f.bad.length, 1);
+  }
+  assert.deepStrictEqual(C.fortune('seed', good, bad), C.fortune('seed', good, bad));
+});
