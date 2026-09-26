@@ -1,0 +1,20 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data:">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>一封信</title>
+<link rel="stylesheet" href="letter.css">
+<script type="module" src="letter.js"></script>
+</head>
+<body>
+<div class="stage" id="stage">
+  <div class="petals" id="petals" aria-hidden="true"></div>
+  <div class="scene" id="scene"></div>
+  <button type="button" class="close" id="close" title="关闭（Esc）" aria-label="关闭">
+    <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 7l10 10M17 7L7 17"/></svg>
+  </button>
+</div>
+</body>
+</html>
