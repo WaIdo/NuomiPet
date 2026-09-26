@@ -61,6 +61,7 @@ const panel = new Panel($('panel'), {
   actions: {
     feed: (id) => brain.feed(id),
     play: () => brain.play(),
+    coax: (kind) => brain.coax(kind),
     openHome: (page) => api.openHome(page),
   },
   onToggle: (open) => brain.onPanelToggle(open),
@@ -77,6 +78,7 @@ const brain = new Brain({
   anchor,
   getData: () => data,
   getLayout: () => layout,
+  visible,
 });
 
 // ---------- 布局 ----------

@@ -4,11 +4,27 @@ import { dateKey, levelFor } from '../shared/common.mjs';
 
 const MAIN = [
   { id: 'food', emoji: '🍓', label: '喂食' },
+  { id: 'coax', emoji: '🥺', label: '哄我' },
   { id: 'play', emoji: '🧶', label: '玩耍' },
   { id: 'focus', emoji: '🍅', label: '专注' },
   { id: 'mood', emoji: '🌈', label: '心情' },
-  { id: 'todos', emoji: '📝', label: '待办' },
   { id: 'home', emoji: '🏠', label: '小窝' },
+];
+
+// 「哄我」里的动作
+const COAX = [
+  { id: 'kneel', emoji: '🙇', label: '跪搓衣板' },
+  { id: 'flower', emoji: '💐', label: '送花' },
+  { id: 'heart', emoji: '❤️', label: '比心' },
+  { id: 'hug', emoji: '🤗', label: '抱抱' },
+  { id: 'kiss', emoji: '😘', label: '亲亲' },
+  { id: 'tea', emoji: '🧋', label: '奶茶' },
+  { id: 'bow', emoji: '🙏', label: '鞠躬' },
+  { id: 'cute', emoji: '🥺', label: '撒娇' },
+  { id: 'roll', emoji: '🌀', label: '打滚' },
+  { id: 'dance', emoji: '💃', label: '跳舞' },
+  { id: 'praise', emoji: '🌟', label: '夸夸' },
+  { id: 'random', emoji: '🎲', label: '随便哄' },
 ];
 
 const fmt = (sec) => `${String(Math.floor(sec / 60)).padStart(2, '0')}:${String(sec % 60).padStart(2, '0')}`;
@@ -188,6 +204,16 @@ export class Panel {
           }, f.id === fav ? 'fav' : ''),
         );
       }
+    } else if (this.view === 'coax') {
+      el.append(this.head('要我怎么哄你？'));
+      for (const c of COAX) {
+        body.append(
+          this.button(c.emoji, c.label, () => {
+            this.close();
+            this.actions.coax(c.id);
+          }, c.id === 'kneel' ? 'fav' : ''),
+        );
+      }
     } else if (this.view === 'mood') {
       const today = d.moods?.[dateKey()];
       el.append(this.head(today ? '今天的心情（可以改哦）' : '今天心情怎么样？'));
@@ -237,6 +263,7 @@ export class Panel {
   pickMain(id) {
     switch (id) {
       case 'food':
+      case 'coax':
       case 'mood':
       case 'focus':
         this.view = id;
@@ -246,10 +273,6 @@ export class Panel {
       case 'play':
         this.close();
         this.actions.play();
-        break;
-      case 'todos':
-        this.close();
-        this.actions.openHome('todos');
         break;
       case 'home':
         this.close();

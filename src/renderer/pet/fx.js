@@ -121,6 +121,45 @@ export class Fx {
     }
   }
 
+  // 下跪认错时举着的小木牌。弹出来以后一直轻轻晃，到时间淡出。
+  // 不走 spawn：牌子可能举一分钟，动画时长不能跟着显示时长拉长。
+  sign({ x, y }, text, dur = 6000) {
+    this.clearSigns();
+    const el = document.createElement('div');
+    el.className = 'fx fx-sign';
+    el.style.cssText = `left:${x}px;top:${y}px`;
+    const board = document.createElement('div');
+    board.className = 'board';
+    board.textContent = text;
+    el.append(board, document.createElement('i'));
+    this.layer.append(el);
+    el.timer = setTimeout(() => this.dropSign(el, true), dur);
+    return el;
+  }
+
+  // 收起一块牌子；fade 为 true 时先淡出
+  dropSign(el, fade = false) {
+    if (!el) return;
+    clearTimeout(el.timer);
+    if (!fade || !el.isConnected) return el.remove();
+    el.classList.add('out');
+    el.timer = setTimeout(() => el.remove(), 320);
+  }
+
+  clearSigns() {
+    this.layer.querySelectorAll('.fx-sign').forEach((el) => this.dropSign(el));
+  }
+
+  // 比心：头顶冒出一颗大爱心
+  bigHeart({ x, y }) {
+    this.spawn({ html: heartSVG('#FF5C8D'), cls: 'fx-bigheart', x, y, size: 46, dur: 1600 });
+  }
+
+  // 飞吻：从嘴边飞出一颗爱心
+  kiss({ x, y }, dir = 1) {
+    this.spawn({ html: heartSVG('#FF6F9E'), cls: 'fx-float', x: x + 10 * dir, y, size: 20, dur: 1500, dx: 70 * dir, dy: -60, rot: 25 * dir });
+  }
+
   thought({ x, y }, emoji, dur = 2600) {
     const el = this.spawn({ cls: 'fx-thought', x: x + 34, y: y - 22, size: 40, dur });
     const cloud = document.createElement('div');

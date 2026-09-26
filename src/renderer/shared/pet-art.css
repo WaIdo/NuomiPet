@@ -32,7 +32,8 @@
 .pet.e-dizzy .eyes-dizzy,
 .pet.e-wink .eyes-wink,
 .pet.e-sad .eyes-sad,
-.pet.e-sleepy .eyes-sleepy {
+.pet.e-sleepy .eyes-sleepy,
+.pet.e-plead .eyes-plead {
   display: inline;
 }
 .pet.m-cat .mouth.m-cat,
@@ -43,7 +44,9 @@
 .pet.m-wavy .mouth.m-wavy,
 .pet.m-tongue .mouth.m-tongue,
 .pet.m-yawn .mouth.m-yawn,
-.pet.m-chew .mouth.m-chew {
+.pet.m-chew .mouth.m-chew,
+.pet.m-kiss .mouth.m-kiss,
+.pet.m-frown .mouth.m-frown {
   display: inline;
 }
 .pet.m-chew .chew-a {
@@ -67,6 +70,21 @@
 }
 .pet.blink .eye {
   transform: scaleY(0.1);
+}
+
+/* 🥺 眼泪往下掉 */
+.pet .eyes-plead .drip {
+  transform-box: fill-box;
+  transform-origin: center;
+  animation: p-drip 1.5s ease-in infinite;
+}
+.pet .eyes-plead .drip.d2 {
+  animation-delay: -0.7s;
+}
+@keyframes p-drip {
+  0% { transform: translateY(0) scale(0.6); opacity: 0; }
+  20% { opacity: 1; transform: translateY(0) scale(1); }
+  100% { transform: translateY(12px) scale(0.8); opacity: 0; }
 }
 
 /* 眼睛看向鼠标 */
@@ -430,3 +448,53 @@
 }
 
 /* 呼吸、尾巴、小芽、鼻涕泡、打字这些常驻动画由 ambient.js 低帧率驱动 */
+
+/* ---------- 讨好她的动作 ---------- */
+.pet .p-board {
+  display: none;
+}
+.pet.pose-kneel .p-board {
+  display: inline;
+}
+.pet.pose-kneel .p-shadow {
+  opacity: 0;
+}
+/* 跪在搓衣板上一下一下地磕头 */
+.pet.pose-kneel .p-body {
+  animation: p-kowtow 1.8s ease-in-out infinite;
+}
+.pet.pose-kneel .p-face {
+  transform: translate(0px, 2px);
+}
+@keyframes p-kowtow {
+  0%, 100% { transform: translateY(-9px) scale(1, 0.96); }
+  38% { transform: translateY(-6px) scale(1.08, 0.82); }
+  55% { transform: translateY(-6px) scale(1.08, 0.82); }
+  75% { transform: translateY(-10px) scale(0.99, 0.98); }
+}
+.pet.pose-bow .p-body {
+  animation: p-bow 1.2s ease-in-out 2;
+}
+@keyframes p-bow {
+  0%, 100% { transform: scale(1, 1); }
+  45% { transform: scale(1.07, 0.84); }
+  60% { transform: scale(1.07, 0.84); }
+}
+.pet.pose-roll .p-root {
+  transform-origin: 100px 124px;
+  animation: p-roll 1.6s cubic-bezier(0.45, 0, 0.55, 1);
+}
+@keyframes p-roll {
+  0% { transform: rotate(0) translateX(0); }
+  25% { transform: rotate(-190deg) translateX(-8px) scale(0.95); }
+  50% { transform: rotate(-360deg) translateX(0) scale(1); }
+  75% { transform: rotate(-550deg) translateX(8px) scale(0.95); }
+  100% { transform: rotate(-720deg) translateX(0); }
+}
+.pet.pose-squeeze .p-body {
+  animation: p-squeeze 0.55s ease-in-out infinite;
+}
+@keyframes p-squeeze {
+  0%, 100% { transform: scale(1.05, 0.95); }
+  50% { transform: scale(0.95, 1.05); }
+}

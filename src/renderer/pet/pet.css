@@ -481,3 +481,64 @@ body.dragging #pet .hit {
   85% { opacity: 1; transform: translate(-50%, -54%) scale(1); }
   100% { opacity: 0; transform: translate(-50%, -60%) scale(0.9); }
 }
+
+/* 下跪认错的小木牌 */
+.fx-sign {
+  animation: fx-sign-in 0.5s ease-out both, fx-sign-sway 2.6s ease-in-out 0.5s infinite;
+  transform-origin: 50% 100%;
+}
+.fx-sign.out {
+  animation: fx-sign-out 0.3s ease-in both;
+}
+.fx-sign .board {
+  position: relative;
+  z-index: 1;
+  padding: 5px 10px 6px;
+  border: 2px solid #b07a42;
+  border-radius: 6px;
+  background: linear-gradient(180deg, #f8d9a8, #eebf80);
+  box-shadow: 0 3px 8px rgba(120, 70, 30, 0.25);
+  color: #6b3f1d;
+  font-size: 14px;
+  font-weight: 800;
+  letter-spacing: 1px;
+  white-space: nowrap;
+}
+.fx-sign i {
+  position: absolute;
+  left: 50%;
+  top: 100%;
+  width: 5px;
+  height: 22px;
+  margin-left: -2.5px;
+  border-radius: 2px;
+  background: #c48d55;
+  border: 1.5px solid #b07a42;
+}
+@keyframes fx-sign-in {
+  0% { opacity: 0; transform: translate(-50%, -30%) scale(0.3) rotate(-10deg); }
+  65% { opacity: 1; transform: translate(-50%, -50%) scale(1.1) rotate(4deg); }
+  100% { opacity: 1; transform: translate(-50%, -50%) scale(1) rotate(0); }
+}
+@keyframes fx-sign-sway {
+  0%, 100% { transform: translate(-50%, -50%) rotate(0); }
+  25% { transform: translate(-50%, -50%) rotate(3deg); }
+  75% { transform: translate(-50%, -50%) rotate(-3deg); }
+}
+@keyframes fx-sign-out {
+  0% { opacity: 1; transform: translate(-50%, -50%); }
+  100% { opacity: 0; transform: translate(-50%, -40%) scale(0.9); }
+}
+
+/* 比心的大爱心 */
+.fx-bigheart {
+  animation-name: fx-bigheart;
+}
+@keyframes fx-bigheart {
+  0% { opacity: 0; transform: translate(-50%, -30%) scale(0.2); }
+  25% { opacity: 1; transform: translate(-50%, -50%) scale(1.25); }
+  40% { transform: translate(-50%, -50%) scale(0.95); }
+  55% { transform: translate(-50%, -50%) scale(1.1); }
+  80% { opacity: 1; transform: translate(-50%, -60%) scale(1); }
+  100% { opacity: 0; transform: translate(-50%, -90%) scale(0.9); }
+}

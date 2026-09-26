@@ -43,6 +43,14 @@ export class Bubble {
         return;
       }
     }
+    // interrupt：她刚刚亲手触发的反应要马上显示，正在显示的气泡先放回队首
+    if (item.interrupt && this.current && !this.paused) {
+      const cur = this.current;
+      if (cur.buttons) this.queue.unshift(cur);
+      this.current = null;
+      this.render(item);
+      return;
+    }
     if (item.priority === 'high') this.queue.unshift(item);
     else this.queue.push(item);
     if (this.queue.length > 6) this.queue.splice(0, this.queue.length - 6);

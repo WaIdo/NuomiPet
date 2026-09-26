@@ -20,11 +20,35 @@ function foodItems(petCommand) {
   return catalog.foods.map((f) => ({ label: `${f.emoji}  ${f.name}`, click: () => petCommand({ type: 'feed', food: f.id }) }));
 }
 
+// 哄她开心的动作
+const COAX = [
+  ['kneel', '🙇  跪搓衣板认错'],
+  ['bow', '🙏  鞠躬道歉'],
+  ['flower', '💐  送花花'],
+  ['heart', '❤️  比心'],
+  ['hug', '🤗  抱抱'],
+  ['kiss', '😘  亲亲'],
+  ['tea', '🧋  请喝奶茶'],
+  ['cute', '🥺  撒娇'],
+  ['roll', '🌀  打滚'],
+  ['dance', '💃  跳舞逗你笑'],
+  ['praise', '🌟  夸夸你'],
+];
+
+function coaxItems(petCommand) {
+  return [
+    ...COAX.map(([kind, label]) => ({ label, click: () => petCommand({ type: 'coax', kind }) })),
+    { type: 'separator' },
+    { label: '🎲  随便哄哄', click: () => petCommand({ type: 'coax', kind: 'random' }) },
+  ];
+}
+
 function petMenu({ store, pet, pomodoro, openHome, petCommand, state = {} }) {
   const name = store.get('pet.name') || '糯米';
   const size = store.get('pet.size');
   return Menu.buildFromTemplate([
     { label: `🍓  喂${name}吃东西`, submenu: foodItems(petCommand) },
+    { label: '🥺  哄你开心', submenu: coaxItems(petCommand) },
     { label: '🧶  陪它玩', click: () => petCommand({ type: 'play' }) },
     state.sleeping
       ? { label: '☀️  叫它起床', click: () => petCommand({ type: 'wake' }) }
@@ -69,6 +93,7 @@ function trayMenu({ store, pet, pomodoro, openHome, petCommand, setLoginItem }) 
     { label: `叫${name}过来`, click: () => pet.summon() },
     { label: '🏠  打开小窝', click: () => openHome('overview') },
     { label: '🍓  喂它吃东西', submenu: foodItems(petCommand) },
+    { label: '🥺  哄哄我', click: () => petCommand({ type: 'coax', kind: 'random' }) },
     { label: '🍅  番茄钟', submenu: pomodoroItems(pomodoro) },
     { type: 'separator' },
     toggle(store, 'settings.dnd', '勿扰模式'),

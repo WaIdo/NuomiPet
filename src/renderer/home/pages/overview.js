@@ -194,6 +194,53 @@ function openFood(app, anchor) {
   );
 }
 
+const COAX = [
+  { id: 'kneel', emoji: '🙇', label: '跪搓衣板' },
+  { id: 'flower', emoji: '💐', label: '送花' },
+  { id: 'heart', emoji: '❤️', label: '比心' },
+  { id: 'hug', emoji: '🤗', label: '抱抱' },
+  { id: 'kiss', emoji: '😘', label: '亲亲' },
+  { id: 'tea', emoji: '🧋', label: '请喝奶茶' },
+  { id: 'bow', emoji: '🙏', label: '鞠躬' },
+  { id: 'cute', emoji: '🥺', label: '撒娇' },
+  { id: 'roll', emoji: '🌀', label: '打滚' },
+  { id: 'dance', emoji: '💃', label: '跳舞' },
+  { id: 'praise', emoji: '🌟', label: '夸夸我' },
+  { id: 'random', emoji: '🎲', label: '随便哄' },
+];
+
+function coax(app, c, e) {
+  app.mochi.petCommand({ type: 'coax', kind: c.id });
+  const r = e.currentTarget.getBoundingClientRect();
+  hearts(r.left + r.width / 2, r.top + r.height / 2);
+  closePopover();
+  toast(c.id === 'kneel' ? `${app.state.pet.name}去跪搓衣板啦，快看桌面～` : `${app.state.pet.name}来哄你啦～看看桌面`);
+}
+
+function openCoax(app, anchor) {
+  popover(
+    anchor,
+    h(
+      'div',
+      { class: 'food-pop' },
+      h('div', { class: 'pop-title' }, `要${app.state.pet.name}怎么哄你？`),
+      h(
+        'div',
+        { class: 'food-grid' },
+        COAX.map((c) =>
+          h(
+            'button',
+            { type: 'button', class: cx('food', { fav: c.id === 'kneel' }), onclick: (e) => coax(app, c, e) },
+            h('span', { class: 'food-emoji' }, c.emoji),
+            h('span', { class: 'food-name' }, c.label),
+          ),
+        ),
+      ),
+    ),
+    { cls: 'pop-food' },
+  );
+}
+
 function play(app, e) {
   app.mochi.petCommand({ type: 'play' });
   const r = e.currentTarget.getBoundingClientRect();
@@ -244,6 +291,7 @@ function statusCard(app) {
       'div',
       { class: 'btn-row' },
       h('button', { type: 'button', class: 'btn primary sm grow', onclick: (e) => openFood(app, e.currentTarget) }, '🍓 喂零食'),
+      h('button', { type: 'button', class: 'btn soft sm grow', onclick: (e) => openCoax(app, e.currentTarget) }, '🥺 哄哄我'),
       h('button', { type: 'button', class: 'btn ghost sm grow', onclick: (e) => play(app, e) }, '🧶 陪它玩'),
     ),
   );

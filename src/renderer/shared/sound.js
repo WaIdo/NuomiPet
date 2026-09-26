@@ -132,6 +132,15 @@ export class Sound {
         case 'heart':
           this.tone({ f0: 1320, f1: 1760, dur: 0.08, vol: 0.18 });
           break;
+        case 'sob':
+          // 呜呜：两声往下掉的小哭腔
+          this.tone({ type: 'triangle', f0: 700, f1: 520, dur: 0.32, vol: 0.22, vibrato: 14 });
+          this.tone({ type: 'triangle', f0: 640, f1: 430, dur: 0.4, vol: 0.2, delay: 0.38, vibrato: 14 });
+          break;
+        case 'kiss':
+          this.tone({ f0: 520, f1: 1500, dur: 0.12, vol: 0.28 });
+          this.noise({ dur: 0.04, vol: 0.12, freq: 3000, delay: 0.1 });
+          break;
         default:
           break;
       }

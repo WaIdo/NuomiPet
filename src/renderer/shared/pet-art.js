@@ -229,9 +229,25 @@ function eyes(P, uid) {
   const heart = ([cx, cy]) => `
       <path d="${heartPath(cx, cy + 1, 24)}" fill="#FF5C8D" stroke="#E43F74" stroke-width="1.2"/>
       <ellipse cx="${cx - 5}" cy="${cy - 3}" rx="2.6" ry="2" fill="#fff" opacity=".85"/>`;
+  // 🥺：更大的眼睛、更多高光、下眼眶一圈泪光
+  const pleadEye = ([cx, cy], side) => `<g class="eye eye-${side}">
+      <ellipse cx="${cx}" cy="${cy}" rx="9.8" ry="12.2" fill="url(#pe-${uid})"/>
+      ${P.pupil ? `<ellipse cx="${cx}" cy="${cy + 1}" rx="4" ry="8.4" fill="${P.pupil}"/>` : ''}
+      <circle cx="${cx - 3.2}" cy="${cy - 4.8}" r="4.5" fill="#fff"/>
+      <circle cx="${cx + 3.9}" cy="${cy + 3.4}" r="2.5" fill="#fff"/>
+      <circle cx="${cx - 4.3}" cy="${cy + 5.2}" r="1.4" fill="#fff" opacity=".85"/>
+      <path d="M${cx - 8.8},${cy + 6} Q${cx},${cy + 15} ${cx + 8.8},${cy + 6}" fill="none" stroke="#A8DDFF" stroke-width="2.6" stroke-linecap="round" opacity=".95"/>
+    </g>`;
   const [lx, ly] = EYE_L;
   const [rx, ry] = EYE_R;
   return `
+    <g class="eye-set eyes-plead">
+      ${pleadEye(EYE_L, 'l')}${pleadEye(EYE_R, 'r')}
+      <path d="M${lx - 10},${ly - 14} Q${lx - 1},${ly - 20} ${lx + 8},${ly - 20}" ${stroke} stroke-width="2.6"/>
+      <path d="M${rx + 10},${ry - 14} Q${rx + 1},${ry - 20} ${rx - 8},${ry - 20}" ${stroke} stroke-width="2.6"/>
+      <path class="drip" d="M${lx - 9},${ly + 10} q-3.5,5.5 0,8 q3.5,-2.5 0,-8 z" fill="#9CD6FF" stroke="#6FB8EC" stroke-width="1"/>
+      <path class="drip d2" d="M${rx + 9},${ry + 10} q-3.5,5.5 0,8 q3.5,-2.5 0,-8 z" fill="#9CD6FF" stroke="#6FB8EC" stroke-width="1"/>
+    </g>
     <g class="eye-set eyes-normal">${normalEye(EYE_L, 'l')}${normalEye(EYE_R, 'r')}</g>
     <g class="eye-set eyes-happy">${arcUp(EYE_L)}${arcUp(EYE_R)}</g>
     <g class="eye-set eyes-closed">${arcDown(EYE_L)}${arcDown(EYE_R)}</g>
@@ -269,7 +285,7 @@ function mouths(species, P) {
     const beak = '#FFB443';
     const beakLine = '#E58E2C';
     return `
-      <g class="mouth m-cat m-smile m-flat m-wavy m-tongue">
+      <g class="mouth m-cat m-smile m-flat m-wavy m-tongue m-kiss m-frown">
         <path d="M92,131 Q100,126 108,131 Q101,140 100,140 Q99,140 92,131 Z" fill="${beak}" stroke="${beakLine}" stroke-width="1.8" stroke-linejoin="round"/>
       </g>
       <g class="mouth m-open m-o m-yawn">
@@ -301,6 +317,8 @@ function mouths(species, P) {
       <ellipse cx="100" cy="${141 + y}" rx="6.5" ry="8.5" fill="${inside}" stroke="${ink}" stroke-width="2"/>
       <ellipse cx="100" cy="${145.5 + y}" rx="3.8" ry="3" fill="${tongue}"/>
     </g>
+    <path class="mouth m-kiss" d="M97.5,${132.5 + y} Q104.5,${134 + y} 100.5,${137.5 + y} Q104.5,${141 + y} 97.5,${142.5 + y}" ${line}/>
+    <path class="mouth m-frown" d="M94,${140.5 + y} Q100,${134 + y} 106,${140.5 + y}" ${line}/>
     <g class="mouth m-chew">
       <path class="chew-a" d="${cat}" ${line}/>
       <ellipse class="chew-b" cx="100" cy="${139 + y}" rx="3.2" ry="3.6" fill="${inside}" stroke="${ink}" stroke-width="1.5"/>
@@ -485,6 +503,12 @@ export function petSVG(look = {}, { className = '' } = {}) {
     <clipPath id="pc-${uid}"><path d="${blob}"/></clipPath>
   </defs>
   <ellipse class="p-shadow" cx="100" cy="189" rx="56" ry="7.5"/>
+  <g class="p-board">
+    <path d="M10,183 L190,183 L184,197 L16,197 Z" fill="#E7B67C" stroke="#B07A42" stroke-width="2" stroke-linejoin="round"/>
+    <path d="M18,186.5 H182 M19.5,190 H180.5 M21,193.5 H179" stroke="#C48D55" stroke-width="1.6" stroke-linecap="round"/>
+    <path d="M10,183 L17,174 L183,174 L190,183 Z" fill="#F4CE98" stroke="#B07A42" stroke-width="2" stroke-linejoin="round"/>
+    <path d="M24,178.5 H176" stroke="#D9A566" stroke-width="1.4" stroke-linecap="round"/>
+  </g>
   <g class="p-flip">
   <g class="p-root">
   <g class="p-body">

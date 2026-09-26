@@ -23,8 +23,8 @@ function weighted(list) {
 const PRI = { idle: 1, event: 2, user: 3 };
 
 export class Brain {
-  constructor({ view, bubble, fx, sound, api, getData, anchor, panel, getLayout }) {
-    Object.assign(this, { view, bubble, fx, sound, api, getData, anchor, panel, getLayout });
+  constructor({ view, bubble, fx, sound, api, getData, anchor, panel, getLayout, visible }) {
+    Object.assign(this, { view, bubble, fx, sound, api, getData, anchor, panel, getLayout, visible });
     this.mode = 'awake'; // awake | sleeping | focus
     this.sleepReason = null;
     this.physical = null; // drag | fall
@@ -211,6 +211,10 @@ export class Brain {
       { w: s.followMouse ? 8 : 0, fn: () => this.idleFollow() },
       { w: cursorActive ? 0.6 : 0, fn: () => this.idleWave() },
       { w: night ? 0.5 : quiet ? 0.25 : 0.1, fn: () => this.nap() },
+      {
+        w: C.levelFor(d.stats.xp || 0, catalog.levels).level >= 3 && d.stats.mood > 60 && !s.dnd && !this.bubble.busy() ? 0.25 : 0,
+        fn: () => this.coax(chance(0.5) ? 'heart' : 'flower', { reason: 'idle' }),
+      },
     ];
   }
 
@@ -479,6 +483,12 @@ export class Brain {
   startStroke() {
     this.strokeTravel = 0;
     const v = this.view;
+    if (this.kneeling()) {
+      this.bubble.dismiss('kneel-ask');
+      this.forgiven();
+      return;
+    }
+    if (this.task && this.task.name === 'forgiven') return;
     if (this.mode === 'sleeping') {
       this.stroking = 'sleep';
       v.setFlag('blush-strong', true);
@@ -515,6 +525,7 @@ export class Brain {
     const table = {
       poke: [15000, { xp: 1, mood: 1 }],
       stroke: [8000, { xp: 1, mood: 3, counters: { pets: 1 }, daily: { pets: 1 } }],
+      coax: [20000, { xp: 1, mood: 5, counters: { coax: 1 } }],
     };
     const cfg = table[kind];
     const now = Date.now();
@@ -523,7 +534,16 @@ export class Brain {
     this.api.bumpStats(cfg[1]);
   }
 
+  kneeling() {
+    return this.task && this.task.name === 'kneel';
+  }
+
   async poke() {
+    if (this.kneeling()) {
+      this.sound.play('sob');
+      if (!this.bubble.has('kneel-ask')) this.say(this.line('kneelWaiting'), { id: 'kneel-poke', duration: 2200 });
+      return;
+    }
     const now = Date.now();
     this.pokes = this.pokes.filter((x) => now - x < 3500);
     this.pokes.push(now);
@@ -596,6 +616,7 @@ export class Brain {
   }
 
   async annoyed() {
+    if (chance(0.4)) return this.kneel({ reason: 'poke' });
     const t = this.begin('annoyed', PRI.user);
     if (!t) return;
     const v = this.view;
@@ -1096,6 +1117,19 @@ export class Brain {
 
   async moodReact({ mood, text }) {
     await this.wakeForEvent();
+    if (this.mode === 'awake' && !this.physical) {
+      if (mood === 'angry') return this.kneel({ reason: 'angry' });
+      if (mood === 'sad') {
+        if (text) this.say(text, { duration: 5000 });
+        // 抱抱和送花都不说话，回应她心情的那句话要完整显示
+        await this.coax('hug', { quiet: true });
+        return this.coax('flower', { reason: 'mood', quiet: true });
+      }
+      if (mood === 'tired') {
+        if (text) this.say(text, { duration: 5000 });
+        return this.coax('tea', { quiet: true });
+      }
+    }
     if (text) this.say(text, { duration: 5000 });
     await this.gesture('mood', PRI.event, async (t, v) => {
       const h = this.head();
@@ -1259,6 +1293,8 @@ export class Brain {
         return this.moodAsk({ text: this.line('moodAsk') });
       case 'fortune':
         return this.fortune();
+      case 'coax':
+        return this.coax(cmd.kind || 'random', { reason: cmd.reason || 'menu' });
       default:
         return undefined;
     }
@@ -1389,6 +1425,231 @@ export class Brain {
     this.say(this.line('stroke'), { duration: 2600 });
     this.reward('stroke');
     await this.hold(t, 1600);
+    this.end(t);
+  }
+
+  // ---------- 哄她开心 ----------
+  // 木牌立在宠物右边；右边被屏幕边缘挡住时放到左边
+  signPos() {
+    const h = this.head();
+    const dx = 104 * h.scale;
+    const clip = this.visible ? this.visible() : null;
+    const x = clip && h.x + dx + 45 > clip.right ? h.x - dx : h.x + dx;
+    return { x, y: h.y + 62 * h.scale };
+  }
+
+  coaxLine(key, forKey) {
+    const d = this.data;
+    if (forKey && d.owner.sender && chance(0.6)) return this.line(forKey);
+    return this.line(key);
+  }
+
+  async coax(kind = 'random', { reason = 'menu', quiet = false } = {}) {
+    if (this.physical) return;
+    if (this.mode === 'sleeping') await this.wakeUp({ quick: true });
+    if (this.mode === 'focus') {
+      this.say('（小声）等专注完再哄你～', { duration: 2400 });
+      return;
+    }
+    const kinds = ['kneel', 'bow', 'flower', 'heart', 'hug', 'kiss', 'tea', 'cute', 'roll', 'dance', 'praise'];
+    if (kind === 'random') kind = C.pick(kinds, 'coax');
+    if (kind === 'kneel') return this.kneel({ reason });
+    const t = this.begin('coax-' + kind, PRI.user);
+    if (!t) return;
+    const v = this.view;
+    const h = this.head();
+    const say = (key, forKey) => {
+      if (!quiet) this.say(this.coaxLine(key, forKey), { duration: 4000, interrupt: reason !== 'idle' });
+    };
+    switch (kind) {
+      case 'bow':
+        v.setPose('bow');
+        v.setFace('plead', 'frown');
+        v.setPaws('pray');
+        say('bow');
+        this.sound.play('sob');
+        await this.hold(t, 2500);
+        break;
+      case 'flower':
+        v.setPose('shy');
+        v.setPaws('offer');
+        v.setProp(chance(0.5) ? '💐' : '🌹', { y: 133, size: 38 });
+        v.setFace('happy', 'cat');
+        v.setFlag('blush-strong', true);
+        say('flower', 'flowerFor');
+        this.fx.hearts(h, 3);
+        this.sound.play('chirp');
+        await this.hold(t, 3400);
+        break;
+      case 'heart':
+        v.setPaws('cheer');
+        v.setFace('heart', 'open');
+        v.setPose('bounce');
+        this.fx.bigHeart({ x: h.x, y: h.y - 14 * h.scale });
+        this.fx.hearts(h, 2);
+        this.sound.play('heart');
+        say('heart');
+        await this.hold(t, 2600);
+        break;
+      case 'hug':
+        v.setPaws('wide');
+        v.setFace('happy', 'open');
+        if (!(await this.hold(t, 900))) return;
+        v.setPaws('belly');
+        v.setPose('squeeze');
+        v.setFace('closed', 'cat');
+        v.setFlag('blush-strong', true);
+        this.fx.hearts(h, 4, 1.3);
+        this.sound.play('heart');
+        say('hug');
+        await this.hold(t, 2400);
+        break;
+      case 'kiss': {
+        v.setFace('wink', 'kiss');
+        v.setFlag('blush-strong', true);
+        v.setPose('shy');
+        const m = this.anchor('mouth');
+        this.fx.kiss(m, this.view.state.facing);
+        this.sound.play('kiss');
+        say('kiss');
+        if (!(await this.hold(t, 900))) return;
+        this.fx.kiss(m, this.view.state.facing);
+        await this.hold(t, 1800);
+        break;
+      }
+      case 'tea':
+        v.setPaws('offer');
+        v.setProp('🧋', { y: 133, size: 36 });
+        v.setFace('happy', 'cat');
+        v.setPose('bounce');
+        say('tea');
+        this.sound.play('chirp');
+        await this.hold(t, 3200);
+        break;
+      case 'cute':
+        v.setPose('shy');
+        v.setFace('plead', 'frown');
+        v.setPaws('pray');
+        v.setFlag('blush-strong', true);
+        say('cute');
+        this.sound.play('squeak');
+        await this.hold(t, 3000);
+        break;
+      case 'roll':
+        v.setPose('roll');
+        v.setFace('squeeze', 'open');
+        say('roll');
+        this.sound.play('whoosh');
+        if (!(await this.hold(t, 1650))) return;
+        v.setPose('land');
+        v.setFace('happy', 'open');
+        this.fx.sparkles(h, 4, 50);
+        await this.hold(t, 900);
+        break;
+      case 'dance':
+        v.setPose('dance');
+        v.setPaws('cheer');
+        v.setFace('happy', 'open');
+        v.setFlag('excited', true);
+        this.fx.notes(h, 4);
+        say('danceCoax');
+        await this.hold(t, 3600);
+        break;
+      default:
+        v.setPaws('cheer');
+        v.setFace('heart', 'open');
+        v.setPose('bounce');
+        this.fx.sparkles(h, 6, 60);
+        say('praise');
+        this.sound.play('sparkle');
+        await this.hold(t, 2800);
+        break;
+    }
+    if (reason !== 'idle') this.reward('coax');
+    this.end(t);
+  }
+
+  // 跪在搓衣板上认错，问她原不原谅；「哼」就接着跪（最多四轮），摸摸头也算原谅
+  async kneel({ reason = 'menu', round = 1 } = {}) {
+    if (this.physical) return;
+    if (this.mode === 'sleeping') await this.wakeUp({ quick: true });
+    if (this.mode === 'focus') return;
+    if (round === 3) {
+      // 第三轮先送花、递奶茶
+      this.say(this.line('kneelGift'), { id: 'kneel', duration: 4200, priority: 'high', interrupt: true });
+      // 送的时候她去做别的了（喂食、拖动……），就不接着跪了
+      await this.coax('flower', { quiet: true });
+      if (this.task || this.physical) return;
+      await this.coax('tea', { quiet: true });
+      if (this.task || this.physical) return;
+    }
+    const t = this.begin('kneel', PRI.user);
+    if (!t) return;
+    const v = this.view;
+    v.setPose('kneel');
+    v.setPaws('pray');
+    v.setFace('plead', 'wavy');
+    v.setFlag('sweat', round > 1);
+    v.lookAt(0, 0, false);
+    this.gazeLock = true;
+    const signs = ['我错了', '原谅我', '最爱你', '等你原谅'];
+    // 只收自己这块牌子：被打断的上一次下跪醒过来时，不能把新举起的牌子收掉
+    const sign = this.fx.sign(this.signPos(), signs[Math.min(round, 4) - 1], round >= 4 ? 22000 : 60000);
+    const d = this.data;
+    let text;
+    if (round === 1) {
+      if (reason === 'poke') text = this.line('kneelPoke');
+      else if (d.owner.sender && (reason === 'angry' || chance(0.5))) text = this.line('kneelFor');
+      else text = this.line(reason === 'angry' ? 'kneelAngry' : 'kneel');
+    } else text = this.line(round >= 4 ? 'kneelForever' : 'kneelAgain');
+    this.say(text, { id: 'kneel', duration: 5200, priority: 'high', interrupt: true });
+    this.sound.play('sob');
+    // 分段等：被拖走时牌子要马上收起来，不能在原地多挂几秒
+    const until = Date.now() + (round >= 4 ? 2500 : 5400);
+    while (Date.now() < until && this.alive(t)) await sleep(250);
+    if (!this.alive(t)) return this.fx.dropSign(sign, true);
+    let answer = null;
+    this.say(this.line('forgiveAsk'), {
+      id: 'kneel-ask',
+      priority: 'high',
+      interrupt: true,
+      buttons: [{ label: '原谅你啦 💗', value: 'yes', primary: true }, { label: '哼！', value: 'no' }],
+      onButton: (val) => {
+        answer = val;
+      },
+      duration: round >= 4 ? 20000 : 45000,
+    });
+    while (answer === null && this.alive(t)) await sleep(250);
+    this.fx.dropSign(sign, true);
+    if (!this.alive(t)) {
+      // 被拖走或者被别的事打断了：收起还没回答的问题，免得按钮点了没反应
+      if (answer === null) this.bubble.dismiss('kneel-ask');
+      return;
+    }
+    this.end(t);
+    if (answer === 'yes') return this.forgiven();
+    if (answer === 'no' && round < 4) return this.kneel({ reason, round: round + 1 });
+  }
+
+  async forgiven() {
+    this.fx.clearSigns();
+    this.bubble.dismiss('kneel-ask');
+    const t = this.begin('forgiven', PRI.user);
+    if (!t) return;
+    const v = this.view;
+    const h = this.head();
+    v.setPose('jump');
+    v.setPaws('cheer');
+    v.setFace('heart', 'open');
+    v.setFlag('excited', true);
+    this.fx.confetti({ x: h.x, y: h.y }, 20);
+    this.fx.hearts(h, 5, 1.3);
+    this.sound.play('levelup');
+    this.say(this.line('forgiven'), { id: 'kneel', duration: 4000, priority: 'high', interrupt: true });
+    this.api.bumpStats({ mood: 10, xp: 3, counters: { forgiven: 1 } });
+    if (!(await this.hold(t, 800))) return;
+    v.setPose('dance');
+    await this.hold(t, 2000);
     this.end(t);
   }
 

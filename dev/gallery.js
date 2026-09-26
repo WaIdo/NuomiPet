@@ -64,3 +64,19 @@ if (only === 'sleep') {
   const r = section('睡觉');
   for (const sp of ['cat', 'bunny', 'chick']) cell(r, { species: sp, color: 'milk' }, sp, (v) => { v.setPose('sleep'); v.setFace('closed', 'smile'); v.setFlag('ears-down', true); }, 200);
 }
+if (only === 'coax') {
+  const r = section('哄她的动作');
+  const setups = [
+    ['下跪认错', (v) => { v.setPose('kneel'); v.setPaws('pray'); v.setFace('plead', 'wavy'); v.setFlag('sweat', true); }],
+    ['送花', (v) => { v.setPose('shy'); v.setPaws('offer'); v.setProp('💐', { y: 132, size: 38 }); v.setFace('happy', 'cat'); v.setFlag('blush-strong', true); }],
+    ['亲亲', (v) => { v.setFace('wink', 'kiss'); v.setFlag('blush-strong', true); }],
+    ['抱抱', (v) => { v.setPaws('wide'); v.setFace('happy', 'open'); }],
+    ['撒娇', (v) => { v.setPose('shy'); v.setFace('plead', 'frown'); v.setPaws('pray'); }],
+    ['递奶茶', (v) => { v.setPaws('offer'); v.setProp('🧋', { y: 132, size: 36 }); v.setFace('happy', 'cat'); }],
+  ];
+  for (const sp of ['cat', 'bunny', 'chick']) for (const [name, fn] of setups) cell(r, { species: sp, color: sp === 'chick' ? 'custard' : 'milk', accessory: 'bow' }, `${sp}·${name}`, fn, 150);
+}
+if (only === 'kneelbig') {
+  const r = section('下跪认错（大图）');
+  for (const [sp, c] of [['cat', 'milk'], ['puppy', 'milktea']]) cell(r, { species: sp, color: c, accessory: 'bow' }, sp, (v) => { v.setPose('kneel'); v.setPaws('pray'); v.setFace('plead', 'wavy'); v.setFlag('sweat', true); }, 360);
+}

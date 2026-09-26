@@ -4,7 +4,7 @@ import { Ambient } from './ambient.js';
 
 const POSES = [
   'idle', 'think', 'walk', 'sleep', 'drag', 'fall', 'land', 'jump', 'bounce', 'eat', 'stretch',
-  'spin', 'dance', 'dizzy', 'shake', 'sad', 'play', 'focus', 'shy',
+  'spin', 'dance', 'dizzy', 'shake', 'sad', 'play', 'focus', 'shy', 'kneel', 'bow', 'roll', 'squeeze',
 ];
 
 // 爪子姿势：目标中心点 + 旋转角（普通物种 / 小鸡翅膀）
@@ -20,6 +20,9 @@ const PAW_TARGETS = {
     bat: { l: [80, 180, 0], r: [148, 175, 0] },
     cover: { l: [78, 123, 10], r: [122, 123, -10] },
     belly: { l: [90, 163, 20], r: [110, 163, -20] },
+    pray: { l: [94, 151, 42], r: [106, 151, -42] },
+    offer: { l: [86, 150, 25], r: [114, 150, -25] },
+    wide: { l: [30, 128, -30], r: [170, 128, 30] },
   },
   chick: {
     rest: { l: [34, 146, 0], r: [166, 146, 0] },
@@ -32,6 +35,9 @@ const PAW_TARGETS = {
     bat: { l: [34, 146, 0], r: [156, 160, -30] },
     cover: { l: [76, 124, -70], r: [124, 124, 70] },
     belly: { l: [80, 160, -60], r: [120, 160, 60] },
+    pray: { l: [90, 150, -62], r: [110, 150, 62] },
+    offer: { l: [82, 150, -55], r: [118, 150, 55] },
+    wide: { l: [26, 118, -50], r: [174, 118, 50] },
   },
 };
 
