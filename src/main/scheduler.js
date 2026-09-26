@@ -2,7 +2,7 @@
 // 这里只决定「什么时候说什么」，具体的动作和气泡由宠物窗口完成。
 const { powerMonitor, Notification } = require('electron');
 const C = require('../shared/common');
-const phrases = require('../shared/phrases.json');
+const { phrases } = require('./i18n');
 const catalog = require('../shared/catalog.json');
 const festivals = require('../shared/festivals.json');
 const weather = require('./weather');
@@ -401,7 +401,7 @@ class Scheduler {
     }
     // 通用节日排在她自己的纪念日后面
     const fest = C.festivalOf(festivals, d);
-    if (fest && fire('fest-' + fest.name, { reason: 'festival', text: C.fill(fest.text, this.vars()) })) return true;
+    if (fest && fire('fest-' + fest.id, { reason: 'festival', text: C.fill(fest.text, this.vars()) })) return true;
     return false;
   }
 

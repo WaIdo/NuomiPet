@@ -1,0 +1,191 @@
+{
+  "species": {
+    "cat": "猫猫",
+    "bunny": "兔兔",
+    "bear": "小熊",
+    "puppy": "狗狗",
+    "hamster": "仓鼠",
+    "chick": "小鸡"
+  },
+  "palettes": {
+    "milk": "奶白",
+    "sakura": "樱花粉",
+    "peach": "蜜桃",
+    "milktea": "奶茶",
+    "caramel": "焦糖",
+    "custard": "奶黄",
+    "mint": "薄荷",
+    "mist": "雾霾蓝",
+    "taro": "香芋紫",
+    "gray": "银灰",
+    "cocoa": "黑糖"
+  },
+  "accessories": {
+    "none": "不戴",
+    "bow": "蝴蝶结",
+    "flower": "小花",
+    "sprout": "小芽",
+    "crown": "小皇冠",
+    "partyhat": "派对帽",
+    "heartclip": "爱心发卡",
+    "strawberry": "草莓帽",
+    "santa": "圣诞帽",
+    "glasses": "圆眼镜"
+  },
+  "markings": {
+    "none": "纯色",
+    "belly": "白肚皮",
+    "stripes": "小花纹",
+    "patch": "眼罩斑"
+  },
+  "sizes": {
+    "s": "小只",
+    "m": "适中",
+    "l": "大只",
+    "xl": "超大只"
+  },
+  "moods": {
+    "great": "超开心",
+    "good": "开心",
+    "calm": "平静",
+    "tired": "好累",
+    "sad": "难过",
+    "angry": "生气"
+  },
+  "foods": {
+    "strawberry": {
+      "name": "草莓",
+      "line": "草莓酸酸甜甜的，好好吃～"
+    },
+    "cake": {
+      "name": "小蛋糕",
+      "line": "是蛋糕！幸福的味道～"
+    },
+    "boba": {
+      "name": "奶茶",
+      "line": "奶茶！快乐水！咕噜咕噜～"
+    },
+    "onigiri": {
+      "name": "饭团",
+      "line": "饭团好香，吃饱饱～"
+    },
+    "cookie": {
+      "name": "小饼干",
+      "line": "咔嚓咔嚓，好脆！"
+    },
+    "icecream": {
+      "name": "冰淇淋",
+      "line": "好冰好甜，脑袋都冻住啦～"
+    },
+    "fish": {
+      "name": "小鱼干",
+      "line": "小鱼干！最最最喜欢了！"
+    },
+    "carrot": {
+      "name": "胡萝卜",
+      "line": "胡萝卜脆脆的，咔嚓咔嚓！"
+    },
+    "honey": {
+      "name": "蜂蜜",
+      "line": "甜甜的蜂蜜，舔舔～"
+    },
+    "meat": {
+      "name": "大肉肉",
+      "line": "肉肉！汪汪汪！好香！"
+    },
+    "seeds": {
+      "name": "瓜子",
+      "line": "嗑瓜子嗑瓜子，停不下来～"
+    },
+    "corn": {
+      "name": "玉米",
+      "line": "玉米粒一颗一颗，好甜！"
+    }
+  },
+  "levels": {
+    "1": "初次见面",
+    "2": "渐渐熟悉",
+    "3": "好朋友",
+    "4": "形影不离",
+    "5": "心有灵犀",
+    "6": "最最喜欢",
+    "7": "命中注定",
+    "8": "独一无二",
+    "9": "永远在一起",
+    "10": "宇宙第一好"
+  },
+  "themes": {
+    "sakura": "樱花粉",
+    "peach": "蜜桃橘",
+    "butter": "奶油黄",
+    "mint": "薄荷绿",
+    "sky": "天空蓝",
+    "taro": "香芋紫"
+  },
+  "festivals": {
+    "newYearsDay": {
+      "name": "元旦",
+      "text": "新年快乐！🎉 新的一年也要一起走下去哦"
+    },
+    "valentines": {
+      "name": "情人节",
+      "text": "情人节快乐💕 今天也被好好爱着哦"
+    },
+    "womensDay": {
+      "name": "女神节",
+      "text": "女神节快乐！👑 {nick}是全世界最好的女神"
+    },
+    "whiteDay": {
+      "name": "白色情人节",
+      "text": "白色情人节快乐🤍 甜甜的一天～"
+    },
+    "day520": {
+      "name": "520",
+      "text": "520 快乐💕 {love}"
+    },
+    "childrensDay": {
+      "name": "儿童节",
+      "text": "儿童节快乐！🎈 在{pet}眼里你永远是小朋友～"
+    },
+    "christmasEve": {
+      "name": "平安夜",
+      "text": "平安夜快乐🍎 吃个苹果，平平安安～"
+    },
+    "christmas": {
+      "name": "圣诞节",
+      "text": "圣诞快乐！🎄 {pet}今天戴了圣诞帽哦"
+    },
+    "newYearsEve": {
+      "name": "跨年夜",
+      "text": "今天是一年的最后一天啦，谢谢你这一年的陪伴✨"
+    },
+    "lunarNewYearsEve": {
+      "name": "除夕",
+      "text": "除夕快乐🧧 年夜饭要多吃一点哦！"
+    },
+    "springFestival": {
+      "name": "春节",
+      "text": "新年快乐！🧨 {pet}给你拜年啦，祝你新的一年开开心心、平平安安！"
+    },
+    "lanternFestival": {
+      "name": "元宵节",
+      "text": "元宵节快乐🏮 今天要吃汤圆哦，团团圆圆～"
+    },
+    "dragonBoat": {
+      "name": "端午节",
+      "text": "端午安康🐉 粽子你喜欢甜的还是咸的？"
+    },
+    "qixi": {
+      "name": "七夕",
+      "text": "七夕快乐💕 {love}"
+    },
+    "midAutumn": {
+      "name": "中秋节",
+      "text": "中秋快乐🥮 月亮圆圆，人也要团团圆圆～"
+    }
+  },
+  "defaults": {
+    "petName": "糯米",
+    "nickname": "宝贝"
+  }
+}

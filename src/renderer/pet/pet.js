@@ -1,5 +1,5 @@
 // 桌宠窗口入口：把数据、输入事件、主进程消息接到 Brain 上。
-import '../shared/emoji.js'; // 要最先执行：缺字的 emoji 先换掉
+import { syncLang } from '../shared/i18n.mjs'; // 要最先执行：按语言填好名字和台词，缺字的 emoji 先换掉
 import { PetView } from '../shared/pet-view.js';
 import { Sound } from '../shared/sound.js';
 import { Bubble } from './bubble.js';
@@ -15,6 +15,7 @@ const api = window.mochi;
 const $ = (id) => document.getElementById(id);
 
 let data = await api.getData();
+syncLang(data);
 let layout = await api.pet.getLayout();
 let pomodoro = await api.pomodoro.get();
 
@@ -238,6 +239,7 @@ document.addEventListener('contextmenu', (e) => e.preventDefault());
 api.onData((d, paths) => {
   const prev = data;
   data = d;
+  if (syncLang(d)) panel.refresh();
   const all = paths.includes('*');
   if (all || paths.some((p) => p.startsWith('pet') || p.startsWith('love'))) {
     view.setLook(lookOf(d));

@@ -1,5 +1,5 @@
 // 对话气泡：排队显示，可带按钮（提醒、心情打卡、信件）。
-import { em } from '../shared/emoji.js';
+import { em } from '../shared/i18n.mjs';
 
 // 颜文字（括号里的一小串符号）不要被折成两行
 const KAOMOJI = /([（(][^（()）\n]{1,10}[)）][ﾉ♡✧~～]*)/;

@@ -1,7 +1,7 @@
 // 双击宠物弹出的快捷面板：喂食、哄我、玩耍、专注、心情、小窝。
 import catalog from '../../shared/catalog.json' with { type: 'json' };
 import { dateKey, levelFor } from '../shared/common.mjs';
-import { em } from '../shared/emoji.js';
+import { em } from '../shared/i18n.mjs';
 
 const MAIN = [
   { id: 'food', emoji: '🍓', label: '喂食' },

@@ -62,11 +62,15 @@ function createDefaults(gift = {}) {
       dnd: false,
       // 小窝和对话气泡的颜色：sakura/peach/butter/mint/sky/taro，或 auto（跟宠物配色一样）
       theme: 'sakura',
+      // 界面语言：auto 跟随系统，或 zh-CN / zh-TW / en / ja
+      language: 'auto',
     },
     weather: { enabled: false, city: '', lat: null, lon: null },
     // custom：在应用里自己写的信 { id, title, from, unlock, body, createdAt }
     letters: { read: {}, notified: {}, custom: [] },
     runtime: {
+      // 实际使用的语言，由主进程按 settings.language 和系统语言算出来
+      lang: '',
       welcomed: false,
       welcomedAt: 0,
       tipsShown: 0,

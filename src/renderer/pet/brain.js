@@ -1,8 +1,7 @@
 // 宠物的行为：空闲小动作、闲聊、对鼠标的反应、被拖拽/摔落、处理主进程发来的事件和命令。
 import C from '../shared/common.mjs';
 import catalog from '../../shared/catalog.json' with { type: 'json' };
-import phrases from '../../shared/phrases.json' with { type: 'json' };
-import { em } from '../shared/emoji.js';
+import { em, phrases } from '../shared/i18n.mjs';
 
 const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
 const rand = (a, b) => a + Math.random() * (b - a);

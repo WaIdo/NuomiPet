@@ -14,7 +14,8 @@ const weather = require('./weather');
 const letters = require('./letters');
 const C = require('../shared/common');
 const catalog = require('../shared/catalog.json');
-const phrases = require('../shared/phrases.json');
+const i18n = require('./i18n');
+const { phrases } = i18n;
 
 const isMac = process.platform === 'darwin';
 
@@ -79,6 +80,7 @@ function init() {
   app.on('web-contents-created', (_e, contents) => debugConsole(contents));
   gift = loadGift();
   store = new Store(path.join(app.getPath('userData'), 'mochi-data.json'), createDefaults(gift));
+  i18n.sync(store);
   if (isMac) {
     app.dock?.hide();
     Menu.setApplicationMenu(menus.appMenu());
@@ -135,6 +137,7 @@ function wireStoreBroadcast() {
   windows.setHomeTheme(C.resolveTheme(store.data, catalog));
   store.on('change', (p) => {
     pending.add(p);
+    if (p === '*' || p === 'settings' || p === 'settings.language') i18n.sync(store);
     if (p === 'pet.name' || p === '*') tray?.setToolTip(`${petName()}的桌面小窝`);
     if (p === '*' || p.startsWith('settings') || p.startsWith('pet')) windows.setHomeTheme(C.resolveTheme(store.data, catalog));
     if (timer) return;

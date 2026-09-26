@@ -1,7 +1,7 @@
 # 生成「小窝的颜色」主题：
 #   1. 把 home.css / pet.css 里粉色系的颜色换成 CSS 变量（--th-<原色>）
 #   2. 生成 src/renderer/shared/theme.css：默认（樱花粉）是原色，其它主题在 OKLCH 里旋转色相得到
-#   3. 生成 src/shared/themes.json：主题列表和标题栏颜色（主进程和设置页用）
+#   3. 生成 src/shared/themes.json：主题列表和标题栏颜色（主进程和设置页用；主题的名字在 locales/<语言>/data.json 里）
 # 可以重复运行：已经换成变量的颜色会从 theme.css 里读回原色。
 # 用法：python3 scripts/make-theme.py
 import json, os, re, sys
@@ -137,7 +137,6 @@ def main():
         tid, name, _, _ = theme
         meta.append({
             'id': tid,
-            'name': name,
             'swatch': hexs(rotate((0xFF, 0x7E, 0xA8), theme)),
             'light': hexs(rotate((0xFF, 0xE6, 0xEF), theme)),
             'header': hexs(rotate((0xFF, 0xF6, 0xF8), theme)),

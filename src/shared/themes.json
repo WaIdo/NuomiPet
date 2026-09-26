@@ -1,7 +1,6 @@
 [
   {
     "id": "sakura",
-    "name": "樱花粉",
     "swatch": "#ff7ea8",
     "light": "#ffe6ef",
     "header": "#fff6f8",
@@ -9,7 +8,6 @@
   },
   {
     "id": "peach",
-    "name": "蜜桃橘",
     "swatch": "#ff8863",
     "light": "#ffe8e3",
     "header": "#fff7f4",
@@ -17,7 +15,6 @@
   },
   {
     "id": "butter",
-    "name": "奶油黄",
     "swatch": "#d5a733",
     "light": "#f7ecdb",
     "header": "#fbf8f2",
@@ -25,7 +22,6 @@
   },
   {
     "id": "mint",
-    "name": "薄荷绿",
     "swatch": "#4ac89c",
     "light": "#e1f3e8",
     "header": "#f4faf7",
@@ -33,7 +29,6 @@
   },
   {
     "id": "sky",
-    "name": "天空蓝",
     "swatch": "#5eb6ff",
     "light": "#def1fe",
     "header": "#f4f9ff",
@@ -41,7 +36,6 @@
   },
   {
     "id": "taro",
-    "name": "香芋紫",
     "swatch": "#be97ff",
     "light": "#eeebff",
     "header": "#faf7fe",

@@ -1,7 +1,7 @@
 // 小窝窗口：标题栏 + 侧边栏 + 各个页面。
 // 数据只有一份（app.state，来自主进程）；任何变化都重新渲染当前页面，再用 morph() 合并进页面，
 // 所以正在输入的框、开关动画、宠物动画都不会被打断。
-import '../shared/emoji.js'; // 要最先执行：缺字的 emoji 先换掉
+import { syncLang } from '../shared/i18n.mjs'; // 要最先执行：按语言填好名字和台词，缺字的 emoji 先换掉
 import catalog from '../../shared/catalog.json' with { type: 'json' };
 import C from '../shared/common.mjs';
 import { Ambient } from '../shared/ambient.js';
@@ -124,9 +124,10 @@ function applyData(data, paths) {
   if (!data || typeof data !== 'object') return;
   for (const [path, p] of pending) setPath(data, path, p.value);
   app.state = data;
+  const langChanged = syncLang(data);
   if (!started) return;
   const ps = Array.isArray(paths) && paths.length ? paths : ['*'];
-  if (ps.every((p) => String(p).startsWith('runtime'))) return;
+  if (!langChanged && ps.every((p) => String(p).startsWith('runtime'))) return;
   const touches = (prefix) => ps.some((p) => p === '*' || p === prefix || String(p).startsWith(prefix + '.') || prefix.startsWith(p + '.'));
   if (touches('letters')) refreshLetters();
   if (touches('weather')) syncWeather();
@@ -390,6 +391,7 @@ async function boot() {
   try {
     const data = await mochi.getData();
     if (!app.state) app.state = data;
+    syncLang(app.state);
   } catch (err) {
     console.error('[home] getData failed', err);
     fatal('读取数据失败了，关掉小窝再打开试试～');

@@ -1,8 +1,7 @@
 // 首页：宠物大卡片、在一起、状态、今天、天气（便当盒布局）。
-import phrases from '../../../shared/phrases.json' with { type: 'json' };
 import { h, s, cx, petEl, bar, cardHead, popover, closePopover, burst, hearts, toast, icon, fmtDate, WEEK } from '../ui.js';
 import { upcomingEvents } from './love.js';
-import { em } from '../../shared/emoji.js';
+import { em, phrases } from '../../shared/i18n.mjs';
 
 const ui = { line: '', pokeTimer: 0 };
 

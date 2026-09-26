@@ -76,8 +76,12 @@
     return MILESTONES.includes(n) || (n > 0 && n % 100 === 0);
   }
 
+  // {name} 换成变量；{n|单数|复数} 按数字选单复数（英语用，比如 "{n} {n|day|days}"）
   function fill(tpl, vars = {}) {
-    return String(tpl).replace(/\{(\w+)\}/g, (m, k) => (vars[k] !== undefined && vars[k] !== null ? vars[k] : m));
+    const v = vars || {};
+    return String(tpl)
+      .replace(/\{(\w+)\|([^|{}]*)\|([^{}]*)\}/g, (m, k, one, other) => (v[k] === undefined || v[k] === null ? m : Number(v[k]) === 1 ? one : other))
+      .replace(/\{(\w+)\}/g, (m, k) => (v[k] !== undefined && v[k] !== null ? v[k] : m));
   }
 
   const lastPicked = new Map();
@@ -103,12 +107,12 @@
     return { ...cur, next, progress: next ? (xp - cur.xp) / (next.xp - cur.xp) : 1 };
   }
 
-  // 今天是什么节日（表见 src/shared/festivals.json）
+  // 今天是什么节日（表见 src/shared/festivals.json；名字和祝福语由多语言模块填进表里）
   function festivalOf(table, now = new Date()) {
     if (!table) return null;
     const key = dateKey(now);
-    const lunarName = table.lunar && table.lunar[key];
-    if (lunarName && table.lunarNames && table.lunarNames[lunarName]) return { name: lunarName, ...table.lunarNames[lunarName] };
+    const lunarId = table.lunar && table.lunar[key];
+    if (lunarId && table.lunarInfo && table.lunarInfo[lunarId]) return { id: lunarId, ...table.lunarInfo[lunarId] };
     const fixed = table.fixed && table.fixed[key.slice(5)];
     return fixed ? { ...fixed } : null;
   }
