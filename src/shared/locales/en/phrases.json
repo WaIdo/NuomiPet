@@ -1,1 +1,425 @@
-{}
+{
+  "hello": [
+    "Hi there! I'm {pet}, and I live on your desktop now~",
+    "Ding! {pet} has arrived! Nice to meet you (｡･ω･｡)ﾉ♡"
+  ],
+  "startup": [
+    "I'm here, {nick}! Let's have a lovely day together~",
+    "{pet} is online! You've got me right by your side",
+    "Hehe, we meet again~",
+    "{pet} is awake! Let's do our best today, together!"
+  ],
+  "morning": [
+    "Good morning, {nick}~ Let's make today a bright one! ☀️",
+    "Morning! Did you sleep well last night?",
+    "Rise and shine~ {pet} has been waiting for you forever!",
+    "Good morning! Don't skip breakfast. No running on an empty tummy!",
+    "A brand-new day, and {pet} will be with you all the way~",
+    "Morning! You're super cute today too!"
+  ],
+  "noon": [
+    "Lunchtime! A good meal keeps you going~ 🍱",
+    "It's noon! After lunch, grab a little nap. {pet} will keep watch~",
+    "Time for lunch, {nick}! And no, bubble tea alone doesn't count!",
+    "Chow time! What are you craving today?"
+  ],
+  "evening": [
+    "Evening's here. You worked so hard today~ 🌇",
+    "What's for dinner? {pet} wants fish treats!",
+    "After a busy day, treat yourself to something nice, okay?",
+    "It's getting dark. Did you take good care of yourself today?"
+  ],
+  "night": [
+    "It's late! Time to snuggle into bed 🌙",
+    "Stay up too late and you'll get panda eyes! Off to bed~",
+    "Even {pet} is sleepy… Let's go to bed together, okay?",
+    "Good night, {nick}. Sweet dreams 💤",
+    "If you don't go to sleep soon, {pet} is gonna get mad! (｀へ´)",
+    "Your phone and computer need rest too. Pick it up tomorrow~"
+  ],
+  "welcomeBack": [
+    "You're back! {pet} missed you so much~",
+    "Welcome back! Where'd you run off to?",
+    "Finally, you're back! (pounce)",
+    "I've been waiting forever~",
+    "Yay, you're back! {pet} waited right here like a good little pet"
+  ],
+  "stroke": [
+    "Hehe~ That feels so nice",
+    "More pets, please~",
+    "Purr purr…",
+    "I love it when you pet me, {nick}!",
+    "(*´▽`*)",
+    "Nuzzle nuzzle~",
+    "This is pure bliss~",
+    "One head pat and poof, all my worries fly away"
+  ],
+  "poke": [
+    "Hm? Looking for me?",
+    "Eep!",
+    "Why'd you poke me~ (,,•́ . •̀,,)",
+    "Hey!",
+    "You found me!",
+    "I'm here, I'm here!",
+    "Hi hi! (｡･ω･｡)ﾉ♡",
+    "One poke, one smile~",
+    "Want a hug?"
+  ],
+  "pokeMany": [
+    "Stop poking me >_<",
+    "So dizzy… so dizzy…",
+    "Poke me again and I'll bite! (trying to look scary)",
+    "Waah… You poked me dizzy"
+  ],
+  "wakeByPoke": [
+    "Mmm… You woke me up…",
+    "Mmm… Five more minutes…",
+    "(rubs eyes) Is it morning already?",
+    "Okay, okay, I'm up. Let's play~"
+  ],
+  "drag": [
+    "Waaaah—!",
+    "Put me down!",
+    "So high up!",
+    "Where are we going?",
+    "Wheee, I'm flying~"
+  ],
+  "land": [
+    "Safe landing!",
+    "Hup!",
+    "Nailed it~",
+    "Thump!"
+  ],
+  "dizzy": [
+    "Everything's spinning…",
+    "Seeing stars @_@",
+    "The world is going round and round…",
+    "Be gentler next time…"
+  ],
+  "idle": [
+    "You're looking extra cute today!",
+    "You look so good when you're focused",
+    "If you're tired, take a break. {pet} is right here with you",
+    "Remember to drink lots of water 💧",
+    "If something's bugging you, you can tell {pet} all about it",
+    "You're the best, {nick}!",
+    "Spacing out…",
+    "Have you been eating properly today?",
+    "When you smile, {pet} gets happy too",
+    "Go, go! You've got this!",
+    "I'll always be right here with you",
+    "Craving strawberry cake… 🍰",
+    "(sneaks a peek at you)",
+    "Who's that little fairy at the screen? Oh, it's you, {nick}!",
+    "May the world be gentle with you today",
+    "Don't wear yourself out. Your health comes first",
+    "Hehe, nothing. I just wanted to say hi~",
+    "We've known each other for {knownDays} {knownDays|day|days} now!",
+    "You're shining bright today too ✨",
+    "Sit up a little straighter. Your back will thank you~",
+    "Psst… Someone misses you a lot 💕",
+    "Feeling tired? Give me a pat~"
+  ],
+  "together": [
+    "Today is day {days} of you two being together 💕",
+    "{days} {days|day|days} together, and forever and ever to go!",
+    "Day {days}, and another day of being loved~"
+  ],
+  "hungry": [
+    "My tummy's rumbling…",
+    "{pet} is a little hungry… Could you feed me something?",
+    "I want fish treats… (puppy eyes)",
+    "Sooo hungry~ Double-click me to feed me!"
+  ],
+  "full": [
+    "Can't eat another bite~ My tummy's all round",
+    "So full! Thank you, {nick}!",
+    "One more bite and I'll turn into a ball~"
+  ],
+  "favorite": [
+    "{food}!! My most favorite thing ever!",
+    "Wow! {food}! You know me so well, {nick} 💕"
+  ],
+  "play": [
+    "Let's play, let's play!",
+    "Watch this!",
+    "So fun! Again, again!",
+    "Come back here, yarn ball~"
+  ],
+  "water": [
+    "Water time! 💧 Glug glug~",
+    "Time for some water, {nick}! It's great for your skin, too",
+    "Cheers! 🥤 (with water, of course)",
+    "Hydration break! Just a little cup~",
+    "{pet} will drink some water with you~"
+  ],
+  "waterDone": [
+    "Good job! That's {n} {n|cup|cups} of water today 💧",
+    "Glug glug~ Cup number {n}, done!",
+    "Awesome! Keep it up~"
+  ],
+  "stretch": [
+    "You've been sitting a while. Get up and have a nice stretch~",
+    "Stand up, walk around, roll those shoulders!",
+    "Let's stretch together: nnnngh—!",
+    "Is your back sore? Get up and move a little"
+  ],
+  "eyes": [
+    "Look at something far away and rest your eyes for 20 seconds 👀",
+    "Blink blink~ Close your eyes and rest them for a bit",
+    "You've been staring at the screen a while. Your eyes need a break too"
+  ],
+  "todoNudge": [
+    "You've still got {n} {n|to-do|to-dos} left. Let's do this together!",
+    "{n} {n|item|items} left on your to-do list. Treat yourself after each one~"
+  ],
+  "todoDone": [
+    "Amazing! Another one done! 🎉",
+    "Great job! You get a gold star 🌟",
+    "Look at you go!",
+    "Done! You're such a pro, {nick}~"
+  ],
+  "todoAllDone": [
+    "All of today's to-dos are done! You're the best! 🎉"
+  ],
+  "focusStart": [
+    "Focus time! {pet} will keep you quiet company 📖",
+    "Focus mode on! You've got this~",
+    "Let's buckle down together for a bit!"
+  ],
+  "focusCheer": [
+    "(whispers) You've got this…",
+    "(quietly keeping you company)",
+    "You look so cool when you focus!"
+  ],
+  "focusEnd": [
+    "Focus session done! Take a little break~ 🍅",
+    "Amazing, another Pomodoro done!",
+    "Great work! Stretch your legs before the next round~"
+  ],
+  "breakEnd": [
+    "Break's over! Ready to get back to it?"
+  ],
+  "moodAsk": [
+    "How are you feeling today?"
+  ],
+  "moodReply": {
+    "great": [
+      "Yay! {pet} is super happy too!",
+      "You're at your prettiest when you're happy~"
+    ],
+    "good": [
+      "Hehe, as long as you're happy~",
+      "Sounds like a pretty good day!"
+    ],
+    "calm": [
+      "Quiet days are nice too. Tomorrow will be even better!",
+      "Nice and calm feels cozy too~"
+    ],
+    "tired": [
+      "You've worked so hard. Get to bed early tonight~",
+      "If you're tired, lean on {pet} and rest a while"
+    ],
+    "sad": [
+      "Hugs… The sad stuff will pass, I promise 💗",
+      "{pet} is right here with you. It's okay to cry"
+    ],
+    "angry": [
+      "Who made you mad?! {pet} will bite them for you! (｀Д´)",
+      "Deep breaths, deep breaths. It's not worth making yourself sick over~"
+    ]
+  },
+  "birthday": [
+    "Happy birthday!! 🎂 A whole year older, {nick}, and cute as ever!",
+    "It's your birthday, {nick}! The whole world is celebrating you 🎉"
+  ],
+  "birthdaySoon": [
+    "Psst… Only {n} more {n|day|days} until your birthday 🎂"
+  ],
+  "anniversary": [
+    "Today marks {years} {years|year|years} together for you two! 💕",
+    "Happy anniversary! {years} {years|year|years} down, and many, many more to go!"
+  ],
+  "milestone": [
+    "Today is day {days} of you two being together! One to remember 💕"
+  ],
+  "eventToday": [
+    "Today is “{name}”! 🎉",
+    "Ding! It's “{name}” today~"
+  ],
+  "eventSoon": [
+    "Only {n} {n|day|days} until “{name}”!"
+  ],
+  "levelUp": [
+    "Our closeness just reached Lv.{level}! “{title}” 💕"
+  ],
+  "letter": [
+    "Someone asked me to bring you a letter 💌",
+    "Ding-dong~ A new letter just unlocked 💌"
+  ],
+  "note": [
+    "{sender} asked me to whisper this to you: {note}",
+    "Whisper time 💌 {note}",
+    "{note}"
+  ],
+  "sleepy": [
+    "Hmm… (yawn)…",
+    "Getting a little sleepy…"
+  ],
+  "goSleep": [
+    "Then I'll take a little nap… 💤",
+    "Zzz…"
+  ],
+  "weatherIntro": [
+    "Today in {city}: {desc}, {min}–{max}°C."
+  ],
+  "fortuneGood": [
+    "eating sweets",
+    "getting compliments",
+    "going to bed early",
+    "sipping bubble tea",
+    "soaking up some sun",
+    "buying yourself flowers",
+    "chatting with someone you like",
+    "slacking off for ten minutes",
+    "eating a proper meal",
+    "listening to your favorite songs",
+    "wearing something cute",
+    "taking photos",
+    "laughing out loud three times",
+    "petting {pet}",
+    "eating hot pot",
+    "learning something new",
+    "daydreaming",
+    "getting hugs",
+    "acting cute",
+    "going for a walk",
+    "drinking lots of water",
+    "tidying up your desk",
+    "watching a movie",
+    "eating strawberries"
+  ],
+  "fortuneBad": [
+    "staying up late",
+    "sulking",
+    "coffee on an empty stomach",
+    "sitting still for too long",
+    "overthinking",
+    "putting yourself last",
+    "skipping breakfast",
+    "being too hard on yourself",
+    "scrolling your phone till midnight",
+    "negative self-talk",
+    "forgetting to drink water"
+  ],
+  "helloFrom": [
+    "Hi there, {nick}! I'm {pet}. {sender} sent me to keep you company~ From now on, I live on your desktop!",
+    "Ding! {pet}, sent specially by {sender}, has arrived! Nice to meet you, {nick} (｡･ω･｡)ﾉ♡"
+  ],
+  "tips": [
+    "Tip: Move your mouse back and forth over my head to give me head pats~",
+    "Tip: Double-click me to open the quick panel (feed, play, Pomodoro, mood…)",
+    "Tip: Press and hold to pick me up. Let go and I'll drop (be gentle, okay?)",
+    "Tip: Right-click me for the full menu. You can dress me up in the Nest~",
+    "Tip: Press {hotkey} to hide me. Press it again and I'll pop right back!"
+  ],
+  "profileAsk": [
+    "Can we get to know each other? Tell me what to call you and when your birthday is. I'll remember it all~",
+    "Will you tell me a little about yourself? Like your birthday 🎂"
+  ],
+  "kneel": [
+    "I was wrong… Please forgive me? 🥺",
+    "Kneeling nice and proper! The washboard's getting warm… Forgive me~",
+    "Sorry, sorry, it's all my fault 🙇"
+  ],
+  "kneelFor": [
+    "Did {sender} upset you? I'll kneel on the washboard for them 🙇",
+    "{sender} sent me to apologize: they really know they messed up. Forgive them just this once? 🥺",
+    "{sender} is facing the wall, thinking about what they did. I'll kneel for them in the meantime 🙇"
+  ],
+  "kneelAngry": [
+    "Who upset you? I'll kneel and apologize on their behalf first 🙇",
+    "Don't be mad, don't be mad. I'll kneel on the washboard to make it up to you 🥺"
+  ],
+  "kneelPoke": [
+    "Stop poking, stop poking! I already said I'm sorry 🥺",
+    "I'm already kneeling! No more poking~"
+  ],
+  "kneelAgain": [
+    "Waah… Then I'll kneel a little longer 😭",
+    "Fine, hmph all you want… I'll keep kneeling until you forgive me 🥺"
+  ],
+  "kneelGift": [
+    "Flowers and bubble tea for you… Forgive me this time? 🥺"
+  ],
+  "kneelForever": [
+    "Okay… I'll stay right here on my knees until you forgive me 😭"
+  ],
+  "forgiveAsk": [
+    "Am I forgiven?",
+    "So… am I forgiven? 🥺"
+  ],
+  "forgiven": [
+    "Yay! I knew you were the best 💕",
+    "Hehe, I love you the most!",
+    "Thank you for forgiving me~ I'll be good from now on, promise"
+  ],
+  "kneelWaiting": [
+    "Pretty please forgive me? 🥺",
+    "Pat my head and that means I'm forgiven~"
+  ],
+  "bow": [
+    "I'm sorry~ Here's a deep bow 🙇",
+    "My bad. A deep bow to you, {nick} 🙇"
+  ],
+  "flower": [
+    "For you, {nick}, the best in the whole world 🌹",
+    "Flowers for you. Please don't be mad 💐",
+    "None of today's flowers are as pretty as you 🌷"
+  ],
+  "flowerFor": [
+    "{sender} asked me to bring you flowers 💐",
+    "{sender} sent these flowers with me 🌹 and says you're the prettiest of all"
+  ],
+  "heart": [
+    "Sending you a heart ❤️ Love you~",
+    "A little heart, just for you 💗",
+    "You've got my whole heart~"
+  ],
+  "hug": [
+    "Hugs~ All the sad stuff will pass",
+    "C'mere, hug!",
+    "Holding you tight, never letting go~"
+  ],
+  "kiss": [
+    "Mwah~ 😘",
+    "One little kiss, and no more being mad~",
+    "Sneaking you a kiss 😚"
+  ],
+  "tea": [
+    "Bubble tea's on me 🧋 Drink up and don't be mad anymore, okay?",
+    "Full sugar, no ice, just how you like it 🧋",
+    "Bubble tea's here! Sweet, just like you"
+  ],
+  "cute": [
+    "Whimper whimper~ Please don't be mad~",
+    "I know I was wrooong~",
+    "Whine whine~ Pay attention to meee"
+  ],
+  "roll": [
+    "Rolling around, begging for forgiveness~",
+    "Roll, roll, roll… Please forgive me"
+  ],
+  "danceCoax": [
+    "A little dance just for you. Smile for me~ 💃",
+    "Look at me, look at me! Cheer up~"
+  ],
+  "praise": [
+    "You look amazing today!",
+    "You're the cutest person in the whole world",
+    "I'm so lucky to have you",
+    "You glow when you're focused ✨",
+    "You're the best, {nick}. Hands down!",
+    "When you smile, the whole sky clears up"
+  ]
+}

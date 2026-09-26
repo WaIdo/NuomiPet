@@ -1,1 +1,248 @@
-{}
+{
+  "species": {
+    "cat": "Kitty",
+    "bunny": "Bunny",
+    "bear": "Teddy",
+    "puppy": "Puppy",
+    "hamster": "Hamster",
+    "chick": "Chick"
+  },
+  "palettes": {
+    "milk": "Milk white",
+    "sakura": "Sakura pink",
+    "peach": "Peach",
+    "milktea": "Milk tea",
+    "caramel": "Caramel",
+    "custard": "Custard",
+    "mint": "Mint",
+    "mist": "Dusty blue",
+    "taro": "Taro purple",
+    "gray": "Silver gray",
+    "cocoa": "Cocoa"
+  },
+  "accessories": {
+    "none": "None",
+    "bow": "Bow",
+    "flower": "Flower",
+    "sprout": "Sprout",
+    "crown": "Crown",
+    "partyhat": "Party hat",
+    "heartclip": "Heart clip",
+    "strawberry": "Berry hat",
+    "santa": "Santa hat",
+    "glasses": "Glasses"
+  },
+  "markings": {
+    "none": "Solid",
+    "belly": "White belly",
+    "stripes": "Stripes",
+    "patch": "Eye patch"
+  },
+  "sizes": {
+    "s": "Small",
+    "m": "Medium",
+    "l": "Large",
+    "xl": "Jumbo"
+  },
+  "moods": {
+    "great": "Super happy",
+    "good": "Happy",
+    "calm": "Calm",
+    "tired": "Tired",
+    "sad": "Sad",
+    "angry": "Angry"
+  },
+  "foods": {
+    "strawberry": {
+      "name": "Berry",
+      "line": "Strawberries are sweet and tangy. Yummy~"
+    },
+    "cake": {
+      "name": "Cake",
+      "line": "Cake! It tastes like happiness~"
+    },
+    "boba": {
+      "name": "Bubble tea",
+      "line": "Bubble tea! My happy juice! Slurp slurp~"
+    },
+    "onigiri": {
+      "name": "Rice ball",
+      "line": "Mmm, rice ball! Eating till my tummy's full~"
+    },
+    "cookie": {
+      "name": "Cookie",
+      "line": "Crunch crunch, so crispy!"
+    },
+    "icecream": {
+      "name": "Ice cream",
+      "line": "So cold and sweet… Brain freeze~"
+    },
+    "fish": {
+      "name": "Fish treats",
+      "line": "Fish treats! I love, love, love these!"
+    },
+    "carrot": {
+      "name": "Carrot",
+      "line": "Crunchy carrot! Munch munch!"
+    },
+    "honey": {
+      "name": "Honey",
+      "line": "Sweet, sweet honey. Lick lick~"
+    },
+    "meat": {
+      "name": "Meaty bone",
+      "line": "Meat! Woof woof! Smells sooo good!"
+    },
+    "seeds": {
+      "name": "Seeds",
+      "line": "Crack a seed, crack a seed… Can't stop~"
+    },
+    "corn": {
+      "name": "Corn",
+      "line": "One little kernel at a time. So sweet!"
+    }
+  },
+  "levels": {
+    "1": "Just met",
+    "2": "Getting closer",
+    "3": "Good friends",
+    "4": "Inseparable",
+    "5": "Hearts in tune",
+    "6": "Absolute favorite",
+    "7": "Meant to be",
+    "8": "One of a kind",
+    "9": "Together forever",
+    "10": "Best in the universe"
+  },
+  "themes": {
+    "sakura": "Sakura pink",
+    "peach": "Peach orange",
+    "butter": "Butter yellow",
+    "mint": "Mint green",
+    "sky": "Sky blue",
+    "taro": "Taro purple"
+  },
+  "festivals": {
+    "newYearsDay": {
+      "name": "New Year's Day",
+      "text": "Happy New Year! 🎉 Here's to another year side by side"
+    },
+    "valentines": {
+      "name": "Valentine's Day",
+      "text": "Happy Valentine's Day 💕 You're so loved, today and every day"
+    },
+    "womensDay": {
+      "name": "Women's Day",
+      "text": "Happy Women's Day! 👑 You're the best goddess in the whole world, {nick}"
+    },
+    "whiteDay": {
+      "name": "White Day",
+      "text": "Happy White Day 🤍 Have a sweet, sweet day~"
+    },
+    "day520": {
+      "name": "520 Day",
+      "text": "Happy 520 Day 💕 In Chinese, “520” sounds like “I love you”… {love}"
+    },
+    "childrensDay": {
+      "name": "Children's Day",
+      "text": "Happy Children's Day! 🎈 To {pet}, you'll always be a little kid at heart~"
+    },
+    "christmasEve": {
+      "name": "Christmas Eve",
+      "text": "Merry Christmas Eve 🍎 Have an apple tonight! In China, it's said to keep you safe and sound~"
+    },
+    "christmas": {
+      "name": "Christmas",
+      "text": "Merry Christmas! 🎄 {pet} is wearing a Santa hat today"
+    },
+    "newYearsEve": {
+      "name": "New Year's Eve",
+      "text": "It's the last day of the year! Thank you for keeping me company all year long ✨"
+    },
+    "lunarNewYearsEve": {
+      "name": "Lunar New Year's Eve",
+      "text": "Happy Lunar New Year's Eve 🧧 Eat lots at the reunion dinner tonight!"
+    },
+    "springFestival": {
+      "name": "Lunar New Year",
+      "text": "Happy Lunar New Year! 🧨 {pet} wishes you a year full of joy and peace!"
+    },
+    "lanternFestival": {
+      "name": "Lantern Festival",
+      "text": "Happy Lantern Festival 🏮 Time for tangyuan, sweet little rice balls that mean being together~"
+    },
+    "dragonBoat": {
+      "name": "Dragon Boat Festival",
+      "text": "Happy Dragon Boat Festival 🐉 Zongzi time! Are you team sweet or team savory?"
+    },
+    "qixi": {
+      "name": "Qixi Festival",
+      "text": "Happy Qixi, the Chinese Valentine's Day 💕 {love}"
+    },
+    "midAutumn": {
+      "name": "Mid-Autumn Festival",
+      "text": "Happy Mid-Autumn Festival 🥮 The moon is full tonight. May the people you love be close to you, too~"
+    }
+  },
+  "defaults": {
+    "petName": "Mochi",
+    "nickname": "sweetie",
+    "notes": [
+      "Stay happy today, okay?",
+      "No matter what happens, someone is always on your side",
+      "You've been working so hard. Remember to give yourself some credit",
+      "If you're tired, it's okay to stop and rest for a while",
+      "You are so, so loved"
+    ],
+    "anniversary": "Anniversary"
+  },
+  "weather": {
+    "codes": {
+      "0": "Clear",
+      "1": "Mostly clear",
+      "2": "Partly cloudy",
+      "3": "Cloudy",
+      "45": "Foggy",
+      "48": "Foggy",
+      "51": "Drizzle",
+      "53": "Drizzle",
+      "55": "Drizzle",
+      "56": "Freezing drizzle",
+      "57": "Freezing drizzle",
+      "61": "Light rain",
+      "63": "Moderate rain",
+      "65": "Heavy rain",
+      "66": "Freezing rain",
+      "67": "Freezing rain",
+      "71": "Light snow",
+      "73": "Moderate snow",
+      "75": "Heavy snow",
+      "77": "Snow grains",
+      "80": "Showers",
+      "81": "Showers",
+      "82": "Heavy showers",
+      "85": "Snow showers",
+      "86": "Heavy snow showers",
+      "95": "Thunderstorm",
+      "96": "Thunderstorm with hail",
+      "99": "Thunderstorm with hail"
+    },
+    "unknown": "Unknown",
+    "advice": {
+      "rain": "Looks like rain. Don't forget your umbrella ☂️",
+      "snow": "Snow's on the way! Bundle up and watch your step ⛄",
+      "hot": "It's a hot one! Stay out of the sun and drink lots of water 🧊",
+      "cold": "Brr, it's cold! Layer up so you don't catch a chill 🧣",
+      "uv": "The UV is strong today. Remember your sunscreen 🧴",
+      "swing": "Big temperature swings today. Bring a jacket 🧥",
+      "nice": "Lovely weather today. Hope your mood is just as lovely~"
+    }
+  },
+  "letters": {
+    "hello": {
+      "title": "Meet {pet}",
+      "from": "{pet}",
+      "body": "Hi there!\n\nI'm {pet}, a soft, squishy little fluffball. Starting today, I live right here on your desktop.\n\nWhile you work, I'll keep you quiet company. When you forget to drink water, I'll remind you. When you've been sitting too long, I'll call you up for a nice big stretch.\n\nPat my head and I'll be over the moon. Double-click me and you can feed me something yummy. You can even pick me up and toss me around (just not too hard, okay?).\n\nOh, and someone asked me to take extra good care of you. So, nice to meet you, and let's look after each other!"
+    }
+  }
+}
