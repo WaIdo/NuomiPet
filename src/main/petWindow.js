@@ -210,7 +210,13 @@ class PetWindow {
 
   applyBounds() {
     if (!this.alive) return;
-    this.win.setBounds({ x: Math.round(this.pos.x), y: Math.round(this.pos.y), width: this.w, height: this.h });
+    const bounds = { x: Math.round(this.pos.x), y: Math.round(this.pos.y), width: this.w, height: this.h };
+    this.win.setBounds(bounds);
+    // Windows：窗口移到缩放比例不同的另一块屏幕时，系统可能顺带把窗口大小也缩放了，再设一次
+    if (process.platform === 'win32') {
+      const b = this.win.getBounds();
+      if (Math.abs(b.width - this.w) > 1 || Math.abs(b.height - this.h) > 1) this.win.setBounds(bounds);
+    }
     this.updateClip();
   }
 

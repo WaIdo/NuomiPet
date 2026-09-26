@@ -123,6 +123,7 @@ function weatherCard(app) {
             )
           : h('p', { class: 'cs-state', key: 'none' }, '没有找到这个城市，换个名字试试？')),
     ),
+    h('p', { class: 'wx-credit', key: 'credit' }, '天气数据由 Open-Meteo.com 提供（CC BY 4.0）'),
   );
 }
 
@@ -218,7 +219,7 @@ function profileCard(app) {
   return h(
     'section',
     { class: 'card set-card profile-card', key: 'profile' },
-    cardHead('🪪', '我们的资料', h('button', { type: 'button', class: 'btn soft sm', onclick: () => app.openProfile({ first: false }) }, '修改资料')),
+    cardHead('💞', '我们的资料', h('button', { type: 'button', class: 'btn soft sm', onclick: () => app.openProfile({ first: false }) }, '修改资料')),
     h(
       'div',
       { class: 'pf-grid' },
@@ -340,6 +341,13 @@ export default {
             h('div', { class: 'tip' }, h('span', { class: 'kbd' }, '来回划'), '在它头上来回划就是摸摸头'),
             h('div', { class: 'tip' }, h('span', { class: 'kbd' }, '按住拖'), '把它拎起来，松手会掉下去'),
             h('div', { class: 'tip' }, h('span', { class: 'kbd' }, app.mochi.platform === 'darwin' ? '⌘ ⌥ P' : 'Ctrl Alt P'), '显示或藏起宠物'),
+          ),
+          h(
+            'p',
+            { class: 'about-legal' },
+            'Copyright © 2026 WaIdo · github.com/WaIdo/NuomiPet',
+            h('br'),
+            '仅限非商业使用（PolyForm Noncommercial License 1.0.0）',
           ),
         ),
       ),

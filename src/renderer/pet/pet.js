@@ -1,4 +1,5 @@
 // 桌宠窗口入口：把数据、输入事件、主进程消息接到 Brain 上。
+import '../shared/emoji.js'; // 要最先执行：缺字的 emoji 先换掉
 import { PetView } from '../shared/pet-view.js';
 import { Sound } from '../shared/sound.js';
 import { Bubble } from './bubble.js';

@@ -1,4 +1,4 @@
-// 日期解析和主题选择
+// 日期解析、主题选择、emoji 兼容
 const test = require('node:test');
 const assert = require('node:assert');
 const C = require('../src/shared/common');
@@ -23,4 +23,22 @@ test('小窝颜色：固定主题、跟宠物走、默认值', () => {
 test('每种宠物配色都对应一个存在的主题', () => {
   const ids = new Set(themes.map((t) => t.id));
   for (const p of catalog.palettes) assert.ok(ids.has(p.theme), `${p.id} -> ${p.theme}`);
+});
+
+test('swapEmoji：缺字的 emoji 换成老的，数据就地替换', () => {
+  const missing = new Set(['🧋']);
+  assert.equal(C.swapEmoji('全糖去冰🧋🧋', missing), '全糖去冰🥤🥤');
+  assert.equal(C.swapEmoji('全糖去冰🧋', new Set()), '全糖去冰🧋');
+  const data = { foods: [{ id: 'boba', emoji: '🧋', price: 3 }], tea: ['🧋 来啦'] };
+  assert.strictEqual(C.swapEmoji(data, missing), data);
+  assert.deepEqual(data, { foods: [{ id: 'boba', emoji: '🥤', price: 3 }], tea: ['🥤 来啦'] });
+});
+
+test('emoji 替代表：替代品和原来的不同，而且自己不会再被替换', () => {
+  for (const [from, to] of Object.entries(C.EMOJI_FALLBACK)) {
+    assert.ok(to && to !== from);
+    assert.ok(!(to in C.EMOJI_FALLBACK), to);
+  }
+  // 零食目录里的奶茶会被替换
+  assert.ok(catalog.foods.some((f) => f.emoji in C.EMOJI_FALLBACK));
 });

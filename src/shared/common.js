@@ -140,6 +140,25 @@
     return { stars: '★'.repeat(stars) + '☆'.repeat(5 - stars), good: take(good || [], 2), bad: take(bad || [], 1) };
   }
 
+  // Windows 10 自带的 emoji 字体只到 Emoji 12，更新的 emoji 在那里显示成方框，换成老一点的
+  const EMOJI_FALLBACK = { '🧋': '🥤' };
+
+  // 把字符串里 missing 中的 emoji 换掉；数组和对象就地逐项替换
+  function swapEmoji(value, missing) {
+    if (!missing || !missing.size) return value;
+    if (typeof value === 'string') {
+      let s = value;
+      for (const e of missing) if (s.includes(e)) s = s.split(e).join(EMOJI_FALLBACK[e]);
+      return s;
+    }
+    if (Array.isArray(value)) {
+      for (let i = 0; i < value.length; i++) value[i] = swapEmoji(value[i], missing);
+    } else if (value && typeof value === 'object') {
+      for (const k of Object.keys(value)) value[k] = swapEmoji(value[k], missing);
+    }
+    return value;
+  }
+
   // 小窝的颜色：'auto' 表示跟宠物的配色走（catalog.palettes[].theme）
   function resolveTheme(data, catalog) {
     const t = (data && data.settings && data.settings.theme) || 'sakura';
@@ -148,5 +167,5 @@
     return (pal && pal.theme) || 'sakura';
   }
 
-  return { pad2, dateKey, hm, parseKey, diffDays, nextYearly, dayNumber, daysUntil, isMilestone, fill, pick, uid, levelFor, todayParts, festivalOf, fortune, resolveTheme };
+  return { pad2, dateKey, hm, parseKey, diffDays, nextYearly, dayNumber, daysUntil, isMilestone, fill, pick, uid, levelFor, todayParts, festivalOf, fortune, resolveTheme, EMOJI_FALLBACK, swapEmoji };
 });

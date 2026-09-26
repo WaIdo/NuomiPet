@@ -4564,6 +4564,12 @@ html[data-platform='win32'] .titlebar {
   color: #e5484d;
 }
 
+.wx-credit {
+  margin: 12px 2px 0;
+  font-size: 11.5px;
+  color: var(--muted);
+}
+
 .cs-results {
   display: flex;
   flex-direction: column;
@@ -4640,6 +4646,14 @@ html[data-platform='win32'] .titlebar {
   font-size: 13.5px;
   font-weight: 700;
   color: var(--pink-deep);
+}
+
+.about-legal {
+  margin: 14px 0 0;
+  font-size: 11.5px;
+  line-height: 1.6;
+  color: var(--muted);
+  user-select: text;
 }
 
 .tips {

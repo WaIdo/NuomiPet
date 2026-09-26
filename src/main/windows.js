@@ -45,11 +45,17 @@ function openHome(page, petName = '糯米') {
     if (page) home.webContents.send('home:navigate', page);
     return home;
   }
+  // 不超过屏幕可用区域：1080p 屏幕开 150% 缩放时可用高度只有 670 多
+  const area = screen.getDisplayNearestPoint(screen.getCursorScreenPoint()).workArea;
+  const width = Math.min(980, area.width - 20);
+  const height = Math.min(680, area.height - 20);
   home = new BrowserWindow({
-    width: 980,
-    height: 680,
-    minWidth: 860,
-    minHeight: 600,
+    width,
+    height,
+    x: Math.round(area.x + (area.width - width) / 2),
+    y: Math.round(area.y + (area.height - height) / 2),
+    minWidth: Math.min(860, width),
+    minHeight: Math.min(600, height),
     show: false,
     title: `${petName}的小窝`,
     backgroundColor: themeOf(homeTheme).header,

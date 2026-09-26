@@ -3,4 +3,4 @@ import '../../shared/common.js';
 
 const C = self.MochiCommon;
 export default C;
-export const { pad2, dateKey, hm, parseKey, diffDays, nextYearly, dayNumber, daysUntil, isMilestone, fill, pick, uid, levelFor, todayParts, festivalOf, fortune, resolveTheme } = C;
+export const { pad2, dateKey, hm, parseKey, diffDays, nextYearly, dayNumber, daysUntil, isMilestone, fill, pick, uid, levelFor, todayParts, festivalOf, fortune, resolveTheme, EMOJI_FALLBACK, swapEmoji } = C;

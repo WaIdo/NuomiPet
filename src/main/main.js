@@ -24,6 +24,11 @@ const argValue = (name) => {
   return hit ? hit.slice(name.length + 3) : null;
 };
 if (!app.isPackaged && argValue('data-dir')) app.setPath('userData', path.resolve(argValue('data-dir')));
+// 跑测试脚本时窗口可能被别的窗口挡住（或者 CI 机器锁屏），也要继续渲染，否则截到的是旧画面
+if (!app.isPackaged && argValue('dev-script')) {
+  app.commandLine.appendSwitch('disable-renderer-backgrounding');
+  app.commandLine.appendSwitch('disable-backgrounding-occluded-windows');
+}
 
 let store;
 let gift;
@@ -34,6 +39,8 @@ let tray;
 let greeted = false;
 
 const petName = () => store?.get('pet.name') || '糯米';
+// 名字、昵称会拼进默认文件名：Windows 文件名里不能有 \ / : * ? " < > |，结尾也不能是点或空格
+const safeFileName = (name) => String(name).replace(/[\\/:*?"<>|\u0000-\u001f]/g, '_').replace(/[. ]+$/, '');
 
 if (!app.requestSingleInstanceLock()) {
   app.quit();
@@ -347,7 +354,7 @@ function registerIpc() {
     const win = BrowserWindow.fromWebContents(e.sender);
     const { canceled, filePath } = await dialog.showSaveDialog(win, {
       title: '导出写好的信',
-      defaultPath: path.join(app.getPath('desktop'), `写给${store.get('owner.nickname') || 'TA'}的信.nuomi-letters.json`),
+      defaultPath: path.join(app.getPath('desktop'), safeFileName(`写给${store.get('owner.nickname') || 'TA'}的信`) + '.nuomi-letters.json'),
       filters: [{ name: '信件', extensions: ['json'] }],
     });
     if (canceled || !filePath) return { ok: false };
@@ -396,7 +403,7 @@ function registerIpc() {
     const win = BrowserWindow.fromWebContents(e.sender);
     const { canceled, filePath } = await dialog.showSaveDialog(win, {
       title: '导出数据',
-      defaultPath: path.join(app.getPath('documents'), `${petName()}-备份-${C.dateKey()}.json`),
+      defaultPath: path.join(app.getPath('documents'), safeFileName(`${petName()}-备份-${C.dateKey()}`) + '.json'),
       filters: [{ name: 'JSON', extensions: ['json'] }],
     });
     if (canceled || !filePath) return { ok: false };

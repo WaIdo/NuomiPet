@@ -1,4 +1,5 @@
 // 对话气泡：排队显示，可带按钮（提醒、心情打卡、信件）。
+import { em } from '../shared/emoji.js';
 
 // 颜文字（括号里的一小串符号）不要被折成两行
 const KAOMOJI = /([（(][^（()）\n]{1,10}[)）][ﾉ♡✧~～]*)/;
@@ -110,7 +111,7 @@ export class Bubble {
     el.className = 'bubble ' + (item.cls || '');
     const p = document.createElement('div');
     p.className = 'text';
-    appendText(p, item.text);
+    appendText(p, em(item.text));
     if (item.text) el.append(p);
     if (item.buttons && item.buttons.length) {
       const row = document.createElement('div');
@@ -118,7 +119,7 @@ export class Bubble {
       for (const b of item.buttons) {
         const btn = document.createElement('button');
         btn.className = 'btn' + (b.primary ? ' primary' : '') + (b.emojiOnly ? ' emoji' : '');
-        btn.textContent = b.label;
+        btn.textContent = em(b.label);
         if (b.title) btn.title = b.title;
         btn.addEventListener('click', (e) => {
           e.stopPropagation();

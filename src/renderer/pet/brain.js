@@ -2,6 +2,7 @@
 import C from '../shared/common.mjs';
 import catalog from '../../shared/catalog.json' with { type: 'json' };
 import phrases from '../../shared/phrases.json' with { type: 'json' };
+import { em } from '../shared/emoji.js';
 
 const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
 const rand = (a, b) => a + Math.random() * (b - a);
@@ -283,7 +284,7 @@ export class Brain {
     const d = this.data;
     const fav = catalog.foods.find((f) => f.id === catalog.species.find((s) => s.id === d.pet.species)?.favorite);
     const pool = ['🍓', '🍰', '🎵', '⭐', '🌙', '🧋', '💕', '🌸', '☁️', '🍙', fav?.emoji || '🐟'];
-    this.fx.thought(this.head(), C.pick(pool, 'think'));
+    this.fx.thought(this.head(), em(C.pick(pool, 'think')));
     await this.hold(t, 2700);
     this.end(t);
   }
@@ -1519,7 +1520,7 @@ export class Brain {
       }
       case 'tea':
         v.setPaws('offer');
-        v.setProp('🧋', { y: 133, size: 36 });
+        v.setProp(em('🧋'), { y: 133, size: 36 });
         v.setFace('happy', 'cat');
         v.setPose('bounce');
         say('tea');

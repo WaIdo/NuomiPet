@@ -4,8 +4,13 @@
   "version": "1.0.0",
   "description": "一只超可爱的桌面宠物，陪她工作、学习、喝水、休息。",
   "main": "src/main/main.js",
-  "author": "糯米桌宠",
-  "license": "UNLICENSED",
+  "author": "WaIdo",
+  "license": "PolyForm-Noncommercial-1.0.0",
+  "homepage": "https://github.com/WaIdo/NuomiPet",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/WaIdo/NuomiPet.git"
+  },
   "private": true,
   "scripts": {
     "start": "electron .",
@@ -23,7 +28,7 @@
   "build": {
     "appId": "com.mochi.desktoppet",
     "productName": "糯米桌宠",
-    "copyright": "Made with love",
+    "copyright": "Copyright © 2026 WaIdo",
     "directories": {
       "output": "dist",
       "buildResources": "build"
@@ -59,10 +64,19 @@
       "hardenedRuntime": false,
       "gatekeeperAssess": false,
       "extendInfo": {
-        "LSUIElement": true,
-        "NSHumanReadableCopyright": "Made with love"
+        "LSUIElement": true
       },
-      "artifactName": "NuomiPet-${version}-mac-${arch}.${ext}"
+      "artifactName": "NuomiPet-${version}-mac-${arch}.${ext}",
+      "extraResources": [
+        {
+          "from": "node_modules/electron/dist/LICENSE",
+          "to": "LICENSE.electron.txt"
+        },
+        {
+          "from": "node_modules/electron/dist/LICENSES.chromium.html",
+          "to": "LICENSES.chromium.html"
+        }
+      ]
     },
     "dmg": {
       "title": "糯米桌宠 ${version}",
@@ -119,6 +133,12 @@
     },
     "portable": {
       "artifactName": "NuomiPet-${version}-win-portable.${ext}"
-    }
+    },
+    "extraResources": [
+      {
+        "from": "LICENSE.md",
+        "to": "LICENSE.md"
+      }
+    ]
   }
 }

@@ -1,6 +1,7 @@
 // 小窝窗口：标题栏 + 侧边栏 + 各个页面。
 // 数据只有一份（app.state，来自主进程）；任何变化都重新渲染当前页面，再用 morph() 合并进页面，
 // 所以正在输入的框、开关动画、宠物动画都不会被打断。
+import '../shared/emoji.js'; // 要最先执行：缺字的 emoji 先换掉
 import catalog from '../../shared/catalog.json' with { type: 'json' };
 import C from '../shared/common.mjs';
 import { Ambient } from '../shared/ambient.js';

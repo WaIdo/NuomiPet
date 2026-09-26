@@ -2,6 +2,7 @@
 import phrases from '../../../shared/phrases.json' with { type: 'json' };
 import { h, s, cx, petEl, bar, cardHead, popover, closePopover, burst, hearts, toast, icon, fmtDate, WEEK } from '../ui.js';
 import { upcomingEvents } from './love.js';
+import { em } from '../../shared/emoji.js';
 
 const ui = { line: '', pokeTimer: 0 };
 
@@ -200,7 +201,7 @@ const COAX = [
   { id: 'heart', emoji: '❤️', label: '比心' },
   { id: 'hug', emoji: '🤗', label: '抱抱' },
   { id: 'kiss', emoji: '😘', label: '亲亲' },
-  { id: 'tea', emoji: '🧋', label: '请喝奶茶' },
+  { id: 'tea', emoji: em('🧋'), label: '请喝奶茶' },
   { id: 'bow', emoji: '🙏', label: '鞠躬' },
   { id: 'cute', emoji: '🥺', label: '撒娇' },
   { id: 'roll', emoji: '🌀', label: '打滚' },
@@ -426,7 +427,7 @@ function weatherCard(app) {
   } else {
     body = h('div', { class: 'wx-loading', key: 'loading', 'aria-label': '正在查天气' }, h('span', { class: 'sk a' }), h('span', { class: 'sk b' }), h('span', { class: 'sk c' }));
   }
-  return h('section', { class: 'card c-weather', key: 'weather' }, cardHead('📍', city, refresh), body);
+  return h('section', { class: 'card c-weather', key: 'weather', title: '天气数据由 Open-Meteo.com 提供' }, cardHead('📍', city, refresh), body);
 }
 
 export default {

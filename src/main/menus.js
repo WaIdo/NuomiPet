@@ -1,6 +1,13 @@
 // 右键宠物的菜单和托盘菜单。
 const { Menu, app } = require('electron');
+const os = require('os');
 const catalog = require('../shared/catalog.json');
+const { EMOJI_FALLBACK, swapEmoji } = require('../shared/common');
+
+// Windows 10（内部版本号 22000 以下）的系统 emoji 字体没有新 emoji，菜单里换成老的
+const oldWindows = process.platform === 'win32' && Number(os.release().split('.')[2]) < 22000;
+const missingEmoji = new Set(oldWindows ? Object.keys(EMOJI_FALLBACK) : []);
+const em = (label) => swapEmoji(label, missingEmoji);
 
 function toggle(store, path, label) {
   return { label, type: 'checkbox', checked: !!store.get(path), click: (item) => store.set(path, item.checked) };
@@ -17,7 +24,7 @@ function pomodoroItems(pomodoro) {
 }
 
 function foodItems(petCommand) {
-  return catalog.foods.map((f) => ({ label: `${f.emoji}  ${f.name}`, click: () => petCommand({ type: 'feed', food: f.id }) }));
+  return catalog.foods.map((f) => ({ label: em(`${f.emoji}  ${f.name}`), click: () => petCommand({ type: 'feed', food: f.id }) }));
 }
 
 // 哄她开心的动作
@@ -37,7 +44,7 @@ const COAX = [
 
 function coaxItems(petCommand) {
   return [
-    ...COAX.map(([kind, label]) => ({ label, click: () => petCommand({ type: 'coax', kind }) })),
+    ...COAX.map(([kind, label]) => ({ label: em(label), click: () => petCommand({ type: 'coax', kind }) })),
     { type: 'separator' },
     { label: '🎲  随便哄哄', click: () => petCommand({ type: 'coax', kind: 'random' }) },
   ];
