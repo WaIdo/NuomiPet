@@ -3950,6 +3950,146 @@ html[data-platform='win32'] .titlebar {
   color: var(--muted);
 }
 
+/* 自己写的信：卡片右上角的「···」菜单 */
+.letter-item {
+  position: relative;
+  display: flex;
+  min-width: 0;
+}
+
+.letter-item > .letter-card {
+  flex: 1;
+}
+
+.lc-more {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  z-index: 2;
+  width: 30px;
+  height: 26px;
+  border: 0;
+  border-radius: 13px;
+  font: inherit;
+  font-weight: 800;
+  line-height: 20px;
+  letter-spacing: 1px;
+  color: var(--muted);
+  background: rgba(255, 255, 255, 0.92);
+  box-shadow: 0 2px 8px rgba(200, 90, 130, 0.16);
+  cursor: pointer;
+  opacity: 0;
+  transition: opacity 0.15s, color 0.15s;
+}
+
+.letter-item:hover .lc-more,
+.lc-more:focus-visible {
+  opacity: 1;
+}
+
+.lc-more:hover {
+  color: var(--pink-deep);
+}
+
+.menu-list {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  min-width: 150px;
+}
+
+.popover.letter-menu {
+  padding: 6px;
+}
+
+.menu-item {
+  padding: 8px 12px;
+  border: 0;
+  border-radius: 10px;
+  font: inherit;
+  font-size: 13px;
+  text-align: left;
+  color: var(--ink);
+  background: none;
+  cursor: pointer;
+}
+
+.menu-item:hover {
+  background: var(--pink-50);
+}
+
+.menu-item.danger {
+  color: #d9485f;
+}
+
+.letter-tools {
+  margin-top: 16px;
+}
+
+.lt-btns {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 12px;
+}
+
+/* 写信弹窗 */
+.modal.letter-editor {
+  width: min(560px, calc(100vw - 40px));
+  max-height: calc(100vh - 40px);
+  overflow: auto;
+  text-align: left;
+}
+
+.modal.letter-editor .modal-title {
+  text-align: center;
+  margin-bottom: 14px;
+}
+
+.le-form .field {
+  margin-bottom: 12px;
+}
+
+.le-when {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 10px;
+}
+
+.le-when .seg {
+  width: 190px;
+}
+
+.le-two {
+  display: grid;
+  grid-template-columns: 1.4fr 1fr;
+  gap: 12px;
+}
+
+.le-form .textarea {
+  min-height: 150px;
+  font-size: 14px;
+}
+
+.le-count {
+  align-self: flex-end;
+  font-size: 11.5px;
+  color: var(--faint);
+  font-variant-numeric: tabular-nums;
+}
+
+.le-sealed,
+.le-tip {
+  margin: 4px 0 14px;
+  padding: 9px 12px;
+  border-radius: 12px;
+  font-size: 12.5px;
+  line-height: 1.6;
+  color: var(--text);
+  background: var(--pink-50);
+}
+
 /* ================================================================
    心情
    ================================================================ */
@@ -4548,4 +4688,120 @@ html.blurred .nav-dot {
   .st-new .env::before {
     animation: none;
   }
+}
+
+/* ================================================================
+   我们的资料（设置页卡片 + 「认识一下」弹窗）
+   ================================================================ */
+
+.pf-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+  gap: 8px 14px;
+  margin-top: 10px;
+}
+
+.pf-item {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  padding: 9px 12px;
+  border-radius: 12px;
+  background: var(--pink-50);
+}
+
+.pf-k {
+  font-size: 11.5px;
+  color: var(--muted);
+}
+
+.pf-v {
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--ink);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.pf-v.none {
+  font-weight: 500;
+  color: var(--faint);
+}
+
+.modal.profile-editor {
+  width: min(520px, calc(100vw - 40px));
+  max-height: calc(100vh - 40px);
+  overflow: auto;
+  text-align: left;
+}
+
+.modal.profile-editor .modal-title {
+  text-align: center;
+  margin-bottom: 14px;
+}
+
+.pf-form .field {
+  margin-bottom: 12px;
+}
+
+.pf-two {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+}
+
+.pf-date {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+/* 首页：一起的回忆 */
+.memories {
+  margin: 12px 0 14px;
+}
+
+.mem-title {
+  margin-bottom: 6px;
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--muted);
+}
+
+.mem-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 6px;
+}
+
+.mem {
+  display: flex;
+  align-items: baseline;
+  gap: 4px;
+  min-width: 0;
+  padding: 6px 8px;
+  border-radius: 10px;
+  font-size: 12px;
+  color: var(--text);
+  background: var(--pink-50);
+  white-space: nowrap;
+}
+
+.mem i {
+  font-style: normal;
+  font-family: var(--emoji);
+  font-size: 12px;
+}
+
+.mem b {
+  margin-left: auto;
+  font-family: var(--num);
+  font-size: 15px;
+  color: var(--ink);
+}
+
+.mem small {
+  font-size: 11px;
+  color: var(--muted);
 }

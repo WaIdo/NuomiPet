@@ -66,6 +66,11 @@ contextBridge.exposeInMainWorld('mochi', {
     list: () => invoke('letters:list'),
     markRead: (id) => invoke('letters:read', id),
     open: (id) => send('letter:open', id),
+    // 在应用里写的信：{ id?, title, from, unlock: 'YYYY-MM-DD'|'', body }；修改时可以不传 body
+    save: (letter) => invoke('letters:save', letter),
+    remove: (id) => invoke('letters:delete', id),
+    exportFile: () => invoke('letters:export'),
+    importFile: () => invoke('letters:import'),
   },
 
   // ---- 窗口与应用 ----

@@ -15,6 +15,7 @@ import letters from './pages/letters.js';
 import moods from './pages/moods.js';
 import notes from './pages/notes.js';
 import settings from './pages/settings.js';
+import { openProfile } from './profile.js';
 
 const mochi = window.mochi;
 const PAGES = [overview, dress, reminders, focus, todos, love, letters, moods, notes, settings];
@@ -43,6 +44,7 @@ const app = {
   refreshWeather,
   refreshLetters,
   companionDays,
+  openProfile: (o) => openProfile(app, o),
 };
 
 /* ---------------- 数据 ---------------- */
@@ -303,6 +305,11 @@ function sidebar() {
 }
 
 function go(id) {
+  // 'profile' 不是页面，是「认识一下」资料弹窗
+  if (id === 'profile') {
+    if (app.state) openProfile(app, { first: !app.state.runtime?.profileDone });
+    return;
+  }
   if (!PAGE[id]) return;
   closePopover();
   if (id === app.page) return;
@@ -373,6 +380,7 @@ async function boot() {
 
   const q = new URLSearchParams(location.search).get('page');
   if (q && PAGE[q]) app.page = q;
+  const wantProfile = q === 'profile';
 
   // 先订阅再读取，读取期间发生的变化也不会漏掉
   mochi.onData((data, paths) => applyData(data, paths));
@@ -389,6 +397,9 @@ async function boot() {
   PAGE[app.page].enter?.(app);
   started = true;
   renderNow();
+  // 第一次打开小窝：先认识一下（填名字、昵称、生日……）
+  const rt = app.state.runtime || {};
+  if (wantProfile || (!rt.profileDone && !rt.profileSkipped)) setTimeout(() => openProfile(app, { first: !rt.profileDone }), 450);
 
   mochi.onNavigate((page) => go(page));
   mochi.pomodoro.onUpdate(setPomo);

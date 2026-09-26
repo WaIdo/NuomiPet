@@ -7,6 +7,8 @@ const C = require('../../src/shared/common');
 
 module.exports = async ({ app, store, scheduler, openHome, capture, pomodoro }) => {
   store.set('runtime.welcomed', true);
+  store.set('runtime.profileDone', true);
+  store.set('stats.counters', { pets: 128, feeds: 36, plays: 21, waters: 87, pomodoros: 14, todos: 42 });
   scheduler.goAway = () => {};
   const day = (offset) => { const d = new Date(); d.setDate(d.getDate() + offset); return C.dateKey(d); };
   store.set('owner.nickname', '小橘子');

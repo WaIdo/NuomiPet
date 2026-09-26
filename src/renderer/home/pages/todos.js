@@ -45,10 +45,10 @@ function toggleDone(app, t, e) {
   );
   if (!done) return;
   app.bump({ xp: 2, counters: { todos: 1 } });
-  app.mochi.petCommand({ type: 'cheer' });
+  const left = (app.state.todos || []).filter((x) => !x.done).length;
+  app.mochi.petCommand({ type: 'cheer', allDone: left === 0 });
   const r = e.currentTarget.getBoundingClientRect();
   burst(r.left + r.width / 2, r.top + r.height / 2, { emoji: ['💗', '✨'] });
-  const left = (app.state.todos || []).filter((x) => !x.done).length;
   toast(left === 0 ? '全部完成啦！你最棒 🎉' : '又完成一件，真厉害！🎉');
 }
 

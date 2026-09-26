@@ -174,6 +174,29 @@ async function doReset(app) {
   }
 }
 
+// 我们的资料：名字、昵称、生日、在一起的日子、署名
+function profileCard(app) {
+  const st = app.state;
+  const C = app.C;
+  const bd = C.parseKey(st.love?.birthday || '');
+  const days = C.dayNumber(st.love?.togetherSince || '');
+  const item = (label, value) => h('div', { class: 'pf-item' }, h('span', { class: 'pf-k' }, label), h('span', { class: cx('pf-v', { none: !value }) }, value || '还没填'));
+  return h(
+    'section',
+    { class: 'card set-card profile-card', key: 'profile' },
+    cardHead('🪪', '我们的资料', h('button', { type: 'button', class: 'btn soft sm', onclick: () => app.openProfile({ first: false }) }, '修改资料')),
+    h(
+      'div',
+      { class: 'pf-grid' },
+      item('宠物的名字', st.pet?.name),
+      item('它怎么称呼你', st.owner?.nickname),
+      item('生日', bd ? `${bd.y ? bd.y + '年' : ''}${bd.m}月${bd.d}日` : ''),
+      item('在一起', days ? `${st.love.togetherSince} 起 · 第 ${days} 天` : ''),
+      item('悄悄话署名', st.owner?.sender),
+    ),
+  );
+}
+
 export default {
   id: 'settings',
   icon: '⚙️',
@@ -193,6 +216,7 @@ export default {
       h(
         'div',
         { class: 'set-col' },
+        profileCard(app),
         h(
           'section',
           { class: 'card set-card', key: 'pet' },
@@ -208,7 +232,7 @@ export default {
           'section',
           { class: 'card set-card', key: 'quiet' },
           cardHead('🔔', '打扰与声音'),
-          settingToggle(app, 'dnd', '勿扰模式', '不主动说话，只保留自定义提醒'),
+          settingToggle(app, 'dnd', '勿扰模式', '不闲聊，不提醒喝水、久坐这些；自定义提醒、番茄钟、纪念日和信照常'),
           settingToggle(app, 'sound', '声音', '说话和互动时的小音效'),
           row(
             '音量',
@@ -278,6 +302,9 @@ export default {
             { class: 'tips' },
             h('div', { class: 'tip' }, h('span', { class: 'kbd' }, '右键'), '宠物可以打开菜单'),
             h('div', { class: 'tip' }, h('span', { class: 'kbd' }, '双击'), '宠物打开快捷面板'),
+            h('div', { class: 'tip' }, h('span', { class: 'kbd' }, '来回划'), '在它头上来回划就是摸摸头'),
+            h('div', { class: 'tip' }, h('span', { class: 'kbd' }, '按住拖'), '把它拎起来，松手会掉下去'),
+            h('div', { class: 'tip' }, h('span', { class: 'kbd' }, app.mochi.platform === 'darwin' ? '⌘ ⌥ P' : 'Ctrl Alt P'), '显示或藏起宠物'),
           ),
         ),
       ),

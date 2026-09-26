@@ -169,3 +169,27 @@ test('喝水提醒只在活跃时间段内', () => {
   assert.equal(s.checkWater(at('2026-09-26T20:00:00')), false);
   assert.equal(s.checkWater(at('2026-09-26T10:00:00')), true);
 });
+
+test('勿扰模式：不发新手提示、不说早安、回来不说欢迎语，但纪念日照常', () => {
+  const { s, events, store } = setup({ 'settings.dnd': true, 'runtime.welcomedAt': Date.now() - 60 * 60 * 1000, 'love.birthday': '1999-03-21' });
+  assert.equal(s.checkTips(), false);
+  assert.equal(s.checkProfile(), false);
+  assert.equal(s.checkMorning(at('2027-03-20T08:00:00')), false);
+  s.away = true;
+  s.awayAt = Date.now() - 30 * 60 * 1000;
+  s.comeBack();
+  assert.equal(events.at(-1).type, 'back');
+  assert.equal(events.at(-1).text, '');
+  assert.equal(s.checkCelebrations(at('2027-03-21T10:00:00')), true);
+  store.set('settings.dnd', false);
+  assert.equal(s.checkTips(), true);
+});
+
+test('吃饭提醒在 12:00 和 18:00 之后', () => {
+  const { s, events } = setup();
+  assert.equal(s.checkMeals(at('2026-09-26T11:55:00')), false);
+  assert.equal(s.checkMeals(at('2026-09-26T12:01:00')), true);
+  assert.equal(s.checkMeals(at('2026-09-26T17:59:00')), false);
+  assert.equal(s.checkMeals(at('2026-09-26T18:10:00')), true);
+  assert.deepEqual(events.map((e) => e.period), ['noon', 'evening']);
+});

@@ -199,7 +199,7 @@ export default {
           emoji: '🌤️',
           tint: 'pink',
           title: '活跃时间段',
-          desc: '上面这些提醒只在这段时间里出现',
+          desc: '喝水、久坐和护眼提醒只在这段时间里出现',
           body: h(
             'div',
             { class: 'rm-ctrl inline rm-range' },

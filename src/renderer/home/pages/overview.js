@@ -201,6 +201,26 @@ function play(app, e) {
   toast(`${app.state.pet.name}开心地玩起来啦～`);
 }
 
+// 一起的回忆：从认识到现在的累计次数
+function memories(c) {
+  const item = (emoji, label, n, unit) => h('div', { class: 'mem', title: `${label} ${n || 0} ${unit}` }, h('i', emoji), h('span', label), h('b', n || 0), h('small', unit));
+  return h(
+    'div',
+    { class: 'memories', key: 'mem' },
+    h('div', { class: 'mem-title' }, '一起的回忆'),
+    h(
+      'div',
+      { class: 'mem-grid' },
+      item('🤲', '摸摸', c.pets, '次'),
+      item('🍓', '喂食', c.feeds, '次'),
+      item('🧶', '玩耍', c.plays, '次'),
+      item('💧', '喝水', c.waters, '杯'),
+      item('🍅', '专注', c.pomodoros, '个'),
+      item('📝', '完成', c.todos, '件'),
+    ),
+  );
+}
+
 function statusCard(app) {
   const st = app.state.stats || {};
   const full = clamp(st.fullness);
@@ -217,8 +237,9 @@ function statusCard(app) {
       'div',
       { class: 'facts' },
       fav && h('span', { class: 'fact' }, h('i', fav.emoji), `最爱${fav.name}`),
-      h('span', { class: 'fact', title: `今天摸了 ${daily.pets || 0} 次` }, h('i', '🤲'), `摸摸 ${daily.pets || 0} 次`),
+      h('span', { class: 'fact', title: `今天摸了 ${daily.pets || 0} 次` }, h('i', '🤲'), `今天摸摸 ${daily.pets || 0} 次`),
     ),
+    memories(st.counters || {}),
     h(
       'div',
       { class: 'btn-row' },

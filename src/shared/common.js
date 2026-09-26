@@ -13,14 +13,18 @@
     return `${pad2(d.getHours())}:${pad2(d.getMinutes())}`;
   }
 
-  // 'YYYY-MM-DD' -> {y, m, d}；也接受 'MM-DD'（y 为 null）
+  const MONTH_DAYS = [31, 29, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
+
+  // 'YYYY-MM-DD' -> {y, m, d}；也接受 'MM-DD'（y 为 null）。不存在的日期（13 月、2 月 30 日）返回 null。
   function parseKey(s) {
     if (!s || typeof s !== 'string') return null;
-    let m = s.match(/^(\d{4})-(\d{1,2})-(\d{1,2})$/);
-    if (m) return { y: +m[1], m: +m[2], d: +m[3] };
-    m = s.match(/^(\d{1,2})-(\d{1,2})$/);
-    if (m) return { y: null, m: +m[1], d: +m[2] };
-    return null;
+    let r = null;
+    let m = s.trim().match(/^(\d{4})-(\d{1,2})-(\d{1,2})$/);
+    if (m) r = { y: +m[1], m: +m[2], d: +m[3] };
+    else if ((m = s.trim().match(/^(\d{1,2})-(\d{1,2})$/))) r = { y: null, m: +m[1], d: +m[2] };
+    if (!r || r.m < 1 || r.m > 12 || r.d < 1) return null;
+    const max = r.y ? new Date(r.y, r.m, 0).getDate() : MONTH_DAYS[r.m - 1];
+    return r.d <= max ? r : null;
   }
 
   const utc = (y, m, d) => Date.UTC(y, m - 1, d);

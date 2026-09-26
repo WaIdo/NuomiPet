@@ -287,6 +287,8 @@ export class Brain {
   async idleYawn() {
     const t = this.begin('yawn');
     if (!t) return;
+    const h = new Date().getHours();
+    if ((h >= 23 || h < 6) && chance(0.4) && !this.bubble.busy() && !this.data.settings.dnd) this.say(this.line('sleepy'), { duration: 2600 });
     this.view.setFace('closed', 'yawn');
     this.view.setPose('stretch');
     if (!(await this.hold(t, 1500))) return;
@@ -830,6 +832,8 @@ export class Brain {
         return this.letter(evt);
       case 'mood-ask':
         return this.moodAsk(evt);
+      case 'profile-ask':
+        return this.profileAsk(evt);
       case 'mood-recorded':
         return this.moodReact(evt);
       case 'away':
@@ -1068,6 +1072,28 @@ export class Brain {
     });
   }
 
+  async profileAsk(evt) {
+    await this.wakeForEvent();
+    this.say(evt.text, {
+      id: 'profile-ask',
+      buttons: [{ label: '好呀 ✏️', value: 'yes', primary: true }, { label: '以后再说', value: 'later' }],
+      onButton: (v) => {
+        if (v === 'yes') this.api.openHome('profile');
+        else if (v === 'later') {
+          this.api.set('runtime.profileSkipped', true);
+          this.say('好哦，想告诉我的时候，去「小窝 → 设置 → 我们的资料」就可以～', { duration: 4000 });
+        }
+      },
+      duration: 120000,
+    });
+    await this.gesture('profile-ask', PRI.event, async (t, v) => {
+      v.setPose('think');
+      v.setFace('normal', 'smile');
+      v.setFlag('blush-strong', true);
+      await this.hold(t, 2200);
+    });
+  }
+
   async moodReact({ mood, text }) {
     await this.wakeForEvent();
     if (text) this.say(text, { duration: 5000 });
@@ -1133,10 +1159,22 @@ export class Brain {
     this.mode = 'focus';
     this.panel.close();
     this.resetBody();
+    this.scheduleFocusCheer();
+  }
+
+  // 专注时偶尔小声打个气（不打扰为主）
+  scheduleFocusCheer() {
+    clearTimeout(this.focusCheerTimer);
+    this.focusCheerTimer = setTimeout(() => {
+      if (this.mode !== 'focus') return;
+      if (!this.bubble.busy() && !this.physical && !this.data.settings.dnd) this.say(this.line('focusCheer'), { duration: 2400, silent: true });
+      this.scheduleFocusCheer();
+    }, rand(9, 14) * 60 * 1000);
   }
 
   leaveFocus() {
     if (this.mode !== 'focus') return;
+    clearTimeout(this.focusCheerTimer);
     this.mode = 'awake';
     if (!this.task) this.resetBody();
   }
@@ -1212,7 +1250,7 @@ export class Brain {
       case 'celebrate':
         return this.celebrate(cmd.text || '🎉🎉🎉', 'manual');
       case 'cheer':
-        return this.cheer(cmd.text);
+        return this.cheer(cmd.text || (cmd.allDone ? this.line('todoAllDone') : undefined));
       case 'sleep':
         return this.goSleep('user', true);
       case 'wake':

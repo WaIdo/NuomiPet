@@ -11,6 +11,7 @@ const menus = require('./menus');
 const { Scheduler } = require('./scheduler');
 const { Pomodoro } = require('./pomodoro');
 const weather = require('./weather');
+const letters = require('./letters');
 const C = require('../shared/common');
 const catalog = require('../shared/catalog.json');
 const phrases = require('../shared/phrases.json');
@@ -315,10 +316,62 @@ function registerIpc() {
   // 信件
   ipcMain.handle('letters:list', () => scheduler.lettersState());
   ipcMain.handle('letters:read', (_e, id) => {
-    const known = (gift.letters || []).some((l) => l.id === String(id));
-    if (!known) return false;
+    if (!scheduler.findLetter(id)) return false;
     store.set('letters.read', { ...(store.get('letters.read') || {}), [String(id)]: Date.now() });
     return true;
+  });
+  // 在应用里写信：新建或修改（修改时不传 body 表示正文不变）
+  ipcMain.handle('letters:save', (_e, input) => {
+    const r = letters.saveLetter(store.get('letters.custom'), input);
+    if (!r.ok) return { ok: false, error: r.error };
+    store.set('letters.custom', r.list);
+    if (r.changedUnlock) {
+      // 换了拆开日期：到新日期时宠物要重新把信递过来
+      const notified = { ...(store.get('letters.notified') || {}) };
+      delete notified[r.letter.id];
+      store.set('letters.notified', notified, { silent: true });
+    }
+    return { ok: true, id: r.letter.id };
+  });
+  ipcMain.handle('letters:delete', (_e, id) => {
+    const r = letters.deleteLetter(store.get('letters.custom'), id);
+    if (!r.ok) return { ok: false, error: '只能删除在这里写的信' };
+    store.set('letters.custom', r.list);
+    return { ok: true };
+  });
+  ipcMain.handle('letters:export', async (e) => {
+    const list = store.get('letters.custom') || [];
+    if (!list.length) return { ok: false, error: '还没有在这里写过信' };
+    const win = BrowserWindow.fromWebContents(e.sender);
+    const { canceled, filePath } = await dialog.showSaveDialog(win, {
+      title: '导出写好的信',
+      defaultPath: path.join(app.getPath('desktop'), `写给${store.get('owner.nickname') || 'TA'}的信.nuomi-letters.json`),
+      filters: [{ name: '信件', extensions: ['json'] }],
+    });
+    if (canceled || !filePath) return { ok: false };
+    try {
+      fs.writeFileSync(filePath, letters.exportLetters(list));
+      return { ok: true, path: filePath, count: list.length };
+    } catch (err) {
+      return { ok: false, error: err.message };
+    }
+  });
+  ipcMain.handle('letters:import', async (e) => {
+    const win = BrowserWindow.fromWebContents(e.sender);
+    const { canceled, filePaths } = await dialog.showOpenDialog(win, {
+      title: '导入信件',
+      properties: ['openFile'],
+      filters: [{ name: '信件', extensions: ['json'] }],
+    });
+    if (canceled || !filePaths?.[0]) return { ok: false };
+    try {
+      const r = letters.importLetters(store.get('letters.custom'), fs.readFileSync(filePaths[0], 'utf8'));
+      if (!r.ok) return { ok: false, error: r.error };
+      store.set('letters.custom', r.list);
+      return { ok: true, count: r.count };
+    } catch (err) {
+      return { ok: false, error: err.message };
+    }
   });
   ipcMain.on('letter:open', (_e, id) => {
     const l = scheduler.lettersState().find((x) => x.id === String(id));

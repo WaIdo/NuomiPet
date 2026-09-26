@@ -37,6 +37,7 @@ function petMenu({ store, pet, pomodoro, openHome, petCommand, state = {} }) {
     { label: '📝  待办清单', click: () => openHome('todos') },
     { label: '⏰  提醒设置', click: () => openHome('reminders') },
     { label: '🎀  换个装扮', click: () => openHome('dress') },
+    { label: '💌  信箱', click: () => openHome('letters') },
     { type: 'separator' },
     {
       label: '大小',

@@ -557,7 +557,8 @@ export function toast(msg, kind = '') {
 
 /* ============================== 弹窗 ============================== */
 
-export function modal({ title, text, body, ok = '好的', cancel = '取消', danger = false, look = null, pose = 'idle', face = null }) {
+// onOk：点确定时先调用，返回 false（或 Promise<false>）则不关闭，用于校验表单。cls：额外的样式名。
+export function modal({ title, text, body, ok = '好的', cancel = '取消', danger = false, look = null, pose = 'idle', face = null, onOk = null, cls = '' }) {
   closePopover();
   return new Promise((resolve) => {
     let done = false;
@@ -576,13 +577,35 @@ export function modal({ title, text, body, ok = '好的', cancel = '取消', dan
         close(false);
       }
     };
-    const okBtn = h('button', { type: 'button', class: cx('btn', danger ? 'danger-solid' : 'primary'), onclick: () => close(true) }, ok);
+    const okBtn = h(
+      'button',
+      {
+        type: 'button',
+        class: cx('btn', danger ? 'danger-solid' : 'primary'),
+        onclick: async () => {
+          if (onOk) {
+            okBtn.disabled = true;
+            let r;
+            try {
+              r = await onOk();
+            } catch (err) {
+              console.error(err);
+              r = false;
+            }
+            okBtn.disabled = false;
+            if (r === false) return;
+          }
+          close(true);
+        },
+      },
+      ok,
+    );
     const overlay = h(
       'div',
       { class: 'modal-overlay', onpointerdown: (e) => e.target === overlay && close(false) },
       h(
         'div',
-        { class: cx('modal', { danger }), role: 'dialog', 'aria-modal': 'true', 'aria-label': title },
+        { class: cx('modal', cls, { danger }), role: 'dialog', 'aria-modal': 'true', 'aria-label': title },
         look && h('div', { class: 'modal-pet' }, petEl(look, { size: 92, pose, face, blink: true })),
         h('h3', { class: 'modal-title' }, title),
         text && h('p', { class: 'modal-text' }, text),

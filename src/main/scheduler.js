@@ -112,6 +112,7 @@ class Scheduler {
       }, 14000);
       return;
     }
+    if (this.quiet()) return;
     if (h >= 5 && h < 11 && this.s.runtime.greeted?.morning !== today) {
       this.store.set('runtime.greeted', { ...this.s.runtime.greeted, morning: today }, { silent: true });
       this.morningGreeting();
@@ -135,7 +136,7 @@ class Scheduler {
     if (this.s.weather.enabled && this.s.weather.lat != null) {
       const w = await weather.current(this.s.weather);
       if (w.ok) {
-        const t = `${w.emoji} 今天${w.city || ''}${w.desc}，${w.min}~${w.max}°C。${w.advice}`;
+        const t = `${w.emoji} ${this.line('weatherIntro', { city: w.city || '', desc: w.desc, min: w.min, max: w.max })}${w.advice}`;
         setTimeout(() => this.emit({ type: 'weather', text: t, emoji: w.emoji }), 9000);
       }
     }
@@ -160,7 +161,7 @@ class Scheduler {
     const minutes = Math.round((Date.now() - (this.awayAt || Date.now())) / MIN);
     this.activeSince = Date.now();
     this.runtime('lastEyes', Date.now());
-    const text = minutes >= 10 ? this.line('welcomeBack') : '';
+    const text = minutes >= 10 && !this.quiet() ? this.line('welcomeBack') : '';
     this.emit({ type: 'back', minutes, text }, { urgent: true });
     this.lastSpoke = Date.now();
   }
@@ -177,10 +178,10 @@ class Scheduler {
       return;
     }
     if (this.away) this.comeBack();
-    this.runtime('lastSeen', Date.now());
 
     // 以下事件每次最多触发一个，彼此至少间隔 45 秒
     const checks = [
+      () => this.checkProfile(),
       () => this.checkTips(),
       () => this.checkMorning(d),
       () => this.checkCelebrations(d),
@@ -228,12 +229,22 @@ class Scheduler {
     return true;
   }
 
+  // 刚认识不久：问问她的名字和生日（资料在小窝里填）
+  checkProfile() {
+    const rt = this.s.runtime;
+    if (this.quiet() || rt.profileDone || rt.profileSkipped || rt.profileAsked || !rt.welcomedAt) return false;
+    if (Date.now() - rt.welcomedAt < 40 * 1000) return false;
+    this.runtime('profileAsked', true);
+    this.emit({ type: 'profile-ask', text: this.line('profileAsk') });
+    return true;
+  }
+
   // 刚认识的前 15 分钟，分几次教她怎么和宠物玩
   checkTips() {
     const rt = this.s.runtime;
     const n = rt.tipsShown || 0;
     const at = [1, 3, 6, 10, 15];
-    if (!rt.welcomedAt || n >= phrases.tips.length) return false;
+    if (this.quiet() || !rt.welcomedAt || n >= phrases.tips.length) return false;
     if (Date.now() - rt.welcomedAt < at[n] * MIN) return false;
     this.runtime('tipsShown', n + 1);
     const hotkey = process.platform === 'darwin' ? '⌘ + ⌥ + P' : 'Ctrl + Alt + P';
@@ -243,7 +254,7 @@ class Scheduler {
 
   checkMorning(d) {
     const h = d.getHours();
-    if (h < 5 || h >= 11) return false;
+    if (this.quiet() || h < 5 || h >= 11) return false;
     if (!this.once('morning', C.dateKey(d))) return false;
     this.morningGreeting();
     return true;
@@ -253,11 +264,11 @@ class Scheduler {
     if (this.quiet() || !this.s.reminders.meals?.enabled) return false;
     const n = nowMin(d);
     const today = C.dateKey(d);
-    if (n >= 11 * 60 + 50 && n <= 13 * 60 && this.once('noon', today)) {
+    if (n >= 12 * 60 && n <= 13 * 60 + 30 && this.once('noon', today)) {
       this.emit({ type: 'greet', period: 'noon', text: this.line('noon') });
       return true;
     }
-    if (n >= 17 * 60 + 50 && n <= 19 * 60 + 30 && this.once('evening', today)) {
+    if (n >= 18 * 60 && n <= 19 * 60 + 30 && this.once('evening', today)) {
       this.emit({ type: 'greet', period: 'evening', text: this.line('evening') });
       return true;
     }
@@ -415,9 +426,19 @@ class Scheduler {
     return false;
   }
 
+  // 打包进来的信（gift.config.json）+ 在应用里写的信
+  allLetters() {
+    const custom = (this.s.letters?.custom || []).map((l) => ({ ...l, mine: true }));
+    return [...(this.gift.letters || []), ...custom];
+  }
+
+  findLetter(id) {
+    return this.allLetters().find((l) => l.id === String(id)) || null;
+  }
+
   lettersState(d = new Date()) {
     const read = this.s.letters?.read || {};
-    return (this.gift.letters || []).map((l) => {
+    return this.allLetters().map((l) => {
       const left = l.unlock ? C.daysUntil(l.unlock, d) : 0;
       const unlocked = left == null || left <= 0;
       return {
@@ -430,6 +451,8 @@ class Scheduler {
         read: !!read[l.id],
         body: unlocked ? l.body : undefined,
         preview: unlocked ? String(l.body).replace(/\s+/g, ' ').slice(0, 40) : '',
+        mine: !!l.mine,
+        createdAt: l.createdAt || 0,
       };
     });
   }

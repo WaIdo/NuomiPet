@@ -62,11 +62,15 @@ function createDefaults(gift = {}) {
       dnd: false,
     },
     weather: { enabled: false, city: '', lat: null, lon: null },
-    letters: { read: {}, notified: {} },
+    // custom：在应用里自己写的信 { id, title, from, unlock, body, createdAt }
+    letters: { read: {}, notified: {}, custom: [] },
     runtime: {
       welcomed: false,
       welcomedAt: 0,
       tipsShown: 0,
+      profileAsked: false,
+      profileDone: false,
+      profileSkipped: false,
       hidden: false,
       position: null,
       greeted: {},
@@ -74,7 +78,7 @@ function createDefaults(gift = {}) {
       lastWater: 0,
       lastEyes: 0,
       lastHungry: 0,
-      lastSeen: now,
+      lastSleepNag: 0,
     },
   };
 }
