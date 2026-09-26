@@ -124,8 +124,13 @@ module.exports = async ({ app, store, scheduler, openHome, pomodoro, pet }) => {
   r = await js(`(() => { const row = __t.byText('.set-row', '跟着鼠标走'); row.querySelector('.toggle').click(); return 'ok'; })()`);
   await wait(300);
   r = await js(`(() => { const box = document.querySelector('.city-search'); if (!box) return 'missing city-search'; const i = box.querySelector('input'); i.value = '上海'; i.dispatchEvent(new Event('input', {bubbles:true})); const b = box.querySelector('button'); b.click(); return 'ok'; })()`);
-  await wait(4000);
-  r += ' ' + (await js(`(() => { const b = document.querySelector('.cs-results .cs-item'); if (!b) return 'no results'; b.click(); return 'ok'; })()`));
+  // 要联网查城市，最多等 15 秒
+  let found = 'no results';
+  for (let i = 0; i < 30 && found !== 'ok'; i++) {
+    await wait(500);
+    found = await js(`(() => { const b = document.querySelector('.cs-results .cs-item'); if (!b) return 'no results'; b.click(); return 'ok'; })()`);
+  }
+  r += ' ' + found;
   await wait(1500);
   check('设置：天气城市', store.get('weather.enabled') === true && store.get('weather.lat') != null, r + ' city=' + store.get('weather.city'));
 

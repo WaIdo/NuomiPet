@@ -1,7 +1,14 @@
 <!doctype html><html><head><meta charset="utf-8"><style>
 body{margin:0;padding:10px;background:#333;display:grid;grid-template-columns:repeat(var(--cols,5),1fr);gap:8px;font:11px sans-serif;color:#ddd}
 figure{margin:0} img{width:100%;display:block;border-radius:4px} figcaption{padding:2px 0}
+body.clean{padding:16px;gap:16px 12px;background:#fff;color:#6b5a63;font:600 14px -apple-system,'PingFang SC','Microsoft YaHei',sans-serif;text-align:center}
+body.clean img{border-radius:12px;box-shadow:0 2px 10px rgba(80,60,90,.15)}
+body.clean figcaption{padding:8px 0 0}
 </style></head><body><script>
+// 截图拼图：?cols=列数&files=绝对路径,...
+// 可选：&clean=1 白底圆角（给 README 用）；&caps=标题1|标题2|…（不给的话，clean 时不写标题，否则写文件名）
 const q=new URLSearchParams(location.search);document.body.style.setProperty('--cols',q.get('cols')||5);
-for(const f of (q.get('files')||'').split(',')){if(!f)continue;const fig=document.createElement('figure');const img=document.createElement('img');img.src='file://'+f;const c=document.createElement('figcaption');c.textContent=f.split('/').pop();fig.append(img,c);document.body.append(fig);}
+const clean=q.get('clean')==='1';if(clean)document.body.classList.add('clean');
+const caps=(q.get('caps')||'').split('|');
+(q.get('files')||'').split(',').filter(Boolean).forEach((f,i)=>{const fig=document.createElement('figure');const img=document.createElement('img');img.src='file://'+f;fig.append(img);const text=caps[i]||(clean?'':f.split('/').pop());if(text){const c=document.createElement('figcaption');c.textContent=text;fig.append(c);}document.body.append(fig);});
 </script></body></html>

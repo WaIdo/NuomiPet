@@ -1,0 +1,76 @@
+# 在真实的 Windows 和 macOS 机器上检查：单元测试、所有场景（截图）、Windows 安装包的安装/启动/卸载。
+# 截图和安装包在每次运行的 Artifacts 里可以下载。
+name: check
+
+on:
+  push:
+    branches: [main]
+    paths-ignore: ['**.md', 'docs/**']
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: check-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  scenarios:
+    name: 场景测试 (${{ matrix.os }})
+    strategy:
+      fail-fast: false
+      matrix:
+        # windows-2022 的 emoji 字体和 Windows 10 一样旧；windows-2025 和 Windows 11 一样
+        os: [windows-2022, windows-2025, macos-latest]
+    runs-on: ${{ matrix.os }}
+    timeout-minutes: 45
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm ci
+      - name: 确认 Electron 已下载
+        run: node node_modules/electron/install.js
+      - run: npm test
+      - name: 跑所有场景
+        run: node dev/run-scenarios.js --out=scenario-output
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: scenarios-${{ matrix.os }}
+          path: scenario-output
+          retention-days: 14
+
+  windows-installer:
+    name: Windows 安装包 (${{ matrix.os }})
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [windows-2022, windows-2025]
+    runs-on: ${{ matrix.os }}
+    timeout-minutes: 45
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm ci
+      - name: 确认 Electron 已下载
+        run: node node_modules/electron/install.js
+      - name: 打包
+        run: npx electron-builder --win --publish never
+      - name: 安装、启动、卸载、便携版
+        shell: pwsh
+        run: ./dev/windows-smoke.ps1 -Out win-smoke
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: windows-${{ matrix.os }}
+          path: |
+            win-smoke
+            dist/*.exe
+          retention-days: 14
