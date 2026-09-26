@@ -7,7 +7,7 @@ const wait = (ms) => new Promise((r) => setTimeout(r, ms));
 module.exports = async ({ app, store, scheduler, pet, petCommand, capture, openHome }) => {
   store.set('runtime.welcomed', true);
   store.set('runtime.profileDone', true);
-  store.set('owner.sender', '阿杰');
+  store.set('owner.sender', '豪豪');
   store.set('owner.nickname', '小橘子');
   scheduler.goAway = () => {};
   const log = [];
@@ -68,7 +68,7 @@ module.exports = async ({ app, store, scheduler, pet, petCommand, capture, openH
   await wait(3500);
   await clear();
 
-  // 心情选「生气」→ 自动跪下（替阿杰认错）
+  // 心情选「生气」→ 自动跪下（替豪豪认错）
   pet.sendEvent({ type: 'mood-recorded', mood: 'angry', text: '谁惹你生气啦！' });
   await wait(1500);
   await shot('mood-angry');

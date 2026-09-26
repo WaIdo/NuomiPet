@@ -1,11 +1,8 @@
 // 悄悄话：她的昵称、你的署名、话痨程度、内置语录，以及宠物会悄悄说出来的话。
 import { h, pageHead, cardHead, segmented, toggle, toast, icon, shake, burst } from '../ui.js';
+import { t, petName, nickname } from '../../shared/i18n.mjs';
 
-const CHATTY = [
-  { value: 'low', label: '少' },
-  { value: 'normal', label: '适中' },
-  { value: 'high', label: '多' },
-];
+const CHATTY = ['low', 'normal', 'high'];
 const MAX = 60;
 
 function commitText(app, path, input, { required = false, fallback = '' } = {}) {
@@ -13,7 +10,7 @@ function commitText(app, path, input, { required = false, fallback = '' } = {}) 
   const v = input.value.trim().slice(0, 10);
   if (!v && required) {
     input.value = cur || fallback;
-    toast('这个不能空着哦');
+    toast(t('home.notes.required'));
     return;
   }
   input.value = v;
@@ -37,14 +34,14 @@ function textInput(app, path, value, o) {
 
 function spoken(app, text) {
   const sender = (app.state.owner?.sender || '').trim();
-  return sender ? `${sender}让我偷偷告诉你：${text}` : text;
+  return sender ? t('home.notes.spoken', { sender, text }) : text;
 }
 
 function say(app, n, e) {
   app.mochi.petCommand({ type: 'say', text: spoken(app, n.text) });
   const r = e.currentTarget.getBoundingClientRect();
   burst(r.left + r.width / 2, r.top + r.height / 2, { emoji: ['💬'], n: 6, spread: 22 });
-  toast(`${app.state.pet.name}去桌面上说给她听啦`);
+  toast(t('home.notes.said', { pet: petName(app.state) }));
 }
 
 function addNote(app, e) {
@@ -59,7 +56,7 @@ function addNote(app, e) {
   app.set('love.notes', [...(app.state.love?.notes || []), { id: app.C.uid(), text }], { quiet: true });
   ta.value = '';
   box.querySelector('.note-count').textContent = `0/${MAX}`;
-  toast('悄悄记下啦 💌');
+  toast(t('home.notes.added'));
   const r = e.currentTarget.getBoundingClientRect();
   burst(r.left + r.width / 2, r.top + r.height / 2, { emoji: ['💌'] });
 }
@@ -70,69 +67,73 @@ function removeNote(app, id) {
     (app.state.love?.notes || []).filter((n) => n.id !== id),
     { quiet: true },
   );
-  toast('删掉啦');
+  toast(t('home.notes.removed'));
 }
 
 export default {
   id: 'notes',
   icon: '💬',
-  label: '悄悄话',
   render(app) {
     const st = app.state;
     const love = st.love || {};
     const owner = st.owner || {};
     const notes = love.notes || [];
-    const pet = st.pet?.name || '糯米';
-    const nick = owner.nickname || '宝贝';
+    const pet = petName(st);
+    const nick = nickname(st);
     const sender = (owner.sender || '').trim();
     return h(
       'div',
       { class: 'page page-notes' },
-      pageHead('💬', '悄悄话', `${pet}会时不时把这些话，悄悄地说给她听`),
+      pageHead('💬', t('home.notes.title'), t('home.notes.sub', { pet })),
       h(
         'div',
         { class: 'notes-top' },
         h(
           'section',
           { class: 'card names-card', key: 'names' },
-          cardHead('🏷️', '称呼'),
+          cardHead('🏷️', t('home.notes.names.title')),
           h(
             'label',
             { class: 'field' },
-            h('span', { class: 'field-label' }, '她的昵称'),
-            textInput(app, 'owner.nickname', owner.nickname, { required: true, fallback: '宝贝', placeholder: '比如：宝贝', label: '她的昵称' }),
-            h('span', { class: 'field-hint' }, `${pet}会这样叫她：「晚上好呀，${nick}」`),
+            h('span', { class: 'field-label' }, t('home.notes.names.nick')),
+            textInput(app, 'owner.nickname', nick, { required: true, fallback: nick, placeholder: t('home.notes.names.nickPlaceholder'), label: t('home.notes.names.nick') }),
+            h('span', { class: 'field-hint' }, t('home.notes.names.nickHint', { pet, nick })),
           ),
           h(
             'label',
             { class: 'field' },
-            h('span', { class: 'field-label' }, '你的署名'),
-            textInput(app, 'owner.sender', owner.sender, { placeholder: '可以不填', label: '你的署名' }),
-            h('span', { class: 'field-hint' }, sender ? `说悄悄话时会说：「${sender}让我偷偷告诉你…」` : '留空的话，就不说是谁让它说的'),
+            h('span', { class: 'field-label' }, t('home.notes.names.sender')),
+            textInput(app, 'owner.sender', owner.sender, { placeholder: t('home.notes.names.senderPlaceholder'), label: t('home.notes.names.sender') }),
+            h('span', { class: 'field-hint' }, sender ? t('home.notes.names.senderHint', { sender }) : t('home.notes.names.senderEmpty')),
           ),
         ),
         h(
           'section',
           { class: 'card talk-card', key: 'talk' },
-          cardHead('🗣️', '说话方式'),
+          cardHead('🗣️', t('home.notes.talk.title')),
           h(
             'div',
             { class: 'set-row' },
-            h('div', { class: 'set-label' }, h('span', '话痨程度'), h('small', '多久说一次话')),
-            segmented(CHATTY, love.chatty || 'normal', (v) => app.set('love.chatty', v), { cls: 'sm' }),
+            h('div', { class: 'set-label' }, h('span', t('home.notes.talk.chatty')), h('small', t('home.notes.talk.chattyDesc'))),
+            segmented(
+              CHATTY.map((value) => ({ value, label: t(`home.notes.talk.levels.${value}`) })),
+              love.chatty || 'normal',
+              (v) => app.set('love.chatty', v),
+              { cls: 'sm' },
+            ),
           ),
           h(
             'div',
             { class: 'set-row' },
-            h('div', { class: 'set-label' }, h('span', '内置语录'), h('small', '除了你写的悄悄话，也会说些可爱的日常句子')),
-            toggle(love.builtin !== false, (v) => app.set('love.builtin', v), { label: '内置语录' }),
+            h('div', { class: 'set-label' }, h('span', t('home.notes.talk.builtin')), h('small', t('home.notes.talk.builtinDesc'))),
+            toggle(love.builtin !== false, (v) => app.set('love.builtin', v), { label: t('home.notes.talk.builtin') }),
           ),
         ),
       ),
       h(
         'section',
         { class: 'card notes-card', key: 'notes' },
-        cardHead('💌', '悄悄话', h('span', { class: 'muted-chip' }, `${notes.length} 条`), '每条最多 60 个字，点「让TA说」可以马上在桌面上听一遍'),
+        cardHead('💌', t('home.notes.title'), h('span', { class: 'muted-chip' }, t('home.notes.list.count', { n: notes.length })), t('home.notes.list.sub', { max: MAX })),
         h(
           'div',
           { class: 'note-add', key: 'add' },
@@ -141,8 +142,8 @@ export default {
             key: 'note-ta',
             rows: 2,
             maxlength: MAX,
-            placeholder: '写一句想让它转告的话，比如：今天也很想你',
-            'aria-label': '新的悄悄话',
+            placeholder: t('home.notes.list.placeholder'),
+            'aria-label': t('home.notes.list.newLabel'),
             oninput: (e) => {
               e.target.closest('.note-add').querySelector('.note-count').textContent = `${e.target.value.length}/${MAX}`;
             },
@@ -153,7 +154,7 @@ export default {
               }
             },
           }),
-          h('div', { class: 'note-add-foot' }, h('span', { class: 'note-count', key: 'count' }, `0/${MAX}`), h('button', { type: 'button', class: 'btn primary', key: 'add-btn', onclick: (e) => addNote(app, e) }, icon('plus'), '添加')),
+          h('div', { class: 'note-add-foot' }, h('span', { class: 'note-count', key: 'count' }, `0/${MAX}`), h('button', { type: 'button', class: 'btn primary', key: 'add-btn', onclick: (e) => addNote(app, e) }, icon('plus'), t('common.add'))),
         ),
         notes.length
           ? h(
@@ -163,17 +164,17 @@ export default {
                 h(
                   'div',
                   { class: 'note', key: n.id },
-                  h('div', { class: 'note-bubble' }, sender && h('span', { class: 'note-from' }, `${sender}让我偷偷告诉你：`), h('span', { class: 'note-text' }, n.text)),
+                  h('div', { class: 'note-bubble' }, sender && h('span', { class: 'note-from' }, t('home.notes.list.from', { sender })), h('span', { class: 'note-text' }, n.text)),
                   h(
                     'div',
                     { class: 'note-actions' },
-                    h('button', { type: 'button', class: 'btn soft xs', title: '让桌面上的宠物说一遍', onclick: (e) => say(app, n, e) }, icon('chat'), '让TA说'),
-                    h('button', { type: 'button', class: 'icon-btn xs', title: '删除', 'aria-label': '删除', onclick: () => removeNote(app, n.id) }, icon('close')),
+                    h('button', { type: 'button', class: 'btn soft xs', title: t('home.notes.list.sayTitle'), onclick: (e) => say(app, n, e) }, icon('chat'), t('home.notes.list.say')),
+                    h('button', { type: 'button', class: 'icon-btn xs', title: t('common.delete'), 'aria-label': t('common.delete'), onclick: () => removeNote(app, n.id) }, icon('close')),
                   ),
                 ),
               ),
             )
-          : h('p', { class: 'note-empty', key: 'empty' }, '还没有悄悄话，写下第一句吧～'),
+          : h('p', { class: 'note-empty', key: 'empty' }, t('home.notes.list.empty')),
       ),
     );
   },

@@ -1,14 +1,22 @@
 // 纪念日：在一起的日子、她的生日、自定义纪念日（每年纪念 / 倒数日 / 累计天数）。
-import { h, cx, pageHead, cardHead, datePicker, segmented, modal, toast, icon, fmtDate, addDays, burst, shake } from '../ui.js';
+import { h, cx, pageHead, cardHead, datePicker, segmented, modal, toast, icon, fmtDate, addDays, burst, shake, rich } from '../ui.js';
+import { t, fill, petName } from '../../shared/i18n.mjs';
 
-const KINDS = [
-  { value: 'yearly', label: '每年纪念' },
-  { value: 'countdown', label: '倒数日' },
-  { value: 'since', label: '累计天数' },
-];
-const KIND_NAME = { yearly: '每年纪念', countdown: '倒数日', since: '累计天数' };
+const KINDS = ['yearly', 'countdown', 'since'];
+const kindName = (kind) => t(`home.love.kinds.${KINDS.includes(kind) ? kind : 'other'}`);
 
 const ui = { kind: 'yearly', date: '' };
+
+// 「还有{n}天」这样的句子拆成数字前后两段：{ pre: '还有', num: n, unit: '天' }，数字单独加粗
+function around(tpl, n) {
+  const [pre, unit = ''] = fill(String(tpl).replace(/\{n\}/g, '\u0000'), { n }).split('\u0000');
+  return { pre, num: n, unit };
+}
+
+function bigCount(tpl, n) {
+  const c = around(tpl, n);
+  return h('div', { class: 'lv-big' }, h('span', { class: 'lv-pre' }, c.pre), h('b', { class: 'num' }, c.num), h('span', { class: 'lv-unit' }, c.unit));
+}
 
 export function nextMilestone(n, C) {
   for (let k = n + 1; k < n + 20000; k++) if (C.isMilestone(k)) return k;
@@ -19,23 +27,23 @@ export function nextMilestone(n, C) {
 export function annivInfo(a, C) {
   if (a.kind === 'since') {
     const n = C.dayNumber(a.date);
-    if (n) return { pre: '已经', num: n, unit: '天', sort: 200000 + n };
+    if (n) return { ...around(t('home.love.count.sinceDays'), n), sort: 200000 + n };
     const left = C.daysUntil(a.date);
-    if (left == null) return { text: '日期不对哦', sort: 900000 };
-    return { pre: '还有', num: left, unit: '天开始', sort: left };
+    if (left == null) return { text: t('home.love.count.badDate'), sort: 900000 };
+    return { ...around(t('home.love.count.startsIn'), left), sort: left };
   }
   if (a.kind === 'countdown') {
     const d = C.daysUntil(a.date);
-    if (d == null) return { text: '日期不对哦', sort: 900000 };
-    if (d === 0) return { text: '就是今天！', today: true, sort: 0 };
-    if (d > 0) return { pre: '还有', num: d, unit: '天', sort: d };
-    return { pre: '已过去', num: -d, unit: '天', past: true, sort: 400000 - d };
+    if (d == null) return { text: t('home.love.count.badDate'), sort: 900000 };
+    if (d === 0) return { text: t('home.love.count.today'), today: true, sort: 0 };
+    if (d > 0) return { ...around(t('home.love.count.daysLeft'), d), sort: d };
+    return { ...around(t('home.love.count.daysPast'), -d), past: true, sort: 400000 - d };
   }
   const ny = C.nextYearly(a.date);
-  if (!ny) return { text: '日期不对哦', sort: 900000 };
-  const extra = ny.years > 0 ? `第 ${ny.years} 周年` : '';
-  if (ny.isToday) return { text: '就是今天！', extra, today: true, sort: 0 };
-  return { pre: '还有', num: ny.daysLeft, unit: '天', extra, sort: ny.daysLeft };
+  if (!ny) return { text: t('home.love.count.badDate'), sort: 900000 };
+  const extra = ny.years > 0 ? t('home.love.count.years', { n: ny.years }) : '';
+  if (ny.isToday) return { text: t('home.love.count.today'), extra, today: true, sort: 0 };
+  return { ...around(t('home.love.count.daysLeft'), ny.daysLeft), extra, sort: ny.daysLeft };
 }
 
 // 首页用：接下来会到的日子（生日、在一起周年、里程碑、每年纪念、倒数日），按天数排好
@@ -44,15 +52,15 @@ export function upcomingEvents(state, C) {
   const out = [];
   if (love.birthday) {
     const ny = C.nextYearly(love.birthday);
-    if (ny) out.push({ key: 'birthday', icon: '🎂', name: '生日', days: ny.daysLeft, date: ny.date });
+    if (ny) out.push({ key: 'birthday', icon: '🎂', name: t('home.love.events.birthday'), days: ny.daysLeft, date: ny.date });
   }
   if (love.togetherSince) {
     const ny = C.nextYearly(love.togetherSince);
-    if (ny && ny.years > 0) out.push({ key: 'together', icon: '💑', name: `在一起 ${ny.years} 周年`, days: ny.daysLeft, date: ny.date });
+    if (ny && ny.years > 0) out.push({ key: 'together', icon: '💑', name: t('home.love.events.together', { n: ny.years }), days: ny.daysLeft, date: ny.date });
     const n = C.dayNumber(love.togetherSince);
     if (n) {
       const ms = nextMilestone(n, C);
-      if (ms) out.push({ key: 'milestone', icon: '💗', name: `在一起第 ${ms} 天`, days: ms - n, date: addDays(love.togetherSince, ms - 1) });
+      if (ms) out.push({ key: 'milestone', icon: '💗', name: t('home.love.events.milestone', { n: ms }), days: ms - n, date: addDays(love.togetherSince, ms - 1) });
     }
   }
   for (const a of love.anniversaries || []) {
@@ -73,23 +81,38 @@ function togetherCard(app) {
   const year = new Date().getFullYear();
   let body;
   if (!since) {
-    body = h('p', { class: 'lv-hint' }, '选一个日子，糯米会帮你们数着在一起的每一天 💕');
+    body = h('p', { class: 'lv-hint' }, t('home.love.together.hint', { pet: petName(app.state) }));
   } else {
     const n = C.dayNumber(since);
     if (n == null) {
-      body = h('div', { class: 'lv-big' }, h('span', { class: 'lv-pre' }, '还有'), h('b', { class: 'num' }, C.daysUntil(since)), h('span', { class: 'lv-unit' }, '天'));
+      body = bigCount(t('home.love.count.daysLeft'), C.daysUntil(since));
     } else {
       const ms = nextMilestone(n, C);
       const ny = C.nextYearly(since);
       body = [
-        h('div', { class: 'lv-big' }, h('span', { class: 'lv-pre' }, '在一起的第'), h('b', { class: 'num' }, n), h('span', { class: 'lv-unit' }, '天')),
+        bigCount(t('home.love.together.dayN'), n),
         h(
           'div',
           { class: 'lv-lines' },
-          ms && h('p', { class: 'lv-line' }, h('i', '🎯'), '距离第 ', h('b', ms), ' 天还有 ', h('b', { class: 'pink' }, ms - n), ' 天', h('span', { class: 'lv-date' }, fmtDate(addDays(since, ms - 1), { withYear: false }))),
+          ms &&
+            h(
+              'p',
+              { class: 'lv-line' },
+              h('i', '🎯'),
+              rich('home.love.together.toMilestone', { ms, n: ms - n }, { ms: h('b', ms), n: h('b', { class: 'pink' }, ms - n) }),
+              h('span', { class: 'lv-date' }, fmtDate(addDays(since, ms - 1), { withYear: false })),
+            ),
           ny &&
             ny.years > 0 &&
-            h('p', { class: 'lv-line' }, h('i', '🥂'), ny.isToday ? `今天是 ${ny.years} 周年纪念日！` : [`${ny.years} 周年还有 `, h('b', { class: 'pink' }, ny.daysLeft), ' 天'], h('span', { class: 'lv-date' }, fmtDate(ny.date, { withYear: false }))),
+            h(
+              'p',
+              { class: 'lv-line' },
+              h('i', '🥂'),
+              ny.isToday
+                ? t('home.love.together.anniversaryToday', { n: ny.years })
+                : rich('home.love.together.toAnniversary', { years: ny.years, n: ny.daysLeft }, { n: h('b', { class: 'pink' }, ny.daysLeft) }),
+              h('span', { class: 'lv-date' }, fmtDate(ny.date, { withYear: false })),
+            ),
         ),
       ];
     }
@@ -99,8 +122,8 @@ function togetherCard(app) {
     { class: 'card lv-card together', key: 'together' },
     cardHead(
       '💑',
-      '在一起的日子',
-      since && h('button', { type: 'button', class: 'link-btn', onclick: () => app.set('love.togetherSince', '') }, '清除'),
+      t('home.love.together.title'),
+      since && h('button', { type: 'button', class: 'link-btn', onclick: () => app.set('love.togetherSince', '') }, t('home.love.clear')),
     ),
     datePicker('together', since, (v) => app.set('love.togetherSince', v), { yearMin: 1980, yearMax: year, onPartial: app.rerender }),
     h('div', { class: 'lv-body' }, body),
@@ -113,19 +136,33 @@ function birthdayCard(app) {
   const ny = bd ? C.nextYearly(bd) : null;
   let body;
   if (!ny) {
-    body = h('p', { class: 'lv-hint' }, '填上生日，那天糯米会第一个跟她说生日快乐 🎂');
+    body = h('p', { class: 'lv-hint' }, t('home.love.birthday.hint', { pet: petName(app.state) }));
   } else if (ny.isToday) {
-    body = [h('div', { class: 'lv-big today' }, h('b', { class: 'num sm' }, '就是今天！')), h('p', { class: 'lv-line' }, h('i', '🎉'), ny.years ? `${ny.years} 岁生日快乐！` : '生日快乐！')];
+    body = [
+      h('div', { class: 'lv-big today' }, h('b', { class: 'num sm' }, t('home.love.count.today'))),
+      h('p', { class: 'lv-line' }, h('i', '🎉'), ny.years ? t('home.love.birthday.happyAge', { n: ny.years }) : t('home.love.birthday.happy')),
+    ];
   } else {
     body = [
-      h('div', { class: 'lv-big' }, h('span', { class: 'lv-pre' }, '还有'), h('b', { class: 'num' }, ny.daysLeft), h('span', { class: 'lv-unit' }, '天')),
-      h('div', { class: 'lv-lines' }, h('p', { class: 'lv-line' }, h('i', '🎂'), fmtDate(ny.date), ny.years ? [' · ', h('b', { class: 'pink' }, ny.years), ' 岁生日'] : ' 生日')),
+      bigCount(t('home.love.count.daysLeft'), ny.daysLeft),
+      h(
+        'div',
+        { class: 'lv-lines' },
+        h(
+          'p',
+          { class: 'lv-line' },
+          h('i', '🎂'),
+          ny.years
+            ? rich('home.love.birthday.dateAge', { date: fmtDate(ny.date), n: ny.years }, { n: h('b', { class: 'pink' }, ny.years) })
+            : t('home.love.birthday.date', { date: fmtDate(ny.date) }),
+        ),
+      ),
     ];
   }
   return h(
     'section',
     { class: 'card lv-card birthday', key: 'birthday' },
-    cardHead('🎂', '她的生日', bd && h('button', { type: 'button', class: 'link-btn', onclick: () => app.set('love.birthday', '') }, '清除')),
+    cardHead('🎂', t('home.love.birthday.title'), bd && h('button', { type: 'button', class: 'link-btn', onclick: () => app.set('love.birthday', '') }, t('home.love.clear'))),
     datePicker('birthday', bd, (v) => app.set('love.birthday', v), { noYear: true, yearMin: 1950, yearMax: new Date().getFullYear(), onPartial: app.rerender }),
     h('div', { class: 'lv-body' }, body),
   );
@@ -133,10 +170,10 @@ function birthdayCard(app) {
 
 async function remove(app, a) {
   const ok = await modal({
-    title: `删除「${a.name}」？`,
-    text: '删掉之后就不会再提醒这个日子了哦。',
-    ok: '删除',
-    cancel: '留着',
+    title: t('home.love.remove.title', { name: a.name }),
+    text: t('home.love.remove.text'),
+    ok: t('common.delete'),
+    cancel: t('home.love.remove.keep'),
     danger: true,
   });
   if (!ok) return;
@@ -153,12 +190,12 @@ function add(app, e) {
   if (!name) {
     shake(input);
     input.focus();
-    toast('先给这个日子起个名字吧～');
+    toast(t('home.love.add.needName'));
     return;
   }
   if (!ui.date) {
     shake(box.querySelector('.datepick'));
-    toast('再选一下日期哦');
+    toast(t('home.love.add.needDate'));
     return;
   }
   const item = { id: app.C.uid(), name, date: ui.date, kind: ui.kind };
@@ -176,8 +213,8 @@ function item(app, a) {
     h(
       'div',
       { class: 'an-top' },
-      h('span', { class: 'an-kind' }, KIND_NAME[a.kind] || '纪念日'),
-      h('button', { type: 'button', class: 'icon-btn xs an-del', title: '删除', 'aria-label': '删除', onclick: () => remove(app, a) }, icon('close')),
+      h('span', { class: 'an-kind' }, kindName(a.kind)),
+      h('button', { type: 'button', class: 'icon-btn xs an-del', title: t('common.delete'), 'aria-label': t('common.delete'), onclick: () => remove(app, a) }, icon('close')),
     ),
     h('div', { class: 'an-name', title: a.name }, a.name),
     h('div', { class: 'an-date' }, fmtDate(a.date)),
@@ -193,7 +230,6 @@ function item(app, a) {
 export default {
   id: 'love',
   icon: '💝',
-  label: '纪念日',
   enter(app) {
     if (!ui.date) ui.date = app.C.dateKey();
   },
@@ -203,17 +239,17 @@ export default {
     return h(
       'div',
       { class: 'page page-love' },
-      pageHead('💝', '纪念日', '重要的日子，糯米都帮你们记着'),
+      pageHead('💝', t('home.love.title'), t('home.love.sub', { pet: petName(app.state) })),
       h('div', { class: 'love-top' }, togetherCard(app), birthdayCard(app)),
       h(
         'section',
         { class: 'card an-card', key: 'list' },
-        cardHead('📅', '我们的纪念日', h('span', { class: 'muted-chip' }, `${list.length} 个`)),
-        list.length ? h('div', { class: 'an-grid', key: 'grid' }, list.map(({ a }) => item(app, a))) : h('p', { class: 'an-empty', key: 'empty' }, '还没有自定义的纪念日，在下面添加一个吧～'),
+        cardHead('📅', t('home.love.list.title'), h('span', { class: 'muted-chip' }, t('home.love.list.count', { n: list.length }))),
+        list.length ? h('div', { class: 'an-grid', key: 'grid' }, list.map(({ a }) => item(app, a))) : h('p', { class: 'an-empty', key: 'empty' }, t('home.love.list.empty')),
         h(
           'div',
           { class: 'an-add', key: 'add' },
-          h('div', { class: 'an-add-row' }, h('input', { class: 'input grow', name: 'an-name', key: 'an-name', placeholder: '名字，比如：第一次约会', maxlength: 16, onkeydown: (e) => e.key === 'Enter' && !e.isComposing && add(app, e) })),
+          h('div', { class: 'an-add-row' }, h('input', { class: 'input grow', name: 'an-name', key: 'an-name', placeholder: t('home.love.add.placeholder'), maxlength: 16, onkeydown: (e) => e.key === 'Enter' && !e.isComposing && add(app, e) })),
           h(
             'div',
             { class: 'an-add-row' },
@@ -221,11 +257,16 @@ export default {
               ui.date = v;
               app.rerender();
             }, { yearMin: 1980, yearMax: year + 10, onPartial: app.rerender }),
-            segmented(KINDS, ui.kind, (v) => {
-              ui.kind = v;
-              app.rerender();
-            }, { cls: 'sm' }),
-            h('button', { type: 'button', class: 'btn primary', onclick: (e) => add(app, e) }, icon('plus'), '添加'),
+            segmented(
+              KINDS.map((value) => ({ value, label: kindName(value) })),
+              ui.kind,
+              (v) => {
+                ui.kind = v;
+                app.rerender();
+              },
+              { cls: 'sm' },
+            ),
+            h('button', { type: 'button', class: 'btn primary', onclick: (e) => add(app, e) }, icon('plus'), t('common.add')),
           ),
         ),
       ),

@@ -31,9 +31,41 @@
   --shadow: 0 8px 28px rgba(var(--th-e678a0-rgb), 0.12);
   --r: 20px;
   --sidebar: 222px;
-  --font: -apple-system, 'PingFang SC', 'Microsoft YaHei UI', 'Microsoft YaHei', 'Hiragino Sans GB', system-ui, sans-serif;
+  /* 各语言的字体（设置页的语言选项也用它们，让每种语言名显示成自己的字形） */
+  --font-zh-cn: -apple-system, 'PingFang SC', 'Microsoft YaHei UI', 'Microsoft YaHei', 'Hiragino Sans GB', system-ui, sans-serif;
+  --font-zh-tw: -apple-system, 'PingFang TC', 'Microsoft JhengHei UI', 'Microsoft JhengHei', system-ui, sans-serif;
+  --font-ja: -apple-system, 'Hiragino Sans', 'Hiragino Kaku Gothic ProN', 'Yu Gothic UI', 'Meiryo', system-ui, sans-serif;
+  --font-ko: -apple-system, 'Apple SD Gothic Neo', 'Malgun Gothic', system-ui, 'PingFang SC', 'Microsoft YaHei UI', sans-serif;
+  /* 英文、法文先用系统的西文字体，数据里的中文再用中文字体兜底 */
+  --font-en: -apple-system, 'Segoe UI', system-ui, 'PingFang SC', 'Microsoft YaHei UI', 'Microsoft YaHei', 'Hiragino Sans GB', sans-serif;
+  --font-ar: -apple-system, 'Segoe UI', 'Geeza Pro', Tahoma, system-ui, 'PingFang SC', 'Microsoft YaHei UI', sans-serif;
+  --font: var(--font-zh-cn);
   --num: ui-rounded, 'SF Pro Rounded', 'Arial Rounded MT Bold', -apple-system, 'Segoe UI', 'PingFang SC', 'Microsoft YaHei UI', sans-serif;
   --emoji: 'Apple Color Emoji', 'Segoe UI Emoji', 'Noto Color Emoji', sans-serif;
+}
+
+/* 按界面语言（<html lang>，home.js 跟着设置）换字体；--num 里夹着的中日文字也换成对应的字体 */
+:root:lang(zh-TW) {
+  --font: var(--font-zh-tw);
+  --num: ui-rounded, 'SF Pro Rounded', 'Arial Rounded MT Bold', -apple-system, 'Segoe UI', 'PingFang TC', 'Microsoft JhengHei UI', sans-serif;
+}
+
+:root:lang(ja) {
+  --font: var(--font-ja);
+  --num: ui-rounded, 'SF Pro Rounded', 'Arial Rounded MT Bold', -apple-system, 'Segoe UI', 'Hiragino Sans', 'Yu Gothic UI', 'Meiryo', sans-serif;
+}
+
+:root:lang(ko) {
+  --font: var(--font-ko);
+}
+
+:root:lang(en),
+:root:lang(fr) {
+  --font: var(--font-en);
+}
+
+:root:lang(ar) {
+  --font: var(--font-ar);
 }
 
 * {
@@ -327,7 +359,7 @@ html[data-platform='win32'] .titlebar {
   font-size: 11.5px;
   text-align: center;
   color: var(--th-cf9ab2);
-  white-space: nowrap;
+  text-wrap: balance;
 }
 
 .sb-heart {
@@ -407,8 +439,13 @@ html[data-platform='win32'] .titlebar {
   text-align: center;
 }
 
+/* 侧边栏宽度固定：别的语言的页面名放不下时显示省略号 */
 .nav-label {
   flex: 1;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
 .nav-badge {
@@ -606,6 +643,13 @@ html[data-platform='win32'] .titlebar {
 .ct-emoji {
   font-family: var(--emoji);
   font-size: 15px;
+}
+
+/* 标题太长（别的语言、很长的名字）时显示省略号 */
+.ct-text {
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .card-sub {
@@ -979,6 +1023,13 @@ html[data-platform='win32'] .titlebar {
   white-space: nowrap;
   cursor: pointer;
   transition: color 0.2s;
+}
+
+/* 等宽的分段（.wide / .fill）里，别的语言的字放不下时显示省略号 */
+.seg-label {
+  display: block;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .seg-opt:hover {
@@ -1360,6 +1411,7 @@ html[data-platform='win32'] .titlebar {
 
 .modal-actions {
   display: flex;
+  flex-wrap: wrap;
   justify-content: center;
   gap: 10px;
 }
@@ -2083,6 +2135,15 @@ html[data-platform='win32'] .titlebar {
   margin-top: auto;
 }
 
+/* 别的语言按钮上的字多：放不下就换行，每个按钮至少和自己的字一样宽（中文排版保持原样） */
+:root:not(:lang(zh)) .btn-row {
+  flex-wrap: wrap;
+}
+
+:root:not(:lang(zh)) .btn-row > .btn {
+  min-width: auto;
+}
+
 .facts {
   display: flex;
   flex-wrap: wrap;
@@ -2182,7 +2243,6 @@ html[data-platform='win32'] .titlebar {
 .td-label {
   font-size: 13px;
   color: var(--text);
-  white-space: nowrap;
 }
 
 .td-label b {
@@ -2331,7 +2391,6 @@ html[data-platform='win32'] .titlebar {
 .wx-desc b {
   font-size: 14px;
   color: var(--ink);
-  white-space: nowrap;
 }
 
 .wx-desc small {
@@ -2417,9 +2476,10 @@ html[data-platform='win32'] .titlebar {
 }
 
 /* 喂零食 */
+/* 格子至少 64px；别的语言名字长时一起变宽（最宽到名字的 max-width），再长就换行 */
 .food-grid {
   display: grid;
-  grid-template-columns: repeat(4, 64px);
+  grid-template-columns: repeat(4, minmax(64px, 1fr));
   gap: 6px;
 }
 
@@ -2453,7 +2513,10 @@ html[data-platform='win32'] .titlebar {
 }
 
 .food-name {
+  max-width: 96px;
   font-size: 11.5px;
+  text-align: center;
+  overflow-wrap: anywhere;
   color: var(--text);
 }
 
@@ -2680,6 +2743,9 @@ html[data-platform='win32'] .titlebar {
 }
 
 .opt-name {
+  max-width: 100%;
+  overflow: hidden;
+  text-overflow: ellipsis;
   font-size: 12px;
   font-weight: 600;
   color: var(--text);
@@ -2780,6 +2846,9 @@ html[data-platform='win32'] .titlebar {
 }
 
 .sw-name {
+  max-width: 100%;
+  overflow: hidden;
+  text-overflow: ellipsis;
   font-size: 11.5px;
   color: var(--text);
   white-space: nowrap;
@@ -4776,6 +4845,17 @@ html.blurred .nav-dot {
   margin: 12px 0 14px;
 }
 
+/* 别的语言的名字和单位长：格子不够宽就少排几列，名字再放不下显示省略号（中文排版保持原样） */
+:root:not(:lang(zh)) .mem-grid {
+  grid-template-columns: repeat(auto-fill, minmax(min(100%, 112px), 1fr));
+}
+
+:root:not(:lang(zh)) .mem span {
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
 .mem-title {
   margin-bottom: 6px;
   font-size: 12px;
@@ -4892,6 +4972,97 @@ html.blurred .nav-dot {
 }
 
 .theme-name {
+  max-width: 100%;
   font-size: 12px;
-  white-space: nowrap;
+  text-align: center;
+  overflow-wrap: anywhere;
+}
+
+/* 设置：语言 */
+.lang-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 12px;
+}
+
+.lang-opt {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  min-height: 34px;
+  max-width: 100%;
+  padding: 6px 14px;
+  border: 1.5px solid var(--line);
+  border-radius: 999px;
+  font: inherit;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--text);
+  background: #fff;
+  cursor: pointer;
+  transition: background-color 0.15s, border-color 0.15s, color 0.15s, transform 0.15s;
+}
+
+.lang-opt:hover {
+  border-color: var(--pink-200);
+  background: var(--pink-50);
+}
+
+.lang-opt:active {
+  transform: scale(0.96);
+}
+
+.lang-opt.on {
+  border-color: var(--pink-2);
+  color: var(--pink-deep);
+  font-weight: 700;
+  background: var(--pink-50);
+}
+
+/* 每种语言的名字用它自己的字体 */
+.lang-opt:lang(zh-CN) {
+  font-family: var(--font-zh-cn);
+}
+
+.lang-opt:lang(zh-TW) {
+  font-family: var(--font-zh-tw);
+}
+
+.lang-opt:lang(ja) {
+  font-family: var(--font-ja);
+}
+
+.lang-opt:lang(ko) {
+  font-family: var(--font-ko);
+}
+
+.lang-opt:lang(en),
+.lang-opt:lang(fr) {
+  font-family: var(--font-en);
+}
+
+.lang-opt:lang(ar) {
+  font-family: var(--font-ar);
+}
+
+.lang-name {
+  min-width: 0;
+}
+
+.lang-check {
+  display: grid;
+  place-items: center;
+  flex: none;
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  color: #fff;
+  background: var(--pink);
+}
+
+.lang-check .ico {
+  width: 10px;
+  height: 10px;
+  stroke-width: 3.2;
 }

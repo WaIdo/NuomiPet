@@ -1,1 +1,317 @@
-{}
+{
+  "ui": {
+    "stepper": {
+      "less": "减少",
+      "more": "增加"
+    },
+    "time": {
+      "hour": "小时",
+      "minute": "分钟"
+    },
+    "datePicker": {
+      "year": "年",
+      "month": "月",
+      "day": "日"
+    },
+    "dateWeek": "{date} · {week}"
+  },
+  "home": {
+    "title": "{pet}的小窝",
+    "together": "在一起",
+    "nav": {
+      "overview": "首页",
+      "dress": "装扮",
+      "reminders": "提醒",
+      "focus": "专注",
+      "todos": "待办",
+      "love": "纪念日",
+      "letters": "信箱",
+      "moods": "心情",
+      "notes": "悄悄话",
+      "settings": "设置"
+    },
+    "sidebar": {
+      "home": "回到首页",
+      "pages": "页面",
+      "xp": "亲密度 {xp} / {next}",
+      "xpMax": "亲密度 {xp} · 已满级",
+      "undone": "还有 {n} 件没完成",
+      "newLetter": "有新的信",
+      "foot": "今天也要开开心心的 {heart}"
+    },
+    "toast": {
+      "saved": "已保存 ✓",
+      "saveFailed": "没保存上，再试一次吧",
+      "moodFailed": "没记上，再试一次吧"
+    },
+    "fatal": {
+      "noHost": "没有连接到桌宠主程序，请从应用里打开小窝～",
+      "loadFailed": "读取数据失败了，关掉小窝再打开试试～"
+    },
+    "weather": {
+      "title": "天气",
+      "unavailable": "暂时查不到天气"
+    },
+    "profile": {
+      "title": "我们的资料",
+      "firstTitle": "我们来认识一下吧～",
+      "firstOk": "好啦 ✓",
+      "firstCancel": "以后再说",
+      "name": "我叫什么名字？",
+      "nick": "我该怎么称呼你？",
+      "birthday": "你的生日",
+      "birthdayHint": "生日那天我会给你过生日 🎂（年份可以不填）",
+      "since": "在一起的日子（可以不填）",
+      "sinceHint": "我会帮你们数着在一起的天数，整百天和周年都会庆祝",
+      "sender": "是谁把我带来的？（可以不填）",
+      "senderPlaceholder": "比如：豪豪",
+      "senderHint": "悄悄话会说「xxx让我偷偷告诉你……」",
+      "clear": "清除",
+      "needName": "给我起个名字吧～",
+      "needNick": "我该怎么叫你呢？",
+      "firstDone": "记住啦！以后请多多关照 💗",
+      "cheerFirst": "记住啦，{nick}！以后请多多关照～",
+      "cheerSaved": "资料改好啦～"
+    },
+    "overview": {
+      "greet": {
+        "morning": "早上好呀",
+        "forenoon": "上午好呀",
+        "noon": "中午好呀",
+        "afternoon": "下午好呀",
+        "evening": "晚上好呀",
+        "night": "夜深啦"
+      },
+      "greeting": "{greet}，{nick}",
+      "defaultLine": "今天也要开开心心的呀",
+      "pat": "摸摸{pet}",
+      "days": "{pet}已经陪伴你 {n} 天啦",
+      "maxLevel": "已满级 ✨",
+      "xpHint": "再攒 {n} 点亲密度，就升到「{title}」啦",
+      "love": {
+        "dayN": "第{n}天",
+        "since": "{date} 开始",
+        "empty": "把你们在一起的那天告诉{pet}吧",
+        "setDate": "设置在一起的日子 →",
+        "go": "去纪念日看看",
+        "today": "今天就是「{name}」🎉",
+        "until": "距离「{name}」{left}",
+        "left": "还有 {n} 天",
+        "none": "还没有纪念日，去添加一个吧"
+      },
+      "status": {
+        "title": "{pet}的状态",
+        "fullness": "饱腹",
+        "mood": "心情",
+        "favorite": "最爱{food}",
+        "pats": "今天摸摸 {n} 次",
+        "patsTip": "今天摸了 {n} 次",
+        "feed": "🍓 喂零食",
+        "coax": "🥺 哄哄我",
+        "play": "🧶 陪它玩"
+      },
+      "fullness": {
+        "full": "饱饱的",
+        "fine": "刚刚好",
+        "hungry": "有点饿",
+        "starving": "饿扁啦"
+      },
+      "mood": {
+        "great": "超开心",
+        "happy": "开心",
+        "meh": "一般般",
+        "low": "有点低落"
+      },
+      "memories": {
+        "title": "一起的回忆",
+        "tip": "{label} {n} {unit}",
+        "pets": "摸摸",
+        "feeds": "喂食",
+        "plays": "玩耍",
+        "waters": "喝水",
+        "pomodoros": "专注",
+        "todos": "完成",
+        "unit": {
+          "times": "次",
+          "cups": "杯",
+          "pomodoros": "个",
+          "todos": "件"
+        }
+      },
+      "food": {
+        "title": "给{pet}喂点什么？",
+        "fav": "最爱",
+        "fed": "{emoji} 送到{pet}嘴边啦"
+      },
+      "coax": {
+        "title": "要{pet}怎么哄你？",
+        "kneel": "跪搓衣板",
+        "flower": "送花",
+        "heart": "比心",
+        "hug": "抱抱",
+        "kiss": "亲亲",
+        "tea": "请喝奶茶",
+        "bow": "鞠躬",
+        "cute": "撒娇",
+        "roll": "打滚",
+        "dance": "跳舞",
+        "praise": "夸夸我",
+        "random": "随便哄",
+        "kneeling": "{pet}去跪搓衣板啦，快看桌面～",
+        "coming": "{pet}来哄你啦～看看桌面"
+      },
+      "played": "{pet}开心地玩起来啦～",
+      "today": {
+        "title": "今天",
+        "water": "喝水 {n} 杯",
+        "cupsGoal": "一天 {n} 杯水",
+        "addCup": "+1 杯",
+        "drank": "咕噜咕噜～又喝了一杯 💧",
+        "pomodoros": "专注 {n} 个番茄",
+        "todos": "待办 {done} / {total}",
+        "noTodos": "今天还没有待办",
+        "mood": "心情 {mood}",
+        "moodGo": "去心情日历",
+        "moodAsk": "今天心情怎么样？",
+        "moodSaved": "记下啦：{emoji} {mood}"
+      },
+      "weather": {
+        "refresh": "刷新天气",
+        "noCity": "还没有选城市呢",
+        "pickCity": "去选一个 →",
+        "feels": "体感 {temp}°",
+        "tomorrow": "明天 {emoji} {desc} {min}°~{max}°",
+        "loading": "正在查天气",
+        "credit": "天气数据由 Open-Meteo.com 提供"
+      }
+    },
+    "dress": {
+      "sub": "给{pet}换个新造型吧，桌面上的它会马上变身～",
+      "hint": "点一下右边的选项，马上就能看到效果",
+      "name": "名字",
+      "nameLabel": "宠物名字",
+      "nameMax": "最多 {n} 个字",
+      "nameEmpty": "名字不能是空的哦",
+      "species": "物种",
+      "color": "配色",
+      "accessory": "配饰",
+      "markings": "花纹",
+      "size": "大小",
+      "sizeHint": "桌面上的宠物有多大只"
+    },
+    "settings": {
+      "sub": "按你喜欢的样子来～",
+      "profile": {
+        "edit": "修改资料",
+        "petName": "宠物的名字",
+        "nickname": "它怎么称呼你",
+        "birthday": "生日",
+        "togetherValue": "{date} 起 · 第 {n} 天",
+        "sender": "悄悄话署名"
+      },
+      "theme": {
+        "title": "小窝的颜色",
+        "sub": "背景、按钮和宠物的对话气泡会一起换颜色",
+        "auto": "跟宠物一样"
+      },
+      "pet": {
+        "title": "宠物",
+        "onTop": "始终在最前面",
+        "onTopHint": "宠物不会被其他窗口挡住",
+        "walk": "自由走动",
+        "walkHint": "闲着的时候在屏幕底下走来走去",
+        "follow": "跟着鼠标走",
+        "followHint": "鼠标去哪儿，它就慢慢跟到哪儿",
+        "gravity": "重力",
+        "gravityHint": "松手会掉到屏幕底部",
+        "eyes": "眼睛跟随鼠标",
+        "eyesHint": "眼睛会一直看着你的鼠标",
+        "activity": "活泼程度",
+        "activityHint": "动作和小表演的多少"
+      },
+      "activity": {
+        "quiet": "安静",
+        "normal": "适中",
+        "lively": "活泼"
+      },
+      "quiet": {
+        "title": "打扰与声音",
+        "dnd": "勿扰模式",
+        "dndHint": "不闲聊，不提醒喝水、久坐这些；自定义提醒、番茄钟、纪念日和信照常",
+        "sound": "声音",
+        "soundHint": "说话和互动时的小音效",
+        "volume": "音量"
+      },
+      "system": {
+        "title": "系统",
+        "login": "开机自动启动",
+        "loginHint": "打开电脑就能见到它",
+        "loginDenied": "系统没有允许开机启动，可以去系统设置里打开",
+        "loginFailed": "没设置成功，再试一次吧"
+      },
+      "weather": {
+        "show": "在首页显示天气",
+        "showHint": "还会根据天气提醒你带伞、加衣服",
+        "showLabel": "显示天气",
+        "city": "当前城市",
+        "cityPicked": "已选择",
+        "cityNone": "还没有选",
+        "cityFirst": "先搜一下城市吧",
+        "searchPlaceholder": "搜索城市，比如：杭州、Tokyo",
+        "searchLabel": "搜索城市",
+        "search": "搜索",
+        "searching": "找找看…",
+        "searchFailed": "搜索失败了，检查一下网络再试试吧",
+        "notFound": "没有找到这个城市，换个名字试试？",
+        "picked": "天气城市设成「{city}」啦",
+        "credit": "天气数据由 Open-Meteo.com 提供（CC BY 4.0）"
+      },
+      "data": {
+        "title": "数据",
+        "export": "导出数据",
+        "exportHint": "把所有设置和记录存成一个文件",
+        "exportBtn": "导出",
+        "exported": "导出好啦 ✓",
+        "exportedTo": "导出好啦：{file}",
+        "exportError": "导出失败：{error}",
+        "exportFailed": "导出失败了",
+        "import": "导入数据",
+        "importHint": "从导出的文件里恢复",
+        "importBtn": "导入",
+        "importTitle": "导入数据？",
+        "importText": "导入之后，现在的设置和记录会被文件里的内容替换掉哦。",
+        "importOk": "选择文件",
+        "importCancel": "算了",
+        "imported": "导入成功 ✓",
+        "importError": "导入失败：{error}",
+        "importFailed": "导入失败了",
+        "reset": "重置所有数据",
+        "resetHint": "清空一切，回到刚见面的样子",
+        "resetBtn": "重置",
+        "resetTitle": "真的要重置吗？",
+        "resetText": "所有的设置、待办、心情和纪念日都会被清空，{pet}也会忘掉你们一起的回忆……",
+        "resetOk": "确定重置",
+        "resetCancel": "再想想",
+        "resetDone": "已经重置啦",
+        "resetError": "重置失败：{error}",
+        "unknownError": "未知原因",
+        "resetFailed": "重置失败了"
+      },
+      "about": {
+        "title": "关于",
+        "version": "版本 {version}",
+        "love": "给最可爱的你 💗",
+        "rightClick": "右键",
+        "rightClickTip": "宠物可以打开菜单",
+        "doubleClick": "双击",
+        "doubleClickTip": "宠物打开快捷面板",
+        "rub": "来回划",
+        "rubTip": "在它头上来回划就是摸摸头",
+        "drag": "按住拖",
+        "dragTip": "把它拎起来，松手会掉下去",
+        "hotkeyTip": "显示或藏起宠物",
+        "license": "仅限非商业使用（PolyForm Noncommercial License 1.0.0）"
+      }
+    }
+  }
+}

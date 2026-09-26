@@ -7,7 +7,7 @@ const wait = (ms) => new Promise((r) => setTimeout(r, ms));
 module.exports = async ({ app, store, scheduler, pet, petCommand, capture, bumpStats }) => {
   store.set('runtime.welcomed', true);
   store.set('runtime.profileDone', true);
-  store.set('owner.sender', '阿杰');
+  store.set('owner.sender', '豪豪');
   store.set('love.notes', [{ id: 'n1', text: '今天也要好好吃饭' }]);
   scheduler.goAway = () => {};
   const js = (c) => pet.win.webContents.executeJavaScript(c);
@@ -28,7 +28,7 @@ module.exports = async ({ app, store, scheduler, pet, petCommand, capture, bumpS
     ['remind-sleep', { type: 'remind', kind: 'sleep', id: 'sleep', text: '很晚啦，该睡觉觉了🌙' }],
     ['hungry', { type: 'hungry', text: '肚子咕咕叫了……' }],
     ['levelup', { type: 'levelup', level: 3, title: '好朋友', text: '我们的亲密度升到 Lv.3 啦！「好朋友」💕' }],
-    ['festival', { type: 'celebrate', reason: 'festival', text: '七夕快乐💕 阿杰让我告诉你：我爱你' }],
+    ['festival', { type: 'celebrate', reason: 'festival', text: '七夕快乐💕 豪豪让我告诉你：我爱你' }],
     ['focus-done', { type: 'focus-done', text: '专注完成！休息一下吧～🍅' }],
     ['break-start', { type: 'break-start', phase: 'short', text: '休息一下，活动活动～' }],
     ['break-done', { type: 'break-done', text: '休息结束啦，准备好继续了吗？' }],

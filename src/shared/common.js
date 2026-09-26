@@ -76,11 +76,38 @@
     return MILESTONES.includes(n) || (n > 0 && n % 100 === 0);
   }
 
-  // {name} 换成变量；{n|单数|复数} 按数字选单复数（英语用，比如 "{n} {n|day|days}"）
+  // 单复数按当前界面语言的规则选（多语言模块切换语言时调用 setLang），算法同 src/shared/i18n.js
+  let pluralLang = 'en';
+  const pluralRules = {};
+  function setLang(lang) {
+    pluralLang = lang || 'en';
+  }
+  function pickPlural(n, body) {
+    const forms = body.split('|');
+    let cat;
+    try {
+      cat = (pluralRules[pluralLang] || (pluralRules[pluralLang] = new Intl.PluralRules(pluralLang))).select(n);
+    } catch {
+      cat = n === 1 ? 'one' : 'other';
+    }
+    if (forms.every((f) => /^(zero|one|two|few|many|other):/.test(f))) {
+      const map = {};
+      for (const f of forms) map[f.slice(0, f.indexOf(':'))] = f.slice(f.indexOf(':') + 1);
+      return map[cat] !== undefined ? map[cat] : map.other !== undefined ? map.other : '';
+    }
+    if (forms.length === 2) return cat === 'one' ? forms[0] : forms[1];
+    return null;
+  }
+
+  // {name} 换成变量；{n|单数|复数} 或 {n|one:…|few:…|other:…} 按数字选单复数
   function fill(tpl, vars = {}) {
     const v = vars || {};
     return String(tpl)
-      .replace(/\{(\w+)\|([^|{}]*)\|([^{}]*)\}/g, (m, k, one, other) => (v[k] === undefined || v[k] === null ? m : Number(v[k]) === 1 ? one : other))
+      .replace(/\{(\w+)\|([^{}]*)\}/g, (m, k, body) => {
+        if (v[k] === undefined || v[k] === null) return m;
+        const out = pickPlural(Number(v[k]), body);
+        return out === null ? m : out;
+      })
       .replace(/\{(\w+)\}/g, (m, k) => (v[k] !== undefined && v[k] !== null ? v[k] : m));
   }
 
@@ -171,5 +198,5 @@
     return (pal && pal.theme) || 'sakura';
   }
 
-  return { pad2, dateKey, hm, parseKey, diffDays, nextYearly, dayNumber, daysUntil, isMilestone, fill, pick, uid, levelFor, todayParts, festivalOf, fortune, resolveTheme, EMOJI_FALLBACK, swapEmoji };
+  return { pad2, dateKey, hm, parseKey, diffDays, nextYearly, dayNumber, daysUntil, isMilestone, fill, pick, uid, levelFor, todayParts, festivalOf, fortune, resolveTheme, EMOJI_FALLBACK, swapEmoji, setLang };
 });

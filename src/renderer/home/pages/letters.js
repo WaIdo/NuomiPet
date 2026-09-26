@@ -1,6 +1,7 @@
 // 信箱：一封封信封。解锁未读的有发光的火漆爱心和「新」，已读的是拆开的信封，没到日子的上了锁。
 // 也可以在这里写信：定好拆开的日子，封好之后没到日子谁都看不到正文。
 import { h, s, cx, pageHead, cardHead, emptyState, icon, fmtDate, toast, shake, modal, morph, datePicker, segmented, popover, closePopover } from '../ui.js';
+import { t, petName, nickname } from '../../shared/i18n.mjs';
 
 function heart() {
   return s(
@@ -18,7 +19,7 @@ function stateOf(l) {
 function open(app, l, e) {
   if (!l.unlocked) {
     shake(e.currentTarget.querySelector('.env'));
-    toast(`还没到拆开的时间哦～${l.unlock ? fmtDate(l.unlock, { withYear: false }) + ' 见' : ''}`);
+    toast(l.unlock ? t('home.letters.card.lockedToastDate', { date: fmtDate(l.unlock, { withYear: false }) }) : t('home.letters.card.lockedToast'));
     return;
   }
   app.mochi.letters.open(l.id);
@@ -41,7 +42,7 @@ function editor(app, existing = null) {
     unlock: existing ? existing.unlock : nextBirthday,
     body: '',
   };
-  const nick = st.owner?.nickname || 'TA';
+  const nick = nickname(st);
   const box = h('div', { class: 'le-form' });
   let countEl = null;
 
@@ -53,23 +54,23 @@ function editor(app, existing = null) {
         'div',
         { class: 'le-two', key: 'two' },
         field(
-          '标题',
-          h('input', { class: 'input', key: 'title', maxlength: 30, value: form.title, placeholder: '比如：生日快乐', oninput: (e) => (form.title = e.target.value) }),
+          t('home.letters.editor.title'),
+          h('input', { class: 'input', key: 'title', maxlength: 30, value: form.title, placeholder: t('home.letters.editor.titlePlaceholder'), oninput: (e) => (form.title = e.target.value) }),
         ),
         field(
-          '署名',
-          h('input', { class: 'input', key: 'from', maxlength: 16, value: form.from, placeholder: '写信的人', oninput: (e) => (form.from = e.target.value) }),
+          t('home.letters.editor.from'),
+          h('input', { class: 'input', key: 'from', maxlength: 16, value: form.from, placeholder: t('home.letters.editor.fromPlaceholder'), oninput: (e) => (form.from = e.target.value) }),
         ),
       ),
       field(
-        '什么时候可以拆开',
+        t('home.letters.editor.when'),
         h(
           'div',
           { class: 'le-when' },
           segmented(
             [
-              { value: 'now', label: '马上' },
-              { value: 'date', label: '到某一天' },
+              { value: 'now', label: t('home.letters.editor.now') },
+              { value: 'date', label: t('home.letters.editor.onDate') },
             ],
             form.mode,
             (v) => {
@@ -89,19 +90,19 @@ function editor(app, existing = null) {
               { key: 'unlock', yearMin: now.getFullYear(), yearMax: now.getFullYear() + 15, onPartial: () => draw() },
             ),
         ),
-        form.mode === 'date' ? `到了那天，${st.pet?.name || '糯米'}会把信叼给${nick}` : `封好就能拆开，${st.pet?.name || '糯米'}很快会把信递过去`,
+        form.mode === 'date' ? t('home.letters.editor.hintDate', { pet: petName(st), nick }) : t('home.letters.editor.hintNow', { pet: petName(st) }),
       ),
       existing
-        ? h('p', { class: 'le-sealed', key: 'sealed' }, '🔒 信已经封好了，正文看不到也改不了。写错了可以删掉重写。')
+        ? h('p', { class: 'le-sealed', key: 'sealed' }, t('home.letters.editor.sealed'))
         : field(
-            '正文',
+            t('home.letters.editor.body'),
             h('textarea', {
               class: 'input textarea',
               key: 'body',
               rows: 7,
               maxlength: 5000,
               value: form.body,
-              placeholder: `想对${nick}说的话……`,
+              placeholder: t('home.letters.editor.bodyPlaceholder', { nick }),
               oninput: (e) => {
                 form.body = e.target.value;
                 if (countEl) countEl.textContent = `${form.body.length} / 5000`;
@@ -109,7 +110,7 @@ function editor(app, existing = null) {
             }),
             h('span', { class: 'le-count', key: 'count' }, `${form.body.length} / 5000`),
           ),
-      !existing && h('p', { class: 'le-tip', key: 'tip' }, '封好之后，没到拆开的日子谁都看不到正文（写信的人也看不到）。'),
+      !existing && h('p', { class: 'le-tip', key: 'tip' }, t('home.letters.editor.tip')),
     );
 
   const draw = () => {
@@ -119,18 +120,18 @@ function editor(app, existing = null) {
   draw();
 
   modal({
-    title: existing ? '修改信封' : '写一封信 💌',
+    title: existing ? t('home.letters.editor.editTitle') : t('home.letters.editor.newTitle'),
     body: box,
-    ok: existing ? '保存' : '封好 💌',
-    cancel: '取消',
+    ok: existing ? t('common.save') : t('home.letters.editor.seal'),
+    cancel: t('common.cancel'),
     cls: 'letter-editor',
     onOk: async () => {
       if (!existing && !form.body.trim()) {
-        toast('信里还什么都没写呢', 'err');
+        toast(t('home.letters.editor.emptyBody'), 'err');
         return false;
       }
       if (form.mode === 'date' && !C.parseKey(form.unlock)?.y) {
-        toast('选一下拆开的日子吧', 'err');
+        toast(t('home.letters.editor.pickDate'), 'err');
         return false;
       }
       const payload = {
@@ -142,10 +143,10 @@ function editor(app, existing = null) {
       if (!existing) payload.body = form.body;
       const r = await app.mochi.letters.save(payload);
       if (!r || !r.ok) {
-        toast((r && r.error) || '没保存上，再试一次吧', 'err');
+        toast((r && r.error) || t('home.letters.editor.saveFailed'), 'err');
         return false;
       }
-      toast(existing ? '改好啦 ✓' : '信封好啦 💌');
+      toast(existing ? t('home.letters.editor.edited') : t('home.letters.editor.sealedToast'));
       app.refreshLetters();
       return true;
     },
@@ -155,9 +156,9 @@ function editor(app, existing = null) {
 
 async function remove(app, l) {
   const ok = await modal({
-    title: '删掉这封信？',
-    text: `「${l.title}」删掉之后就找不回来了。`,
-    ok: '删掉',
+    title: t('home.letters.remove.title'),
+    text: t('home.letters.remove.text', { title: l.title }),
+    ok: t('home.letters.remove.ok'),
     danger: true,
     look: app.look(),
     face: ['sad', 'wavy'],
@@ -165,9 +166,9 @@ async function remove(app, l) {
   if (!ok) return;
   const r = await app.mochi.letters.remove(l.id);
   if (r && r.ok) {
-    toast('删掉了');
+    toast(t('home.letters.remove.done'));
     app.refreshLetters();
-  } else toast((r && r.error) || '没删掉', 'err');
+  } else toast((r && r.error) || t('home.letters.remove.failed'), 'err');
 }
 
 function more(app, l, e) {
@@ -188,7 +189,7 @@ function more(app, l, e) {
               editor(app, l);
             },
           },
-          '✏️ 改标题或日期',
+          t('home.letters.menu.edit'),
         ),
       h(
         'button',
@@ -200,7 +201,7 @@ function more(app, l, e) {
             remove(app, l);
           },
         },
-        '🗑️ 删掉这封信',
+        t('home.letters.menu.remove'),
       ),
     ),
     { cls: 'letter-menu' },
@@ -209,14 +210,14 @@ function more(app, l, e) {
 
 async function exportLetters(app) {
   const r = await app.mochi.letters.exportFile();
-  if (r && r.ok) toast(`导出了 ${r.count} 封信 ✓`);
+  if (r && r.ok) toast(t('home.letters.tools.exported', { n: r.count }));
   else if (r && r.error) toast(r.error, 'err');
 }
 
 async function importLetters(app) {
   const r = await app.mochi.letters.importFile();
   if (r && r.ok) {
-    toast(`导入了 ${r.count} 封信 💌`);
+    toast(t('home.letters.tools.imported', { n: r.count }));
     app.refreshLetters();
   } else if (r && r.error) toast(r.error, 'err');
 }
@@ -227,8 +228,8 @@ function card(app, l) {
   const st = stateOf(l);
   const meta =
     st === 'locked'
-      ? [h('span', { class: 'lm-lock' }, icon('lock')), l.daysLeft > 0 ? `${l.daysLeft} 天后解锁` : '快要解锁啦', l.unlock && h('span', { class: 'lm-date' }, fmtDate(l.unlock))]
-      : [l.from ? `来自 ${l.from}` : '一封信', l.unlock && h('span', { class: 'lm-date' }, fmtDate(l.unlock))];
+      ? [h('span', { class: 'lm-lock' }, icon('lock')), l.daysLeft > 0 ? t('home.letters.card.unlockIn', { n: l.daysLeft }) : t('home.letters.card.unlockSoon'), l.unlock && h('span', { class: 'lm-date' }, fmtDate(l.unlock))]
+      : [l.from ? t('home.letters.card.from', { name: l.from }) : t('home.letters.aLetter'), l.unlock && h('span', { class: 'lm-date' }, fmtDate(l.unlock))];
   return h(
     'div',
     { class: 'letter-item', key: l.id },
@@ -238,7 +239,7 @@ function card(app, l) {
         type: 'button',
         class: cx('letter-card', 'st-' + st),
         'aria-disabled': st === 'locked' ? 'true' : null,
-        title: st === 'locked' ? '还没到拆开的时间哦' : '拆开看看',
+        title: st === 'locked' ? t('home.letters.card.locked') : t('home.letters.card.open'),
         onclick: (e) => open(app, l, e),
       },
       h(
@@ -249,14 +250,14 @@ function card(app, l) {
         h('span', { class: 'env-pocket' }),
         h('span', { class: 'env-flap' }),
         h('span', { class: 'env-seal' }, st === 'locked' ? icon('lock') : heart()),
-        st === 'new' && h('span', { class: 'env-new' }, '新'),
+        st === 'new' && h('span', { class: 'env-new' }, t('home.letters.card.new')),
       ),
-      h('div', { class: 'lc-title', title: l.title }, l.title || '一封信'),
+      h('div', { class: 'lc-title', title: l.title }, l.title || t('home.letters.aLetter')),
       h('div', { class: 'lc-meta' }, meta),
       st === 'read' && l.preview && h('div', { class: 'lc-preview' }, l.preview),
-      st === 'new' && h('div', { class: 'lc-preview new' }, '点开看看吧～'),
+      st === 'new' && h('div', { class: 'lc-preview new' }, t('home.letters.card.tapToOpen')),
     ),
-    l.mine && h('button', { type: 'button', class: 'lc-more', title: '修改或删除', 'aria-label': '修改或删除', onclick: (e) => more(app, l, e) }, '···'),
+    l.mine && h('button', { type: 'button', class: 'lc-more', title: t('home.letters.card.more'), 'aria-label': t('home.letters.card.more'), onclick: (e) => more(app, l, e) }, '···'),
   );
 }
 
@@ -265,7 +266,6 @@ const ORDER = { new: 0, read: 1, locked: 2 };
 export default {
   id: 'letters',
   icon: '💌',
-  label: '信箱',
   enter(app) {
     app.refreshLetters();
   },
@@ -273,28 +273,28 @@ export default {
     const list = [...(app.letters || [])].sort((a, b) => ORDER[stateOf(a)] - ORDER[stateOf(b)] || (a.daysLeft || 0) - (b.daysLeft || 0));
     const fresh = list.filter((l) => stateOf(l) === 'new').length;
     const mine = list.filter((l) => l.mine).length;
-    const sub = !list.length ? '这里会收到特别的信' : fresh ? `有 ${fresh} 封新的信在等你拆开 💗` : '每一封都好好收着呢';
+    const sub = !list.length ? t('home.letters.sub.empty') : fresh ? t('home.letters.sub.fresh', { n: fresh }) : t('home.letters.sub.all');
     return h(
       'div',
       { class: 'page page-letters' },
-      pageHead('💌', '信箱', sub, h('button', { type: 'button', class: 'btn primary', key: 'write', onclick: () => editor(app) }, '✍️ 写一封信')),
+      pageHead('💌', t('home.letters.title'), sub, h('button', { type: 'button', class: 'btn primary', key: 'write', onclick: () => editor(app) }, t('home.letters.write'))),
       list.length
         ? h('div', { class: 'letter-grid', key: 'grid' }, list.map((l) => card(app, l)))
         : app.lettersLoaded
-          ? h('section', { class: 'card', key: 'empty' }, emptyState(app.look(), '信箱空空的～', '点右上角「写一封信」，给重要的人留一封信吧'))
+          ? h('section', { class: 'card', key: 'empty' }, emptyState(app.look(), t('home.letters.empty.text'), t('home.letters.empty.sub')))
           : h('div', { class: 'letter-grid', key: 'loading' }),
       h(
         'section',
         { class: 'card letter-tools', key: 'tools' },
-        cardHead('📦', '在别的电脑上写好的信', null, '写好的信可以导出成文件，拿到另一台电脑上导入，信会原样封好。'),
+        cardHead('📦', t('home.letters.tools.title'), null, t('home.letters.tools.sub')),
         h(
           'div',
           { class: 'lt-btns' },
-          h('button', { type: 'button', class: 'btn soft', disabled: !mine, onclick: () => exportLetters(app) }, '导出在这里写的信'),
-          h('button', { type: 'button', class: 'btn soft', onclick: () => importLetters(app) }, '导入信件'),
+          h('button', { type: 'button', class: 'btn soft', disabled: !mine, onclick: () => exportLetters(app) }, t('home.letters.tools.export')),
+          h('button', { type: 'button', class: 'btn soft', onclick: () => importLetters(app) }, t('home.letters.tools.import')),
         ),
       ),
-      h('p', { class: 'letter-hint', key: 'hint' }, '💌 信可以提前写好、定好拆开的日子。到了那天，信会自己解锁。'),
+      h('p', { class: 'letter-hint', key: 'hint' }, t('home.letters.hint')),
     );
   },
 };

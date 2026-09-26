@@ -1,12 +1,12 @@
 # 糯米桌宠 NuomiPet
 
+**简体中文** | [繁體中文](README.zh-TW.md) | [English](README.en.md) | [日本語](README.ja.md)
+
 [![check](https://github.com/WaIdo/NuomiPet/actions/workflows/check.yml/badge.svg)](https://github.com/WaIdo/NuomiPet/actions/workflows/check.yml)
 
-一只住在桌面上的小团子，Windows 和 macOS 都能用。它在屏幕底部走来走去，提醒喝水、休息和早睡，记得你们的纪念日，会替你说悄悄话、递信；惹她生气了，还会跪在搓衣板上认错。
+一只住在桌面上的小团子，Windows 和 macOS 都能用。它在屏幕底部走来走去，提醒喝水、休息和早睡，记得你们的纪念日，会替你说悄悄话、递信；惹她生气了，还会跪在搓衣板上认错。界面有简体中文、繁體中文、English、日本語四种语言。
 
-A cute desktop pet for Windows and macOS, made as a gift for a girlfriend. The interface is in Chinese.
-
-![宠物的日常](docs/images/pet.png)
+![宠物的日常](docs/images/zh-CN/pet.png)
 
 ## 下载
 
@@ -14,10 +14,10 @@ A cute desktop pet for Windows and macOS, made as a gift for a girlfriend. The i
 
 | 文件 | 适用于 |
 | --- | --- |
-| `NuomiPet-1.0.0-win-setup.exe` | Windows 10 / 11（64 位），安装版，推荐 |
-| `NuomiPet-1.0.0-win-portable.exe` | Windows 10 / 11（64 位），免安装，双击就能用 |
-| `NuomiPet-1.0.0-mac-arm64.dmg` | Apple 芯片的 Mac（M1 及之后），macOS 13 或更新 |
-| `NuomiPet-1.0.0-mac-x64.dmg` | Intel 芯片的 Mac，macOS 13 或更新 |
+| `NuomiPet-1.1.0-win-setup.exe` | Windows 10 / 11（64 位），安装版，推荐 |
+| `NuomiPet-1.1.0-win-portable.exe` | Windows 10 / 11（64 位），免安装，双击就能用 |
+| `NuomiPet-1.1.0-mac-arm64.dmg` | Apple 芯片的 Mac（M1 及之后），macOS 13 或更新 |
+| `NuomiPet-1.1.0-mac-x64.dmg` | Intel 芯片的 Mac，macOS 13 或更新 |
 
 不知道 Mac 是哪种芯片：点屏幕左上角苹果菜单 →「关于本机」，「芯片」一栏写着 Apple M… 的选 arm64，写着 Intel 的选 x64。
 
@@ -25,7 +25,7 @@ A cute desktop pet for Windows and macOS, made as a gift for a girlfriend. The i
 
 **Windows**
 
-1. 运行 `NuomiPet-1.0.0-win-setup.exe`，按提示安装（不需要管理员权限）。免安装版直接双击运行。
+1. 运行 `NuomiPet-1.1.0-win-setup.exe`，按提示安装（不需要管理员权限）。免安装版直接双击运行。
 2. 安装包没有购买代码签名证书，第一次运行时可能出现「Windows 已保护你的电脑」：点「更多信息」→「仍要运行」。如果杀毒软件拦截，选择允许或信任。
 3. 宠物出现在屏幕右下角。任务栏右下角的托盘区有一个粉色小猫图标（可能藏在 `^` 里），点它打开菜单。
 
@@ -68,10 +68,12 @@ xattr -dr com.apple.quarantine /Applications/糯米桌宠.app
 - 心情日记：每天晚上问她今天心情怎么样，小窝里有月历记录。
 - 节日：元旦、情人节、女神节、白色情人节、520、儿童节、七夕、中秋、除夕、春节、元宵、端午、平安夜、圣诞、跨年都会送祝福（农历节日已算好到 2035 年）。她生日那天宠物戴派对帽，圣诞节戴圣诞帽，情人节、520、七夕戴爱心发卡。
 - 今日运势：右键菜单里点「今日运势」，每天一签。
+- 用邮件寄信：你在手机或电脑上给宠物的邮箱发一封邮件，它会变成她信箱里的一封信，可以定好哪天才能拆开。设置方法见下面的「用邮件寄信、叫你来接」。
+- 🚗 来接我：她在宠物的快捷面板里点一下，宠物就发邮件（也可以推送到你的手机或微信）叫你下班来接她。
 
 **哄她开心**
 
-![跪搓衣板认错](docs/images/kneel.png)
+![跪搓衣板认错](docs/images/zh-CN/kneel.png)
 
 - 11 个动作：跪搓衣板、送花、比心、抱抱、亲亲、递奶茶、鞠躬、撒娇、打滚、跳舞、夸夸，还有「随便哄」随机挑一个。
 - 跪搓衣板：宠物跪在搓衣板上，泪汪汪地举着「我错了」的小木牌，过一会儿问「原谅我了吗？」，下面有「原谅你啦 💗」和「哼！」两个按钮。
@@ -81,17 +83,22 @@ xattr -dr com.apple.quarantine /Applications/糯米桌宠.app
 - 它也会自己哄：心情打卡选「生气」会马上跪下认错；选「难过」会先抱抱再送花；选「好累」会递一杯奶茶；连续戳它，有时会跪下求饶；亲密度到 Lv.3 以上、心情好的时候，偶尔会自己比心或送花。
 - 入口：双击宠物打开快捷面板点「🥺 哄我」；右键菜单「哄你开心」；托盘菜单「哄哄我」（随机一个）；小窝首页的「🥺 哄哄我」。
 
-![其他哄人的动作](docs/images/coax.png)
+![其他哄人的动作](docs/images/zh-CN/coax.png)
 
 **小窝**
 
 「小窝」是设置窗口，从右键菜单、快捷面板或托盘图标都能打开：首页（在一起天数、宠物状态、今日喝水/番茄/待办/心情、天气）、装扮、提醒、专注、待办、纪念日、信箱、心情月历、悄悄话、设置（我们的资料、小窝的颜色、置顶、开机启动、声音、走动、重力、勿扰、天气城市、数据导入导出）。
 
-![小窝首页](docs/images/home.png)
+![小窝首页](docs/images/zh-CN/home.png)
 
 小窝有樱花粉、蜜桃橘、奶油黄、薄荷绿、天空蓝、香芋紫六种颜色，也可以选「跟宠物一样」。在「小窝 → 设置 → 小窝的颜色」里换，背景、按钮、宠物的对话气泡和快捷面板一起变。
 
-![小窝的颜色](docs/images/themes.png)
+![小窝的颜色](docs/images/zh-CN/themes.png)
+
+**多语言**
+- 简体中文、繁體中文、English、日本語。第一次打开时跟着系统语言走。
+- 在「小窝 → 设置 → 语言」或托盘菜单「🌐 语言」里随时切换：界面、宠物说的话、菜单、节日祝福马上跟着变；没改过的宠物名字也会跟着变（糯米 / Mochi / もち）。
+- 你们自己写的内容（名字、昵称、悄悄话、信、纪念日）保持原样，不会被翻译。
 
 ## 写上你们自己的内容
 
@@ -111,9 +118,9 @@ xattr -dr com.apple.quarantine /Applications/糯米桌宠.app
 | --- | --- | --- |
 | `petName` | 宠物的名字 | `"糯米"` |
 | `nickname` | 宠物怎么称呼她 | `"宝贝"`、她的小名 |
-| `sender` | 你的署名，悄悄话会说「xxx让我偷偷告诉你」；留空则不署名 | `"阿杰"` |
+| `sender` | 你的署名，悄悄话会说「xxx让我偷偷告诉你」；留空则不署名 | `"豪豪"` |
 | `species` / `color` / `accessory` / `markings` / `size` | 初始形象，可选值见 `src/shared/catalog.json` | `"bunny"` / `"sakura"` / `"flower"` / `"none"` / `"m"` |
-| `togetherSince` | 在一起的日子 | `"2023-05-20"` |
+| `togetherSince` | 在一起的日子 | `"2026-09-25"` |
 | `birthday` | 她的生日，可以只写月日 | `"1999-08-08"` 或 `"08-08"` |
 | `anniversaries` | 其他纪念日 | `[{ "name": "第一次约会", "date": "2023-06-01", "kind": "yearly" }]` |
 | `notes` | 悄悄话列表 | `["今天也要开心", "..."]` |
@@ -129,13 +136,36 @@ xattr -dr com.apple.quarantine /Applications/糯米桌宠.app
     "id": "birthday-2026",
     "title": "生日快乐",
     "unlock": "2026-08-08",
-    "from": "阿杰",
+    "from": "豪豪",
     "body": "第一行\n第二行……"
   }
 ]
 ```
 
 默认带了一封宠物自我介绍的信（`id: "hello"`），第一次启动时会递给她。
+
+## 用邮件寄信、叫你来接
+
+这两个功能要先给宠物准备一个邮箱，在她的电脑上设置一次就好。
+
+1. 给宠物注册一个新的免费邮箱（推荐 QQ 邮箱或 163 邮箱），不要用你们平时用的邮箱。
+2. 在网页版邮箱里开启 IMAP/SMTP 服务，拿到「授权码」（不是登录密码）：
+   - QQ 邮箱：设置 → 账号 →「POP3/IMAP/SMTP/Exchange/CardDAV/CalDAV 服务」→ 开启「IMAP/SMTP 服务」，按提示验证后会显示授权码。
+   - 163 邮箱：设置 → POP3/SMTP/IMAP → 开启「IMAP/SMTP 服务」，按提示得到授权密码。
+   - Gmail、iCloud：先开启两步验证，再生成「应用专用密码」。Outlook 和 Hotmail 用不了（微软已经关闭了这种登录方式）。
+3. 在她的电脑上打开「小窝 → 设置 → 邮件」，填好宠物的邮箱、授权码、谁可以寄信（你的邮箱）、「来接我」发到哪（一般也是你的邮箱），点「保存」，再点「测试连接」。
+4. 点「把用法发给他」，你的邮箱会收到一封使用说明。
+
+**寄信**：用你的邮箱给宠物的邮箱发邮件，主题就是信的标题，正文就是信的内容。几分钟内宠物会把信递给她，你也会收到一封确认邮件。
+- 想定在某一天才能拆开：在主题最前面写【2026-12-25】，或者在正文第一行写「拆开日期：2026-12-25」。只写月日（比如【12-25】）就是最近的那一天。
+- 只有「谁可以寄信」里的邮箱寄来的信会收下，别人寄来的不会进信箱。还可以设一个暗号，信里带着暗号才收。
+- 只收文字，图片和附件不会显示。
+
+**来接我**：她双击宠物，点「🚗 来接我」，选「现在」「半小时后」或「一小时后」，还可以写一句话，宠物就会发邮件告诉你。想在手机上马上收到提醒：
+- 在手机上装邮箱 App 并打开新邮件通知；QQ 邮箱还可以在微信里开启「QQ邮箱提醒」。
+- 或者在设置里填「推送网址」：iPhone 可以用 Bark（`https://api.day.app/你的key/{title}/{body}`），微信可以用 Server酱（`https://sctapi.ftqq.com/你的SendKey.send?title={title}&desp={body}`）或 PushPlus（`https://www.pushplus.plus/send?token=你的token&title={title}&content={body}`）。
+
+授权码和推送网址只保存在她的电脑上，用系统的钥匙串（macOS）或数据保护（Windows）加密，不会出现在导出的备份里。
 
 ## 使用小贴士
 
@@ -159,7 +189,11 @@ xattr -dr com.apple.quarantine /Applications/糯米桌宠.app
 
 ## 隐私
 
-应用不收集、不上传任何数据，没有统计和广告。唯一的联网功能是天气：打开并设置城市后，会用城市名向 [Open-Meteo](https://open-meteo.com/) 查询经纬度，再用经纬度查询天气。不开天气就不会联网。
+应用不收集、不上传任何数据，没有统计和广告。只有这几种情况会联网：
+- 天气：打开并设置城市后，用城市名向 [Open-Meteo](https://open-meteo.com/) 查询经纬度，再用经纬度查询天气。
+- 邮件：设置了宠物的邮箱以后，定时连接这个邮箱的服务器收信，收到信时回一封确认邮件；她点「来接我」时发一封邮件，填了推送网址的话再请求一次那个网址。
+
+这些功能都不设置的话，应用不会联网。
 
 ## 从源码构建
 
@@ -200,8 +234,10 @@ npm run dist:win
 **测试**
 
 ```bash
-npm test                        # 单元测试：日期、提醒调度、番茄钟、信件
+npm test                        # 单元测试：日期、提醒调度、番茄钟、信件、多语言
 node dev/run-scenarios.js       # 在真实窗口里跑 dev/scenarios 下的所有场景，截图放在 scenario-output/
+node dev/i18n-check.js code     # 代码里有没有没提取的中文
+node dev/i18n-check.js locales  # 各语言的文字和简体中文是否一一对应、占位符是否一致
 ```
 
 每次推送到 `main`，GitHub Actions 会在 Windows Server 2022（emoji 字体和 Windows 10 一样旧）、Windows Server 2025 和 macOS 上跑单元测试和所有场景，并在 Windows 上打包、静默安装、启动、卸载一遍，截图可以在每次运行的 Artifacts 里下载。
@@ -212,7 +248,8 @@ node dev/run-scenarios.js       # 在真实窗口里跑 dev/scenarios 下的所�
 gift.config.json        打包前预先写好的内容（名字、纪念日、悄悄话、信件）
 src/main/               主进程：窗口、拖拽和下落物理、托盘和菜单、提醒调度、番茄钟、天气、数据存储
 src/preload/            渲染进程可用的接口（window.mochi）
-src/shared/             两边共用：物种/配色/食物目录、台词、节日表、主题、日期工具
+src/shared/             两边共用：物种/配色/食物目录、节日表、主题、日期工具、多语言（i18n.js）
+src/shared/locales/     各语言的文字：界面（common/main/pet/home/pages.json）、宠物台词（phrases.json）、名字和默认内容（data.json）
 src/renderer/shared/    宠物的 SVG 形象、表情和动画、音效、emoji 兼容
 src/renderer/pet/       桌宠窗口：行为、气泡、特效、快捷面板
 src/renderer/home/      小窝（设置窗口）
@@ -238,6 +275,7 @@ Copyright © 2026 WaIdo
 **第三方组件和数据**
 
 - 安装包里带有 [Electron](https://www.electronjs.org/)（MIT 许可证）以及其中的 Chromium、Node.js 等开源组件，它们的许可证随安装包分发：Windows 在安装目录的 `LICENSE.electron.txt` 和 `LICENSES.chromium.html`，macOS 在 `糯米桌宠.app/Contents/Resources/` 里。
+- 收发邮件用 [ImapFlow](https://github.com/postalsys/imapflow)（MIT）、[Nodemailer](https://nodemailer.com/)（MIT-0）、[mailparser](https://github.com/nodemailer/mailparser)（MIT），随安装包分发。
 - 打包工具 [electron-builder](https://www.electron.build/)（MIT）。
 - 农历节日对应的公历日期是用 [lunar-javascript](https://github.com/6tail/lunar-javascript)（MIT）算好后写进 `src/shared/festivals.json` 的，应用本身不包含这个库。
 - 天气数据由 [Open-Meteo](https://open-meteo.com/) 提供，以 [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/) 授权；Open-Meteo 的免费接口只允许非商业使用。

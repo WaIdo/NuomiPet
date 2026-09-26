@@ -1,10 +1,18 @@
 // 心情：月历（周一开头），每天一个心情表情；点今天或以前的日子可以记录/修改；下面是本月统计。
-import { h, cx, pageHead, cardHead, popover, closePopover, toast, icon, burst, WEEK } from '../ui.js';
+import { h, cx, pageHead, cardHead, popover, closePopover, toast, icon, burst, fmtDate, rich } from '../ui.js';
+import { t, weekday, petName } from '../../shared/i18n.mjs';
 
-const HEAD = ['周一', '周二', '周三', '周四', '周五', '周六', '周日'];
+// 表头的星期几，周一开头（0 = 周日）
+const HEAD = [1, 2, 3, 4, 5, 6, 0];
 const ui = { y: 0, m: 0 };
 
 const pad2 = (n) => String(n).padStart(2, '0');
+
+// 月份的名字（「9月」）
+function monthName(m) {
+  const months = t('date.months');
+  return t('date.month', { m, mon: Array.isArray(months) ? months[m - 1] : String(m) });
+}
 
 function openPicker(app, key, anchor) {
   const { C, catalog } = app;
@@ -13,9 +21,9 @@ function openPicker(app, key, anchor) {
   const p = C.parseKey(key);
   const isToday = key === C.dateKey();
   const d = new Date(p.y, p.m - 1, p.d);
-  const title = isToday ? '今天的心情' : `${p.m}月${p.d}日 · ${WEEK[d.getDay()]}`;
-  const note = h('input', { class: 'input sm', maxlength: 30, placeholder: '想说点什么吗？（可以不写）', value: rec?.note || '' });
-  const save = h('button', { type: 'button', class: 'btn primary sm', disabled: !sel, onclick: () => commit() }, '记下来');
+  const title = isToday ? t('home.moods.today') : t('home.moods.pick.title', { date: fmtDate(key, { withYear: false }), week: weekday(d.getDay()) });
+  const note = h('input', { class: 'input sm', maxlength: 30, placeholder: t('home.moods.pick.placeholder'), value: rec?.note || '' });
+  const save = h('button', { type: 'button', class: 'btn primary sm', disabled: !sel, onclick: () => commit() }, t('home.moods.pick.save'));
   const grid = h(
     'div',
     { class: 'mp-grid' },
@@ -45,7 +53,7 @@ function openPicker(app, key, anchor) {
     const r = anchor.getBoundingClientRect();
     closePopover();
     burst(r.left + r.width / 2, r.top + r.height / 2, { emoji: [m.emoji], n: 10, spread: 26 });
-    toast(`记下啦：${m.emoji} ${m.name}`);
+    toast(t('home.moods.saved', { emoji: m.emoji, name: m.name }));
   }
   note.addEventListener('keydown', (e) => {
     if (e.key === 'Enter' && !e.isComposing) commit();
@@ -58,7 +66,7 @@ function openPicker(app, key, anchor) {
       h('div', { class: 'pop-title' }, title),
       grid,
       note,
-      h('div', { class: 'pop-actions' }, h('button', { type: 'button', class: 'btn ghost sm', onclick: () => closePopover() }, '取消'), save),
+      h('div', { class: 'pop-actions' }, h('button', { type: 'button', class: 'btn ghost sm', onclick: () => closePopover() }, t('common.cancel')), save),
     ),
     { cls: 'pop-mood' },
   );
@@ -101,7 +109,7 @@ function calendar(app) {
           class: cx('cal-cell', 'day', { today: key === today, future, has: !!md }),
           disabled: future,
           style: md ? { '--mc': md.color } : null,
-          title: md ? `${md.name}${rec.note ? '：' + rec.note : ''}` : future ? null : '点一下记录心情',
+          title: md ? (rec.note ? t('home.moods.cal.note', { name: md.name, note: rec.note }) : md.name) : future ? null : t('home.moods.cal.tap'),
           onclick: (e) => openPicker(app, key, e.currentTarget),
         },
         h('span', { class: 'cal-num' }, d),
@@ -116,9 +124,9 @@ function calendar(app) {
     h(
       'div',
       { class: 'cal-head' },
-      h('button', { type: 'button', class: 'icon-btn', title: '上个月', 'aria-label': '上个月', onclick: () => shiftMonth(app, -1) }, icon('left')),
-      h('div', { class: 'cal-title' }, h('b', `${ui.m}月`), h('span', ui.y + '年')),
-      h('button', { type: 'button', class: 'icon-btn', title: '下个月', 'aria-label': '下个月', disabled: future, onclick: () => shiftMonth(app, 1) }, icon('right')),
+      h('button', { type: 'button', class: 'icon-btn', title: t('home.moods.cal.prev'), 'aria-label': t('home.moods.cal.prev'), onclick: () => shiftMonth(app, -1) }, icon('left')),
+      h('div', { class: 'cal-title' }, h('b', monthName(ui.m)), h('span', t('date.year', { y: ui.y }))),
+      h('button', { type: 'button', class: 'icon-btn', title: t('home.moods.cal.next'), 'aria-label': t('home.moods.cal.next'), disabled: future, onclick: () => shiftMonth(app, 1) }, icon('right')),
       !isCur &&
         h(
           'button',
@@ -131,10 +139,10 @@ function calendar(app) {
               app.rerender();
             },
           },
-          '回到本月',
+          t('home.moods.cal.thisMonth'),
         ),
     ),
-    h('div', { class: 'cal-week' }, HEAD.map((d) => h('span', d))),
+    h('div', { class: 'cal-week' }, HEAD.map((i) => h('span', weekday(i)))),
     h('div', { class: 'cal-grid', key: `${ui.y}-${ui.m}` }, cells),
   );
 }
@@ -148,16 +156,16 @@ function todayCard(app) {
     return h(
       'section',
       { class: 'card mood-today has', key: 'today', style: { '--mc': md.color } },
-      cardHead('🌈', '今天的心情'),
-      h('div', { class: 'mt-main' }, h('span', { class: 'mt-emo' }, md.emoji), h('div', { class: 'mt-text' }, h('b', md.name), h('p', rec.note ? `「${rec.note}」` : '没有写备注'))),
-      h('button', { type: 'button', class: 'btn ghost sm', onclick: (e) => openPicker(app, key, e.currentTarget) }, '改一改'),
+      cardHead('🌈', t('home.moods.today')),
+      h('div', { class: 'mt-main' }, h('span', { class: 'mt-emo' }, md.emoji), h('div', { class: 'mt-text' }, h('b', md.name), h('p', rec.note ? t('home.moods.todayNote', { note: rec.note }) : t('home.moods.noNote')))),
+      h('button', { type: 'button', class: 'btn ghost sm', onclick: (e) => openPicker(app, key, e.currentTarget) }, t('home.moods.change')),
     );
   }
   return h(
     'section',
     { class: 'card mood-today', key: 'today' },
-    cardHead('🌈', '今天的心情'),
-    h('p', { class: 'mt-ask' }, '今天是什么样的一天呀？点一下记下来吧'),
+    cardHead('🌈', t('home.moods.today')),
+    h('p', { class: 'mt-ask' }, t('home.moods.ask')),
     h(
       'div',
       { class: 'mt-pick' },
@@ -173,7 +181,7 @@ function todayCard(app) {
               app.recordMood(key, m.id, '');
               const r = e.currentTarget.getBoundingClientRect();
               burst(r.left + r.width / 2, r.top + r.height / 2, { emoji: [m.emoji], n: 8, spread: 24 });
-              toast(`记下啦：${m.emoji} ${m.name}`);
+              toast(t('home.moods.saved', { emoji: m.emoji, name: m.name }));
             },
           },
           h('span', m.emoji),
@@ -200,15 +208,17 @@ function summary(app) {
   return h(
     'section',
     { class: 'card mood-sum', key: 'sum' },
-    cardHead('📊', `${ui.m}月的心情`, h('span', { class: 'muted-chip' }, `记录了 ${total} 天`)),
+    cardHead('📊', t('home.moods.month.title', { month: monthName(ui.m) }), h('span', { class: 'muted-chip' }, t('home.moods.month.recorded', { n: total }))),
     total
       ? h(
           'div',
           { class: 'sum-bar', key: 'bar' },
-          counts.filter((c) => c.n).map((c) => h('i', { key: c.m.id, style: { flex: String(c.n), background: c.m.color }, title: `${c.m.name} ${c.n} 天` })),
+          counts.filter((c) => c.n).map((c) => h('i', { key: c.m.id, style: { flex: String(c.n), background: c.m.color }, title: t('home.moods.month.bar', { name: c.m.name, n: c.n }) })),
         )
       : h('div', { class: 'sum-bar empty', key: 'bar-empty' }),
-    total ? h('p', { class: 'sum-top' }, '这个月最多的是 ', h('b', `${top.m.emoji} ${top.m.name}`), `，一共 ${top.n} 天`) : h('p', { class: 'sum-top muted' }, '这个月还没有记录，从今天开始吧～'),
+    total
+      ? h('p', { class: 'sum-top' }, rich('home.moods.month.top', { n: top.n }, { mood: h('b', `${top.m.emoji} ${top.m.name}`) }))
+      : h('p', { class: 'sum-top muted' }, t('home.moods.month.none')),
     h(
       'div',
       { class: 'sum-legend' },
@@ -220,7 +230,6 @@ function summary(app) {
 export default {
   id: 'moods',
   icon: '🌈',
-  label: '心情',
   enter() {
     const d = new Date();
     ui.y = d.getFullYear();
@@ -231,7 +240,7 @@ export default {
     return h(
       'div',
       { class: 'page page-moods' },
-      pageHead('🌈', '心情', '每天记一下心情，糯米会好好记住的'),
+      pageHead('🌈', t('home.moods.title'), t('home.moods.sub', { pet: petName(app.state) })),
       h('div', { class: 'moods' }, calendar(app), h('div', { class: 'mood-side', key: 'side' }, todayCard(app), summary(app))),
     );
   },

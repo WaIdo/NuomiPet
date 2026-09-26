@@ -10,9 +10,10 @@ const core = require('../src/shared/i18n');
 
 const ROOT = path.join(__dirname, '..');
 const LOC = path.join(ROOT, 'src/shared/locales');
-const CJK = /[぀-ヿ㐀-鿿豈-﫿＀-￯　-〿]/;
-const HAN = /[㐀-鿿豈-﫿]/;
-const KANA = /[぀-ヿ]/;
+const CJK = /[\u3040-\u30ff\u3400-\u9fff\uf900-\ufaff\uff00-\uffef\u3000-\u303f]/;
+const HAN = /[\u3400-\u9fff\uf900-\ufaff]/;
+const KANA = /[\u3040-\u30ff]/;
+const NO_HAN = ['en', 'ko', 'fr', 'ar']; // 这些语言的译文里不应该有汉字
 
 const readJson = (f) => JSON.parse(fs.readFileSync(f, 'utf8'));
 const loadLang = (lang) => ({
@@ -27,11 +28,13 @@ function codeFiles() {
     .filter((f) => /\.(js|mjs|html)$/.test(f) && !f.startsWith('src/shared/locales/') && f !== 'src/shared/i18n.js');
 }
 
-// 去掉注释，保留字符串（粗略的词法扫描：字符串、模板字符串、// 和 /* */ 注释）
+// 去掉注释，保留字符串（粗略的词法扫描：字符串、模板字符串、正则字面量、// 和 /* */ 注释）
 function stripComments(src) {
   let out = '';
   let i = 0;
-  let mode = null; // null | "'" | '"' | '`' | 'line' | 'block'
+  let mode = null; // null | "'" | '"' | '`' | 'line' | 'block' | 'regex'
+  let inClass = false; // 正则里的 [...]
+  let prev = ''; // 上一个非空白字符，用来判断 / 是除号还是正则的开头
   while (i < src.length) {
     const c = src[i];
     const n = src[i + 1];
@@ -53,6 +56,22 @@ function stripComments(src) {
       i++;
       continue;
     }
+    if (mode === 'regex') {
+      out += c;
+      if (c === '\\') {
+        out += n || '';
+        i += 2;
+        continue;
+      }
+      if (c === '[') inClass = true;
+      else if (c === ']') inClass = false;
+      else if (c === '/' && !inClass) {
+        mode = null;
+        prev = '/';
+      }
+      i++;
+      continue;
+    }
     if (mode) {
       out += c;
       if (c === '\\') {
@@ -60,7 +79,10 @@ function stripComments(src) {
         i += 2;
         continue;
       }
-      if (c === mode) mode = null;
+      if (c === mode) {
+        mode = null;
+        prev = c;
+      }
       i++;
       continue;
     }
@@ -74,7 +96,16 @@ function stripComments(src) {
       i += 2;
       continue;
     }
+    // / 前面是运算符、括号、逗号或 return 时是正则的开头，否则是除号
+    if (c === '/' && (!prev || '(,=:[!&|?{};+-*%<>~^'.includes(prev) || /\breturn\s*$/.test(out.slice(-12)))) {
+      mode = 'regex';
+      inClass = false;
+      out += c;
+      i++;
+      continue;
+    }
     if (c === "'" || c === '"' || c === '`') mode = c;
+    if (!/\s/.test(c)) prev = c;
     out += c;
     i++;
   }
@@ -106,8 +137,8 @@ function checkKeys() {
   const seen = new Set();
   for (const f of codeFiles()) {
     const src = stripComments(fs.readFileSync(path.join(ROOT, f), 'utf8'));
-    // 只认独立的 t( / has( 和 i18n.t( / i18n.has(，不认 bubble.has( 这类别的对象的方法
-    const re = /(?:(?<![\w.$])|\bi18n\.)(?:t|has)\(\s*(['"`])((?:(?!\1).)+)\1/g;
+    // 只认独立的 t( / has( / rich( 和 i18n.t( / i18n.has(，不认 bubble.has( 这类别的对象的方法
+    const re = /(?:(?<![\w.$])|\bi18n\.)(?:t|has|rich)\(\s*(['"`])((?:(?!\1).)+)\1/g;
     let m;
     while ((m = re.exec(src))) {
       const key = m[2];
@@ -177,9 +208,9 @@ function checkLocales() {
         if (pa !== pb) report(`[${id}] 占位符不一致 ${section}.${k}：zh {${pa}} / ${id} {${pb}}`);
         for (const s of bs) {
           if (typeof s !== 'string') continue;
-          if (id === 'en' && HAN.test(s)) report(`[${id}] 英文里有汉字 ${section}.${k}：${s.slice(0, 60)}`);
+          if (NO_HAN.includes(id) && HAN.test(s)) report(`[${id}] 译文里有汉字 ${section}.${k}：${s.slice(0, 60)}`);
           if (id === 'ja' && HAN.test(s) && !KANA.test(s) && as.includes(s) && s.length > 1) report(`[${id}] 可能没翻译 ${section}.${k}：${s.slice(0, 60)}`);
-          if (id === 'en' && as.includes(s) && CJK.test(s)) report(`[${id}] 没翻译 ${section}.${k}`);
+          if (id !== 'ja' && id !== 'zh-TW' && as.includes(s) && CJK.test(s)) report(`[${id}] 没翻译 ${section}.${k}`);
         }
       }
       for (const k of Object.keys(b)) if (a[k] === undefined) report(`[${id}] 多出来的 ${section}.${k}`);

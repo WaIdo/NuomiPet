@@ -3,7 +3,7 @@
 // 系统字体画不出来的 emoji（Windows 10 只到 Emoji 12）也先换成老一点的。
 // 代码里直接写的 emoji 用 em() 包一下。
 import '../../shared/i18n.js';
-import { EMOJI_FALLBACK, swapEmoji } from './common.mjs';
+import { EMOJI_FALLBACK, swapEmoji, setLang as setPluralLang } from './common.mjs';
 import catalog from '../../shared/catalog.json' with { type: 'json' };
 import festivals from '../../shared/festivals.json' with { type: 'json' };
 import themes from '../../shared/themes.json' with { type: 'json' };
@@ -35,6 +35,27 @@ import ja_home from '../../shared/locales/ja/home.json' with { type: 'json' };
 import ja_pages from '../../shared/locales/ja/pages.json' with { type: 'json' };
 import ja_phrases from '../../shared/locales/ja/phrases.json' with { type: 'json' };
 import ja_data from '../../shared/locales/ja/data.json' with { type: 'json' };
+import ko_common from '../../shared/locales/ko/common.json' with { type: 'json' };
+import ko_main from '../../shared/locales/ko/main.json' with { type: 'json' };
+import ko_pet from '../../shared/locales/ko/pet.json' with { type: 'json' };
+import ko_home from '../../shared/locales/ko/home.json' with { type: 'json' };
+import ko_pages from '../../shared/locales/ko/pages.json' with { type: 'json' };
+import ko_phrases from '../../shared/locales/ko/phrases.json' with { type: 'json' };
+import ko_data from '../../shared/locales/ko/data.json' with { type: 'json' };
+import fr_common from '../../shared/locales/fr/common.json' with { type: 'json' };
+import fr_main from '../../shared/locales/fr/main.json' with { type: 'json' };
+import fr_pet from '../../shared/locales/fr/pet.json' with { type: 'json' };
+import fr_home from '../../shared/locales/fr/home.json' with { type: 'json' };
+import fr_pages from '../../shared/locales/fr/pages.json' with { type: 'json' };
+import fr_phrases from '../../shared/locales/fr/phrases.json' with { type: 'json' };
+import fr_data from '../../shared/locales/fr/data.json' with { type: 'json' };
+import ar_common from '../../shared/locales/ar/common.json' with { type: 'json' };
+import ar_main from '../../shared/locales/ar/main.json' with { type: 'json' };
+import ar_pet from '../../shared/locales/ar/pet.json' with { type: 'json' };
+import ar_home from '../../shared/locales/ar/home.json' with { type: 'json' };
+import ar_pages from '../../shared/locales/ar/pages.json' with { type: 'json' };
+import ar_phrases from '../../shared/locales/ar/phrases.json' with { type: 'json' };
+import ar_data from '../../shared/locales/ar/data.json' with { type: 'json' };
 
 const core = self.MochiI18n;
 const bundles = {
@@ -42,6 +63,9 @@ const bundles = {
   'zh-TW': { ui: core.mergeUi([zhTW_common, zhTW_main, zhTW_pet, zhTW_home, zhTW_pages]), phrases: zhTW_phrases, data: zhTW_data },
   'en': { ui: core.mergeUi([en_common, en_main, en_pet, en_home, en_pages]), phrases: en_phrases, data: en_data },
   'ja': { ui: core.mergeUi([ja_common, ja_main, ja_pet, ja_home, ja_pages]), phrases: ja_phrases, data: ja_data },
+  'ko': { ui: core.mergeUi([ko_common, ko_main, ko_pet, ko_home, ko_pages]), phrases: ko_phrases, data: ko_data },
+  'fr': { ui: core.mergeUi([fr_common, fr_main, fr_pet, fr_home, fr_pages]), phrases: fr_phrases, data: fr_data },
+  'ar': { ui: core.mergeUi([ar_common, ar_main, ar_pet, ar_home, ar_pages]), phrases: ar_phrases, data: ar_data },
 };
 
 // 各处共用的台词对象，切换语言时就地替换
@@ -72,8 +96,10 @@ function drawsInColor(emoji) {
 export const missingEmoji = new Set(Object.keys(EMOJI_FALLBACK).filter((e) => !drawsInColor(e)));
 export const em = (text) => swapEmoji(text, missingEmoji);
 
-// 换语言后名字和台词是新填进去的，缺字的 emoji 要再换一遍（这个监听最先注册，先于各窗口的重绘）
+// 换语言后名字和台词是新填进去的，缺字的 emoji 要再换一遍；common.js 的 fill 也要按新语言选单复数。
+// 这个监听最先注册，先于各窗口的重绘
 function swapData() {
+  setPluralLang(i18n.lang);
   swapEmoji(catalog, missingEmoji);
   swapEmoji(phrases, missingEmoji);
   swapEmoji(festivals, missingEmoji);
@@ -96,9 +122,12 @@ export const getLang = () => i18n.lang;
 export const petName = (state) => String((state && state.pet && state.pet.name) || '').trim() || i18n.data('defaults.petName') || '';
 export const nickname = (state) => String((state && state.owner && state.owner.nickname) || '').trim() || i18n.data('defaults.nickname') || '';
 
-// 按数据里的 runtime.lang 切换语言，同时设好 <html lang>（中日文字形、字体跟着变）。返回是否换了
+// 按数据里的 runtime.lang 切换语言，同时设好 <html lang>（字形、字体跟着变）和 <html dir>（阿拉伯文从右往左）。返回是否换了
 export function syncLang(state) {
   const changed = i18n.setLang((state && state.runtime && state.runtime.lang) || core.SOURCE);
   document.documentElement.lang = i18n.lang;
+  document.documentElement.dir = core.dirOf(i18n.lang);
   return changed;
 }
+
+export const dirOf = core.dirOf;

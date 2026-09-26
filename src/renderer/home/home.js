@@ -1,11 +1,11 @@
 // 小窝窗口：标题栏 + 侧边栏 + 各个页面。
 // 数据只有一份（app.state，来自主进程）；任何变化都重新渲染当前页面，再用 morph() 合并进页面，
 // 所以正在输入的框、开关动画、宠物动画都不会被打断。
-import { syncLang } from '../shared/i18n.mjs'; // 要最先执行：按语言填好名字和台词，缺字的 emoji 先换掉
+import { syncLang, t, petName } from '../shared/i18n.mjs'; // 要最先执行：按语言填好名字和台词，缺字的 emoji 先换掉
 import catalog from '../../shared/catalog.json' with { type: 'json' };
 import C from '../shared/common.mjs';
 import { Ambient } from '../shared/ambient.js';
-import { h, morph, cx, toast, petEl, bar, closePopover, pawGlyph, WEEK, fmtClock } from './ui.js';
+import { h, morph, cx, toast, petEl, bar, closePopover, pawGlyph, fmtClock, dateWeek, rich } from './ui.js';
 import overview from './pages/overview.js';
 import dress from './pages/dress.js';
 import reminders from './pages/reminders.js';
@@ -73,11 +73,11 @@ function set(path, value, { quiet = false } = {}) {
   return Promise.resolve(mochi.set(path, value))
     .then(
       () => {
-        if (!quiet) toast('已保存 ✓');
+        if (!quiet) toast(t('home.toast.saved'));
       },
       (err) => {
         console.error('[home] save failed', path, err);
-        toast('没保存上，再试一次吧', 'err');
+        toast(t('home.toast.saveFailed'), 'err');
         reload();
       },
     )
@@ -111,7 +111,7 @@ function recordMood(date, mood, note = '') {
   return Promise.resolve(mochi.recordMood(date, mood, note))
     .catch((err) => {
       console.error('[home] recordMood failed', err);
-      toast('没记上，再试一次吧', 'err');
+      toast(t('home.toast.moodFailed'), 'err');
       reload();
     })
     .finally(() => {
@@ -130,7 +130,9 @@ function applyData(data, paths) {
   if (!langChanged && ps.every((p) => String(p).startsWith('runtime'))) return;
   const touches = (prefix) => ps.some((p) => p === '*' || p === prefix || String(p).startsWith(prefix + '.') || prefix.startsWith(p + '.'));
   if (touches('letters')) refreshLetters();
-  if (touches('weather')) syncWeather();
+  const weatherAsked = touches('weather') && syncWeather();
+  // 换了语言：天气的描述要换成新语言的，重新要一次（主进程按当前语言返回）
+  if (langChanged && !weatherAsked) refreshWeather();
   rerender();
 }
 
@@ -166,17 +168,19 @@ function pomoNow() {
 let weatherKey = '';
 let weatherSeq = 0;
 
+// 天气开关或城市变了才重新请求；返回这次有没有发出请求
 function syncWeather() {
   const w = app.state.weather || {};
   const key = w.enabled ? `${w.lat},${w.lon},${w.city}` : '';
-  if (key === weatherKey) return;
+  if (key === weatherKey) return false;
   const first = !weatherKey;
   weatherKey = key;
   if (!key) {
     app.weather = { status: 'off', data: null };
-    return;
+    return false;
   }
   refreshWeather(!first);
+  return true;
 }
 
 async function refreshWeather(force = false) {
@@ -187,9 +191,10 @@ async function refreshWeather(force = false) {
   let next;
   try {
     const r = await mochi.weather.get(force);
-    next = r && r.ok ? { status: 'ok', data: r } : { status: 'error', error: (r && r.error) || '暂时查不到天气', data: null };
+    // 主进程没给原因时 error 留空，显示的时候再按当前语言取默认的说法
+    next = r && r.ok ? { status: 'ok', data: r } : { status: 'error', error: (r && r.error) || '', data: null };
   } catch (err) {
-    next = { status: 'error', error: '暂时查不到天气', data: null };
+    next = { status: 'error', error: '', data: null };
   }
   if (seq !== weatherSeq) return;
   app.weather = next;
@@ -231,8 +236,8 @@ function renderNow() {
   const lvl = scheduled;
   scheduled = 0;
   if (!app.state) return;
-  const name = app.state.pet?.name || '糯米';
-  if (document.title !== `${name}的小窝`) document.title = `${name}的小窝`;
+  const title = t('home.title', { pet: petName(app.state) });
+  if (document.title !== title) document.title = title;
   const theme = C.resolveTheme(app.state, catalog);
   if (document.documentElement.dataset.theme !== theme) document.documentElement.dataset.theme = theme;
   morph(els.titlebar, titlebar());
@@ -254,37 +259,39 @@ function renderNow() {
 }
 
 function titlebar() {
-  const d = new Date();
   return h(
     'header',
     { class: 'titlebar', id: 'titlebar' },
-    h('div', { class: 'tb-title' }, pawGlyph(), h('span', { class: 'tb-name' }, `${app.state.pet?.name || '糯米'}的小窝`)),
-    h('div', { class: 'tb-right' }, h('span', { class: 'tb-date' }, `${d.getMonth() + 1}月${d.getDate()}日 · ${WEEK[d.getDay()]}`)),
+    h('div', { class: 'tb-title' }, pawGlyph(), h('span', { class: 'tb-name' }, t('home.title', { pet: petName(app.state) }))),
+    h('div', { class: 'tb-right' }, h('span', { class: 'tb-date' }, dateWeek())),
   );
 }
 
 function sidebar() {
   const st = app.state;
-  const lv = C.levelFor(st.stats?.xp || 0, catalog.levels);
-  const undone = (st.todos || []).filter((t) => !t.done).length;
+  const xp = st.stats?.xp || 0;
+  const lv = C.levelFor(xp, catalog.levels);
+  const undone = (st.todos || []).filter((x) => !x.done).length;
   const unread = app.letters.some((l) => l.unlocked && !l.read);
   const pomo = pomoNow();
   const pomoLive = pomo && pomo.phase !== 'idle' && (pomo.running || pomo.paused);
-  const xpText = lv.next ? `亲密度 ${st.stats?.xp || 0} / ${lv.next.xp}` : `亲密度 ${st.stats?.xp || 0} · 已满级`;
+  const xpText = lv.next ? t('home.sidebar.xp', { xp, next: lv.next.xp }) : t('home.sidebar.xpMax', { xp });
+  const name = petName(st);
+  const homeTip = t('home.sidebar.home');
   return h(
     'aside',
     { class: 'sidebar', id: 'sidebar' },
     h(
       'div',
       { class: 'sb-profile' },
-      h('button', { type: 'button', class: 'sb-pet', title: '回到首页', 'aria-label': '回到首页', onclick: () => go('overview') }, h('span', { class: 'sb-glow' }), petEl(look(), { size: 72, blink: true, track: true, key: 'sb-pet' })),
-      h('div', { class: 'sb-name', title: st.pet?.name }, st.pet?.name || '糯米'),
+      h('button', { type: 'button', class: 'sb-pet', title: homeTip, 'aria-label': homeTip, onclick: () => go('overview') }, h('span', { class: 'sb-glow' }), petEl(look(), { size: 72, blink: true, track: true, key: 'sb-pet' })),
+      h('div', { class: 'sb-name', title: name }, name),
       h('div', { class: 'lv-chip', title: xpText }, h('b', `Lv.${lv.level}`), lv.title),
       h('div', { class: 'sb-xp', title: xpText }, bar(lv.progress, 'xp')),
     ),
     h(
       'nav',
-      { class: 'nav', 'aria-label': '页面' },
+      { class: 'nav', 'aria-label': t('home.sidebar.pages') },
       PAGES.map((p) =>
         h(
           'button',
@@ -297,14 +304,14 @@ function sidebar() {
             onclick: () => go(p.id),
           },
           h('span', { class: 'nav-ico' }, p.icon),
-          h('span', { class: 'nav-label' }, p.label),
-          p.id === 'todos' && undone > 0 && h('span', { class: 'nav-badge', title: `还有 ${undone} 件没完成` }, undone > 99 ? '99+' : undone),
-          p.id === 'letters' && unread && h('span', { class: 'nav-dot', title: '有新的信' }),
+          h('span', { class: 'nav-label' }, t(`home.nav.${p.id}`)),
+          p.id === 'todos' && undone > 0 && h('span', { class: 'nav-badge', title: t('home.sidebar.undone', { n: undone }) }, undone > 99 ? '99+' : undone),
+          p.id === 'letters' && unread && h('span', { class: 'nav-dot', title: t('home.sidebar.newLetter') }),
           p.id === 'focus' && pomoLive && h('span', { class: cx('nav-timer', 'nt-' + pomo.phase, { paused: pomo.paused }) }, fmtClock(pomo.remaining)),
         ),
       ),
     ),
-    h('div', { class: 'sb-foot' }, '今天也要开开心心的 ', h('span', { class: 'sb-heart' }, '♡')),
+    h('div', { class: 'sb-foot' }, rich('home.sidebar.foot', {}, { heart: h('span', { class: 'sb-heart' }, '♡') })),
   );
 }
 
@@ -373,7 +380,7 @@ function fatal(msg) {
 
 async function boot() {
   if (!mochi) {
-    fatal('没有连接到桌宠主程序，请从应用里打开小窝～');
+    fatal(t('home.fatal.noHost'));
     return;
   }
   document.documentElement.dataset.platform = mochi.platform || '';
@@ -394,7 +401,7 @@ async function boot() {
     syncLang(app.state);
   } catch (err) {
     console.error('[home] getData failed', err);
-    fatal('读取数据失败了，关掉小窝再打开试试～');
+    fatal(t('home.fatal.loadFailed'));
     return;
   }
   weatherKey = '';

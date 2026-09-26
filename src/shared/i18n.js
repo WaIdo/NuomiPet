@@ -3,7 +3,8 @@
 //   common.json main.json pet.json home.json pages.json  界面文字，按模块分文件，读入后合并成一棵树
 //   phrases.json                                        宠物说的话，每组一个数组
 //   data.json                                           物种、配色、食物、节日、主题、天气等的显示名字，以及默认内容
-// 某种语言缺的文字依次回退：繁体 → 简体；英语 → 简体；日语 → 英语 → 简体。
+// 某种语言缺的文字依次回退：繁体 → 简体；英语 → 简体；其他语言 → 英语 → 简体。
+// 阿拉伯文从右往左排（dirOf），各窗口据此设置 <html dir>。
 (function (root, factory) {
   if (typeof module === 'object' && module.exports) module.exports = factory();
   else root.MochiI18n = factory();
@@ -16,6 +17,9 @@
     { id: 'zh-TW', name: '繁體中文' },
     { id: 'en', name: 'English' },
     { id: 'ja', name: '日本語' },
+    { id: 'ko', name: '한국어' },
+    { id: 'fr', name: 'Français' },
+    { id: 'ar', name: 'العربية', dir: 'rtl' },
   ];
   const IDS = LANGS.map((l) => l.id);
   const SOURCE = 'zh-CN';
@@ -26,10 +30,11 @@
     const s = String(tag || '').toLowerCase().replace(/_/g, '-');
     if (!s) return null;
     if (s === 'zh' || s.startsWith('zh-')) return /(^|-)(hant|tw|hk|mo)(-|$)/.test(s) ? 'zh-TW' : 'zh-CN';
-    if (s === 'ja' || s.startsWith('ja-')) return 'ja';
-    if (s === 'en' || s.startsWith('en-')) return 'en';
+    for (const id of ['ja', 'en', 'ko', 'fr', 'ar']) if (s === id || s.startsWith(id + '-')) return id;
     return null;
   }
+
+  const dirOf = (lang) => ((LANGS.find((l) => l.id === lang) || {}).dir === 'rtl' ? 'rtl' : 'ltr');
 
   // 设置里的语言（'auto' 或具体语言）+ 系统的首选语言列表 → 实际使用的语言
   function resolveLang(setting, systemLangs) {
@@ -42,18 +47,46 @@
   }
 
   function chain(lang) {
+    if (lang === 'zh-CN' || !IDS.includes(lang)) return ['zh-CN'];
     if (lang === 'zh-TW') return ['zh-TW', 'zh-CN'];
     if (lang === 'en') return ['en', 'zh-CN'];
-    if (lang === 'ja') return ['ja', 'en', 'zh-CN'];
-    return ['zh-CN'];
+    return [lang, 'en', 'zh-CN'];
   }
 
-  // {name} 换成变量；{n|单数|复数} 按数字选单复数（英语用，比如 "{n} {n|day|days}"）
-  function fill(tpl, vars) {
+  // 单复数：按这种语言的规则（Intl.PluralRules）算出类别 zero/one/two/few/many/other
+  const rules = {};
+  function pluralCategory(n, lang) {
+    try {
+      const r = rules[lang] || (rules[lang] = new Intl.PluralRules(lang || 'en'));
+      return r.select(n);
+    } catch {
+      return n === 1 ? 'one' : 'other';
+    }
+  }
+
+  // {n|单数|复数}：两种写法（英语、法语）；{n|one:…|few:…|other:…}：按类别写（阿拉伯语等）
+  function pickPlural(n, body, lang) {
+    const forms = body.split('|');
+    const cat = pluralCategory(n, lang);
+    if (forms.every((f) => /^(zero|one|two|few|many|other):/.test(f))) {
+      const map = {};
+      for (const f of forms) map[f.slice(0, f.indexOf(':'))] = f.slice(f.indexOf(':') + 1);
+      return map[cat] !== undefined ? map[cat] : map.other !== undefined ? map.other : '';
+    }
+    if (forms.length === 2) return cat === 'one' ? forms[0] : forms[1];
+    return null;
+  }
+
+  // {name} 换成变量；{n|…} 按数字选单复数（见 pickPlural）
+  function fill(tpl, vars, lang) {
     if (tpl === undefined || tpl === null) return '';
     const v = vars || {};
     return String(tpl)
-      .replace(/\{(\w+)\|([^|{}]*)\|([^{}]*)\}/g, (m, k, one, other) => (v[k] === undefined || v[k] === null ? m : Number(v[k]) === 1 ? one : other))
+      .replace(/\{(\w+)\|([^{}]*)\}/g, (m, k, body) => {
+        if (v[k] === undefined || v[k] === null) return m;
+        const out = pickPlural(Number(v[k]), body, lang);
+        return out === null ? m : out;
+      })
       .replace(/\{(\w+)\}/g, (m, k) => (v[k] !== undefined && v[k] !== null ? v[k] : m));
   }
 
@@ -96,7 +129,7 @@
     function t(key, vars) {
       const val = lookup('ui', key);
       if (val === undefined) return key;
-      return typeof val === 'string' ? fill(val, vars) : clone(val);
+      return typeof val === 'string' ? fill(val, vars, lang) : clone(val);
     }
 
     const has = (key) => lookup('ui', key) !== undefined;
@@ -113,7 +146,7 @@
       if (!p || !p.m) return '';
       const months = t('date.months');
       const vars = { y: p.y, m: p.m, d: p.d, mon: Array.isArray(months) ? months[p.m - 1] : p.m };
-      return fill(t(withYear && p.y ? 'date.ymd' : 'date.md'), vars);
+      return fill(t(withYear && p.y ? 'date.ymd' : 'date.md'), vars, lang);
     }
 
     // 星期几（0 = 星期日）
@@ -172,7 +205,7 @@
       has,
       data,
       lines,
-      fill,
+      fill: (tpl, vars) => fill(tpl, vars, lang),
       fmtDate,
       weekday,
       setLang,
@@ -183,5 +216,5 @@
     };
   }
 
-  return { LANGS, IDS, SOURCE, UI_FILES, matchLang, resolveLang, fill, mergeUi, createI18n };
+  return { LANGS, IDS, SOURCE, UI_FILES, matchLang, resolveLang, dirOf, pluralCategory, fill, mergeUi, createI18n };
 });

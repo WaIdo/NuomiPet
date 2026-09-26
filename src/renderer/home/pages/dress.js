@@ -1,14 +1,16 @@
 // 装扮：名字、物种、配色、配饰、花纹、大小。每个改动都立刻写回，桌面上的宠物会跟着变。
 import { h, cx, petEl, pageHead, cardHead, segmented, toast, icon } from '../ui.js';
+import { t, petName } from '../../shared/i18n.mjs';
 
 const nameOf = (list, id) => (list.find((x) => x.id === id) || list[0] || {}).name || '';
 
+// 名字是空的表示用当前语言的默认名字；起过名字以后不能再清空
 function commitName(app, input) {
-  const cur = app.state.pet.name;
+  const cur = app.state.pet.name || '';
   const v = input.value.trim().slice(0, 8);
   if (!v) {
     input.value = cur;
-    toast('名字不能是空的哦');
+    if (cur) toast(t('home.dress.nameEmpty'));
     return;
   }
   input.value = v;
@@ -53,23 +55,23 @@ function swatch(app, pal, on) {
   );
 }
 
-function section(emoji, title, body, sub) {
-  return h('section', { class: 'card dress-sec', key: title }, cardHead(emoji, title, null, sub), body);
+function section(id, emoji, title, body, sub) {
+  return h('section', { class: 'card dress-sec', key: id }, cardHead(emoji, title, null, sub), body);
 }
 
 export default {
   id: 'dress',
   icon: '🎀',
-  label: '装扮',
   render(app) {
     const p = app.state.pet;
+    const name = petName(app.state);
     const cat = app.catalog;
     const look = app.look();
     const tags = [nameOf(cat.species, p.species), nameOf(cat.palettes, p.color), p.accessory !== 'none' && nameOf(cat.accessories, p.accessory), p.markings !== 'none' && nameOf(cat.markings, p.markings), nameOf(cat.sizes, p.size)].filter(Boolean);
     return h(
       'div',
       { class: 'page page-dress' },
-      pageHead('🎀', '装扮', `给${p.name}换个新造型吧，桌面上的它会马上变身～`),
+      pageHead('🎀', t('home.nav.dress'), t('home.dress.sub', { pet: name })),
       h(
         'div',
         { class: 'dress' },
@@ -77,48 +79,50 @@ export default {
           'aside',
           { class: 'card dress-preview', key: 'preview' },
           h('div', { class: 'dp-stage' }, h('span', { class: 'dp-glow' }), h('span', { class: 'dp-floor' }), petEl(look, { size: 212, blink: true, track: true, key: 'dress-pet' })),
-          h('div', { class: 'dp-name' }, p.name),
-          h('div', { class: 'dp-tags' }, tags.map((t, i) => h('span', { class: 'tag', key: 't' + i }, t))),
-          h('p', { class: 'dp-hint' }, '点一下右边的选项，马上就能看到效果'),
+          h('div', { class: 'dp-name' }, name),
+          h('div', { class: 'dp-tags' }, tags.map((tag, i) => h('span', { class: 'tag', key: 't' + i }, tag))),
+          h('p', { class: 'dp-hint' }, t('home.dress.hint')),
         ),
         h(
           'div',
           { class: 'dress-ctrls' },
           section(
+            'name',
             '📝',
-            '名字',
+            t('home.dress.name'),
             h(
               'div',
               { class: 'name-row' },
               h('input', {
                 class: 'input',
                 key: 'pet-name',
-                value: p.name,
+                value: p.name || '',
                 maxlength: 8,
-                placeholder: '给它起个名字',
-                'aria-label': '宠物名字',
+                placeholder: petName(null),
+                'aria-label': t('home.dress.nameLabel'),
                 onchange: (e) => commitName(app, e.target),
                 onkeydown: (e) => {
                   if (e.key === 'Enter' && !e.isComposing) e.target.blur();
                 },
               }),
-              h('span', { class: 'hint' }, '最多 8 个字'),
+              h('span', { class: 'hint' }, t('home.dress.nameMax', { n: 8 })),
             ),
           ),
-          section('🐾', '物种', h('div', { class: 'opt-grid species' }, cat.species.map((sp) => option(app, 'pet.species', sp.id, p.species === sp.id, sp.name, { ...look, species: sp.id })))),
-          section('🎨', '配色', h('div', { class: 'swatches' }, cat.palettes.map((pal) => swatch(app, pal, p.color === pal.id)))),
-          section('👒', '配饰', h('div', { class: 'opt-grid acc' }, cat.accessories.map((a) => option(app, 'pet.accessory', a.id, p.accessory === a.id, a.name, { ...look, accessory: a.id })))),
-          section('✨', '花纹', h('div', { class: 'opt-grid marks' }, cat.markings.map((m) => option(app, 'pet.markings', m.id, p.markings === m.id, m.name, { ...look, markings: m.id })))),
+          section('species', '🐾', t('home.dress.species'), h('div', { class: 'opt-grid species' }, cat.species.map((sp) => option(app, 'pet.species', sp.id, p.species === sp.id, sp.name, { ...look, species: sp.id })))),
+          section('color', '🎨', t('home.dress.color'), h('div', { class: 'swatches' }, cat.palettes.map((pal) => swatch(app, pal, p.color === pal.id)))),
+          section('accessory', '👒', t('home.dress.accessory'), h('div', { class: 'opt-grid acc' }, cat.accessories.map((a) => option(app, 'pet.accessory', a.id, p.accessory === a.id, a.name, { ...look, accessory: a.id })))),
+          section('markings', '✨', t('home.dress.markings'), h('div', { class: 'opt-grid marks' }, cat.markings.map((m) => option(app, 'pet.markings', m.id, p.markings === m.id, m.name, { ...look, markings: m.id })))),
           section(
+            'size',
             '📏',
-            '大小',
+            t('home.dress.size'),
             segmented(
               cat.sizes.map((x) => ({ value: x.id, label: x.name })),
               p.size,
               (v) => app.set('pet.size', v),
               { cls: 'wide' },
             ),
-            '桌面上的宠物有多大只',
+            t('home.dress.sizeHint'),
           ),
         ),
       ),

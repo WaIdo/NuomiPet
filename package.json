@@ -23,7 +23,9 @@
   },
   "devDependencies": {
     "electron": "^44.4.5",
-    "electron-builder": "^26.15.3"
+    "electron-builder": "^26.15.3",
+    "hoodiecrow-imap": "^2.1.0",
+    "smtp-server": "^3.19.13"
   },
   "build": {
     "appId": "com.mochi.desktoppet",
@@ -46,7 +48,11 @@
       "zh-TW",
       "zh_TW",
       "en-US",
-      "en"
+      "en",
+      "ja",
+      "ko",
+      "fr",
+      "ar"
     ],
     "mac": {
       "target": [
@@ -140,5 +146,10 @@
         "to": "LICENSE.md"
       }
     ]
+  },
+  "dependencies": {
+    "imapflow": "^2.0.7",
+    "mailparser": "^3.9.28",
+    "nodemailer": "^10.0.10"
   }
 }

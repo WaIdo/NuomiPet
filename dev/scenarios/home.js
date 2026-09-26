@@ -12,7 +12,7 @@ module.exports = async ({ app, store, scheduler, openHome, capture, pomodoro }) 
   scheduler.goAway = () => {};
   const day = (offset) => { const d = new Date(); d.setDate(d.getDate() + offset); return C.dateKey(d); };
   store.set('owner.nickname', '小橘子');
-  store.set('owner.sender', '阿杰');
+  store.set('owner.sender', '豪豪');
   store.set('love.togetherSince', day(-412));
   store.set('love.birthday', '1999-' + day(12).slice(5));
   store.set('love.anniversaries', [

@@ -7,6 +7,7 @@
 //   pomo=idle|paused|short|long 番茄钟状态（默认：专注中）
 //   mood=today            今天已经记过心情
 //   letters=none          信箱为空
+//   lang=zh-CN|zh-TW|en|ja 界面语言（默认 zh-CN；设置页选「跟随系统」时也用它）
 const { contextBridge } = require('electron');
 const { createDefaults } = require('../src/main/defaults.js');
 const C = require('../src/shared/common.js');
@@ -40,9 +41,9 @@ function sampleData() {
   const bd = new Date(now);
   bd.setDate(bd.getDate() + 12);
   const data = createDefaults({
-    petName: '糯米',
-    nickname: '宝贝',
-    sender: '阿泽',
+    petName: '糯米', // i18n-ignore: 模拟数据
+    nickname: '宝贝', // i18n-ignore: 模拟数据
+    sender: '阿泽', // i18n-ignore: 模拟数据
     species: 'cat',
     color: 'milk',
     accessory: 'bow',
@@ -51,11 +52,11 @@ function sampleData() {
     togetherSince: dk(-399),
     birthday: `1999-${C.pad2(bd.getMonth() + 1)}-${C.pad2(bd.getDate())}`,
     anniversaries: [
-      { name: '第一次约会', date: shiftedKey(-3, 40), kind: 'yearly' },
-      { name: '一起去看海', date: dk(23), kind: 'countdown' },
-      { name: '搬进我们的小家', date: dk(-1023), kind: 'since' },
+      { name: '第一次约会', date: shiftedKey(-3, 40), kind: 'yearly' }, // i18n-ignore: 模拟数据
+      { name: '一起去看海', date: dk(23), kind: 'countdown' }, // i18n-ignore: 模拟数据
+      { name: '搬进我们的小家', date: dk(-1023), kind: 'since' }, // i18n-ignore: 模拟数据
     ],
-    notes: ['今天也要开开心心的呀', '不管发生什么，都有人站在你这边', '你已经很努力啦，要记得夸夸自己', '累了就停下来歇一歇，没关系的', '你是被好好爱着的人'],
+    notes: ['今天也要开开心心的呀', '不管发生什么，都有人站在你这边', '你已经很努力啦，要记得夸夸自己', '累了就停下来歇一歇，没关系的', '你是被好好爱着的人'], // i18n-ignore: 模拟数据
   });
   data.createdAt = at(-127, 20, 30);
   data.stats.xp = 150;
@@ -64,26 +65,26 @@ function sampleData() {
   data.stats.counters = { pets: 88, feeds: 41, plays: 17, waters: 203, pomodoros: 36, todos: 52 };
   data.stats.daily = { date: dk(0), water: 3, pomodoros: 3, focusMinutes: 75, pets: 4, feeds: 2 };
   data.todos = [
-    { id: 't1', text: '整理这周的读书笔记', done: true, createdAt: at(0, 9, 12), doneAt: at(0, 10, 40) },
-    { id: 't2', text: '给妈妈打个电话', done: false, createdAt: at(0, 9, 30), doneAt: null },
-    { id: 't3', text: '下班路上买一束花 🌷', done: false, createdAt: at(0, 11, 5), doneAt: null },
-    { id: 't4', text: '晚上去跑步 3 公里，回来记得拉伸，不然第二天腿会酸', done: false, createdAt: at(-1, 20, 15), doneAt: null },
+    { id: 't1', text: '整理这周的读书笔记', done: true, createdAt: at(0, 9, 12), doneAt: at(0, 10, 40) }, // i18n-ignore: 模拟数据
+    { id: 't2', text: '给妈妈打个电话', done: false, createdAt: at(0, 9, 30), doneAt: null }, // i18n-ignore: 模拟数据
+    { id: 't3', text: '下班路上买一束花 🌷', done: false, createdAt: at(0, 11, 5), doneAt: null }, // i18n-ignore: 模拟数据
+    { id: 't4', text: '晚上去跑步 3 公里，回来记得拉伸，不然第二天腿会酸', done: false, createdAt: at(-1, 20, 15), doneAt: null }, // i18n-ignore: 模拟数据
   ];
   data.reminders.custom = [
-    { id: 'r1', time: '10:00', text: '周会，记得带上笔记本', repeat: 'weekdays', enabled: true },
-    { id: 'r2', time: '21:30', text: '敷面膜，然后早点洗漱', repeat: 'daily', enabled: true },
-    { id: 'r3', time: '15:00', text: '去驿站取快递', repeat: 'once', date: dk(1), enabled: false },
+    { id: 'r1', time: '10:00', text: '周会，记得带上笔记本', repeat: 'weekdays', enabled: true }, // i18n-ignore: 模拟数据
+    { id: 'r2', time: '21:30', text: '敷面膜，然后早点洗漱', repeat: 'daily', enabled: true }, // i18n-ignore: 模拟数据
+    { id: 'r3', time: '15:00', text: '去驿站取快递', repeat: 'once', date: dk(1), enabled: false }, // i18n-ignore: 模拟数据
   ];
   const ids = ['good', 'great', 'calm', 'tired', 'good', 'calm', 'sad', 'good', 'great', 'angry', 'calm', 'good', 'tired', 'great', 'good'];
-  const notes = { 2: '和同事一起吃了火锅', 7: '加班到好晚', 10: '下雨没带伞', 15: '收到了一束花！' };
+  const notes = { 2: '和同事一起吃了火锅', 7: '加班到好晚', 10: '下雨没带伞', 15: '收到了一束花！' }; // i18n-ignore: 模拟数据
   const days = [1, 2, 4, 5, 7, 8, 10, 12, 13, 15, 17, 18, 20, 22, 24];
   days.forEach((d, i) => {
     if (d >= now.getDate()) return;
     const key = `${now.getFullYear()}-${C.pad2(now.getMonth() + 1)}-${C.pad2(d)}`;
     data.moods[key] = { mood: ids[i], note: notes[d] || '', at: at(d - now.getDate(), 22, 0) };
   });
-  if (q.get('mood') === 'today') data.moods[dk(0)] = { mood: 'great', note: '今天被夸了', at: Date.now() };
-  data.weather = { enabled: true, city: '杭州', lat: 30.29, lon: 120.16 };
+  if (q.get('mood') === 'today') data.moods[dk(0)] = { mood: 'great', note: '今天被夸了', at: Date.now() }; // i18n-ignore: 模拟数据
+  data.weather = { enabled: true, city: '杭州', lat: 30.29, lon: 120.16 }; // i18n-ignore: 模拟数据
   data.letters.read = { hello: true };
   data.settings.launchAtLogin = true;
   return data;
@@ -95,7 +96,15 @@ function emptyData() {
   return data;
 }
 
-let data = scenario === 'empty' ? emptyData() : sampleData();
+// 界面语言：真实程序里由主进程按「设置 → 语言」和系统语言算出来，写进 runtime.lang
+const LANG = q.get('lang') || 'zh-CN';
+function withLang(d) {
+  d.settings.language = d.settings.language || 'auto';
+  d.runtime.lang = LANG;
+  return d;
+}
+
+let data = withLang(scenario === 'empty' ? emptyData() : sampleData());
 
 const LETTERS =
   scenario === 'empty' || q.get('letters') === 'none'
@@ -103,25 +112,25 @@ const LETTERS =
     : [
         {
           id: 'hello',
-          title: '糯米的自我介绍',
-          from: '糯米',
+          title: '糯米的自我介绍', // i18n-ignore: 模拟数据
+          from: '糯米', // i18n-ignore: 模拟数据
           unlock: '',
-          body: '你好呀！\n\n我是糯米，一只软乎乎的小团子。从今天开始，我就住在你的桌面上啦。\n\n你工作的时候，我会安安静静地陪着你；你忘记喝水的时候，我会提醒你；你坐太久的时候，我会喊你起来伸个懒腰。\n\n还有，有人拜托我好好照顾你。所以，请多多指教啦！',
+          body: '你好呀！\n\n我是糯米，一只软乎乎的小团子。从今天开始，我就住在你的桌面上啦。\n\n你工作的时候，我会安安静静地陪着你；你忘记喝水的时候，我会提醒你；你坐太久的时候，我会喊你起来伸个懒腰。\n\n还有，有人拜托我好好照顾你。所以，请多多指教啦！', // i18n-ignore: 模拟数据
         },
         {
           id: 'first',
-          title: '写给第一次打开小窝的你',
-          from: '阿泽',
+          title: '写给第一次打开小窝的你', // i18n-ignore: 模拟数据
+          from: '阿泽', // i18n-ignore: 模拟数据
           unlock: dk(-2),
           body:
-            '宝贝：\n\n见字如面。\n\n想了很久要送你什么，最后决定做一只小猫陪着你。你总说上班的时候没人提醒你喝水，一忙起来就忘了吃饭，所以我把这些事都交给糯米啦。\n\n它可能有点吵，会在你专心的时候探出头来，也会在你难过的时候安安静静地待着。就像我一样，虽然不能时时刻刻在你身边，但一直都在想着你。\n\n如果哪天你觉得累了，就摸摸它的头吧。它会替我抱抱你。\n\n我们已经一起走过了四百天，还有好多好多个四百天在等着我们。去看海的约定，我记着呢。\n\n不管发生什么，都有人站在你这边。\n\n永远爱你的阿泽',
+            '宝贝：\n\n见字如面。\n\n想了很久要送你什么，最后决定做一只小猫陪着你。你总说上班的时候没人提醒你喝水，一忙起来就忘了吃饭，所以我把这些事都交给糯米啦。\n\n它可能有点吵，会在你专心的时候探出头来，也会在你难过的时候安安静静地待着。就像我一样，虽然不能时时刻刻在你身边，但一直都在想着你。\n\n如果哪天你觉得累了，就摸摸它的头吧。它会替我抱抱你。\n\n我们已经一起走过了四百天，还有好多好多个四百天在等着我们。去看海的约定，我记着呢。\n\n不管发生什么，都有人站在你这边。\n\n永远爱你的阿泽', // i18n-ignore: 模拟数据
         },
         {
           id: 'birthday',
-          title: '生日那天再拆开',
-          from: '阿泽',
+          title: '生日那天再拆开', // i18n-ignore: 模拟数据
+          from: '阿泽', // i18n-ignore: 模拟数据
           unlock: dk(12),
-          body: '生日快乐！',
+          body: '生日快乐！', // i18n-ignore: 模拟数据
         },
       ];
 
@@ -218,42 +227,42 @@ function pomoCmd(cmd) {
 
 const WEATHER = {
   ok: true,
-  city: '杭州',
+  city: '杭州', // i18n-ignore: 模拟数据
   temp: 24,
   feels: 25,
   code: 2,
-  desc: '多云',
+  desc: '多云', // i18n-ignore: 模拟数据
   emoji: '⛅',
   max: 27,
   min: 19,
   rainProb: 20,
   uv: 5,
-  advice: '温度刚刚好，早晚有点凉，出门带件薄外套吧～',
-  tomorrow: { desc: '小雨', emoji: '🌦️', max: 23, min: 18, rainProb: 70 },
+  advice: '温度刚刚好，早晚有点凉，出门带件薄外套吧～', // i18n-ignore: 模拟数据
+  tomorrow: { desc: '小雨', emoji: '🌦️', max: 23, min: 18, rainProb: 70 }, // i18n-ignore: 模拟数据
   updatedAt: Date.now(),
 };
 
 function weatherGet() {
   const mode = q.get('weather');
   if (mode === 'slow') return new Promise(() => {});
-  return new Promise((r) => setTimeout(() => r(mode === 'error' ? { ok: false, error: '网络好像开小差了' } : clone(WEATHER)), 120));
+  return new Promise((r) => setTimeout(() => r(mode === 'error' ? { ok: false, error: '网络好像开小差了' } : clone(WEATHER)), 120)); // i18n-ignore: 模拟数据
 }
 
 function weatherSearch(text) {
   const all = [
-    { name: '杭州', admin1: '浙江', country: '中国', latitude: 30.29, longitude: 120.16 },
-    { name: '上海', admin1: '上海', country: '中国', latitude: 31.22, longitude: 121.46 },
-    { name: '成都', admin1: '四川', country: '中国', latitude: 30.66, longitude: 104.06 },
+    { name: '杭州', admin1: '浙江', country: '中国', latitude: 30.29, longitude: 120.16 }, // i18n-ignore: 模拟数据
+    { name: '上海', admin1: '上海', country: '中国', latitude: 31.22, longitude: 121.46 }, // i18n-ignore: 模拟数据
+    { name: '成都', admin1: '四川', country: '中国', latitude: 30.66, longitude: 104.06 }, // i18n-ignore: 模拟数据
     { name: 'Tokyo', admin1: 'Tokyo', country: 'Japan', latitude: 35.69, longitude: 139.69 },
   ];
   const res = all.filter((c) => c.name.toLowerCase().includes(String(text).toLowerCase()) || String(text).includes(c.name));
-  return new Promise((r) => setTimeout(() => r(res.length ? res : text === '杭' ? all.slice(0, 1) : []), 150));
+  return new Promise((r) => setTimeout(() => r(res.length ? res : text === '杭' ? all.slice(0, 1) : []), 150)); // i18n-ignore: 模拟数据
 }
 
 /* ---------------- 暴露给页面 ---------------- */
 
 const reset = () => {
-  data = emptyData();
+  data = withLang(emptyData());
   emit(['*']);
   return Promise.resolve({ ok: true });
 };
@@ -264,7 +273,13 @@ contextBridge.exposeInMainWorld('mochi', {
   getData: () => Promise.resolve(clone(data)),
   set: (path, value) => {
     setPath(data, path, value);
-    emit([path]);
+    const paths = [path];
+    // 模拟主进程：改了语言设置就算出实际用的语言（跟随系统时用 URL 里的 lang）
+    if (path === 'settings.language') {
+      data.runtime.lang = value === 'auto' ? LANG : value;
+      paths.push('runtime.lang');
+    }
+    emit(paths);
     return Promise.resolve(true);
   },
   onData: (cb) => sub(listeners.data, cb),
@@ -310,7 +325,7 @@ contextBridge.exposeInMainWorld('mochi', {
     isVisible: () => Promise.resolve(true),
   },
   reminderAck: (id, action) => log.push({ type: 'reminderAck', id, action }),
-  fortune: () => Promise.resolve({ stars: '★★★★☆', good: ['喝奶茶', '早点睡'], bad: ['熬夜'] }),
+  fortune: () => Promise.resolve({ stars: '★★★★☆', good: ['喝奶茶', '早点睡'], bad: ['熬夜'] }), // i18n-ignore: 模拟数据
 
   pomodoro: {
     get: () => Promise.resolve(clone(pomo)),
@@ -341,13 +356,13 @@ contextBridge.exposeInMainWorld('mochi', {
   openHome: (page) => log.push({ type: 'openHome', page }),
   onNavigate: (cb) => sub(listeners.nav, cb),
   app: {
-    info: () => Promise.resolve({ name: '糯米桌宠', version: '1.0.0', electron: process.versions.electron, platform: process.platform, userData: '/Users/me/Library/Application Support/糯米桌宠' }),
+    info: () => Promise.resolve({ name: '糯米桌宠', version: '1.0.0', electron: process.versions.electron, platform: process.platform, userData: '/Users/me/Library/Application Support/糯米桌宠' }), // i18n-ignore: 模拟数据
     setLoginItem: (on) => {
       data.settings.launchAtLogin = !!on;
       emit(['settings.launchAtLogin']);
       return Promise.resolve(!!on);
     },
-    exportData: () => Promise.resolve({ ok: true, path: '/Users/me/Desktop/糯米的小窝-备份.json' }),
+    exportData: () => Promise.resolve({ ok: true, path: '/Users/me/Desktop/糯米的小窝-备份.json' }), // i18n-ignore: 模拟数据
     importData: () => Promise.resolve({ ok: false }),
     resetData: () => reset(),
     quit: () => log.push({ type: 'quit' }),

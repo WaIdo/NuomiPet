@@ -4,6 +4,7 @@
 // 另外还有开关、分段选择、步进器、时间/日期选择、弹窗、气泡菜单、提示和小特效。
 import { PetView } from '../shared/pet-view.js';
 import { pad2, parseKey } from '../shared/common.mjs';
+import { t, fill, fmtDate as fmtParts, weekday } from '../shared/i18n.mjs';
 
 const SVG_NS = 'http://www.w3.org/2000/svg';
 
@@ -363,7 +364,8 @@ export function cardHead(emoji, title, extra, sub) {
     h(
       'div',
       { class: 'ch-text' },
-      h('h3', { class: 'card-title' }, emoji && h('span', { class: 'ct-emoji' }, emoji), title),
+      // 标题文字单独包一层，放不下时才能显示省略号（flex 容器里的裸文字不会出省略号）
+      h('h3', { class: 'card-title' }, emoji && h('span', { class: 'ct-emoji' }, emoji), h('span', { class: 'ct-text' }, title)),
       sub && h('p', { class: 'card-sub' }, sub),
     ),
     extra && h('div', { class: 'ch-extra' }, extra),
@@ -435,7 +437,8 @@ export function segmented(options, value, onChange, o = {}) {
             if (opt.value !== value) onChange(opt.value);
           },
         },
-        opt.label,
+        // 包一层才能在放不下时显示省略号
+        h('span', { class: 'seg-label' }, opt.label),
       ),
     ),
   );
@@ -450,9 +453,9 @@ export function stepper(value, { min = 1, max = 99, step = 1, unit = '', onChang
   return h(
     'div',
     { class: 'stepper', key },
-    h('button', { type: 'button', class: 'st-btn', disabled: v <= min, 'aria-label': '减少', onclick: () => go(-step) }, '−'),
+    h('button', { type: 'button', class: 'st-btn', disabled: v <= min, 'aria-label': t('ui.stepper.less'), onclick: () => go(-step) }, '−'),
     h('span', { class: 'st-val' }, h('b', v), unit && h('small', unit)),
-    h('button', { type: 'button', class: 'st-btn', disabled: v >= max, 'aria-label': '增加', onclick: () => go(step) }, '+'),
+    h('button', { type: 'button', class: 'st-btn', disabled: v >= max, 'aria-label': t('ui.stepper.more'), onclick: () => go(step) }, '+'),
   );
 }
 
@@ -471,13 +474,13 @@ export function timePicker(value, onChange, o = {}) {
     { class: cx('timepick', o.cls), key: o.key, title: o.title },
     h(
       'select',
-      { value: String(hh), 'aria-label': '小时', onchange: (e) => emit(+e.target.value, mm) },
+      { value: String(hh), 'aria-label': t('ui.time.hour'), onchange: (e) => emit(+e.target.value, mm) },
       Array.from({ length: 24 }, (_, i) => h('option', { value: String(i) }, pad2(i))),
     ),
     h('span', { class: 'tp-colon' }, ':'),
     h(
       'select',
-      { value: String(mm), 'aria-label': '分钟', onchange: (e) => emit(hh, +e.target.value) },
+      { value: String(mm), 'aria-label': t('ui.time.minute'), onchange: (e) => emit(hh, +e.target.value) },
       mins.map((i) => h('option', { value: String(i) }, pad2(i))),
     ),
   );
@@ -525,12 +528,15 @@ export function datePicker(id, value, onChange, o = {}) {
         opts,
       ),
     );
+  const months = t('date.months');
+  const mon = (m) => (Array.isArray(months) ? months[m - 1] : String(m));
+  const [yl, ml, dl] = [t('ui.datePicker.year'), t('ui.datePicker.month'), t('ui.datePicker.day')];
   return h(
     'span',
     { class: cx('datepick', o.cls), key: o.key || id },
-    sel('年', cur.y, years.map((y) => h('option', { value: String(y) }, `${y}年`)), 'y', o.noYear ? '不填年份' : '年'),
-    sel('月', cur.m, Array.from({ length: 12 }, (_, i) => h('option', { value: String(i + 1) }, `${i + 1}月`)), 'm', '月'),
-    sel('日', cur.d, Array.from({ length: dim }, (_, i) => h('option', { value: String(i + 1) }, `${i + 1}日`)), 'd', '日'),
+    sel(yl, cur.y, years.map((y) => h('option', { value: String(y) }, t('date.year', { y }))), 'y', o.noYear ? t('date.noYear') : yl),
+    sel(ml, cur.m, Array.from({ length: 12 }, (_, i) => h('option', { value: String(i + 1) }, t('date.month', { m: i + 1, mon: mon(i + 1) }))), 'm', ml),
+    sel(dl, cur.d, Array.from({ length: dim }, (_, i) => h('option', { value: String(i + 1) }, t('date.day', { d: i + 1 }))), 'd', dl),
   );
 }
 
@@ -558,7 +564,7 @@ export function toast(msg, kind = '') {
 /* ============================== 弹窗 ============================== */
 
 // onOk：点确定时先调用，返回 false（或 Promise<false>）则不关闭，用于校验表单。cls：额外的样式名。
-export function modal({ title, text, body, ok = '好的', cancel = '取消', danger = false, look = null, pose = 'idle', face = null, onOk = null, cls = '' }) {
+export function modal({ title, text, body, ok = t('common.ok'), cancel = t('common.cancel'), danger = false, look = null, pose = 'idle', face = null, onOk = null, cls = '' }) {
   closePopover();
   return new Promise((resolve) => {
     let done = false;
@@ -758,15 +764,45 @@ export function hearts(x, y, o = {}) {
   }
 }
 
+/* ============================== 带元素的文字 ============================== */
+
+// 文字里夹着元素（比如加粗的数字）：先按当前语言取整句，再把 nodes 里的占位符换成元素。
+// vars 照常填文字和单复数（{n|day|days} 要用数字）；nodes 里同名的占位符 {n} 换成元素。
+// 返回字符串和元素组成的数组，直接当 h() 的子节点用。
+export function rich(key, vars = {}, nodes = {}) {
+  const MARK = '\u0000';
+  const tpl = t(key).replace(/\{(\w+)\}/g, (m, k) => (k in nodes ? MARK + k + MARK : m));
+  const used = new Set();
+  return fill(tpl, vars)
+    .split(MARK)
+    .map((part, i) => {
+      if (i % 2 === 0) return part;
+      const node = nodes[part];
+      // 同一个元素在句子里出现两次时，第二次用复制的
+      if (node instanceof Node && used.has(part)) return node.cloneNode(true);
+      used.add(part);
+      return node;
+    })
+    .filter((part) => part !== '');
+}
+
 /* ============================== 日期文字 ============================== */
 
-export const WEEK = ['周日', '周一', '周二', '周三', '周四', '周五', '周六'];
+// 星期几的名字（0 = 周日），按当前语言取；WEEK[i]、WEEK.length 照旧能用
+const isDay = (p) => typeof p === 'string' && /^[0-6]$/.test(p);
+export const WEEK = new Proxy(new Array(7), {
+  get: (arr, p, recv) => (isDay(p) ? weekday(+p) : Reflect.get(arr, p, recv)),
+  has: (arr, p) => isDay(p) || Reflect.has(arr, p),
+});
 
 export function fmtDate(key, { withYear = true } = {}) {
   const p = parseKey(key);
-  if (!p) return '';
-  if (!p.y || !withYear) return `${p.m}月${p.d}日`;
-  return `${p.y}年${p.m}月${p.d}日`;
+  return p ? fmtParts(p, { withYear }) : '';
+}
+
+// 标题栏和首页顶上的「9月27日 · 周六」
+export function dateWeek(d = new Date()) {
+  return t('ui.dateWeek', { date: fmtParts({ m: d.getMonth() + 1, d: d.getDate() }, { withYear: false }), week: weekday(d.getDay()) });
 }
 
 export function fmtClock(sec) {
