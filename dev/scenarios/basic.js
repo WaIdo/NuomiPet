@@ -1,0 +1,51 @@
+// 基本场景：登场、打招呼、各种动作的截图。
+// 运行：SNAP_DIR=<目录> electron . --data-dir=<临时目录> --dev-script=dev/scenarios/basic.js
+const path = require('path');
+const out = process.env.SNAP_DIR || '/tmp';
+const wait = (ms) => new Promise((r) => setTimeout(r, ms));
+
+module.exports = async ({ app, pet, capture, petCommand, store, scheduler }) => {
+  store.set('runtime.welcomed', true);
+  scheduler.goAway = () => {};
+  const shot = (name) => capture(pet.win, path.join(out, `pet-${name}.png`), 'linear-gradient(#8fb6de,#c3d8ee)');
+  const js = (code) => pet.win.webContents.executeJavaScript(code);
+  await wait(2500);
+  await shot('01-start');
+  await wait(3500);
+  petCommand({ type: 'feed', food: 'fish' });
+  await wait(1500);
+  await shot('02-eating');
+  await wait(2400);
+  await shot('03-ate');
+  await wait(4000);
+  await js(`document.querySelector('#bubble .close')?.click()`);
+  pet.sendEvent({ type: 'remind', kind: 'water', id: 'water', text: '喝水时间到啦！💧 咕噜咕噜～' });
+  await wait(2000);
+  await shot('04-water');
+  await js(`document.querySelector('#bubble .btn.primary')?.click()`);
+  await wait(1500);
+  await shot('05-water-done');
+  await wait(3500);
+  await js(`document.querySelector('#bubble .close')?.click()`);
+  await wait(600);
+  pet.sendEvent({ type: 'mood-ask', text: '今天心情怎么样呀？' });
+  await wait(1500);
+  await shot('06-mood-ask');
+  await js(`document.querySelectorAll('#bubble .btn')[4]?.click()`);
+  await wait(1800);
+  await shot('07-mood-react');
+  await wait(5000);
+  pet.sendEvent({ type: 'celebrate', reason: 'birthday', text: '生日快乐！！🎂 宝贝又长大一岁啦，永远可爱！' });
+  await wait(900);
+  await shot('08-celebrate');
+  await wait(9500);
+  pet.sendEvent({ type: 'letter', id: 'hello', title: '糯米的自我介绍', text: '有人托我带了一封信给你💌' });
+  await wait(1500);
+  await shot('09-letter');
+  await js(`document.querySelectorAll('#bubble .btn')[1]?.click()`);
+  await wait(4000);
+  petCommand({ type: 'sleep' });
+  await wait(3800);
+  await shot('10-sleep');
+  app.quit();
+};

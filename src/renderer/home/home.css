@@ -101,7 +101,21 @@ mochi-pet > svg {
   color: var(--ink);
 }
 
-/* ---------------- 背景里飘着的色块 ---------------- */
+/* 窗口不在前台时暂停循环播放的装饰动画，省电（只挑这些，入场动画暂停会停在透明的第一帧） */
+html.blurred .sb-heart,
+html.blurred .nav-dot,
+html.blurred .zzz i,
+html.blurred .hs-spark,
+html.blurred .beat,
+html.blurred .le-heart,
+html.blurred .ring-dots i.cur,
+html.blurred .st-new .env::before,
+html.blurred .st-new .env-seal {
+  animation-play-state: paused;
+}
+
+/* ---------------- 背景里的色块 ----------------
+   色块保持静止：它们在毛玻璃卡片后面，一动就要让每张卡片每帧重新模糊，很耗 GPU。 */
 
 .blobs {
   position: fixed;
@@ -114,7 +128,6 @@ mochi-pet > svg {
 .blobs i {
   position: absolute;
   border-radius: 50%;
-  animation: blob 28s ease-in-out infinite alternate;
 }
 
 .blobs .b1 {
@@ -131,8 +144,6 @@ mochi-pet > svg {
   right: -220px;
   top: 200px;
   background: radial-gradient(circle, rgba(230, 221, 255, 0.95) 0%, rgba(230, 221, 255, 0) 68%);
-  animation-duration: 34s;
-  animation-delay: -9s;
 }
 
 .blobs .b3 {
@@ -141,20 +152,6 @@ mochi-pet > svg {
   left: 30%;
   bottom: -260px;
   background: radial-gradient(circle, rgba(216, 245, 234, 0.95) 0%, rgba(216, 245, 234, 0) 68%);
-  animation-duration: 31s;
-  animation-delay: -16s;
-}
-
-@keyframes blob {
-  0% {
-    transform: translate(0, 0) scale(1);
-  }
-  50% {
-    transform: translate(46px, -34px) scale(1.08);
-  }
-  100% {
-    transform: translate(-34px, 24px) scale(0.95);
-  }
 }
 
 /* ---------------- 标题栏 ---------------- */

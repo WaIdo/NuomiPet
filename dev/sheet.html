@@ -1,0 +1,7 @@
+<!doctype html><html><head><meta charset="utf-8"><style>
+body{margin:0;padding:10px;background:#333;display:grid;grid-template-columns:repeat(var(--cols,5),1fr);gap:8px;font:11px sans-serif;color:#ddd}
+figure{margin:0} img{width:100%;display:block;border-radius:4px} figcaption{padding:2px 0}
+</style></head><body><script>
+const q=new URLSearchParams(location.search);document.body.style.setProperty('--cols',q.get('cols')||5);
+for(const f of (q.get('files')||'').split(',')){if(!f)continue;const fig=document.createElement('figure');const img=document.createElement('img');img.src='file://'+f;const c=document.createElement('figcaption');c.textContent=f.split('/').pop();fig.append(img,c);document.body.append(fig);}
+</script></body></html>

@@ -1,0 +1,124 @@
+{
+  "name": "mochi-pet",
+  "productName": "糯米桌宠",
+  "version": "1.0.0",
+  "description": "一只超可爱的桌面宠物，陪她工作、学习、喝水、休息。",
+  "main": "src/main/main.js",
+  "author": "糯米桌宠",
+  "license": "UNLICENSED",
+  "private": true,
+  "scripts": {
+    "start": "electron .",
+    "dev": "electron . --dev",
+    "icons": "electron scripts/make-icons.js",
+    "dist:mac": "electron-builder --mac",
+    "dist:win": "electron-builder --win",
+    "dist": "electron-builder --mac --win",
+    "test": "node --test \"test/**/*.test.js\""
+  },
+  "devDependencies": {
+    "electron": "^44.4.5",
+    "electron-builder": "^26.15.3"
+  },
+  "build": {
+    "appId": "com.mochi.desktoppet",
+    "productName": "糯米桌宠",
+    "copyright": "Made with love",
+    "directories": {
+      "output": "dist",
+      "buildResources": "build"
+    },
+    "files": [
+      "src/**/*",
+      "assets/**/*",
+      "gift.config.json",
+      "package.json"
+    ],
+    "asar": true,
+    "electronLanguages": [
+      "zh-CN",
+      "zh_CN",
+      "zh-TW",
+      "zh_TW",
+      "en-US",
+      "en"
+    ],
+    "mac": {
+      "target": [
+        {
+          "target": "dmg",
+          "arch": [
+            "arm64",
+            "x64"
+          ]
+        }
+      ],
+      "icon": "build/icon.png",
+      "category": "public.app-category.entertainment",
+      "identity": "-",
+      "hardenedRuntime": false,
+      "gatekeeperAssess": false,
+      "extendInfo": {
+        "LSUIElement": true,
+        "NSHumanReadableCopyright": "Made with love"
+      },
+      "artifactName": "NuomiPet-${version}-mac-${arch}.${ext}"
+    },
+    "dmg": {
+      "title": "糯米桌宠 ${version}",
+      "artifactName": "NuomiPet-${version}-mac-${arch}.${ext}",
+      "contents": [
+        {
+          "x": 150,
+          "y": 190,
+          "type": "file"
+        },
+        {
+          "x": 390,
+          "y": 190,
+          "type": "link",
+          "path": "/Applications"
+        }
+      ],
+      "window": {
+        "width": 540,
+        "height": 380
+      }
+    },
+    "win": {
+      "target": [
+        {
+          "target": "nsis",
+          "arch": [
+            "x64"
+          ]
+        },
+        {
+          "target": "portable",
+          "arch": [
+            "x64"
+          ]
+        }
+      ],
+      "icon": "build/icon.png",
+      "executableName": "NuomiPet"
+    },
+    "nsis": {
+      "oneClick": false,
+      "perMachine": false,
+      "allowToChangeInstallationDirectory": true,
+      "createDesktopShortcut": true,
+      "createStartMenuShortcut": true,
+      "shortcutName": "糯米桌宠",
+      "runAfterFinish": true,
+      "installerLanguages": [
+        "zh_CN"
+      ],
+      "language": "2052",
+      "artifactName": "NuomiPet-${version}-win-setup.${ext}"
+    },
+    "portable": {
+      "artifactName": "NuomiPet-${version}-win-portable.${ext}"
+    }
+  }
+}

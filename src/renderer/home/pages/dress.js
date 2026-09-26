@@ -28,7 +28,7 @@ function option(app, path, id, on, label, look) {
         if (!on) app.set(path, id);
       },
     },
-    h('span', { class: 'opt-pet' }, petEl(look, { size: 56, blink: true, key: 'p' })),
+    h('span', { class: 'opt-pet' }, petEl(look, { size: 56, still: true, key: 'p' })),
     h('span', { class: 'opt-name' }, label),
     on && h('span', { class: 'opt-check' }, icon('check')),
   );

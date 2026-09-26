@@ -1,0 +1,418 @@
+{
+  "species": [
+    {
+      "id": "cat",
+      "name": "猫猫",
+      "favorite": "fish"
+    },
+    {
+      "id": "bunny",
+      "name": "兔兔",
+      "favorite": "carrot"
+    },
+    {
+      "id": "bear",
+      "name": "小熊",
+      "favorite": "honey"
+    },
+    {
+      "id": "puppy",
+      "name": "狗狗",
+      "favorite": "meat"
+    },
+    {
+      "id": "hamster",
+      "name": "仓鼠",
+      "favorite": "seeds"
+    },
+    {
+      "id": "chick",
+      "name": "小鸡",
+      "favorite": "corn"
+    }
+  ],
+  "palettes": [
+    {
+      "id": "milk",
+      "name": "奶白",
+      "body": "#FFF9F2",
+      "body2": "#F5E4D3",
+      "line": "#D9BBA3",
+      "belly": "#FFFFFF",
+      "inner": "#FFC4D2",
+      "blush": "#FF94AE",
+      "nose": "#F48CA6"
+    },
+    {
+      "id": "sakura",
+      "name": "樱花粉",
+      "body": "#FFE6EE",
+      "body2": "#F8C9D8",
+      "line": "#E79DB6",
+      "belly": "#FFF7FA",
+      "inner": "#FFAFC6",
+      "blush": "#FF7FA3",
+      "nose": "#EC7899"
+    },
+    {
+      "id": "peach",
+      "name": "蜜桃",
+      "body": "#FFE5D6",
+      "body2": "#FACBB3",
+      "line": "#E8A385",
+      "belly": "#FFF5EE",
+      "inner": "#FFB2B2",
+      "blush": "#FF8A8A",
+      "nose": "#EE867A"
+    },
+    {
+      "id": "milktea",
+      "name": "奶茶",
+      "body": "#F3DEC8",
+      "body2": "#E3C2A2",
+      "line": "#C39773",
+      "belly": "#FBF0E5",
+      "inner": "#F4B2AE",
+      "blush": "#F29596",
+      "nose": "#C7806C"
+    },
+    {
+      "id": "caramel",
+      "name": "焦糖",
+      "body": "#EDC498",
+      "body2": "#D9A370",
+      "line": "#AE7A4D",
+      "belly": "#F9E6CF",
+      "inner": "#F4A7A0",
+      "blush": "#F2877F",
+      "nose": "#7A4C34"
+    },
+    {
+      "id": "custard",
+      "name": "奶黄",
+      "body": "#FFF2C8",
+      "body2": "#F6DB92",
+      "line": "#DDBB64",
+      "belly": "#FFFBE9",
+      "inner": "#FFBFB0",
+      "blush": "#FF9B8C",
+      "nose": "#EC907C"
+    },
+    {
+      "id": "mint",
+      "name": "薄荷",
+      "body": "#E0F6EA",
+      "body2": "#BDE6D1",
+      "line": "#8FC9AC",
+      "belly": "#F5FCF8",
+      "inner": "#FFC0CE",
+      "blush": "#FF93AE",
+      "nose": "#EC8CA8"
+    },
+    {
+      "id": "mist",
+      "name": "雾霾蓝",
+      "body": "#E0EDFF",
+      "body2": "#C0D6F6",
+      "line": "#98B6E2",
+      "belly": "#F5F9FF",
+      "inner": "#FFC1D4",
+      "blush": "#FF93B3",
+      "nose": "#EB8DAD"
+    },
+    {
+      "id": "taro",
+      "name": "香芋紫",
+      "body": "#ECE3FF",
+      "body2": "#D4C5F7",
+      "line": "#AF9BE6",
+      "belly": "#F9F5FF",
+      "inner": "#FFBFD6",
+      "blush": "#FF8FB6",
+      "nose": "#E98AB3"
+    },
+    {
+      "id": "gray",
+      "name": "银灰",
+      "body": "#ECECF1",
+      "body2": "#D1D1DC",
+      "line": "#A8A8BA",
+      "belly": "#F9F9FB",
+      "inner": "#FFBFD0",
+      "blush": "#FF94B0",
+      "nose": "#EC8FAA"
+    },
+    {
+      "id": "cocoa",
+      "name": "黑糖",
+      "body": "#5A4E55",
+      "body2": "#41363D",
+      "line": "#2A2227",
+      "belly": "#76696F",
+      "inner": "#F29FB7",
+      "blush": "#FF86AA",
+      "nose": "#F29FB7",
+      "ink": "#FFF1F5",
+      "eye": "#FFD86E",
+      "pupil": "#2A2227"
+    }
+  ],
+  "accessories": [
+    {
+      "id": "none",
+      "name": "不戴"
+    },
+    {
+      "id": "bow",
+      "name": "蝴蝶结"
+    },
+    {
+      "id": "flower",
+      "name": "小花"
+    },
+    {
+      "id": "sprout",
+      "name": "小芽"
+    },
+    {
+      "id": "crown",
+      "name": "小皇冠"
+    },
+    {
+      "id": "partyhat",
+      "name": "派对帽"
+    },
+    {
+      "id": "heartclip",
+      "name": "爱心发卡"
+    },
+    {
+      "id": "strawberry",
+      "name": "草莓帽"
+    },
+    {
+      "id": "santa",
+      "name": "圣诞帽"
+    },
+    {
+      "id": "glasses",
+      "name": "圆眼镜"
+    }
+  ],
+  "markings": [
+    {
+      "id": "none",
+      "name": "纯色"
+    },
+    {
+      "id": "belly",
+      "name": "白肚皮"
+    },
+    {
+      "id": "stripes",
+      "name": "小花纹"
+    },
+    {
+      "id": "patch",
+      "name": "眼罩斑"
+    }
+  ],
+  "sizes": [
+    {
+      "id": "s",
+      "name": "小只",
+      "px": 110
+    },
+    {
+      "id": "m",
+      "name": "适中",
+      "px": 140
+    },
+    {
+      "id": "l",
+      "name": "大只",
+      "px": 180
+    },
+    {
+      "id": "xl",
+      "name": "超大只",
+      "px": 230
+    }
+  ],
+  "foods": [
+    {
+      "id": "strawberry",
+      "emoji": "🍓",
+      "name": "草莓",
+      "fill": 12,
+      "line": "草莓酸酸甜甜的，好好吃～"
+    },
+    {
+      "id": "cake",
+      "emoji": "🍰",
+      "name": "小蛋糕",
+      "fill": 25,
+      "line": "是蛋糕！幸福的味道～"
+    },
+    {
+      "id": "boba",
+      "emoji": "🧋",
+      "name": "奶茶",
+      "fill": 18,
+      "line": "奶茶！快乐水！咕噜咕噜～"
+    },
+    {
+      "id": "onigiri",
+      "emoji": "🍙",
+      "name": "饭团",
+      "fill": 30,
+      "line": "饭团好香，吃饱饱～"
+    },
+    {
+      "id": "cookie",
+      "emoji": "🍪",
+      "name": "小饼干",
+      "fill": 10,
+      "line": "咔嚓咔嚓，好脆！"
+    },
+    {
+      "id": "icecream",
+      "emoji": "🍦",
+      "name": "冰淇淋",
+      "fill": 14,
+      "line": "好冰好甜，脑袋都冻住啦～"
+    },
+    {
+      "id": "fish",
+      "emoji": "🐟",
+      "name": "小鱼干",
+      "fill": 20,
+      "line": "小鱼干！最最最喜欢了！"
+    },
+    {
+      "id": "carrot",
+      "emoji": "🥕",
+      "name": "胡萝卜",
+      "fill": 16,
+      "line": "胡萝卜脆脆的，咔嚓咔嚓！"
+    },
+    {
+      "id": "honey",
+      "emoji": "🍯",
+      "name": "蜂蜜",
+      "fill": 20,
+      "line": "甜甜的蜂蜜，舔舔～"
+    },
+    {
+      "id": "meat",
+      "emoji": "🍖",
+      "name": "大肉肉",
+      "fill": 30,
+      "line": "肉肉！汪汪汪！好香！"
+    },
+    {
+      "id": "seeds",
+      "emoji": "🌻",
+      "name": "瓜子",
+      "fill": 12,
+      "line": "嗑瓜子嗑瓜子，停不下来～"
+    },
+    {
+      "id": "corn",
+      "emoji": "🌽",
+      "name": "玉米",
+      "fill": 18,
+      "line": "玉米粒一颗一颗，好甜！"
+    }
+  ],
+  "moods": [
+    {
+      "id": "great",
+      "emoji": "😆",
+      "name": "超开心",
+      "color": "#FFB84D"
+    },
+    {
+      "id": "good",
+      "emoji": "😊",
+      "name": "开心",
+      "color": "#FF8FB1"
+    },
+    {
+      "id": "calm",
+      "emoji": "😌",
+      "name": "平静",
+      "color": "#8FD3B6"
+    },
+    {
+      "id": "tired",
+      "emoji": "😪",
+      "name": "好累",
+      "color": "#A9B4D9"
+    },
+    {
+      "id": "sad",
+      "emoji": "😢",
+      "name": "难过",
+      "color": "#8DB8F0"
+    },
+    {
+      "id": "angry",
+      "emoji": "😠",
+      "name": "生气",
+      "color": "#F28B82"
+    }
+  ],
+  "levels": [
+    {
+      "level": 1,
+      "xp": 0,
+      "title": "初次见面"
+    },
+    {
+      "level": 2,
+      "xp": 30,
+      "title": "渐渐熟悉"
+    },
+    {
+      "level": 3,
+      "xp": 90,
+      "title": "好朋友"
+    },
+    {
+      "level": 4,
+      "xp": 180,
+      "title": "形影不离"
+    },
+    {
+      "level": 5,
+      "xp": 320,
+      "title": "心有灵犀"
+    },
+    {
+      "level": 6,
+      "xp": 520,
+      "title": "最最喜欢"
+    },
+    {
+      "level": 7,
+      "xp": 800,
+      "title": "命中注定"
+    },
+    {
+      "level": 8,
+      "xp": 1200,
+      "title": "独一无二"
+    },
+    {
+      "level": 9,
+      "xp": 1700,
+      "title": "永远在一起"
+    },
+    {
+      "level": 10,
+      "xp": 2400,
+      "title": "宇宙第一好"
+    }
+  ]
+}

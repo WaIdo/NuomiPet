@@ -1,0 +1,432 @@
+/* 宠物 SVG 的表情切换与动画。所有 transform-origin 都用 viewBox 坐标（0~200）。 */
+
+.pet {
+  display: block;
+  overflow: visible;
+  pointer-events: none;
+}
+.pet * {
+  transform-box: view-box;
+}
+.pet .hit {
+  pointer-events: visiblePainted;
+}
+.pet .eye,
+.pet .paw,
+.pet .paw-in {
+  transform-box: fill-box;
+  transform-origin: center;
+}
+
+/* ---------- 表情：眼睛 / 嘴巴 ---------- */
+.pet .eye-set,
+.pet .mouth {
+  display: none;
+}
+.pet.e-normal .eyes-normal,
+.pet.e-happy .eyes-happy,
+.pet.e-closed .eyes-closed,
+.pet.e-surprised .eyes-surprised,
+.pet.e-squeeze .eyes-squeeze,
+.pet.e-heart .eyes-heart,
+.pet.e-dizzy .eyes-dizzy,
+.pet.e-wink .eyes-wink,
+.pet.e-sad .eyes-sad,
+.pet.e-sleepy .eyes-sleepy {
+  display: inline;
+}
+.pet.m-cat .mouth.m-cat,
+.pet.m-smile .mouth.m-smile,
+.pet.m-open .mouth.m-open,
+.pet.m-o .mouth.m-o,
+.pet.m-flat .mouth.m-flat,
+.pet.m-wavy .mouth.m-wavy,
+.pet.m-tongue .mouth.m-tongue,
+.pet.m-yawn .mouth.m-yawn,
+.pet.m-chew .mouth.m-chew {
+  display: inline;
+}
+.pet.m-chew .chew-a {
+  animation: p-chew-a 0.34s steps(1) infinite;
+}
+.pet.m-chew .chew-b {
+  animation: p-chew-b 0.34s steps(1) infinite;
+}
+@keyframes p-chew-a {
+  0% { opacity: 1; }
+  50% { opacity: 0; }
+}
+@keyframes p-chew-b {
+  0% { opacity: 0; }
+  50% { opacity: 1; }
+}
+
+/* 眨眼 */
+.pet .eye {
+  transition: transform 0.07s ease-in;
+}
+.pet.blink .eye {
+  transform: scaleY(0.1);
+}
+
+/* 眼睛看向鼠标 */
+.pet .eyes-normal,
+.pet .eyes-wink,
+.pet .eyes-sad,
+.pet .eyes-surprised,
+.pet .eyes-heart {
+  transform: translate(var(--lx, 0px), var(--ly, 0px));
+  transition: transform 0.28s ease-out;
+}
+.pet .p-face {
+  transform: translate(var(--fx, 0px), var(--fy, 0px));
+  transition: transform 0.45s cubic-bezier(0.3, 0.8, 0.4, 1);
+}
+
+/* 腮红 */
+.pet .p-blush ellipse {
+  opacity: 0.5;
+  transition: opacity 0.3s;
+}
+.pet.blush-strong .p-blush ellipse {
+  opacity: 0.9;
+}
+.pet .blush-lines {
+  display: none;
+}
+.pet.blush-strong .blush-lines {
+  display: inline;
+}
+
+/* 冒汗 */
+.pet .p-sweat {
+  display: none;
+}
+.pet.sweat .p-sweat {
+  display: inline;
+  animation: p-sweat 1.4s ease-in-out infinite;
+}
+@keyframes p-sweat {
+  0%, 100% { transform: translateY(0); opacity: 1; }
+  50% { transform: translateY(3px); opacity: 0.75; }
+}
+
+/* 睡觉时的鼻涕泡 */
+.pet .p-snot {
+  display: none;
+  transform-origin: 104px 130px;
+}
+.pet.pose-sleep .p-snot {
+  display: inline;
+}
+@keyframes p-snot {
+  0%, 100% { transform: scale(0.3); opacity: 0.7; }
+  50% { transform: scale(1.15); opacity: 1; }
+}
+
+/* ---------- 影子 ---------- */
+.pet .p-shadow {
+  fill: rgba(70, 35, 50, 0.14);
+  transform-origin: 100px 189px;
+  transition: opacity 0.2s;
+}
+.pet.airborne .p-shadow {
+  opacity: 0;
+}
+
+/* ---------- 朝向 ---------- */
+.pet .p-flip {
+  transform-origin: 100px 100px;
+  transition: transform 0.18s ease;
+}
+.pet.facing-left .p-flip {
+  transform: scaleX(-1);
+}
+
+/* ---------- 尾巴、耳朵、配饰 ---------- */
+.pet.excited .p-tail {
+  animation: p-tail 0.5s ease-in-out infinite;
+}
+@keyframes p-tail {
+  0%, 100% { transform: rotate(-6deg); }
+  50% { transform: rotate(8deg); }
+}
+@keyframes p-puff {
+  0%, 80%, 100% { transform: rotate(0); }
+  85% { transform: rotate(10deg); }
+  90% { transform: rotate(-8deg); }
+  95% { transform: rotate(5deg); }
+}
+
+.pet .ear {
+  transition: transform 0.35s ease;
+}
+.pet .ear-l.twitch {
+  animation: p-twitch-l 0.5s ease;
+}
+.pet .ear-r.twitch {
+  animation: p-twitch-r 0.5s ease;
+}
+@keyframes p-twitch-l {
+  0%, 100% { transform: rotate(0); }
+  30% { transform: rotate(-14deg); }
+  60% { transform: rotate(5deg); }
+}
+@keyframes p-twitch-r {
+  0%, 100% { transform: rotate(0); }
+  30% { transform: rotate(14deg); }
+  60% { transform: rotate(-5deg); }
+}
+.pet.ears-down .ear-l {
+  transform: rotate(-16deg);
+}
+.pet.ears-down .ear-r {
+  transform: rotate(16deg);
+}
+.pet.sp-bunny.ears-down .ear-l {
+  transform: rotate(-38deg);
+}
+.pet.sp-bunny.ears-down .ear-r {
+  transform: rotate(38deg);
+}
+.pet.sp-puppy.ears-down .ear-l {
+  transform: rotate(8deg);
+}
+.pet.sp-puppy.ears-down .ear-r {
+  transform: rotate(-8deg);
+}
+@keyframes p-sway {
+  0%, 100% { transform: rotate(-7deg); }
+  50% { transform: rotate(7deg); }
+}
+
+/* ---------- 爪子 ---------- */
+.pet .paw {
+  transition: transform 0.28s cubic-bezier(0.34, 1.5, 0.5, 1);
+}
+.pet.paws-wave .paw-r .paw-in {
+  animation: p-wave 0.5s ease-in-out infinite;
+}
+@keyframes p-wave {
+  0%, 100% { transform: rotate(-18deg); }
+  50% { transform: rotate(22deg); }
+}
+.pet.paws-bat .paw-r .paw-in {
+  animation: p-bat 0.45s ease-in-out infinite;
+}
+@keyframes p-bat {
+  0%, 100% { transform: translate(0, 0); }
+  50% { transform: translate(5px, -7px); }
+}
+.pet.paws-cheer .paw-in {
+  animation: p-cheer 0.4s ease-in-out infinite;
+}
+.pet.paws-cheer .paw-r .paw-in {
+  animation-delay: -0.2s;
+}
+@keyframes p-cheer {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-6px); }
+}
+.pet.paws-flail .paw-in {
+  animation: p-flail 0.22s ease-in-out infinite;
+}
+.pet.paws-flail .paw-r .paw-in {
+  animation-delay: -0.11s;
+}
+@keyframes p-flail {
+  0%, 100% { transform: rotate(-16deg); }
+  50% { transform: rotate(16deg); }
+}
+
+/* ---------- 身体姿势 ---------- */
+.pet .p-body {
+  transform-origin: 100px 186px;
+}
+.pet .p-root {
+  transform-origin: 100px 186px;
+}
+
+@keyframes p-breathe {
+  0%, 100% { transform: scale(1, 1); }
+  50% { transform: scale(1.018, 0.978); }
+}
+
+@keyframes p-think {
+  0%, 100% { transform: rotate(4deg) scale(1, 1); }
+  50% { transform: rotate(5deg) scale(1.015, 0.98); }
+}
+
+.pet.pose-walk .p-body {
+  animation: p-hop 0.46s ease-in-out infinite;
+}
+.pet.pose-walk .paw-in {
+  animation: p-step 0.46s ease-in-out infinite;
+}
+.pet.pose-walk .paw-r .paw-in {
+  animation-delay: -0.23s;
+}
+.pet.pose-walk .p-shadow {
+  animation: p-shadow-hop 0.46s ease-in-out infinite;
+}
+@keyframes p-hop {
+  0%, 100% { transform: translateY(0) scale(1.03, 0.97) rotate(-1.5deg); }
+  50% { transform: translateY(-6px) scale(0.98, 1.03) rotate(1.5deg); }
+}
+@keyframes p-step {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-4px); }
+}
+@keyframes p-shadow-hop {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(0.9); }
+}
+
+@keyframes p-sleep {
+  0%, 100% { transform: scale(1.04, 0.93); }
+  50% { transform: scale(1.06, 0.9); }
+}
+
+.pet.pose-drag .p-body {
+  transform-origin: 100px 64px;
+  transform: rotate(var(--tilt, 0deg)) scale(0.96, 1.07);
+  transition: transform 0.1s linear;
+}
+.pet.pose-fall .p-body {
+  transform: scale(0.93, 1.09);
+  transition: transform 0.15s ease;
+}
+
+.pet.pose-land .p-body {
+  animation: p-land 0.6s ease-out;
+}
+@keyframes p-land {
+  0% { transform: scale(1.26, 0.74); }
+  35% { transform: scale(0.92, 1.08); }
+  65% { transform: scale(1.05, 0.96); }
+  100% { transform: scale(1, 1); }
+}
+
+.pet.pose-jump .p-body {
+  animation: p-jump 0.72s cubic-bezier(0.3, 0.7, 0.4, 1);
+}
+.pet.pose-jump .p-shadow {
+  animation: p-shadow-jump 0.72s cubic-bezier(0.3, 0.7, 0.4, 1);
+}
+@keyframes p-jump {
+  0% { transform: translateY(0) scale(1, 1); }
+  15% { transform: translateY(0) scale(1.14, 0.86); }
+  45% { transform: translateY(-34px) scale(0.92, 1.1); }
+  70% { transform: translateY(-4px) scale(0.98, 1.03); }
+  82% { transform: translateY(0) scale(1.12, 0.88); }
+  100% { transform: translateY(0) scale(1, 1); }
+}
+@keyframes p-shadow-jump {
+  0%, 15%, 82%, 100% { transform: scale(1); opacity: 1; }
+  45% { transform: scale(0.6); opacity: 0.5; }
+}
+
+.pet.pose-bounce .p-body {
+  animation: p-bounce 0.6s ease-in-out infinite;
+}
+@keyframes p-bounce {
+  0%, 100% { transform: translateY(0) scale(1.04, 0.96); }
+  50% { transform: translateY(-10px) scale(0.97, 1.04); }
+}
+
+.pet.pose-eat .p-body {
+  animation: p-munch 0.34s ease-in-out infinite;
+}
+@keyframes p-munch {
+  0%, 100% { transform: translateY(0) scale(1, 1); }
+  50% { transform: translateY(1.5px) scale(1.012, 0.985); }
+}
+
+.pet.pose-stretch .p-body {
+  animation: p-stretch 2.4s ease-in-out forwards;
+}
+@keyframes p-stretch {
+  0% { transform: scale(1, 1); }
+  25% { transform: scale(0.9, 1.14); }
+  70% { transform: scale(0.9, 1.15); }
+  84% { transform: scale(1.07, 0.93); }
+  100% { transform: scale(1, 1); }
+}
+
+.pet.pose-spin .p-root {
+  animation: p-spin 0.9s ease-in-out;
+}
+@keyframes p-spin {
+  0% { transform: scaleX(1); }
+  25% { transform: scaleX(-1) translateY(-8px); }
+  50% { transform: scaleX(1) translateY(-10px); }
+  75% { transform: scaleX(-1) translateY(-4px); }
+  100% { transform: scaleX(1); }
+}
+
+.pet.pose-dance .p-body {
+  animation: p-dance 0.9s ease-in-out infinite;
+}
+@keyframes p-dance {
+  0%, 100% { transform: rotate(-9deg) translateY(0); }
+  25% { transform: rotate(0deg) translateY(-9px); }
+  50% { transform: rotate(9deg) translateY(0); }
+  75% { transform: rotate(0deg) translateY(-9px); }
+}
+
+.pet.pose-dizzy .p-body {
+  animation: p-wobble 1.1s ease-in-out infinite;
+}
+@keyframes p-wobble {
+  0%, 100% { transform: rotate(-6deg); }
+  50% { transform: rotate(6deg); }
+}
+
+.pet.pose-shake .p-body {
+  animation: p-shake 0.5s ease-in-out;
+}
+@keyframes p-shake {
+  0%, 100% { transform: translateX(0); }
+  20% { transform: translateX(-5px) rotate(-3deg); }
+  40% { transform: translateX(5px) rotate(3deg); }
+  60% { transform: translateX(-4px) rotate(-2deg); }
+  80% { transform: translateX(3px) rotate(1deg); }
+}
+
+@keyframes p-sad {
+  0%, 100% { transform: scale(1.04, 0.95); }
+  50% { transform: scale(1.05, 0.935); }
+}
+
+.pet.pose-play .p-body {
+  animation: p-play 0.9s ease-in-out infinite;
+}
+@keyframes p-play {
+  0%, 100% { transform: rotate(3deg) translateY(0); }
+  50% { transform: rotate(7deg) translateY(-4px); }
+}
+
+@keyframes p-focus {
+  0%, 100% { transform: rotate(-2deg) scale(1, 1); }
+  50% { transform: rotate(-2deg) scale(1.012, 0.985); }
+}
+
+.pet.pose-shy .p-body {
+  animation: p-shy 1.6s ease-in-out infinite;
+}
+@keyframes p-shy {
+  0%, 100% { transform: rotate(-3deg) scale(1.02, 0.97); }
+  50% { transform: rotate(3deg) scale(1.02, 0.97); }
+}
+
+/* 道具（食物、水杯等） */
+.pet .p-prop text {
+  font-family: 'Apple Color Emoji', 'Segoe UI Emoji', 'Noto Color Emoji', sans-serif;
+}
+.pet .p-prop .bite {
+  transition: transform 0.2s ease;
+  transform-box: fill-box;
+  transform-origin: center;
+}
+
+/* 呼吸、尾巴、小芽、鼻涕泡、打字这些常驻动画由 ambient.js 低帧率驱动 */

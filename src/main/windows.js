@@ -1,0 +1,108 @@
+// 「小窝」设置窗口和信件窗口。
+const { BrowserWindow, app, screen } = require('electron');
+const path = require('path');
+
+const isMac = process.platform === 'darwin';
+const preload = path.join(__dirname, '../preload/preload.js');
+
+let home = null;
+let letter = null;
+
+function webPrefs() {
+  return { preload, contextIsolation: true, nodeIntegration: false, sandbox: true, spellcheck: false };
+}
+
+// macOS 上桌宠默认不占 Dock；打开小窝时临时显示 Dock 图标，方便切换窗口和使用菜单快捷键。
+function updateDock() {
+  if (!isMac || !app.dock) return;
+  const needDock = home && !home.isDestroyed();
+  if (needDock) app.dock.show();
+  else app.dock.hide();
+}
+
+function openHome(page, petName = '糯米') {
+  if (home && !home.isDestroyed()) {
+    if (home.isMinimized()) home.restore();
+    home.show();
+    home.focus();
+    if (page) home.webContents.send('home:navigate', page);
+    return home;
+  }
+  home = new BrowserWindow({
+    width: 980,
+    height: 680,
+    minWidth: 860,
+    minHeight: 600,
+    show: false,
+    title: `${petName}的小窝`,
+    backgroundColor: '#FFF6F8',
+    titleBarStyle: isMac ? 'hiddenInset' : 'hidden',
+    trafficLightPosition: isMac ? { x: 16, y: 15 } : undefined,
+    titleBarOverlay: isMac ? undefined : { color: '#FFF6F8', symbolColor: '#8A6A7A', height: 44 },
+    webPreferences: webPrefs(),
+  });
+  home.removeMenu?.();
+  home.loadFile(path.join(__dirname, '../renderer/home/index.html'), { query: { page: page || 'overview' } });
+  home.once('ready-to-show', () => {
+    home.show();
+    home.focus();
+    if (isMac) app.focus({ steal: true });
+  });
+  home.on('closed', () => {
+    home = null;
+    updateDock();
+  });
+  guardNavigation(home);
+  updateDock();
+  return home;
+}
+
+function openLetter(id) {
+  if (letter && !letter.isDestroyed()) letter.close();
+  const w = 560;
+  const h = 720;
+  const area = screen.getDisplayNearestPoint(screen.getCursorScreenPoint()).workArea;
+  letter = new BrowserWindow({
+    width: w,
+    height: Math.min(h, area.height - 20),
+    x: Math.round(area.x + (area.width - w) / 2),
+    y: Math.round(area.y + Math.max(10, (area.height - h) / 2)),
+    show: false,
+    frame: false,
+    transparent: true,
+    backgroundColor: '#00000000',
+    hasShadow: false,
+    resizable: false,
+    maximizable: false,
+    fullscreenable: false,
+    alwaysOnTop: true,
+    skipTaskbar: false,
+    title: '一封信',
+    webPreferences: webPrefs(),
+  });
+  letter.loadFile(path.join(__dirname, '../renderer/letter/index.html'), { query: { id: String(id) } });
+  letter.once('ready-to-show', () => {
+    letter.show();
+    letter.focus();
+    if (isMac) app.focus({ steal: true });
+  });
+  letter.on('closed', () => {
+    letter = null;
+  });
+  guardNavigation(letter);
+  return letter;
+}
+
+// 不允许页面跳转到外部链接或打开新窗口
+function guardNavigation(win) {
+  win.webContents.setWindowOpenHandler(() => ({ action: 'deny' }));
+  win.webContents.on('will-navigate', (e, url) => {
+    if (!url.startsWith('file://')) e.preventDefault();
+  });
+}
+
+function homeWindow() {
+  return home && !home.isDestroyed() ? home : null;
+}
+
+module.exports = { openHome, openLetter, homeWindow, guardNavigation, updateDock };

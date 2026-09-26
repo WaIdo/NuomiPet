@@ -1,0 +1,21 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<title>Pet gallery</title>
+<link rel="stylesheet" href="../src/renderer/shared/pet-art.css">
+<style>
+  body { margin: 0; padding: 16px; font: 12px -apple-system, "PingFang SC", sans-serif; background: #fdf6f8; color: #6b5060; }
+  h2 { margin: 18px 0 6px; font-size: 14px; }
+  .row { display: flex; flex-wrap: wrap; gap: 6px; }
+  .cell { width: var(--w, 120px); text-align: center; }
+  .cell .p { width: var(--w, 120px); height: var(--w, 120px); }
+  .dark { background: #2b2b33; color: #eee; padding: 6px; border-radius: 8px; }
+  body.static * { animation-play-state: paused !important; }
+</style>
+</head>
+<body>
+<div id="root"></div>
+<script type="module" src="./gallery.js"></script>
+</body>
+</html>

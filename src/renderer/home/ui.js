@@ -243,9 +243,14 @@ class MochiPet extends HTMLElement {
     this.syncBlink();
   }
 
+  // 静止的缩略图：不眨眼、不参加常驻动画，省得一页二十几只宠物一直重绘
+  set still(v) {
+    this._still = !!v;
+  }
+
   connectedCallback() {
     if (!this.pv) {
-      this.pv = new PetView(this, this._look);
+      this.pv = new PetView(this, this._look, { ambient: !this._still });
       if (this._pose !== 'idle') this.pv.setPose(this._pose);
       if (this._face) this.pv.setFace(...this._face.split('/'));
       if (this._paws) this.pv.setPaws(this._paws);
@@ -288,7 +293,7 @@ export function petEl(look, o = {}) {
     style: { width: size + 'px', height: size + 'px' },
     'data-track': o.track ? '' : null,
     'aria-hidden': 'true',
-    props: { look, pose: o.pose || 'idle', face: o.face || null, paws: o.paws || null, blink: !!o.blink },
+    props: { still: !!o.still, look, pose: o.pose || 'idle', face: o.face || null, paws: o.paws || null, blink: !!o.blink && !o.still },
   });
 }
 
