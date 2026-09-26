@@ -60,6 +60,8 @@ function createDefaults(gift = {}) {
       gravity: true,
       eyeTracking: true,
       dnd: false,
+      // 小窝和对话气泡的颜色：sakura/peach/butter/mint/sky/taro，或 auto（跟宠物配色一样）
+      theme: 'sakura',
     },
     weather: { enabled: false, city: '', lat: null, lon: null },
     // custom：在应用里自己写的信 { id, title, from, unlock, body, createdAt }

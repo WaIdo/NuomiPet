@@ -41,7 +41,8 @@
       "belly": "#FFFFFF",
       "inner": "#FFC4D2",
       "blush": "#FF94AE",
-      "nose": "#F48CA6"
+      "nose": "#F48CA6",
+      "theme": "sakura"
     },
     {
       "id": "sakura",
@@ -52,7 +53,8 @@
       "belly": "#FFF7FA",
       "inner": "#FFAFC6",
       "blush": "#FF7FA3",
-      "nose": "#EC7899"
+      "nose": "#EC7899",
+      "theme": "sakura"
     },
     {
       "id": "peach",
@@ -63,7 +65,8 @@
       "belly": "#FFF5EE",
       "inner": "#FFB2B2",
       "blush": "#FF8A8A",
-      "nose": "#EE867A"
+      "nose": "#EE867A",
+      "theme": "peach"
     },
     {
       "id": "milktea",
@@ -74,7 +77,8 @@
       "belly": "#FBF0E5",
       "inner": "#F4B2AE",
       "blush": "#F29596",
-      "nose": "#C7806C"
+      "nose": "#C7806C",
+      "theme": "peach"
     },
     {
       "id": "caramel",
@@ -85,7 +89,8 @@
       "belly": "#F9E6CF",
       "inner": "#F4A7A0",
       "blush": "#F2877F",
-      "nose": "#7A4C34"
+      "nose": "#7A4C34",
+      "theme": "peach"
     },
     {
       "id": "custard",
@@ -96,7 +101,8 @@
       "belly": "#FFFBE9",
       "inner": "#FFBFB0",
       "blush": "#FF9B8C",
-      "nose": "#EC907C"
+      "nose": "#EC907C",
+      "theme": "butter"
     },
     {
       "id": "mint",
@@ -107,7 +113,8 @@
       "belly": "#F5FCF8",
       "inner": "#FFC0CE",
       "blush": "#FF93AE",
-      "nose": "#EC8CA8"
+      "nose": "#EC8CA8",
+      "theme": "mint"
     },
     {
       "id": "mist",
@@ -118,7 +125,8 @@
       "belly": "#F5F9FF",
       "inner": "#FFC1D4",
       "blush": "#FF93B3",
-      "nose": "#EB8DAD"
+      "nose": "#EB8DAD",
+      "theme": "sky"
     },
     {
       "id": "taro",
@@ -129,7 +137,8 @@
       "belly": "#F9F5FF",
       "inner": "#FFBFD6",
       "blush": "#FF8FB6",
-      "nose": "#E98AB3"
+      "nose": "#E98AB3",
+      "theme": "taro"
     },
     {
       "id": "gray",
@@ -140,7 +149,8 @@
       "belly": "#F9F9FB",
       "inner": "#FFBFD0",
       "blush": "#FF94B0",
-      "nose": "#EC8FAA"
+      "nose": "#EC8FAA",
+      "theme": "sky"
     },
     {
       "id": "cocoa",
@@ -154,7 +164,8 @@
       "nose": "#F29FB7",
       "ink": "#FFF1F5",
       "eye": "#FFD86E",
-      "pupil": "#2A2227"
+      "pupil": "#2A2227",
+      "theme": "taro"
     }
   ],
   "accessories": [

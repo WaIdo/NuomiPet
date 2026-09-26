@@ -1,5 +1,6 @@
 // 设置：宠物行为、打扰与声音、系统、天气城市、数据、关于。
 import { h, cx, pageHead, cardHead, toggle, segmented, toast, icon, modal, petEl, shake } from '../ui.js';
+import themes from '../../../shared/themes.json' with { type: 'json' };
 
 const ACTIVITY = [
   { value: 'quiet', label: '安静' },
@@ -174,6 +175,39 @@ async function doReset(app) {
   }
 }
 
+// 小窝的颜色：几种主题 + 跟宠物的配色一样
+function themeCard(app) {
+  const cur = app.state.settings?.theme || 'sakura';
+  const pal = app.catalog.palettes.find((p) => p.id === app.state.pet?.color);
+  const auto = themes.find((t) => t.id === pal?.theme) || themes[0];
+  const opt = (id, name, t, extra) =>
+    h(
+      'button',
+      {
+        type: 'button',
+        key: id,
+        class: cx('theme-opt', { on: cur === id }),
+        'aria-pressed': cur === id ? 'true' : 'false',
+        onclick: () => {
+          if (cur !== id) app.set('settings.theme', id);
+        },
+      },
+      h('span', { class: 'theme-dot', style: { '--c': t.swatch, '--l': t.light } }, extra, cur === id && h('span', { class: 'theme-check' }, icon('check'))),
+      h('span', { class: 'theme-name' }, name),
+    );
+  return h(
+    'section',
+    { class: 'card set-card', key: 'theme' },
+    cardHead('🎨', '小窝的颜色', null, '背景、按钮和宠物的对话气泡会一起换颜色'),
+    h(
+      'div',
+      { class: 'theme-grid' },
+      themes.map((t) => opt(t.id, t.name, t)),
+      opt('auto', '跟宠物一样', auto, h('span', { class: 'theme-paw' }, '🐾')),
+    ),
+  );
+}
+
 // 我们的资料：名字、昵称、生日、在一起的日子、署名
 function profileCard(app) {
   const st = app.state;
@@ -217,6 +251,7 @@ export default {
         'div',
         { class: 'set-col' },
         profileCard(app),
+        themeCard(app),
         h(
           'section',
           { class: 'card set-card', key: 'pet' },

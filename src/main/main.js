@@ -125,9 +125,11 @@ function init() {
 function wireStoreBroadcast() {
   const pending = new Set();
   let timer = null;
+  windows.setHomeTheme(C.resolveTheme(store.data, catalog));
   store.on('change', (p) => {
     pending.add(p);
     if (p === 'pet.name' || p === '*') tray?.setToolTip(`${petName()}的桌面小窝`);
+    if (p === '*' || p.startsWith('settings') || p.startsWith('pet')) windows.setHomeTheme(C.resolveTheme(store.data, catalog));
     if (timer) return;
     timer = setTimeout(() => {
       timer = null;

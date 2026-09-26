@@ -140,5 +140,13 @@
     return { stars: '★'.repeat(stars) + '☆'.repeat(5 - stars), good: take(good || [], 2), bad: take(bad || [], 1) };
   }
 
-  return { pad2, dateKey, hm, parseKey, diffDays, nextYearly, dayNumber, daysUntil, isMilestone, fill, pick, uid, levelFor, todayParts, festivalOf, fortune };
+  // 小窝的颜色：'auto' 表示跟宠物的配色走（catalog.palettes[].theme）
+  function resolveTheme(data, catalog) {
+    const t = (data && data.settings && data.settings.theme) || 'sakura';
+    if (t !== 'auto') return t;
+    const pal = catalog && catalog.palettes.find((p) => p.id === (data.pet && data.pet.color));
+    return (pal && pal.theme) || 'sakura';
+  }
+
+  return { pad2, dateKey, hm, parseKey, diffDays, nextYearly, dayNumber, daysUntil, isMilestone, fill, pick, uid, levelFor, todayParts, festivalOf, fortune, resolveTheme };
 });

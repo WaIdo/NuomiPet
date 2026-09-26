@@ -6,7 +6,8 @@ import { Fx } from './fx.js';
 import { Panel } from './panel.js';
 import { Brain } from './brain.js';
 import { Ambient } from '../shared/ambient.js';
-import { nextYearly, festivalOf } from '../shared/common.mjs';
+import { nextYearly, festivalOf, resolveTheme } from '../shared/common.mjs';
+import catalog from '../../shared/catalog.json' with { type: 'json' };
 import festivals from '../../shared/festivals.json' with { type: 'json' };
 
 const api = window.mochi;
@@ -30,6 +31,11 @@ const lookOf = (d) => ({
   accessory: specialAccessory(d) || d.pet.accessory,
   markings: d.pet.markings,
 });
+
+const applyTheme = (d) => {
+  document.documentElement.dataset.theme = resolveTheme(d, catalog);
+};
+applyTheme(data);
 
 const view = new PetView(petHost, lookOf(data));
 const sound = new Sound();
@@ -238,6 +244,7 @@ api.onData((d, paths) => {
       placeBadge();
     });
   }
+  if (all || paths.some((p) => p.startsWith('settings') || p.startsWith('pet'))) applyTheme(d);
   if (all || paths.some((p) => p.startsWith('settings'))) {
     sound.configure({ enabled: d.settings.sound, volume: d.settings.volume });
     if (prev.settings.eyeTracking !== d.settings.eyeTracking) brain.eyeTrackingChanged(d.settings.eyeTracking);

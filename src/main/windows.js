@@ -4,6 +4,10 @@ const path = require('path');
 
 const isMac = process.platform === 'darwin';
 const preload = path.join(__dirname, '../preload/preload.js');
+const themes = require('../shared/themes.json');
+
+const themeOf = (id) => themes.find((t) => t.id === id) || themes[0];
+let homeTheme = 'sakura';
 
 let home = null;
 let letter = null;
@@ -18,6 +22,19 @@ function updateDock() {
   const needDock = home && !home.isDestroyed();
   if (needDock) app.dock.show();
   else app.dock.hide();
+}
+
+// 小窝换颜色时，同步窗口底色和 Windows 右上角系统按钮区域的颜色
+function setHomeTheme(id) {
+  homeTheme = id;
+  const t = themeOf(id);
+  if (!home || home.isDestroyed()) return;
+  home.setBackgroundColor(t.header);
+  if (!isMac && home.setTitleBarOverlay) {
+    try {
+      home.setTitleBarOverlay({ color: t.header, symbolColor: t.symbol, height: 44 });
+    } catch {}
+  }
 }
 
 function openHome(page, petName = '糯米') {
@@ -35,10 +52,10 @@ function openHome(page, petName = '糯米') {
     minHeight: 600,
     show: false,
     title: `${petName}的小窝`,
-    backgroundColor: '#FFF6F8',
+    backgroundColor: themeOf(homeTheme).header,
     titleBarStyle: isMac ? 'hiddenInset' : 'hidden',
     trafficLightPosition: isMac ? { x: 16, y: 15 } : undefined,
-    titleBarOverlay: isMac ? undefined : { color: '#FFF6F8', symbolColor: '#8A6A7A', height: 44 },
+    titleBarOverlay: isMac ? undefined : { color: themeOf(homeTheme).header, symbolColor: themeOf(homeTheme).symbol, height: 44 },
     webPreferences: webPrefs(),
   });
   home.removeMenu?.();
@@ -105,4 +122,4 @@ function homeWindow() {
   return home && !home.isDestroyed() ? home : null;
 }
 
-module.exports = { openHome, openLetter, homeWindow, guardNavigation, updateDock };
+module.exports = { openHome, openLetter, homeWindow, guardNavigation, updateDock, setHomeTheme };

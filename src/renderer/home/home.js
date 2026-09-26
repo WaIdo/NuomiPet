@@ -231,6 +231,8 @@ function renderNow() {
   if (!app.state) return;
   const name = app.state.pet?.name || '糯米';
   if (document.title !== `${name}的小窝`) document.title = `${name}的小窝`;
+  const theme = C.resolveTheme(app.state, catalog);
+  if (document.documentElement.dataset.theme !== theme) document.documentElement.dataset.theme = theme;
   morph(els.titlebar, titlebar());
   morph(els.sidebar, sidebar());
   const page = PAGE[app.page];
