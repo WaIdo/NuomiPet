@@ -2,6 +2,7 @@
 const { BrowserWindow, screen } = require('electron');
 const path = require('path');
 const catalog = require('../shared/catalog.json');
+const i18n = require('./i18n');
 
 const TOP_AREA = 150; // 宠物头顶上方留给气泡和快捷面板的高度
 const MIN_W = 300;
@@ -63,7 +64,7 @@ class PetWindow {
       acceptFirstMouse: true,
       // Windows 上用工具窗口样式，不出现在任务栏和 Alt+Tab 里
       type: process.platform === 'win32' ? 'toolbar' : undefined,
-      title: this.store.get('pet.name') || '糯米',
+      title: i18n.petName(this.store.data),
       webPreferences: {
         preload: path.join(__dirname, '../preload/preload.js'),
         contextIsolation: true,

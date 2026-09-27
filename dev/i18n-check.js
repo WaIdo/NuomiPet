@@ -180,6 +180,9 @@ const placeholders = (s) =>
     .filter((x, i, a) => a.indexOf(x) === i)
     .join(',');
 
+// 这些 key 在代码里调用时带了 { n }，中文用不到，译文可以用来选单复数
+const COUNT_ONLY = ['home.overview.memories.unit.', 'home.focus.set.minutes', 'home.focus.set.pomodoros'];
+
 function checkLocales() {
   const src = loadLang('zh-CN');
   let bad = 0;
@@ -203,13 +206,17 @@ function checkLocales() {
         const bs = Array.isArray(w) ? w : [w];
         if (typeof v === 'number' || typeof w === 'number') continue;
         // 占位符：数组比较整组的并集
-        const pa = placeholders(as.join(' '));
-        const pb = placeholders(bs.join(' '));
+        // 日期格式里月份可以写成数字 {m} 或月份名 {mon}，两者等价
+        const norm = (ph) => (k.startsWith('date.') ? ph.replace(/\bmon\b/g, 'm').split(',').filter((x, i, arr) => arr.indexOf(x) === i).join(',') : ph);
+        const pa = norm(placeholders(as.join(' ')));
+        // 代码传了 n、但中文不用的单位词：译文可以只拿 n 选单复数（{n|cup|cups}）
+        const sel = COUNT_ONLY.some((x) => k.startsWith(x)) ? new Set(pa.split(',')) : null;
+        const pb = norm(sel ? placeholders(bs.join(' ').replace(/\{n\|[^{}]*\}/g, (m) => (sel.has('n') ? m : ''))) : placeholders(bs.join(' ')));
         if (pa !== pb) report(`[${id}] 占位符不一致 ${section}.${k}：zh {${pa}} / ${id} {${pb}}`);
         for (const s of bs) {
           if (typeof s !== 'string') continue;
           if (NO_HAN.includes(id) && HAN.test(s)) report(`[${id}] 译文里有汉字 ${section}.${k}：${s.slice(0, 60)}`);
-          if (id === 'ja' && HAN.test(s) && !KANA.test(s) && as.includes(s) && s.length > 1) report(`[${id}] 可能没翻译 ${section}.${k}：${s.slice(0, 60)}`);
+          if (id === 'ja' && !k.startsWith('date.') && HAN.test(s) && !KANA.test(s) && as.includes(s) && s.length > 1) report(`[${id}] 可能没翻译 ${section}.${k}：${s.slice(0, 60)}`);
           if (id !== 'ja' && id !== 'zh-TW' && as.includes(s) && CJK.test(s)) report(`[${id}] 没翻译 ${section}.${k}`);
         }
       }

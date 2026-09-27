@@ -1,1 +1,224 @@
-{}
+{
+  "main": {
+    "menu": {
+      "feedPet": "🍓  喂{pet}吃东西",
+      "coax": "🥺  哄你开心",
+      "coaxRandom": "🎲  随便哄哄",
+      "play": "🧶  陪它玩",
+      "wake": "☀️  叫它起床",
+      "sleep": "💤  哄它睡觉",
+      "pomodoro": "🍅  番茄钟",
+      "mood": "🌈  心情打卡",
+      "fortune": "🔮  今日运势",
+      "home": "🏠  打开小窝",
+      "todos": "📝  待办清单",
+      "reminders": "⏰  提醒设置",
+      "dress": "🎀  换个装扮",
+      "letters": "💌  信箱",
+      "size": "大小",
+      "walkAround": "自由走动",
+      "followMouse": "跟着鼠标走",
+      "alwaysOnTop": "始终在最前面",
+      "dnd": "勿扰模式",
+      "sound": "声音",
+      "hidePet": "把{pet}藏起来",
+      "quit": "退出"
+    },
+    "coax": {
+      "kneel": "🙇  跪搓衣板认错",
+      "bow": "🙏  鞠躬道歉",
+      "flower": "💐  送花花",
+      "heart": "❤️  比心",
+      "hug": "🤗  抱抱",
+      "kiss": "😘  亲亲",
+      "tea": "🧋  请喝奶茶",
+      "cute": "🥺  撒娇",
+      "roll": "🌀  打滚",
+      "dance": "💃  跳舞逗你笑",
+      "praise": "🌟  夸夸你"
+    },
+    "pomodoro": {
+      "start": "开始专注",
+      "resume": "继续",
+      "pause": "暂停",
+      "skip": "跳过这一段",
+      "stop": "结束番茄钟"
+    },
+    "tray": {
+      "title": "{pet}的桌面小窝",
+      "hide": "藏起{pet}",
+      "show": "叫{pet}出来",
+      "summon": "叫{pet}过来",
+      "feed": "🍓  喂它吃东西",
+      "coax": "🥺  哄哄我",
+      "launchAtLogin": "开机自动启动"
+    },
+    "appMenu": {
+      "about": "关于",
+      "hide": "隐藏",
+      "edit": "编辑",
+      "undo": "撤销",
+      "redo": "重做",
+      "cut": "剪切",
+      "copy": "拷贝",
+      "paste": "粘贴",
+      "selectAll": "全选",
+      "window": "窗口",
+      "minimize": "最小化"
+    },
+    "window": {
+      "home": "{pet}的小窝"
+    },
+    "say": {
+      "shortBreak": "休息一下，活动活动～",
+      "longBreak": "长休息时间！去走走，喝口水～",
+      "fortune": "🔮 今日运势 {stars}\n宜：{good}\n忌：{bad}",
+      "fortuneSep": "、",
+      "love": "有人很爱很爱你哦",
+      "loveFrom": "{sender}让我告诉你：我爱你",
+      "reminder": "提醒时间到啦",
+      "weather": "{emoji} {intro}{advice}"
+    },
+    "weather": {
+      "noCity": "还没有设置城市",
+      "failed": "天气获取失败：{error}"
+    },
+    "letter": {
+      "untitled": "一封信",
+      "exportTitle": "导出写好的信",
+      "importTitle": "导入信件",
+      "fileType": "信件",
+      "exportName": "写给{nick}的信",
+      "error": {
+        "nothingToExport": "还没有在这里写过信",
+        "notMine": "只能删除在这里写的信",
+        "invalid": "信的内容不对",
+        "badDate": "拆开的日期不对",
+        "empty": "信里还什么都没写呢",
+        "badFile": "这个文件打不开",
+        "notLetters": "这不是信件文件",
+        "nothingToImport": "文件里没有能导入的信"
+      }
+    },
+    "data": {
+      "exportTitle": "导出数据",
+      "importTitle": "导入数据",
+      "backupName": "{pet}-备份-{date}",
+      "notBackup": "这不是{app}的备份文件"
+    },
+    "mail": {
+      "him": "他",
+      "menuPickup": "🚗  叫{sender}来接我",
+      "listSep": "、",
+      "receipt": {
+        "subject": "💌 {pet}收到你的信「{title}」啦",
+        "body": "{pet}收到你的信「{title}」啦，已经放进{nick}的信箱💌",
+        "bodyLater": "{pet}收到你的信「{title}」啦，已经放进{nick}的信箱💌\n会在 {date} 那天交给她。"
+      },
+      "pickup": {
+        "subjectNow": "🚗 {nick}下班啦，来接她吧",
+        "subject30": "🚗 {nick}半小时后下班，记得来接她",
+        "subject60": "🚗 {nick}一小时后下班，记得来接她",
+        "body": "{nick}在 {time} 叫你来接她。\n\n——{pet}",
+        "bodyNote": "{nick}在 {time} 叫你来接她。\n她说：{note}\n\n——{pet}"
+      },
+      "guide": {
+        "subject": "📮 怎么给{nick}的信箱寄信",
+        "intro": "把信寄到{pet}的邮箱：{address}\n{pet}收到以后会放进{nick}的信箱，再把信递给她。",
+        "from": "要用这个邮箱寄：{list}",
+        "format": "邮件的主题就是信的标题，正文就是信的内容。",
+        "date": "想让她到某一天才能拆开，有两种写法：\n· 主题开头写上日期，比如「【{date}】生日快乐」\n· 正文第一行写「拆开日期：{date}」\n日期请写完整的年、月、日。没写日期的信，她一收到就能拆开。",
+        "secret": "别忘了在主题或正文里写上暗号「{secret}」，没有暗号的信{pet}不会收。",
+        "receipt": "{pet}收到信以后，会回一封确认邮件给你。",
+        "sign": "——{pet}"
+      },
+      "error": {
+        "notReady": "邮件还没设置好：要填宠物的邮箱地址和授权码",
+        "unknownServer": "没认出这个邮箱：请在列表里选出你的邮箱服务商，或者选「其他邮箱」自己填收信和发信服务器",
+        "auth": "登录失败：请检查邮箱地址和授权码。授权码不是邮箱的登录密码，QQ、163 邮箱要在网页版的设置里开启 IMAP/SMTP 服务并生成授权码",
+        "unsafe": "网易邮箱拒绝了登录（Unsafe Login）：请在网页版邮箱的设置里开启 IMAP/SMTP 服务、用授权码登录，过一会儿再试",
+        "connect": "连不上邮件服务器：请检查网络（公司网络可能拦了 993/465 端口）",
+        "tls": "安全连接出错：请检查服务器、端口和 SSL 设置，也可能是服务器的证书有问题",
+        "timeout": "连接邮件服务器超时了：请检查网络，过一会儿再试",
+        "http": "服务器返回了错误（{status}）",
+        "other": "出错了：{error}",
+        "noRecipient": "还不知道通知发给谁：请在「设置 → 邮件」里填上他的邮箱",
+        "noAllow": "还没填他的邮箱（允许寄信的邮箱）",
+        "tooSoon": "刚刚已经告诉过他啦，过一分钟再叫吧",
+        "pushUrl": "推送网址不对，要以 http:// 或 https:// 开头",
+        "mailFailed": "邮件没发出去：{error}",
+        "pushFailed": "推送没发出去：{error}",
+        "noSecret": "有一封信没写暗号，没有放进信箱",
+        "emptyBody": "「{title}」的正文是空的，没有放进信箱",
+        "receipt": "信已经收到了，但确认邮件没发出去：{error}",
+        "authGmail": "登录失败：Gmail 要用「应用专用密码」。请先在 Google 账号里开启两步验证，再生成应用专用密码填进来（不是 Google 账号的登录密码）",
+        "msAuth": "微软邮箱拒绝了登录：请确认登录的微软账号就是这里填的邮箱，并且注册的应用里加了 IMAP 和 SMTP 的权限",
+        "msNoClientId": "Outlook 邮箱要用微软账号登录：请先填上你在微软注册的应用 ID（客户端 ID）",
+        "msLogin": "Outlook 邮箱还没登录：请点「用微软账号登录」",
+        "msRelogin": "微软账号的登录失效了（可能改了密码或者取消了授权），请重新登录一次",
+        "msExpired": "登录代码过期了，请重新开始登录",
+        "msDenied": "在微软的页面上没有同意授权，请重新登录，并点「接受」",
+        "msFailed": "用微软账号登录没成功：{error}"
+      },
+      "provider": {
+        "139": {
+          "name": "139 邮箱",
+          "help": "在 139 邮箱网页版的「设置 → 客户端设置」里开启 IMAP/SMTP 服务，按提示获取授权码填在这里。"
+        },
+        "auto": {
+          "name": "自动识别",
+          "help": "按邮箱地址自动选服务器。企业邮箱用的是公司自己的域名，认不出来，请在列表里选出你的邮箱。"
+        },
+        "qq": {
+          "name": "QQ 邮箱",
+          "help": "在 QQ 邮箱网页版的「设置 → 账号」里开启「IMAP/SMTP 服务」，按提示生成授权码，把授权码填在这里（不是 QQ 密码）。"
+        },
+        "exmail": {
+          "name": "腾讯企业邮箱",
+          "help": "在腾讯企业邮箱网页版的「设置 → 客户端设置」里开启 IMAP/SMTP 服务；开启了安全登录的话，生成一个客户端专用密码填在这里。"
+        },
+        "netease": {
+          "name": "网易邮箱（163、126、yeah.net、188）",
+          "help": "在网易邮箱网页版的「设置 → POP3/SMTP/IMAP」里开启 IMAP/SMTP 服务，按提示生成授权码，把授权码填在这里（不是邮箱的登录密码）。"
+        },
+        "qiye163": {
+          "name": "网易企业邮箱",
+          "help": "在网易企业邮箱网页版的「设置 → 客户端设置」里开启 IMAP/SMTP 服务；开启了客户端授权密码的话，把授权密码填在这里。"
+        },
+        "gmail": {
+          "name": "Gmail",
+          "help": "先在 Google 账号里开启两步验证，再到「安全性 → 应用专用密码」生成一个 16 位的密码填在这里（不是 Google 账号的登录密码）。"
+        },
+        "outlook": {
+          "name": "Outlook / Hotmail / Microsoft 365",
+          "help": "微软的邮箱要用微软账号登录授权：填好应用 ID 后点「用微软账号登录」，在浏览器里打开微软的网址，输入页面上的代码并同意。公司或学校的 Microsoft 365 邮箱也选这一项。",
+          "register": "注册应用 ID：用微软账号登录 Azure 门户（portal.azure.com），打开「应用注册 → 新注册」，名字随便起，支持的账户类型选「任何组织目录中的帐户和个人 Microsoft 帐户」；注册好后在「身份验证」里打开「允许公共客户端流」，在「API 权限」里添加 IMAP.AccessAsUser.All 和 SMTP.Send。最后把概述页上的「应用程序(客户端) ID」填到这里。"
+        },
+        "icloud": {
+          "name": "iCloud 邮箱",
+          "help": "先给 Apple 账户开启双重认证，再到 account.apple.com 的「App 专用密码」里生成一个密码填在这里。"
+        },
+        "yahoo": {
+          "name": "Yahoo 邮箱",
+          "help": "到 Yahoo 账号的「账号安全」里生成一个「应用密码」填在这里。"
+        },
+        "sina": {
+          "name": "新浪邮箱",
+          "help": "在新浪邮箱网页版的「设置 → 客户端 POP/IMAP/SMTP」里开启服务，按提示获取授权码填在这里。"
+        },
+        "sohu": {
+          "name": "搜狐邮箱",
+          "help": "在搜狐邮箱网页版的「设置 → POP3/SMTP/IMAP」里开启服务，设置一个独立密码填在这里。"
+        },
+        "aliyun": {
+          "name": "阿里邮箱",
+          "help": "在阿里邮箱网页版的设置里开启 IMAP/SMTP 服务，把邮箱密码填在这里；开启了安全登录的话，填三方客户端安全密码。"
+        },
+        "custom": {
+          "name": "其他邮箱（自己填服务器）",
+          "help": "把邮箱服务商提供的收信（IMAP）和发信（SMTP）服务器、端口和加密方式填在下面，一般在邮箱网页版的帮助里能找到。"
+        }
+      }
+    }
+  }
+}

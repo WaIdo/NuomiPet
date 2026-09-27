@@ -14,7 +14,11 @@
     "milktea": "Milk tea",
     "caramel": "Caramel",
     "custard": "Custard",
+    "avocado": "Avocado",
+    "matcha": "Matcha",
+    "apple": "Green apple",
     "mint": "Mint",
+    "lake": "Lake green",
     "mist": "Dusty blue",
     "taro": "Taro purple",
     "gray": "Silver gray",
@@ -118,7 +122,10 @@
     "sakura": "Sakura pink",
     "peach": "Peach orange",
     "butter": "Butter yellow",
+    "matcha": "Matcha green",
+    "apple": "Apple green",
     "mint": "Mint green",
+    "lake": "Lake green",
     "sky": "Sky blue",
     "taro": "Taro purple"
   },
@@ -186,7 +193,7 @@
   },
   "defaults": {
     "petName": "Mochi",
-    "nickname": "sweetie",
+    "nickname": "baby",
     "notes": [
       "Stay happy today, okay?",
       "No matter what happens, someone is always on your side",

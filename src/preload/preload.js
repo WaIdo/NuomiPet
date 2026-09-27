@@ -73,6 +73,23 @@ contextBridge.exposeInMainWorld('mochi', {
     importFile: () => invoke('letters:import'),
   },
 
+  // ---- 邮件（他用邮件寄信、「来接我」）----
+  // 授权码、推送网址、微软的登录凭据不会传到页面：get() 里只有 hasPass、hasPush、hasMsToken
+  mail: {
+    get: () => invoke('mail:get'), // 设置 + 状态 + resolved（自动识别的服务器）
+    // patch 里 password、pushUrl 是明文：不传表示不改，'' 表示清掉。返回同 get()，另有 ok、error
+    save: (patch) => invoke('mail:save', patch),
+    test: () => invoke('mail:test'), // → { ok, imap: { ok, error }, smtp: { ok, error } }
+    check: () => invoke('mail:check'), // 立即收信 → { ok, added, error }
+    pickup: (opts = {}) => invoke('mail:pickup', opts), // { when: 'now'|'30'|'60', note } → { ok, via, error, tooSoon? }
+    sendGuide: () => invoke('mail:sendGuide'), // 把用法发给他 → { ok, to, error }
+    // Outlook 等微软邮箱：开始用微软账号登录 → { ok, userCode, verificationUri, expiresIn, error }；
+    // 之后主进程在后台等她在浏览器里同意，进度写进 store 的 mail.ms（state：idle / waiting / ok / error）
+    msLoginStart: () => invoke('mail:msLoginStart'),
+    msOpen: () => invoke('mail:msOpen'), // 在浏览器里打开登录的网址（只开微软的网址）→ { ok }
+    msLogout: () => invoke('mail:msLogout'), // 退出微软账号 → { ok }
+  },
+
   // ---- 窗口与应用 ----
   openHome: (page) => send('home:open', page),
   onNavigate: (cb) => on('home:navigate', cb),

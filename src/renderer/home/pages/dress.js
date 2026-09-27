@@ -4,17 +4,17 @@ import { t, petName } from '../../shared/i18n.mjs';
 
 const nameOf = (list, id) => (list.find((x) => x.id === id) || list[0] || {}).name || '';
 
-// 名字是空的表示用当前语言的默认名字；起过名字以后不能再清空
+// 名字框显示现在实际的名字；不能清空。和当前语言的默认名字一样就存空的，换语言时跟着变
 function commitName(app, input) {
-  const cur = app.state.pet.name || '';
   const v = input.value.trim().slice(0, 8);
   if (!v) {
-    input.value = cur;
-    if (cur) toast(t('home.dress.nameEmpty'));
+    input.value = petName(app.state);
+    toast(t('home.dress.nameEmpty'));
     return;
   }
   input.value = v;
-  if (v !== cur) app.set('pet.name', v);
+  const next = v === petName(null) ? '' : v;
+  if (next !== (app.state.pet.name || '')) app.set('pet.name', next);
 }
 
 function option(app, path, id, on, label, look) {
@@ -96,9 +96,9 @@ export default {
               h('input', {
                 class: 'input',
                 key: 'pet-name',
-                value: p.name || '',
+                value: name,
                 maxlength: 8,
-                placeholder: petName(null),
+                placeholder: t('home.dress.namePlaceholder'),
                 'aria-label': t('home.dress.nameLabel'),
                 onchange: (e) => commitName(app, e.target),
                 onkeydown: (e) => {

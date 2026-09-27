@@ -1,1 +1,356 @@
-{}
+{
+  "home": {
+    "letters": {
+      "title": "Lettres",
+      "sub": {
+        "empty": "Des lettres spéciales arriveront ici",
+        "fresh": "{n} {n|nouvelle lettre|nouvelles lettres} pour toi 💗",
+        "all": "Chacune est gardée précieusement"
+      },
+      "write": "✍️ Écrire une lettre",
+      "empty": {
+        "text": "La boîte aux lettres est vide~",
+        "sub": "Clique sur «\u00a0Écrire une lettre\u00a0» en haut à droite pour laisser une lettre à quelqu'un d'important"
+      },
+      "aLetter": "Une lettre",
+      "card": {
+        "unlockIn": "S'ouvre dans {n} {n|jour|jours}",
+        "unlockSoon": "Bientôt débloquée",
+        "from": "De {name}",
+        "locked": "Ce n'est pas encore le moment de l'ouvrir",
+        "lockedToast": "Ce n'est pas encore le moment de l'ouvrir~",
+        "lockedToastDate": "Ce n'est pas encore le moment de l'ouvrir~ Rendez-vous le {date}",
+        "open": "Ouvrir",
+        "new": "Nouvelle",
+        "tapToOpen": "Clique pour l'ouvrir~",
+        "more": "Modifier ou supprimer"
+      },
+      "menu": {
+        "edit": "✏️ Modifier le titre ou la date",
+        "remove": "🗑️ Supprimer cette lettre"
+      },
+      "editor": {
+        "newTitle": "Écrire une lettre 💌",
+        "editTitle": "Modifier l'enveloppe",
+        "seal": "Sceller 💌",
+        "title": "Titre",
+        "titlePlaceholder": "ex.\u00a0: Joyeux anniversaire",
+        "from": "Signature",
+        "fromPlaceholder": "L'auteur de la lettre",
+        "when": "Quand pourra-t-elle être ouverte\u00a0?",
+        "now": "Tout de suite",
+        "onDate": "À une date précise",
+        "hintDate": "Le jour venu, {pet} apportera la lettre à {nick}",
+        "hintNow": "Elle pourra être ouverte dès qu'elle sera scellée, et {pet} l'apportera très vite",
+        "sealed": "🔒 La lettre est scellée\u00a0: le texte n'est plus visible ni modifiable. En cas d'erreur, supprime-la et réécris-la.",
+        "body": "Texte",
+        "bodyPlaceholder": "Ce que tu veux dire à {nick}…",
+        "tip": "Une fois la lettre scellée, personne ne peut lire le texte avant la date d'ouverture (pas même la personne qui l'a écrite).",
+        "emptyBody": "La lettre est encore vide",
+        "pickDate": "Choisis la date d'ouverture",
+        "saveFailed": "L'enregistrement a échoué, réessaie",
+        "edited": "C'est modifié ✓",
+        "sealedToast": "Lettre scellée 💌"
+      },
+      "remove": {
+        "title": "Supprimer cette lettre\u00a0?",
+        "text": "Une fois supprimée, «\u00a0{title}\u00a0» sera perdue pour toujours.",
+        "ok": "Supprimer",
+        "done": "Supprimée",
+        "failed": "La suppression a échoué"
+      },
+      "tools": {
+        "title": "Lettres écrites sur un autre ordinateur",
+        "sub": "Les lettres écrites ici peuvent être exportées dans un fichier puis importées sur un autre ordinateur\u00a0: elles y restent scellées.",
+        "export": "Exporter les lettres écrites ici",
+        "import": "Importer des lettres",
+        "exported": "{n} {n|lettre exportée|lettres exportées} ✓",
+        "imported": "{n} {n|lettre importée|lettres importées} 💌"
+      },
+      "hint": "💌 Tu peux écrire une lettre à l'avance et choisir sa date d'ouverture. Le jour venu, elle se débloque toute seule.",
+      "mail": {
+        "title": "Lettres par e-mail",
+        "badge": "📮 E-mail",
+        "him": "ton chéri",
+        "sendTo": "Par e-mail aussi\u00a0: {sender} peut envoyer des lettres à {address}",
+        "guide": "Configure «\u00a0Réglages → E-mail\u00a0» pour que {sender} puisse envoyer des lettres par e-mail",
+        "toSettings": "Aller aux réglages",
+        "check": "Relever maintenant",
+        "checking": "Relève en cours…",
+        "received": "{n} {n|nouvelle lettre reçue|nouvelles lettres reçues} 💌",
+        "noNew": "Pas de nouvelle lettre",
+        "checkFailed": "La relève a échoué, réessaie",
+        "status": "{last} · {auto}",
+        "lastCheck": "Dernière relève\u00a0: {time}",
+        "never": "Aucune relève pour l'instant",
+        "today": "aujourd'hui",
+        "yesterday": "hier",
+        "at": "{day} à {time}",
+        "auto": "Relève automatique toutes les {n} min",
+        "autoOff": "Relève automatique désactivée",
+        "error": "⚠️ {error}"
+      }
+    },
+    "love": {
+      "title": "Dates spéciales",
+      "sub": "Toutes vos dates importantes, {pet} s'en souvient pour vous",
+      "kinds": {
+        "yearly": "Chaque année",
+        "countdown": "Compte à rebours",
+        "since": "Jours écoulés",
+        "other": "Date spéciale"
+      },
+      "count": {
+        "sinceDays": "Déjà {n} {n|jour|jours}",
+        "startsIn": "Commence dans {n} {n|jour|jours}",
+        "daysLeft": "Encore {n} {n|jour|jours}",
+        "daysPast": "Il y a {n} {n|jour|jours}",
+        "badDate": "Date invalide",
+        "today": "C'est aujourd'hui\u00a0!",
+        "years": "{n}{n|er|e} anniversaire"
+      },
+      "events": {
+        "birthday": "Ton anniversaire",
+        "together": "{n} {n|an|ans} ensemble",
+        "milestone": "Jour {n} ensemble"
+      },
+      "together": {
+        "title": "Ensemble depuis",
+        "hint": "Choisis une date et {pet} comptera chacun de vos jours ensemble 💕",
+        "dayN": "Jour {n} ensemble",
+        "toMilestone": "Plus que {n} {n|jour|jours} avant le jour {ms}",
+        "anniversaryToday": "Aujourd'hui, c'est votre {n}{n|er|e} anniversaire\u00a0!",
+        "toAnniversary": "Plus que {n} {n|jour|jours} avant vos {years} {years|an|ans}"
+      },
+      "birthday": {
+        "title": "Son anniversaire",
+        "hint": "Indique sa date d'anniversaire\u00a0: ce jour-là, {pet} la lui souhaitera avant tout le monde 🎂",
+        "happyAge": "Joyeux anniversaire pour tes {n} {n|an|ans}\u00a0!",
+        "happy": "Joyeux anniversaire\u00a0!",
+        "dateAge": "{date} · {n} {n|an|ans}",
+        "date": "Anniversaire le {date}"
+      },
+      "clear": "Effacer",
+      "remove": {
+        "title": "Supprimer «\u00a0{name}\u00a0»\u00a0?",
+        "text": "Une fois supprimée, cette date ne sera plus rappelée.",
+        "keep": "Garder"
+      },
+      "list": {
+        "title": "Nos dates spéciales",
+        "count": "{n} {n|date|dates}",
+        "empty": "Aucune date personnalisée pour l'instant, ajoutes-en une ci-dessous~"
+      },
+      "add": {
+        "placeholder": "Nom, ex.\u00a0: Premier rendez-vous",
+        "needName": "Donne d'abord un nom à cette date~",
+        "needDate": "Choisis aussi une date"
+      }
+    },
+    "reminders": {
+      "title": "Rappels",
+      "sub": "{pet} te fera signe tout doucement, au bon moment~",
+      "dnd": "Ne pas déranger est activé\u00a0: seuls les rappels personnalisés s'afficheront",
+      "toSettings": "Aller aux réglages",
+      "interval": "Intervalle (min)",
+      "water": {
+        "title": "Boire de l'eau",
+        "desc": "Un verre d'eau toutes les {n} min"
+      },
+      "stretch": {
+        "title": "Bouger un peu",
+        "desc": "Quand tu restes assise trop longtemps, je te fais lever pour t'étirer"
+      },
+      "eyes": {
+        "title": "Repos des yeux",
+        "desc": "Regarder au loin pour reposer tes yeux"
+      },
+      "sleep": {
+        "title": "Se coucher tôt",
+        "desc": "À {time}, je t'envoie au lit",
+        "time": "Heure du coucher"
+      },
+      "meals": {
+        "title": "Manger à l'heure",
+        "desc": "Un rappel aux heures des repas pour bien manger",
+        "lunch": "Déjeuner",
+        "dinner": "Dîner"
+      },
+      "active": {
+        "title": "Plage active",
+        "desc": "Les rappels eau, mouvement et yeux n'apparaissent que pendant cette plage",
+        "start": "Début",
+        "to": "à",
+        "end": "Fin"
+      },
+      "repeat": {
+        "daily": "Tous les jours",
+        "weekdays": "En semaine",
+        "weekends": "Le week-end",
+        "once": "Une seule fois"
+      },
+      "custom": {
+        "title": "Rappels personnalisés",
+        "count": "{n} {n|rappel|rappels}",
+        "sub": "À l'heure dite, {pet} viendra te prévenir, même en mode Ne pas déranger",
+        "empty": "Aucun rappel personnalisé pour l'instant, par exemple «\u00a010:00 réunion\u00a0» ou «\u00a021:30 masque de beauté\u00a0»~",
+        "time": "Heure du rappel",
+        "placeholder": "Quel rappel\u00a0? ex.\u00a0: appeler maman",
+        "add": "Ajouter un rappel",
+        "onceOn": "Une seule fois · {date}",
+        "expired": "Passé",
+        "toggle": "Activer",
+        "needText": "Écris ce qu'il faut te rappeler~",
+        "past": "Cette heure est déjà passée, choisis-en une autre"
+      }
+    },
+    "notes": {
+      "title": "Mots doux",
+      "sub": "De temps en temps, {pet} lui glissera ces mots à l'oreille",
+      "required": "Il faut écrire quelque chose ici~",
+      "spoken": "{sender} m'a demandé de te glisser à l'oreille\u00a0: {text}",
+      "said": "{pet} le lui dit tout de suite sur le bureau",
+      "added": "Mot doux noté 💌",
+      "removed": "Supprimé",
+      "names": {
+        "title": "Surnoms",
+        "nick": "Son surnom",
+        "nickPlaceholder": "ex.\u00a0: mon cœur",
+        "nickHint": "{pet} l'appellera ainsi\u00a0: «\u00a0Bonsoir, {nick}\u00a0»",
+        "sender": "Ta signature",
+        "senderPlaceholder": "ex.\u00a0: WaIdo",
+        "senderHint": "Pour les mots doux, ce sera\u00a0: «\u00a0{sender} m'a demandé de te glisser à l'oreille…\u00a0»",
+        "senderEmpty": "Écris ton nom, et pour les mots doux {pet} dira\u00a0: «\u00a0WaIdo m'a demandé de te glisser à l'oreille…\u00a0»"
+      },
+      "talk": {
+        "title": "Façon de parler",
+        "chatty": "Bavardage",
+        "chattyDesc": "À quelle fréquence parler",
+        "levels": {
+          "low": "Peu",
+          "normal": "Moyen",
+          "high": "Beaucoup"
+        },
+        "builtin": "Phrases intégrées",
+        "builtinDesc": "En plus de tes mots doux, dit aussi de petites phrases mignonnes du quotidien"
+      },
+      "list": {
+        "count": "{n} {n|mot|mots}",
+        "sub": "{max} caractères max par mot\u00a0; clique sur «\u00a0Le dire\u00a0» pour l'entendre tout de suite sur le bureau",
+        "placeholder": "Une phrase à transmettre, ex.\u00a0: tu me manques déjà aujourd'hui",
+        "newLabel": "Nouveau mot doux",
+        "from": "{sender} m'a demandé de te glisser à l'oreille\u00a0:",
+        "say": "Le dire",
+        "sayTitle": "Faire dire ce mot au compagnon sur le bureau",
+        "empty": "Aucun mot doux pour l'instant, écris le premier~"
+      }
+    },
+    "focus": {
+      "title": "Pomodoro",
+      "sub": "Une seule chose à la fois\u00a0: {pet} reste tranquillement à côté de toi",
+      "phase": {
+        "idle": "En attente",
+        "focus": "Concentration",
+        "short": "Petite pause",
+        "long": "Grande pause"
+      },
+      "paused": "En pause",
+      "stuck": "Le pomodoro semble bloqué, réessaie",
+      "pet": {
+        "idle": "Quand tu es prête, on commence~",
+        "paused": "Faire une pause, ce n'est pas grave",
+        "focus": "(concentration silencieuse à tes côtés…)",
+        "long": "Repose-toi bien, bois un peu d'eau et étire-toi~",
+        "short": "Une petite pause, et on reprend vite~"
+      },
+      "dots": "Grande pause tous les {n} {n|pomodoro|pomodoros}",
+      "btn": {
+        "start": "Commencer",
+        "resume": "Reprendre",
+        "pause": "Pause",
+        "skip": "Passer",
+        "skipBreak": "Passer la pause",
+        "stop": "Arrêter"
+      },
+      "today": {
+        "title": "Aujourd'hui",
+        "count": "{n} {n|pomodoro terminé|pomodoros terminés} aujourd'hui 🍅",
+        "none": "Pas encore de pomodoro, lance le premier~",
+        "minutes": "{n} {n|minute|minutes} de concentration au total"
+      },
+      "set": {
+        "title": "Réglages du pomodoro",
+        "sub": "Les changements s'appliquent au prochain pomodoro",
+        "focus": "Durée de concentration",
+        "longEvery": "Rythme des grandes pauses",
+        "longEveryDesc": "Une grande pause tous les combien de pomodoros",
+        "autoBreak": "Pause automatique",
+        "autoBreakDesc": "La pause démarre dès la fin de la concentration",
+        "minutes": "min",
+        "pomodoros": "{n|pomodoro|pomodoros}"
+      }
+    },
+    "moods": {
+      "title": "Humeur",
+      "sub": "Note ton humeur chaque jour, {pet} s'en souviendra",
+      "today": "Humeur du jour",
+      "todayNote": "«\u00a0{note}\u00a0»",
+      "noNote": "Pas de note",
+      "change": "Modifier",
+      "ask": "Comment s'est passée ta journée\u00a0? Clique pour la noter",
+      "saved": "C'est noté\u00a0: {emoji} {name}",
+      "pick": {
+        "title": "{date} · {week}",
+        "placeholder": "Qu'est-ce qui s'est passé aujourd'hui\u00a0? Écris-le en quelques mots~",
+        "save": "Noter"
+      },
+      "cal": {
+        "note": "{name}\u00a0: {note}",
+        "tap": "Clique pour noter ton humeur",
+        "prev": "Mois précédent",
+        "next": "Mois suivant",
+        "thisMonth": "Revenir à ce mois-ci"
+      },
+      "month": {
+        "title": "Humeurs · {month}",
+        "recorded": "{n} {n|jour noté|jours notés}",
+        "bar": "{name}\u00a0: {n} {n|jour|jours}",
+        "top": "Humeur la plus fréquente ce mois-ci\u00a0: {mood}, {n} {n|jour|jours}",
+        "none": "Rien de noté ce mois-ci, commence dès aujourd'hui~"
+      }
+    },
+    "todos": {
+      "title": "À faire",
+      "sub": "{done} {done|terminée|terminées}, {left} {left|restante|restantes}",
+      "subEmpty": "Confie à {pet} ce que tu as à faire",
+      "filter": {
+        "all": "Tout",
+        "open": "En cours",
+        "done": "Terminées"
+      },
+      "today": "Aujourd'hui",
+      "yesterday": "Hier",
+      "createdAt": "{day} {time}",
+      "doneAt": "{day} {time} · terminée",
+      "placeholder": "Et ensuite, on fait quoi\u00a0? Entrée pour ajouter",
+      "newLabel": "Nouvelle tâche",
+      "added": "C'est noté ✓",
+      "oneDone": "Encore une de faite, bravo\u00a0! 🎉",
+      "allDone": "Tout est fait\u00a0! Tu es la meilleure 🎉",
+      "removed": "Supprimée",
+      "clearDone": "Effacer les terminées",
+      "cleared": "{n} {n|tâche terminée effacée|tâches terminées effacées} ✨",
+      "markDone": "Marquer comme terminée",
+      "markUndone": "Marquer comme à faire",
+      "empty": "Rien à faire aujourd'hui, profites-en pour te reposer~",
+      "emptySub": "Quand une idée te vient, note-la ci-dessus",
+      "noneDone": "Rien de terminé pour l'instant, courage~",
+      "hint": "💡 À chaque tâche terminée, {pet} t'encourage sur le bureau, et votre complicité gagne +2",
+      "ideas": {
+        "title": "💞 Petits moments à deux",
+        "more": "D'autres idées",
+        "him": "mon chéri"
+      }
+    }
+  }
+}

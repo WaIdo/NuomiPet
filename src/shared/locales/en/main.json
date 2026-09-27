@@ -1,1 +1,224 @@
-{}
+{
+  "main": {
+    "menu": {
+      "feedPet": "🍓  Feed {pet}",
+      "coax": "🥺  Cheer you up",
+      "coaxRandom": "🎲  Surprise me",
+      "play": "🧶  Play with it",
+      "wake": "☀️  Wake it up",
+      "sleep": "💤  Tuck it in",
+      "pomodoro": "🍅  Pomodoro",
+      "mood": "🌈  Log my mood",
+      "fortune": "🔮  Today's fortune",
+      "home": "🏠  Open the Nest",
+      "todos": "📝  To-dos",
+      "reminders": "⏰  Reminders",
+      "dress": "🎀  Change style",
+      "letters": "💌  Letters",
+      "size": "Size",
+      "walkAround": "Walk around",
+      "followMouse": "Follow the mouse",
+      "alwaysOnTop": "Always on top",
+      "dnd": "Do Not Disturb",
+      "sound": "Sound",
+      "hidePet": "Hide {pet}",
+      "quit": "Quit"
+    },
+    "coax": {
+      "kneel": "🙇  Kneel on the washboard",
+      "bow": "🙏  Bow and apologize",
+      "flower": "💐  Bring flowers",
+      "heart": "❤️  Send a heart",
+      "hug": "🤗  Hug",
+      "kiss": "😘  Kiss",
+      "tea": "🧋  Treat you to bubble tea",
+      "cute": "🥺  Act cute",
+      "roll": "🌀  Roll around",
+      "dance": "💃  Dance to make you smile",
+      "praise": "🌟  Praise you"
+    },
+    "pomodoro": {
+      "start": "Start focusing",
+      "resume": "Resume",
+      "pause": "Pause",
+      "skip": "Skip this round",
+      "stop": "End Pomodoro"
+    },
+    "tray": {
+      "title": "{pet}'s desktop Nest",
+      "hide": "Hide {pet}",
+      "show": "Bring {pet} back",
+      "summon": "Call {pet} over",
+      "feed": "🍓  Feed",
+      "coax": "🥺  Cheer me up",
+      "launchAtLogin": "Open at login"
+    },
+    "appMenu": {
+      "about": "About",
+      "hide": "Hide",
+      "edit": "Edit",
+      "undo": "Undo",
+      "redo": "Redo",
+      "cut": "Cut",
+      "copy": "Copy",
+      "paste": "Paste",
+      "selectAll": "Select All",
+      "window": "Window",
+      "minimize": "Minimize"
+    },
+    "window": {
+      "home": "{pet}'s Nest"
+    },
+    "say": {
+      "shortBreak": "Take a break and move around a little~",
+      "longBreak": "Long break time! Go for a walk and have some water~",
+      "fortune": "🔮 Today's fortune {stars}\nGood for: {good}\nAvoid: {bad}",
+      "fortuneSep": ", ",
+      "love": "Someone loves you very, very much",
+      "loveFrom": "{sender} asked me to tell you: I love you",
+      "reminder": "It's reminder time",
+      "weather": "{emoji} {intro} {advice}"
+    },
+    "weather": {
+      "noCity": "No city set yet",
+      "failed": "Couldn't get the weather: {error}"
+    },
+    "letter": {
+      "untitled": "A letter",
+      "exportTitle": "Export letters written here",
+      "importTitle": "Import letters",
+      "fileType": "Letters",
+      "exportName": "Letters for {nick}",
+      "error": {
+        "nothingToExport": "No letters have been written here yet",
+        "notMine": "You can only delete letters written here",
+        "invalid": "Something's wrong with this letter",
+        "badDate": "The open date isn't valid",
+        "empty": "The letter is still empty",
+        "badFile": "This file can't be opened",
+        "notLetters": "This isn't a letters file",
+        "nothingToImport": "There are no letters to import in this file"
+      }
+    },
+    "data": {
+      "exportTitle": "Export data",
+      "importTitle": "Import data",
+      "backupName": "{pet}-backup-{date}",
+      "notBackup": "This isn't a {app} backup file"
+    },
+    "mail": {
+      "him": "him",
+      "menuPickup": "🚗  Ask {sender} to pick me up",
+      "listSep": ", ",
+      "receipt": {
+        "subject": "💌 {pet} got your letter “{title}”",
+        "body": "{pet} got your letter “{title}” and tucked it into the Letters box for {nick} 💌",
+        "bodyLater": "{pet} got your letter “{title}” and tucked it into the Letters box for {nick} 💌\nIt will be handed to her on {date}."
+      },
+      "pickup": {
+        "subjectNow": "🚗 Time to pick up {nick}. She's off work!",
+        "subject30": "🚗 Heads-up: pick up {nick} in half an hour",
+        "subject60": "🚗 Heads-up: pick up {nick} in an hour",
+        "body": "At {time}, {nick} asked you to come pick her up.\n\n— {pet}",
+        "bodyNote": "At {time}, {nick} asked you to come pick her up.\nShe says: {note}\n\n— {pet}"
+      },
+      "guide": {
+        "subject": "📮 How to send letters to {nick}",
+        "intro": "Email your letters to {pet} at: {address}\n{pet} will put each one in the Letters box for {nick} and hand it to her.",
+        "from": "Please send from: {list}",
+        "format": "The email subject becomes the letter's title, and the email body becomes the letter.",
+        "date": "Want her to open a letter only on a certain day? There are two ways:\n· Start the subject with the date, e.g. “[{date}] Happy birthday”\n· Make the first line of the body “Open on: {date}”\nWrite the full year, month and day. Letters without a date can be opened as soon as she gets them.",
+        "secret": "Don't forget to put the secret word “{secret}” in the subject or body. {pet} won't accept letters without it.",
+        "receipt": "Once {pet} gets a letter, you'll get a confirmation email.",
+        "sign": "— {pet}"
+      },
+      "error": {
+        "notReady": "Email isn't set up yet: enter the pet's email address and app password",
+        "unknownServer": "This email address wasn't recognized: pick your email provider from the list, or choose “Other email” and enter the incoming and outgoing servers yourself",
+        "auth": "Sign-in failed: check the email address and app password. The app password is not your email login password. QQ and 163 Mail need IMAP/SMTP turned on in the web settings to generate one",
+        "unsafe": "NetEase Mail refused the sign-in (Unsafe Login): turn on IMAP/SMTP in the web mail settings, sign in with an app password, and try again in a bit",
+        "connect": "Can't reach the mail server: check your network (work networks may block ports 993/465)",
+        "tls": "Secure connection error: check the server, port and SSL settings. The server's certificate may also be the problem",
+        "timeout": "The mail server took too long to respond: check your network and try again in a bit",
+        "http": "The server returned an error ({status})",
+        "other": "Something went wrong: {error}",
+        "noRecipient": "No one to notify yet: add his email in Settings → Email",
+        "noAllow": "His email (the address allowed to send letters) isn't filled in yet",
+        "tooSoon": "He was just told a moment ago. Try again in a minute",
+        "pushUrl": "The push URL isn't valid. It must start with http:// or https://",
+        "mailFailed": "The email wasn't sent: {error}",
+        "pushFailed": "The push notification wasn't sent: {error}",
+        "noSecret": "A letter didn't include the secret word, so it wasn't put in the Letters box",
+        "emptyBody": "“{title}” has an empty body, so it wasn't put in the Letters box",
+        "receipt": "The letter arrived, but the confirmation email wasn't sent: {error}",
+        "authGmail": "Sign-in failed: Gmail needs an app password. Turn on 2-Step Verification in your Google Account first, then generate an app password and enter it here (not your Google Account password)",
+        "msAuth": "Microsoft refused the sign-in: make sure you signed in with the Microsoft account for the email entered here, and that the registered app has IMAP and SMTP permissions",
+        "msNoClientId": "Outlook mail needs a Microsoft account sign-in: first enter the application (client) ID you registered with Microsoft",
+        "msLogin": "Outlook mail isn't signed in yet: click “Sign in with Microsoft”",
+        "msRelogin": "The Microsoft sign-in has expired (the password may have changed or access was revoked). Please sign in again",
+        "msExpired": "The sign-in code expired. Please start the sign-in again",
+        "msDenied": "Access wasn't approved on the Microsoft page. Sign in again and click “Accept”",
+        "msFailed": "Signing in with Microsoft didn't work: {error}"
+      },
+      "provider": {
+        "139": {
+          "name": "139 Mail",
+          "help": "In 139 Mail on the web, turn on IMAP/SMTP under “Settings → Client settings”, then follow the steps to get an app password and enter it here."
+        },
+        "auto": {
+          "name": "Detect automatically",
+          "help": "The servers are picked from the email address. Business email on a company domain can't be detected, so pick your provider from the list."
+        },
+        "qq": {
+          "name": "QQ Mail",
+          "help": "In QQ Mail on the web, turn on “IMAP/SMTP service” under “Settings → Account”, generate an app password as prompted, and enter it here (not your QQ password)."
+        },
+        "exmail": {
+          "name": "Tencent Exmail",
+          "help": "In Tencent Exmail on the web, turn on IMAP/SMTP under “Settings → Client settings”. If secure login is on, generate a client-specific password and enter it here."
+        },
+        "netease": {
+          "name": "NetEase Mail (163, 126, yeah.net, 188)",
+          "help": "In NetEase Mail on the web, turn on IMAP/SMTP under “Settings → POP3/SMTP/IMAP”, generate an app password as prompted, and enter it here (not your email login password)."
+        },
+        "qiye163": {
+          "name": "NetEase Business Mail",
+          "help": "In NetEase Business Mail on the web, turn on IMAP/SMTP under “Settings → Client settings”. If client authorization passwords are on, enter that password here."
+        },
+        "gmail": {
+          "name": "Gmail",
+          "help": "Turn on 2-Step Verification in your Google Account first, then generate a 16-character password under “Security → App passwords” and enter it here (not your Google Account password)."
+        },
+        "outlook": {
+          "name": "Outlook / Hotmail / Microsoft 365",
+          "help": "Microsoft email needs a Microsoft account sign-in: enter the application ID, click “Sign in with Microsoft”, open the Microsoft page in your browser, enter the code shown and approve. Work or school Microsoft 365 email also uses this option.",
+          "register": "To register an application ID: sign in to the Azure portal (portal.azure.com) with your Microsoft account and open “App registrations → New registration”. Any name works. For supported account types, choose “Accounts in any organizational directory and personal Microsoft accounts”. After registering, turn on “Allow public client flows” under “Authentication”, and add IMAP.AccessAsUser.All and SMTP.Send under “API permissions”. Finally, enter the “Application (client) ID” from the Overview page here."
+        },
+        "icloud": {
+          "name": "iCloud Mail",
+          "help": "Turn on two-factor authentication for your Apple Account first, then generate a password under “App-Specific Passwords” at account.apple.com and enter it here."
+        },
+        "yahoo": {
+          "name": "Yahoo Mail",
+          "help": "Generate an “app password” under “Account security” in your Yahoo account and enter it here."
+        },
+        "sina": {
+          "name": "Sina Mail",
+          "help": "In Sina Mail on the web, turn on the service under “Settings → Client POP/IMAP/SMTP”, then follow the steps to get an app password and enter it here."
+        },
+        "sohu": {
+          "name": "Sohu Mail",
+          "help": "In Sohu Mail on the web, turn on the service under “Settings → POP3/SMTP/IMAP”, set a separate password and enter it here."
+        },
+        "aliyun": {
+          "name": "Alibaba Mail",
+          "help": "In Alibaba Mail on the web, turn on IMAP/SMTP in the settings and enter your email password here. If secure login is on, enter the third-party client security password instead."
+        },
+        "custom": {
+          "name": "Other email (enter servers yourself)",
+          "help": "Enter the incoming (IMAP) and outgoing (SMTP) servers, ports and encryption from your email provider below. You can usually find them in your provider's web mail help."
+        }
+      }
+    }
+  }
+}

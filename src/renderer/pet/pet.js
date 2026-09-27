@@ -1,5 +1,5 @@
 // 桌宠窗口入口：把数据、输入事件、主进程消息接到 Brain 上。
-import { syncLang } from '../shared/i18n.mjs'; // 要最先执行：按语言填好名字和台词，缺字的 emoji 先换掉
+import { syncLang, petName } from '../shared/i18n.mjs'; // 要最先执行：按语言填好名字和台词，缺字的 emoji 先换掉
 import { PetView } from '../shared/pet-view.js';
 import { Sound } from '../shared/sound.js';
 import { Bubble } from './bubble.js';
@@ -16,6 +16,12 @@ const $ = (id) => document.getElementById(id);
 
 let data = await api.getData();
 syncLang(data);
+// 窗口标题是宠物的名字（没改过名字时用当前语言的默认名字）
+const applyTitle = (d) => {
+  const title = petName(d);
+  if (document.title !== title) document.title = title;
+};
+applyTitle(data);
 let layout = await api.pet.getLayout();
 let pomodoro = await api.pomodoro.get();
 
@@ -65,6 +71,8 @@ const panel = new Panel($('panel'), {
     play: () => brain.play(),
     coax: (kind) => brain.coax(kind),
     openHome: (page) => api.openHome(page),
+    pickupNotReady: () => brain.pickupNotReady(),
+    pickupResult: (r) => brain.pickupResult(r),
   },
   onToggle: (open) => brain.onPanelToggle(open),
   onNeedSpace: (need, v) => api.pet.walk({ dir: v.left > 0 ? 1 : -1, distance: need, speed: 520 }),
@@ -239,7 +247,8 @@ document.addEventListener('contextmenu', (e) => e.preventDefault());
 api.onData((d, paths) => {
   const prev = data;
   data = d;
-  if (syncLang(d)) panel.refresh();
+  if (syncLang(d)) panel.refresh('lang');
+  applyTitle(d);
   const all = paths.includes('*');
   if (all || paths.some((p) => p.startsWith('pet') || p.startsWith('love'))) {
     view.setLook(lookOf(d));
@@ -258,7 +267,8 @@ api.onData((d, paths) => {
   if (all || paths.some((p) => p.startsWith('love'))) {
     if (prev.love.chatty !== d.love.chatty) brain.scheduleChatter();
   }
-  if (all || paths.some((p) => p.startsWith('stats'))) panel.refresh();
+  if (all || paths.some((p) => p.startsWith('stats'))) panel.refresh('stats');
+  if (all || paths.some((p) => p.startsWith('owner'))) panel.refresh('owner');
 });
 api.pet.onLayout(applyLayout);
 api.pet.onClip((c) => {
@@ -277,7 +287,7 @@ api.pomodoro.onUpdate((p) => {
   pomodoro = p;
   renderBadge();
   brain.syncPomodoro(p);
-  if (phaseChanged || pausedChanged) panel.refresh();
+  if (phaseChanged || pausedChanged) panel.refresh('pomodoro');
   else panel.tick(p);
 });
 

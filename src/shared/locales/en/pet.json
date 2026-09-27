@@ -1,1 +1,153 @@
-{}
+{
+  "pet": {
+    "panel": {
+      "main": {
+        "food": "Feed",
+        "coax": "Coax",
+        "play": "Play",
+        "focus": "Focus",
+        "mood": "Mood",
+        "home": "Nest"
+      },
+      "coax": {
+        "kneel": "Kneel",
+        "flower": "Flowers",
+        "heart": "Heart",
+        "hug": "Hug",
+        "kiss": "Kiss",
+        "tea": "Tea",
+        "bow": "Bow",
+        "cute": "Cute",
+        "roll": "Roll",
+        "dance": "Dance",
+        "praise": "Praise",
+        "random": "Random"
+      },
+      "title": {
+        "food": "What should I eat?",
+        "coax": "How should I cheer you up?",
+        "mood": "How are you feeling today?",
+        "moodRecorded": "Today's mood (you can change it)"
+      },
+      "stat": {
+        "full": "Full {n}",
+        "mood": "Mood {n}"
+      },
+      "level": "Lv.{n}",
+      "collapse": "Collapse",
+      "focus": {
+        "idle": "Pomodoro · {n} today",
+        "phase": {
+          "focus": "Focusing",
+          "short": "Short break",
+          "long": "Long break"
+        },
+        "running": "{phase} {time}",
+        "paused": "{phase} (paused) {time}",
+        "start": "Focus for {n} min",
+        "resume": "Resume",
+        "pause": "Pause",
+        "skip": "Skip",
+        "stop": "End",
+        "settings": "Settings"
+      }
+    },
+    "chatter": {
+      "note": "Whisper time 💌 {note}"
+    },
+    "remind": {
+      "done": {
+        "water": "Drank it 💧",
+        "stretch": "Moved! 🙆",
+        "eyes": "Okay 👀",
+        "sleep": "Off to bed 🌙",
+        "custom": "Got it ✓"
+      },
+      "snoozeSleep": "A bit longer",
+      "snoozeMinutes": "In {n} min",
+      "snoozed": "Okay, I'll remind you again in a little while~",
+      "goodNight": "Good night, {nick}. Sweet dreams~ 🌙",
+      "doneCustom": "Yay!",
+      "doneGood": "Good job~"
+    },
+    "hungry": {
+      "feed": "Feed it 🍓"
+    },
+    "letter": {
+      "withTitle": "{text}\n“{title}”",
+      "open": "Open it 💌",
+      "later": "Okay! When you want to read it, you'll find it in Nest → Letters~"
+    },
+    "profile": {
+      "yes": "Sure ✏️",
+      "later": "Maybe later",
+      "laterReply": "Okay! Whenever you want to tell me, just go to Nest → Settings → About us~"
+    },
+    "inFocus": {
+      "poke": "(whispers) Focus mode~ You've got this!",
+      "feed": "Let's eat after focus time~ (I'm a little hungry, though)",
+      "play": "Let's play after you finish focusing~",
+      "coax": "(whispers) I'll cheer you up after focus time~"
+    },
+    "breakDone": {
+      "text": "Break's over~",
+      "again": "One more 🍅",
+      "no": "Not now"
+    },
+    "fall": "Waaaah—!",
+    "kneel": {
+      "sign": {
+        "sorry": "Sorry!",
+        "forgiveMe": "Forgive me",
+        "loveYou": "Love you",
+        "waiting": "Waiting…"
+      },
+      "forgive": "You're forgiven 💗",
+      "hmph": "Hmph!"
+    },
+    "pickup": {
+      "button": "Pickup",
+      "title": "Ask {sender} to pick you up?",
+      "when": {
+        "now": "Right now",
+        "30": "In 30 min",
+        "60": "In an hour"
+      },
+      "noteLabel": "A note for {sender}",
+      "placeholder": "e.g. I'll wait outside the office",
+      "send": "Send 🚗",
+      "sending": "Sending…",
+      "done": "I told {sender}! He's coming to get you~ 💕",
+      "doneWithIssue": "I told {sender}! He's coming to get you~ 💕\nOne small hiccup, though: {error}",
+      "tooSoon": "I just let {sender} know a moment ago. Help is on the way~",
+      "failed": "Oops, I couldn't reach {sender}: {error}",
+      "notReady": "Fill in the email setup in Nest → Settings → Email first, then I can call {sender} for you~",
+      "settings": "Settings ⚙️"
+    }
+  },
+  "letter": {
+    "untitled": "A letter",
+    "closeHint": "Close (Esc)",
+    "openAria": "Open this letter",
+    "from": "A letter from {name}",
+    "forYou": "There's a letter for you",
+    "open": "Open it 💌",
+    "readAgain": "Read it again 💌",
+    "locked": {
+      "notYet": "It's not time to open this yet~",
+      "seeYouOn": "See you on {date}",
+      "seeYouLater": "See you then",
+      "daysLeft": "{n} more {n|day|days} to wait. Something to look forward to~",
+      "ok": "Okay, I'll wait"
+    },
+    "missing": {
+      "huh": "Huh?",
+      "title": "This letter seems to have gotten lost…",
+      "close": "Close"
+    },
+    "to": "💌 A letter for {nick}",
+    "toYou": "💌 A letter for you",
+    "signature": "— {name}",
+    "keep": "Keep it safe 💗"
+  }
+}

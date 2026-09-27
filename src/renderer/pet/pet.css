@@ -7,6 +7,23 @@
   --muted: var(--th-a08a97);
   font-family: -apple-system, 'PingFang SC', 'Microsoft YaHei UI', 'Microsoft YaHei', 'Hiragino Sans GB', system-ui, sans-serif;
 }
+/* 按界面语言换字体（<html lang> 由 syncLang 设置）；英文后面接中文字体，名字、悄悄话里的中文照样好看 */
+:root:lang(zh-TW) {
+  font-family: -apple-system, 'PingFang TC', 'Microsoft JhengHei UI', 'Microsoft JhengHei', system-ui, sans-serif;
+}
+:root:lang(ja) {
+  font-family: -apple-system, 'Hiragino Sans', 'Hiragino Kaku Gothic ProN', 'Yu Gothic UI', 'Meiryo', system-ui, sans-serif;
+}
+:root:lang(ko) {
+  font-family: -apple-system, 'Apple SD Gothic Neo', 'Malgun Gothic', 'Noto Sans KR', system-ui, sans-serif;
+}
+:root:lang(en),
+:root:lang(fr) {
+  font-family: -apple-system, 'Segoe UI', system-ui, 'PingFang SC', 'Microsoft YaHei UI', 'Microsoft YaHei', 'Hiragino Sans GB', sans-serif;
+}
+:root:lang(ar) {
+  font-family: -apple-system, 'SF Arabic', 'Geeza Pro', 'Segoe UI', 'Tahoma', system-ui, sans-serif;
+}
 
 [hidden] {
   display: none !important;
@@ -240,6 +257,10 @@ body.dragging #pet .hit {
 }
 .phead .ptitle {
   flex: 1;
+  min-width: 0;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
   font-weight: 700;
   font-size: 12.5px;
 }
@@ -299,6 +320,19 @@ body.dragging #pet .hit {
   white-space: nowrap;
   font-variant-numeric: tabular-nums;
 }
+/* 中文、日文以外的语言（日文和中文一样四个字放得下，折行会从词中间断开），按钮文字可能比格子宽：折成两行（最多两行），放不下的长单词在格子边上断开，不挤到旁边的按钮上。
+   左右各借 3px，和中文一样，四个字（或八九个字母）的词还能放在一行 */
+.pbtn .lbl:not(:lang(zh)):not(:lang(ja)) {
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+  overflow: hidden;
+  margin: 0 -3px;
+  white-space: normal;
+  overflow-wrap: anywhere;
+  text-align: center;
+  line-height: 1.2;
+}
 .pbtn:hover .ico {
   transform: translateY(-2px) scale(1.08);
   box-shadow: inset 0 0 0 1.5px var(--th-ffb3cc), 0 4px 10px rgba(var(--th-d6608c-rgb), 0.2);
@@ -324,6 +358,92 @@ body.dragging #pet .hit {
 .view-focus .pbtn.wide .ico {
   width: 100%;
   border-radius: 18px;
+}
+
+/* 主页 7 个按钮排一行：格子窄一点，图标跟着小一点 */
+.pbody.view-main {
+  grid-template-columns: repeat(7, 1fr);
+}
+.view-main .pbtn .ico {
+  width: 32px;
+  height: 32px;
+  font-size: 17px;
+}
+
+/* ---------- 来接我 ---------- */
+.pbody.view-pickup {
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+  padding: 1px 4px 0;
+}
+.pk-when {
+  display: flex;
+  gap: 5px;
+}
+.pk-when button {
+  flex: 1;
+  min-width: 0;
+  padding: 5px 4px;
+  border: 0;
+  border-radius: 999px;
+  font: inherit;
+  font-size: 12px;
+  font-weight: 600;
+  line-height: 1.3;
+  color: var(--th-d9537f);
+  background: var(--pink-soft);
+  box-shadow: inset 0 0 0 1.5px var(--pink-line);
+  cursor: pointer;
+  transition: transform 0.12s;
+}
+.pk-when button.on {
+  color: #fff;
+  background: linear-gradient(135deg, var(--th-ff9cc0), var(--th-ff7ea8));
+  box-shadow: 0 3px 8px rgba(var(--th-ff6ea0-rgb), 0.35);
+}
+.pk-when button:active,
+.pk-send:active:not(:disabled) {
+  transform: scale(0.95);
+}
+.pk-note {
+  box-sizing: border-box;
+  width: 100%;
+  height: 30px;
+  padding: 0 11px;
+  border: 1.5px solid var(--th-ffd6e3);
+  border-radius: 12px;
+  background: var(--th-fff7fa);
+  color: var(--text);
+  font: inherit;
+  font-size: 12.5px;
+  outline: none;
+  user-select: text;
+  -webkit-user-select: text;
+}
+.pk-note:focus {
+  border-color: var(--th-ffb3cc);
+  background: #fff;
+}
+.pk-note::placeholder {
+  color: var(--muted);
+}
+.pk-send {
+  height: 30px;
+  border: 0;
+  border-radius: 999px;
+  font: inherit;
+  font-size: 13px;
+  font-weight: 700;
+  color: #fff;
+  background: linear-gradient(135deg, var(--th-ff9cc0), var(--th-ff7ea8));
+  box-shadow: 0 3px 8px rgba(var(--th-ff6ea0-rgb), 0.35);
+  cursor: pointer;
+  transition: transform 0.12s, opacity 0.15s;
+}
+.pk-send:disabled {
+  opacity: 0.6;
+  cursor: default;
 }
 
 /* ---------- 番茄钟角标 ---------- */
@@ -541,4 +661,33 @@ body.dragging #pet .hit {
   55% { transform: translate(-50%, -50%) scale(1.1); }
   80% { opacity: 1; transform: translate(-50%, -60%) scale(1); }
   100% { opacity: 0; transform: translate(-50%, -90%) scale(0.9); }
+}
+
+/* ---------- 从右往左的语言（阿拉伯文，<html dir="rtl"> 由 syncLang 设置） ----------
+   气泡、面板的文字方向、按钮顺序、格子顺序跟着 dir 自动镜像；返回按钮的「‹」是会镜像的字符，自动显示成「›」。
+   这里只补上左右不对称的地方。宠物本身、特效、气泡和面板的位置（跟着宠物算）都不镜像。 */
+html[dir='rtl'] .bubble .close {
+  right: auto;
+  left: -8px;
+}
+html[dir='rtl'] .phead {
+  padding: 0 4px 0 2px;
+}
+/* 进度条从右往左长，颜色深的一头也换到左边 */
+html[dir='rtl'] .phead .stat s {
+  background: linear-gradient(270deg, #ffc46b, #ff9f6b);
+}
+html[dir='rtl'] .phead .stat.mood s {
+  background: linear-gradient(270deg, var(--th-ffa6c6), var(--th-ff7ea8));
+}
+html[dir='rtl'] .badge {
+  padding: 3px 6px 3px 9px;
+}
+/* 「来接我」里她写的话可能是别的文字：按自己的文字定方向 */
+html[dir='rtl'] .pk-note {
+  unicode-bidi: plaintext;
+}
+/* 阿拉伯文是连写的，字母之间不能加间距 */
+:lang(ar) .fx-sign .board {
+  letter-spacing: 0;
 }

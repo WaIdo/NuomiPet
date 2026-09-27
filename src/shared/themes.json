@@ -21,11 +21,32 @@
     "symbol": "#84715b"
   },
   {
+    "id": "matcha",
+    "swatch": "#99bb77",
+    "light": "#ebf0e3",
+    "header": "#f7faf5",
+    "symbol": "#747764"
+  },
+  {
+    "id": "apple",
+    "swatch": "#7dc375",
+    "light": "#e7f2e2",
+    "header": "#f6faf5",
+    "symbol": "#6e7962"
+  },
+  {
     "id": "mint",
     "swatch": "#4ac89c",
     "light": "#e1f3e8",
     "header": "#f4faf7",
     "symbol": "#657b6a"
+  },
+  {
+    "id": "lake",
+    "swatch": "#37c6c1",
+    "light": "#dff3ef",
+    "header": "#f3fafa",
+    "symbol": "#607c75"
   },
   {
     "id": "sky",

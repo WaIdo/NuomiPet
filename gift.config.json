@@ -1,9 +1,9 @@
 {
-  "_说明": "送礼前的专属设置。改完后重新打包（npm run dist:mac / npm run dist:win）。除了 letters（信件），其余内容她之后都可以在「小窝」里自己改。日期格式 YYYY-MM-DD，生日可以只写 MM-DD。",
+  "_说明": "送礼前的专属设置。改完后重新打包（npm run dist:mac / npm run dist:win）。除了 letters（信件），其余内容她之后都可以在「小窝」里自己改。日期都写完整的 YYYY-MM-DD。petName（宠物的名字）和 nickname（宠物怎么称呼她）留空就用当前界面语言的默认值，中文是「糯米」和「宝贝」。sender（你的名字）、togetherSince（在一起的日子）和 birthday（她的生日）：已经装过旧版的，数据里这几项还空着的话，启动时会用这里的值补上一次（只补一次，之后她自己清空了也不会再填回去）。",
 
-  "petName": "糯米",
-  "nickname": "宝贝",
-  "sender": "",
+  "petName": "",
+  "nickname": "",
+  "sender": "豪豪",
 
   "species": "cat",
   "color": "milk",
@@ -11,29 +11,18 @@
   "markings": "none",
   "size": "m",
 
-  "togetherSince": "",
-  "birthday": "",
+  "togetherSince": "2026-09-25",
+  "birthday": "2002-06-08",
 
-  "_anniversaries说明": "kind 可选 yearly（每年提醒）/ countdown（倒数日）/ since（累计天数）。例：{ \"name\": \"第一次约会\", \"date\": \"2023-05-20\", \"kind\": \"yearly\" }",
+  "_anniversaries说明": "kind 填 yearly（每年提醒）、countdown（倒数日）或 since（累计天数）。例：{ \"name\": \"第一次约会\", \"date\": \"2023-05-20\", \"kind\": \"yearly\" }",
   "anniversaries": [],
 
-  "_notes说明": "宠物会时不时说出这些悄悄话。填了 sender（你的名字）后，会说「xxx让我偷偷告诉你：……」。",
-  "notes": [
-    "今天也要开开心心的呀",
-    "不管发生什么，都有人站在你这边",
-    "你已经很努力啦，要记得夸夸自己",
-    "累了就停下来歇一歇，没关系的",
-    "你是被好好爱着的人"
-  ],
+  "_notes说明": "宠物会时不时说出这些悄悄话。填了 sender（你的名字）后，会说「xxx让我偷偷告诉你：……」。留空（[]）就用内置的几条，语言和第一次打开时的界面一样。例：[\"今天也要开开心心的呀\", \"你是被好好爱着的人\"]",
+  "notes": [],
 
-  "_letters说明": "信件会出现在「小窝 → 信箱」。unlock 留空表示马上可以看；写日期则到那天才解锁（比如她的生日）。from 是署名。",
-  "letters": [
-    {
-      "id": "hello",
-      "title": "糯米的自我介绍",
-      "unlock": "",
-      "from": "糯米",
-      "body": "你好呀！\n\n我是糯米，一只软乎乎的小团子。从今天开始，我就住在你的桌面上啦。\n\n你工作的时候，我会安安静静地陪着你；你忘记喝水的时候，我会提醒你；你坐太久的时候，我会喊你起来伸个懒腰。\n\n摸摸我的头，我会很开心；双击我，可以喂我吃好吃的；把我拎起来扔一扔也可以（不要太用力哦）。\n\n还有，有人拜托我好好照顾你。所以，请多多指教啦！"
-    }
-  ]
+  "_letters说明": "信件会出现在「小窝 → 信箱」。unlock 留空表示马上可以看；写日期则到那天才解锁（比如她的生日）。from 是署名。id 随便起，不重复就行。例：{ \"id\": \"birthday\", \"title\": \"生日快乐\", \"unlock\": \"2027-06-08\", \"from\": \"豪豪\", \"body\": \"……\" }。应用里自带一封宠物的自我介绍信（id 是 hello，跟着界面语言）；这里写一封 id 为 hello 的信，就会换成你写的。",
+  "letters": [],
+
+  "_mailMsClientId说明": "宠物的邮箱用 Outlook、Hotmail 或 Microsoft 365 的话，要用微软账号登录，得先在微软注册一个应用：登录 Azure 门户（portal.azure.com）→「应用注册 → 新注册」，支持的账户类型选「任何组织目录中的帐户和个人 Microsoft 帐户」；在「身份验证」里打开「允许公共客户端流」，在「API 权限」里添加 IMAP.AccessAsUser.All 和 SMTP.Send。把「应用程序(客户端) ID」填在这里，她在「小窝 → 设置 → 邮件」里就不用再填了。",
+  "mailMsClientId": ""
 }

@@ -11,7 +11,7 @@ module.exports = async ({ app, store, scheduler, openHome, capture, pomodoro }) 
   store.set('stats.counters', { pets: 128, feeds: 36, plays: 21, waters: 87, pomodoros: 14, todos: 42 });
   scheduler.goAway = () => {};
   const day = (offset) => { const d = new Date(); d.setDate(d.getDate() + offset); return C.dateKey(d); };
-  store.set('owner.nickname', '小橘子');
+  store.set('owner.nickname', '宝贝');
   store.set('owner.sender', '豪豪');
   store.set('love.togetherSince', day(-412));
   store.set('love.birthday', '1999-' + day(12).slice(5));

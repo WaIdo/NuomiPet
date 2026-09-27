@@ -45,8 +45,7 @@
     ],
     "year": "{y}",
     "month": "{mon}",
-    "day": "{d}",
-    "noYear": "بدون سنة"
+    "day": "{d}"
   },
   "lang": {
     "title": "اللغة",

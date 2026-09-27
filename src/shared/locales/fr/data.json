@@ -1,1 +1,255 @@
-{}
+{
+  "species": {
+    "cat": "Minou",
+    "bunny": "Lapinou",
+    "bear": "Nounours",
+    "puppy": "Toutou",
+    "hamster": "Hamster",
+    "chick": "Poussin"
+  },
+  "palettes": {
+    "milk": "Crème",
+    "sakura": "Rose sakura",
+    "peach": "Pêche",
+    "milktea": "Café au lait",
+    "caramel": "Caramel",
+    "custard": "Vanille",
+    "avocado": "Avocat",
+    "matcha": "Matcha",
+    "apple": "Pomme verte",
+    "mint": "Menthe",
+    "lake": "Vert d'eau",
+    "mist": "Bleu brume",
+    "taro": "Lavande",
+    "gray": "Gris argent",
+    "cocoa": "Cacao"
+  },
+  "accessories": {
+    "none": "Aucun",
+    "bow": "Nœud",
+    "flower": "Fleur",
+    "sprout": "Pousse",
+    "crown": "Couronne",
+    "partyhat": "Chapeau",
+    "heartclip": "Barrette",
+    "strawberry": "Fraise",
+    "santa": "Père Noël",
+    "glasses": "Lunettes"
+  },
+  "markings": {
+    "none": "Uni",
+    "belly": "Ventre blanc",
+    "stripes": "Rayures",
+    "patch": "Cache-œil"
+  },
+  "sizes": {
+    "s": "Mini",
+    "m": "Moyen",
+    "l": "Grand",
+    "xl": "Géant"
+  },
+  "moods": {
+    "great": "Aux anges",
+    "good": "Contente",
+    "calm": "Sereine",
+    "tired": "Fatiguée",
+    "sad": "Triste",
+    "angry": "Fâchée"
+  },
+  "foods": {
+    "strawberry": {
+      "name": "Fraise",
+      "line": "Une fraise acidulée et toute sucrée, miam~"
+    },
+    "cake": {
+      "name": "Gâteau",
+      "line": "Du gâteau\u00a0! Ça a le goût du bonheur~"
+    },
+    "boba": {
+      "name": "Bubble tea",
+      "line": "Un bubble tea\u00a0! Ma boisson du bonheur\u00a0! Glou glou~"
+    },
+    "onigiri": {
+      "name": "Onigiri",
+      "line": "Un onigiri qui sent trop bon, j'ai le ventre bien rempli~"
+    },
+    "cookie": {
+      "name": "Biscuit",
+      "line": "Crac crac, tout croustillant\u00a0!"
+    },
+    "icecream": {
+      "name": "Glace",
+      "line": "Trop froid, trop sucré… j'ai le cerveau gelé~"
+    },
+    "fish": {
+      "name": "Poisson séché",
+      "line": "Du poisson séché\u00a0! C'est ce que j'aime le plus au monde\u00a0!"
+    },
+    "carrot": {
+      "name": "Carotte",
+      "line": "Une carotte bien croquante, croc croc\u00a0!"
+    },
+    "honey": {
+      "name": "Miel",
+      "line": "Du bon miel tout sucré, je m'en lèche les babines~"
+    },
+    "meat": {
+      "name": "Viande",
+      "line": "De la viande\u00a0! Ouaf ouaf\u00a0! Ça sent trop bon\u00a0!"
+    },
+    "seeds": {
+      "name": "Graines",
+      "line": "Je grignote mes graines, crac, crac… impossible de m'arrêter~"
+    },
+    "corn": {
+      "name": "Maïs",
+      "line": "Des grains de maïs, un par un… trop sucrés\u00a0!"
+    }
+  },
+  "levels": {
+    "1": "Premiers pas",
+    "2": "On s'apprivoise",
+    "3": "Bons amis",
+    "4": "Inséparables",
+    "5": "Complices",
+    "6": "Coup de cœur",
+    "7": "C'était écrit",
+    "8": "Uniques au monde",
+    "9": "Pour toujours",
+    "10": "N°\u00a01 de l'univers"
+  },
+  "themes": {
+    "sakura": "Rose sakura",
+    "peach": "Orange pêche",
+    "butter": "Jaune beurre",
+    "matcha": "Vert matcha",
+    "apple": "Vert pomme",
+    "mint": "Vert menthe",
+    "lake": "Vert d'eau",
+    "sky": "Bleu ciel",
+    "taro": "Lavande"
+  },
+  "festivals": {
+    "newYearsDay": {
+      "name": "Jour de l'An",
+      "text": "Bonne année\u00a0! 🎉 Cette année encore, on avance main dans la main, d'accord\u00a0?"
+    },
+    "valentines": {
+      "name": "Saint-Valentin",
+      "text": "Joyeuse Saint-Valentin 💕 Aujourd'hui encore, tu es tellement aimée"
+    },
+    "womensDay": {
+      "name": "Journée des femmes",
+      "text": "Bonne journée des femmes\u00a0! 👑 Tu es la plus merveilleuse déesse du monde, {nick}"
+    },
+    "whiteDay": {
+      "name": "White Day",
+      "text": "Joyeux White Day 🤍 Une journée toute douce, rien que pour toi~"
+    },
+    "day520": {
+      "name": "Fête du 520",
+      "text": "Joyeux 520\u00a0! 💕 En chinois, «\u00a0520\u00a0» se prononce presque comme «\u00a0je t'aime\u00a0». {love}"
+    },
+    "childrensDay": {
+      "name": "Journée des enfants",
+      "text": "Bonne journée des enfants\u00a0! 🎈 Aux yeux de {pet}, tu seras toujours une grande enfant~"
+    },
+    "christmasEve": {
+      "name": "Réveillon de Noël",
+      "text": "Bon réveillon de Noël\u00a0! 🍎 En chinois, «\u00a0pomme\u00a0» sonne un peu comme «\u00a0paix\u00a0»\u00a0: croque une pomme, et que tout aille bien pour toi~"
+    },
+    "christmas": {
+      "name": "Noël",
+      "text": "Joyeux Noël\u00a0! 🎄 {pet} a mis son bonnet de Noël pour l'occasion"
+    },
+    "newYearsEve": {
+      "name": "Saint-Sylvestre",
+      "text": "C'est le dernier jour de l'année\u00a0! Merci d'avoir passé toute cette année avec moi ✨"
+    },
+    "lunarNewYearsEve": {
+      "name": "Réveillon du Nouvel An lunaire",
+      "text": "Bon réveillon du Nouvel An lunaire\u00a0! 🧧 Au grand dîner du réveillon, régale-toi bien\u00a0!"
+    },
+    "springFestival": {
+      "name": "Nouvel An chinois",
+      "text": "Joyeux Nouvel An chinois\u00a0! 🧨 {pet} te présente ses vœux\u00a0: que cette nouvelle année soit pleine de joie et de sérénité\u00a0!"
+    },
+    "lanternFestival": {
+      "name": "Fête des lanternes",
+      "text": "Bonne fête des lanternes\u00a0! 🏮 Aujourd'hui, on mange des tangyuan, de petites boules de riz gluant toutes rondes, symbole des retrouvailles~"
+    },
+    "dragonBoat": {
+      "name": "Fête des bateaux-dragons",
+      "text": "Bonne fête des bateaux-dragons\u00a0! 🐉 Les zongzi, ces papillotes de riz gluant, tu les préfères sucrés ou salés\u00a0?"
+    },
+    "qixi": {
+      "name": "Qixi (la Saint-Valentin chinoise)",
+      "text": "Joyeux Qixi, la Saint-Valentin chinoise 💕 {love}"
+    },
+    "midAutumn": {
+      "name": "Fête de la Mi-Automne",
+      "text": "Bonne fête de la Mi-Automne\u00a0! 🥮 La lune est toute ronde ce soir, que ceux qui s'aiment soient réunis aussi~"
+    }
+  },
+  "defaults": {
+    "petName": "Mochi",
+    "nickname": "mon cœur",
+    "notes": [
+      "Sois heureuse aujourd'hui aussi, d'accord\u00a0?",
+      "Quoi qu'il arrive, quelqu'un sera toujours de ton côté",
+      "Tu fais déjà tellement d'efforts, pense à te féliciter",
+      "Si tu es fatiguée, arrête-toi un peu, ce n'est pas grave",
+      "Tu es aimée, tellement aimée"
+    ],
+    "anniversary": "Date spéciale"
+  },
+  "weather": {
+    "codes": {
+      "0": "Ciel dégagé",
+      "1": "Peu nuageux",
+      "2": "Nuageux",
+      "3": "Ciel couvert",
+      "45": "Brouillard",
+      "48": "Brouillard",
+      "51": "Bruine",
+      "53": "Bruine",
+      "55": "Bruine",
+      "56": "Bruine verglaçante",
+      "57": "Bruine verglaçante",
+      "61": "Pluie faible",
+      "63": "Pluie modérée",
+      "65": "Pluie forte",
+      "66": "Pluie verglaçante",
+      "67": "Pluie verglaçante",
+      "71": "Neige faible",
+      "73": "Neige modérée",
+      "75": "Neige forte",
+      "77": "Grésil",
+      "80": "Averses",
+      "81": "Averses",
+      "82": "Fortes averses",
+      "85": "Averses de neige",
+      "86": "Fortes averses de neige",
+      "95": "Orages",
+      "96": "Orages avec grêle",
+      "99": "Orages avec grêle"
+    },
+    "unknown": "Météo inconnue",
+    "advice": {
+      "rain": "Il risque de pleuvoir, n'oublie pas ton parapluie ☂️",
+      "snow": "Il va neiger\u00a0! Couvre-toi bien et attention à ne pas glisser ⛄",
+      "hot": "Il fait très chaud aujourd'hui\u00a0: protège-toi du soleil et bois beaucoup d'eau 🧊",
+      "cold": "Brrr, qu'il fait froid\u00a0! Habille-toi chaudement pour ne pas prendre froid 🧣",
+      "uv": "Les UV sont forts aujourd'hui, pense à mettre de la crème solaire 🧴",
+      "swing": "Il fera frais le matin et le soir, prends une petite veste 🧥",
+      "nice": "Il fait beau aujourd'hui, que ton humeur soit au beau fixe aussi~"
+    }
+  },
+  "letters": {
+    "hello": {
+      "title": "{pet} se présente",
+      "from": "{pet}",
+      "body": "Coucou\u00a0!\n\nMoi, c'est {pet}, une petite boule toute douce. À partir d'aujourd'hui, j'habite sur ton bureau.\n\nQuand tu travailles, je reste sagement à côté de toi. Quand tu oublies de boire, je te le rappelle. Et quand tu restes assise trop longtemps, je t'appelle pour que tu te lèves et que tu t'étires un peu.\n\nUne caresse sur la tête, et me voilà aux anges. Double-clique sur moi pour me donner de bonnes choses à manger. Tu peux aussi m'attraper et me lancer un peu (mais pas trop fort, hein\u00a0!).\n\nEt puis, quelqu'un m'a demandé de bien veiller sur toi. Alors, à partir de maintenant, on fait équipe\u00a0!"
+    }
+  }
+}

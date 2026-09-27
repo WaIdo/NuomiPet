@@ -45,8 +45,7 @@
     ],
     "year": "{y}",
     "month": "{mon}",
-    "day": "{d}",
-    "noYear": "No year"
+    "day": "{d}"
   },
   "lang": {
     "title": "Language",

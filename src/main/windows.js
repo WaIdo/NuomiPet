@@ -2,6 +2,8 @@
 const { BrowserWindow, app, screen } = require('electron');
 const path = require('path');
 
+const i18n = require('./i18n');
+
 const isMac = process.platform === 'darwin';
 const preload = path.join(__dirname, '../preload/preload.js');
 const themes = require('../shared/themes.json');
@@ -11,6 +13,9 @@ let homeTheme = 'sakura';
 
 let home = null;
 let letter = null;
+let letterId = null; // 信件窗口里是哪封信
+
+const homeTitle = (petName) => i18n.t('main.window.home', { pet: petName });
 
 function webPrefs() {
   return { preload, contextIsolation: true, nodeIntegration: false, sandbox: true, spellcheck: false };
@@ -37,7 +42,7 @@ function setHomeTheme(id) {
   }
 }
 
-function openHome(page, petName = '糯米') {
+function openHome(page, petName = i18n.petName()) {
   if (home && !home.isDestroyed()) {
     if (home.isMinimized()) home.restore();
     home.show();
@@ -57,7 +62,7 @@ function openHome(page, petName = '糯米') {
     minWidth: Math.min(860, width),
     minHeight: Math.min(600, height),
     show: false,
-    title: `${petName}的小窝`,
+    title: homeTitle(petName),
     backgroundColor: themeOf(homeTheme).header,
     titleBarStyle: isMac ? 'hiddenInset' : 'hidden',
     trafficLightPosition: isMac ? { x: 16, y: 15 } : undefined,
@@ -85,6 +90,7 @@ function openLetter(id) {
   const w = 560;
   const h = 720;
   const area = screen.getDisplayNearestPoint(screen.getCursorScreenPoint()).workArea;
+  letterId = String(id);
   letter = new BrowserWindow({
     width: w,
     height: Math.min(h, area.height - 20),
@@ -100,7 +106,7 @@ function openLetter(id) {
     fullscreenable: false,
     alwaysOnTop: true,
     skipTaskbar: false,
-    title: '一封信',
+    title: i18n.t('main.letter.untitled'),
     webPreferences: webPrefs(),
   });
   letter.loadFile(path.join(__dirname, '../renderer/letter/index.html'), { query: { id: String(id) } });
@@ -109,11 +115,22 @@ function openLetter(id) {
     letter.focus();
     if (isMac) app.focus({ steal: true });
   });
-  letter.on('closed', () => {
+  const win = letter;
+  // 先关掉的旧窗口晚一步才触发 closed，这时 letter 已经是新窗口了，不能清掉
+  win.on('closed', () => {
+    if (letter !== win) return;
     letter = null;
+    letterId = null;
   });
   guardNavigation(letter);
   return letter;
+}
+
+// 换了语言：更新已经打开的小窝和信件窗口的标题（页面换语言后也会设自己的标题）。
+// letterTitle(id) 返回那封信现在的标题
+function setTitles(petName, letterTitle) {
+  if (home && !home.isDestroyed()) home.setTitle(homeTitle(petName));
+  if (letter && !letter.isDestroyed()) letter.setTitle((letterTitle && letterTitle(letterId)) || i18n.t('main.letter.untitled'));
 }
 
 // 不允许页面跳转到外部链接或打开新窗口
@@ -128,4 +145,4 @@ function homeWindow() {
   return home && !home.isDestroyed() ? home : null;
 }
 
-module.exports = { openHome, openLetter, homeWindow, guardNavigation, updateDock, setHomeTheme };
+module.exports = { openHome, openLetter, homeWindow, guardNavigation, updateDock, setHomeTheme, setTitles };

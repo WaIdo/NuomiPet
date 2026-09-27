@@ -1,1 +1,153 @@
-{}
+{
+  "pet": {
+    "panel": {
+      "main": {
+        "food": "Nourrir",
+        "coax": "Câlins",
+        "play": "Jouer",
+        "focus": "Focus",
+        "mood": "Humeur",
+        "home": "Nid"
+      },
+      "coax": {
+        "kneel": "À genoux",
+        "flower": "Fleurs",
+        "heart": "Cœur",
+        "hug": "Câlin",
+        "kiss": "Bisou",
+        "tea": "Bubble tea",
+        "bow": "Excuses",
+        "cute": "Yeux doux",
+        "roll": "Roulade",
+        "dance": "Danse",
+        "praise": "Éloges",
+        "random": "Au hasard"
+      },
+      "title": {
+        "food": "Tu me donnes quoi\u00a0?",
+        "coax": "Comment te remonter le moral\u00a0?",
+        "mood": "Comment tu te sens aujourd'hui\u00a0?",
+        "moodRecorded": "Ton humeur du jour (tu peux la changer)"
+      },
+      "stat": {
+        "full": "Satiété {n}",
+        "mood": "Humeur {n}"
+      },
+      "level": "Lv.{n}",
+      "collapse": "Réduire",
+      "focus": {
+        "idle": "Pomodoro · {n} aujourd'hui",
+        "phase": {
+          "focus": "Concentration",
+          "short": "Petite pause",
+          "long": "Grande pause"
+        },
+        "running": "{phase} {time}",
+        "paused": "{phase} (en pause) {time}",
+        "start": "Concentration {n} min",
+        "resume": "Reprendre",
+        "pause": "Pause",
+        "skip": "Passer",
+        "stop": "Arrêter",
+        "settings": "Réglages"
+      }
+    },
+    "chatter": {
+      "note": "C'est l'heure des mots doux 💌 {note}"
+    },
+    "remind": {
+      "done": {
+        "water": "C'est bu 💧",
+        "stretch": "Je bouge 🙆",
+        "eyes": "D'accord 👀",
+        "sleep": "Au lit 🌙",
+        "custom": "Compris ✓"
+      },
+      "snoozeSleep": "Encore un peu",
+      "snoozeMinutes": "Dans {n} min",
+      "snoozed": "D'accord, je te le rappellerai un peu plus tard~",
+      "goodNight": "Bonne nuit {nick}, fais de beaux rêves~ 🌙",
+      "doneCustom": "D'accord\u00a0!",
+      "doneGood": "Bravo~"
+    },
+    "hungry": {
+      "feed": "À table 🍓"
+    },
+    "letter": {
+      "withTitle": "{text}\n«\u00a0{title}\u00a0»",
+      "open": "Ouvrir 💌",
+      "later": "D'accord\u00a0! Quand tu voudras la lire, elle t'attend dans «\u00a0Nid → Lettres\u00a0»~"
+    },
+    "profile": {
+      "yes": "Avec plaisir ✏️",
+      "later": "Plus tard",
+      "laterReply": "D'accord\u00a0! Quand tu voudras m'en parler, va dans «\u00a0Nid → Réglages → Notre profil\u00a0»~"
+    },
+    "inFocus": {
+      "poke": "(tout bas) On se concentre~ Courage\u00a0!",
+      "feed": "Je mangerai après la concentration~ (même si j'ai un peu faim)",
+      "play": "On jouera après la concentration~",
+      "coax": "(tout bas) Je te fais un câlin après la concentration~"
+    },
+    "breakDone": {
+      "text": "La pause est finie~",
+      "again": "Encore un 🍅",
+      "no": "Pas maintenant"
+    },
+    "fall": "Waaaah\u00a0!",
+    "kneel": {
+      "sign": {
+        "sorry": "Pardon\u00a0!",
+        "forgiveMe": "Pardonne-moi",
+        "loveYou": "Je t'aime",
+        "waiting": "J'attends…"
+      },
+      "forgive": "Je te pardonne 💗",
+      "hmph": "Hmpf\u00a0!"
+    },
+    "pickup": {
+      "button": "Viens !",
+      "title": "Dire à {sender} de venir te chercher\u00a0?",
+      "when": {
+        "30": "Dans 30 min",
+        "60": "Dans 1 heure",
+        "now": "Tout de suite"
+      },
+      "noteLabel": "Un mot pour {sender}",
+      "placeholder": "ex.\u00a0: je t'attends en bas du bureau",
+      "send": "Envoyer 🚗",
+      "sending": "Envoi en cours…",
+      "done": "C'est fait, {sender} est prévenu\u00a0! Il arrive te chercher~ 💕",
+      "doneWithIssue": "C'est fait, {sender} est prévenu\u00a0! Il arrive te chercher~ 💕\nPetit souci quand même\u00a0: {error}",
+      "tooSoon": "Je viens déjà de le prévenir, {sender} est en route~",
+      "failed": "Oups, impossible de joindre {sender}\u00a0: {error}",
+      "notReady": "Il faut d'abord renseigner l'adresse e-mail dans le Nid, «\u00a0Réglages → E-mail\u00a0», pour que je puisse appeler {sender}~",
+      "settings": "Réglages ⚙️"
+    }
+  },
+  "letter": {
+    "untitled": "Une lettre",
+    "closeHint": "Fermer (Échap)",
+    "openAria": "Ouvrir cette lettre",
+    "from": "Lettre de {name}",
+    "forYou": "Une lettre pour toi",
+    "open": "Ouvrir 💌",
+    "readAgain": "Relire 💌",
+    "locked": {
+      "notYet": "Ce n'est pas encore le moment de l'ouvrir~",
+      "seeYouOn": "Rendez-vous le {date}",
+      "seeYouLater": "À bientôt",
+      "daysLeft": "Encore {n} {n|jour|jours} à attendre… un peu de patience",
+      "ok": "D'accord, j'attends"
+    },
+    "missing": {
+      "huh": "Hein\u00a0?",
+      "title": "Cette lettre semble s'être perdue…",
+      "close": "Fermer"
+    },
+    "to": "💌 Une lettre pour {nick}",
+    "toYou": "💌 Une lettre pour toi",
+    "signature": "— {name}",
+    "keep": "Je la garde précieusement 💗"
+  }
+}

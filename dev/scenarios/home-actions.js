@@ -5,7 +5,7 @@ const out = process.env.SNAP_DIR || '/tmp';
 const wait = (ms) => new Promise((r) => setTimeout(r, ms));
 const C = require('../../src/shared/common');
 
-module.exports = async ({ app, store, scheduler, openHome, pomodoro, pet }) => {
+module.exports = async ({ app, store, scheduler, openHome, pomodoro, pet, capture }) => {
   store.set('runtime.welcomed', true);
   store.set('runtime.profileDone', true);
   scheduler.goAway = () => {};
@@ -85,6 +85,63 @@ module.exports = async ({ app, store, scheduler, openHome, pomodoro, pet }) => {
   await wait(700);
   const todoAfter = (store.get('todos') || []).find((t) => t.text === '测试待办');
   check('待办：完成（加亲密度）', !!todoAfter?.done && store.get('stats.xp') > xpBefore, r);
+
+  // 待办：「两个人的小事」
+  store.set('owner.sender', '豪豪');
+  await wait(500);
+  const chips = () => js(`[...document.querySelectorAll('.todo-ideas .todo-idea')].map((b) => b.textContent)`);
+  const before4 = await chips();
+  check('小事：显示 4 条', before4.length === 4 && new Set(before4).size === 4, JSON.stringify(before4));
+  check('小事：标题和换一批', (await js(`document.querySelector('.todo-ideas .ti-head')?.textContent || ''`)) === '💞 两个人的小事换一批');
+  check('小事：没有漏填的名字', before4.every((x) => !x.includes('{')), JSON.stringify(before4));
+  await capture(home, path.join(out, 'todos-ideas.png'));
+  // 点第一条：加成待办，名字填好，带 idea
+  const pickedText = before4[0];
+  r = await js(`__t.click('.todo-ideas .todo-idea')`);
+  await wait(500);
+  const added = (store.get('todos') || []).find((x) => x.text === pickedText);
+  check('小事：点一下加成待办', !!added && added.idea === true && !added.done, JSON.stringify(added));
+  const withName = (store.get('todos') || []).filter((x) => x.idea).map((x) => x.text);
+  check('小事：提示「记下啦 ✓」', (await js(`document.querySelector('.toast')?.textContent`)) === '记下啦 ✓');
+  const after4 = await chips();
+  check('小事：用掉的换成新的一条、不重复', after4.length === 4 && !after4.includes(pickedText) && new Set(after4).size === 4 && before4.slice(1).every((x) => after4.includes(x)), JSON.stringify(after4));
+  // 点一条带名字的，名字要填成「豪豪」
+  r = await js(`(() => { const b = [...document.querySelectorAll('.todo-ideas .todo-idea')].find((x) => x.textContent.includes('豪豪')); if (!b) return 'none'; b.click(); return b.textContent; })()`);
+  await wait(500);
+  if (r === 'none') {
+    await js(`[...document.querySelectorAll('.todo-ideas .link-btn')][0].click(); 0`);
+    await wait(300);
+    r = await js(`(() => { const b = [...document.querySelectorAll('.todo-ideas .todo-idea')].find((x) => x.textContent.includes('豪豪')); if (!b) return 'none'; b.click(); return b.textContent; })()`);
+    await wait(500);
+  }
+  const named = (store.get('todos') || []).find((x) => x.text === r);
+  check('小事：{sender} 填成了「豪豪」', r !== 'none' && !!named && named.idea === true && named.text.includes('豪豪'), JSON.stringify({ r, withName }));
+  // 重新渲染不换：随便切一下筛选
+  const stable = await chips();
+  await js(`__t.click('.todo-bar .seg-opt', '未完成')`);
+  await wait(300);
+  await js(`__t.click('.todo-bar .seg-opt', '全部')`);
+  await wait(300);
+  check('小事：重新渲染时这一批不变', JSON.stringify(await chips()) === JSON.stringify(stable), JSON.stringify(stable));
+  // 换一批
+  await js(`[...document.querySelectorAll('.todo-ideas .link-btn')][0].click(); 0`);
+  await wait(300);
+  const swapped = await chips();
+  check('小事：换一批换了一组', swapped.length === 4 && swapped.every((x) => !stable.includes(x)), JSON.stringify(swapped));
+  const openTexts = (store.get('todos') || []).filter((x) => !x.done).map((x) => x.text);
+  check('小事：不抽和没完成的待办一样的', swapped.every((x) => !openTexts.includes(x)), JSON.stringify(openTexts));
+  // 手写的待办照旧：输入框按回车添加
+  r = await js(`(() => { const i = document.querySelector('.todo-add input'); if (!i) return 'missing input'; i.value = '手写的待办'; i.dispatchEvent(new Event('input', { bubbles: true })); i.dispatchEvent(new KeyboardEvent('keydown', { key: 'Enter', bubbles: true })); return [i.placeholder, document.querySelector('.todo-add .btn').textContent].join(' | '); })()`);
+  await wait(500);
+  const manual = (store.get('todos') || []).find((x) => x.text === '手写的待办');
+  check('待办：手写后按回车添加', !!manual && !manual.idea && !manual.done, r);
+  // 阿拉伯文（从右往左）下的样子，截完换回简体中文
+  store.set('settings.language', 'ar');
+  await wait(1200);
+  check('小事：从右往左', (await js(`document.documentElement.dir`)) === 'rtl' && (await chips()).length === 4);
+  await capture(home, path.join(out, 'todos-ideas-rtl.png'));
+  store.set('settings.language', 'zh-CN');
+  await wait(1200);
 
   // 纪念日
   await nav('love');

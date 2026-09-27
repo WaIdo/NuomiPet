@@ -45,8 +45,7 @@
     ],
     "year": "{y}년",
     "month": "{mon}",
-    "day": "{d}일",
-    "noYear": "연도 없음"
+    "day": "{d}일"
   },
   "lang": {
     "title": "언어",

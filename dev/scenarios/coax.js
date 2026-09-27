@@ -8,7 +8,7 @@ module.exports = async ({ app, store, scheduler, pet, petCommand, capture, openH
   store.set('runtime.welcomed', true);
   store.set('runtime.profileDone', true);
   store.set('owner.sender', '豪豪');
-  store.set('owner.nickname', '小橘子');
+  store.set('owner.nickname', '宝贝');
   scheduler.goAway = () => {};
   const log = [];
   const js = (c) => pet.win.webContents.executeJavaScript(c);

@@ -1,7 +1,8 @@
 // 宠物的行为：空闲小动作、闲聊、对鼠标的反应、被拖拽/摔落、处理主进程发来的事件和命令。
 import C from '../shared/common.mjs';
 import catalog from '../../shared/catalog.json' with { type: 'json' };
-import { em, phrases } from '../shared/i18n.mjs';
+import { em, phrases, petName, nickname } from '../shared/i18n.mjs';
+import * as i18n from '../shared/i18n.mjs'; // 界面文字用 i18n.t()：这个文件里 t 是任务的变量名
 
 const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
 const rand = (a, b) => a + Math.random() * (b - a);
@@ -21,6 +22,10 @@ function weighted(list) {
 
 // 任务优先级：高优先级可以打断低优先级
 const PRI = { idle: 1, event: 2, user: 3 };
+
+// 从右往左的界面（阿拉伯文）里，她起的名字、写的悄悄话、信的标题可能是别的文字：
+// 用 Unicode 隔离符（FSI … PDI）包起来，里面的标点、数字不会跑到句子另一头。从左往右的界面里原样返回
+const isolate = (s) => (s && i18n.dirOf(i18n.getLang()) === 'rtl' ? `\u2068${s}\u2069` : s);
 
 export class Brain {
   constructor({ view, bubble, fx, sound, api, getData, anchor, panel, getLayout, visible }) {
@@ -54,9 +59,9 @@ export class Brain {
   vars(extra = {}) {
     const d = this.data;
     return {
-      nick: d.owner.nickname || '宝贝',
-      pet: d.pet.name || '糯米',
-      sender: d.owner.sender || '',
+      nick: isolate(nickname(d)),
+      pet: isolate(petName(d)),
+      sender: isolate(d.owner.sender || ''),
       days: C.dayNumber(d.love.togetherSince) || '',
       knownDays: C.diffDays(C.todayParts(new Date(d.createdAt)), C.todayParts()) + 1,
       ...extra,
@@ -430,8 +435,8 @@ export class Brain {
     const r = Math.random();
     if (notes.length && (r < 0.45 || !d.love.builtin)) {
       const note = C.pick(notes, 'note');
-      const tpl = d.owner.sender ? C.pick(phrases.note, 'note-tpl') : '悄悄话时间💌 {note}';
-      return C.fill(tpl, this.vars({ note }));
+      const tpl = d.owner.sender ? C.pick(phrases.note, 'note-tpl') : i18n.t('pet.chatter.note');
+      return C.fill(tpl, this.vars({ note: isolate(note) }));
     }
     if (!d.love.builtin) return '';
     if (d.love.togetherSince && r < 0.58) return this.line('together');
@@ -552,7 +557,7 @@ export class Brain {
     if (this.mode === 'focus') {
       this.view.setFace('wink', 'tongue');
       setTimeout(() => this.mode === 'focus' && !this.task && this.view.setFace('normal', 'cat'), 900);
-      if (!this.bubble.busy()) this.say('（小声）专注中哦～加油！', { duration: 2400 });
+      if (!this.bubble.busy()) this.say(i18n.t('pet.inFocus.poke'), { duration: 2400 });
       return;
     }
     if (this.pokes.length >= 5) {
@@ -768,7 +773,7 @@ export class Brain {
     v.setPose('fall');
     v.setFace('surprised', 'o');
     v.setPaws('up');
-    if (Math.hypot(e.vx || 0, e.vy || 0) > 1400 && chance(0.6)) this.say('哇啊啊——', { id: 'drag', duration: 1600, silent: true });
+    if (Math.hypot(e.vx || 0, e.vy || 0) > 1400 && chance(0.6)) this.say(i18n.t('pet.fall'), { id: 'drag', duration: 1600, silent: true });
   }
 
   async onLand({ impact = 0 }) {
@@ -930,12 +935,13 @@ export class Brain {
 
   async remind(evt) {
     await this.wakeForEvent();
+    const later = i18n.t('common.later');
     const kinds = {
-      water: [['喝完啦 💧', 'done', true], ['等会儿', 'snooze']],
-      stretch: [['动一动啦 🙆', 'done', true], ['等会儿', 'snooze']],
-      eyes: [['好哒 👀', 'done', true], ['等会儿', 'snooze']],
-      sleep: [['这就去睡 🌙', 'done', true], ['再玩一会儿', 'snooze']],
-      custom: [['知道啦 ✓', 'done', true], ['10 分钟后', 'snooze']],
+      water: [[i18n.t('pet.remind.done.water'), 'done', true], [later, 'snooze']],
+      stretch: [[i18n.t('pet.remind.done.stretch'), 'done', true], [later, 'snooze']],
+      eyes: [[i18n.t('pet.remind.done.eyes'), 'done', true], [later, 'snooze']],
+      sleep: [[i18n.t('pet.remind.done.sleep'), 'done', true], [i18n.t('pet.remind.snoozeSleep'), 'snooze']],
+      custom: [[i18n.t('pet.remind.done.custom'), 'done', true], [i18n.t('pet.remind.snoozeMinutes', { n: 10 }), 'snooze']],
     };
     const buttons = (kinds[evt.kind] || kinds.custom).map(([label, value, primary]) => ({ label, value, primary }));
     this.sound.play('chime');
@@ -988,13 +994,13 @@ export class Brain {
     const action = val === 'done' ? 'done' : val === 'snooze' ? 'snooze' : 'dismiss';
     this.api.reminderAck(evt.id, action);
     if (action === 'snooze') {
-      this.say('好哦，那我过一会儿再提醒你～', { duration: 2600 });
+      this.say(i18n.t('pet.remind.snoozed'), { duration: 2600 });
     } else if (action === 'done') {
       if (evt.kind === 'sleep') {
-        this.say(`晚安${this.vars().nick}，做个好梦～🌙`, { duration: 3000 });
+        this.say(i18n.t('pet.remind.goodNight', { nick: this.vars().nick }), { duration: 3000 });
         setTimeout(() => this.goSleep('user'), 1800);
       } else if (evt.kind !== 'water') {
-        this.cheer(evt.kind === 'custom' ? '好哒！' : '真乖～', true);
+        this.cheer(evt.kind === 'custom' ? i18n.t('pet.remind.doneCustom') : i18n.t('pet.remind.doneGood'), true);
       }
     }
   }
@@ -1003,7 +1009,7 @@ export class Brain {
     await this.wakeForEvent();
     this.say(evt.text, {
       id: 'hungry',
-      buttons: [{ label: '喂它 🍓', value: 'feed', primary: true }, { label: '等会儿', value: 'later' }],
+      buttons: [{ label: i18n.t('pet.hungry.feed'), value: 'feed', primary: true }, { label: i18n.t('common.later'), value: 'later' }],
       onButton: (v) => {
         if (v === 'feed') this.panel.open('food');
       },
@@ -1056,13 +1062,13 @@ export class Brain {
   async letter(evt) {
     await this.wakeForEvent();
     this.sound.play('chime');
-    this.say(evt.text + (evt.title ? `\n「${evt.title}」` : ''), {
+    this.say(evt.title ? i18n.t('pet.letter.withTitle', { text: evt.text || '', title: isolate(evt.title) }) : evt.text, {
       id: 'letter-' + evt.id,
       priority: 'high',
-      buttons: [{ label: '打开看看 💌', value: 'open', primary: true }, { label: '等会儿', value: 'later' }],
+      buttons: [{ label: i18n.t('pet.letter.open'), value: 'open', primary: true }, { label: i18n.t('common.later'), value: 'later' }],
       onButton: (v) => {
         if (v === 'open') this.api.letters.open(evt.id);
-        else if (v === 'later') this.say('好哦，想看的时候去「小窝 → 信箱」找它～', { duration: 3500 });
+        else if (v === 'later') this.say(i18n.t('pet.letter.later'), { duration: 3500 });
       },
       duration: 120000,
     });
@@ -1097,12 +1103,12 @@ export class Brain {
     await this.wakeForEvent();
     this.say(evt.text, {
       id: 'profile-ask',
-      buttons: [{ label: '好呀 ✏️', value: 'yes', primary: true }, { label: '以后再说', value: 'later' }],
+      buttons: [{ label: i18n.t('pet.profile.yes'), value: 'yes', primary: true }, { label: i18n.t('pet.profile.later'), value: 'later' }],
       onButton: (v) => {
         if (v === 'yes') this.api.openHome('profile');
         else if (v === 'later') {
           this.api.set('runtime.profileSkipped', true);
-          this.say('好哦，想告诉我的时候，去「小窝 → 设置 → 我们的资料」就可以～', { duration: 4000 });
+          this.say(i18n.t('pet.profile.laterReply'), { duration: 4000 });
         }
       },
       duration: 120000,
@@ -1245,9 +1251,9 @@ export class Brain {
   }
 
   breakDone(evt) {
-    this.say(evt.text || '休息结束啦～', {
+    this.say(evt.text || i18n.t('pet.breakDone.text'), {
       id: 'break-done',
-      buttons: [{ label: '再来一个 🍅', value: 'go', primary: true }, { label: '先不了', value: 'no' }],
+      buttons: [{ label: i18n.t('pet.breakDone.again'), value: 'go', primary: true }, { label: i18n.t('pet.breakDone.no'), value: 'no' }],
       onButton: (v) => {
         if (v === 'go') this.api.pomodoro.start();
       },
@@ -1295,9 +1301,84 @@ export class Brain {
         return this.fortune();
       case 'coax':
         return this.coax(cmd.kind || 'random', { reason: cmd.reason || 'menu' });
+      case 'pickup':
+        return this.openPickup();
       default:
         return undefined;
     }
+  }
+
+  // ---------- 来接我 ----------
+  // 叫谁来接：她设置的署名；没填就用通用的称呼（他）
+  senderName() {
+    return isolate(String(this.data.owner.sender || '').trim() || i18n.t('main.mail.him'));
+  }
+
+  // 右键菜单、托盘发来的「来接我」：睡着就先醒过来，再打开面板
+  async openPickup() {
+    if (this.mode === 'sleeping') await this.wakeUp({ quick: true });
+    return this.panel.openPickup();
+  }
+
+  // 带「去设置」按钮的提示（邮件没设置好、没发出去）
+  sayWithSettings(text, id) {
+    this.say(text, {
+      id,
+      priority: 'high',
+      interrupt: true,
+      buttons: [{ label: i18n.t('pet.pickup.settings'), value: 'settings', primary: true }],
+      onButton: (v) => {
+        if (v === 'settings') this.api.openHome('settings#mail');
+      },
+      duration: 30000,
+    });
+  }
+
+  pickupNotReady() {
+    this.sayWithSettings(i18n.t('pet.pickup.notReady', { sender: this.senderName() }), 'pickup');
+    this.gesture('pickup', PRI.user, async (t, v) => {
+      v.setPose('think');
+      v.setFace('normal', 'smile');
+      await this.hold(t, 1600);
+    });
+  }
+
+  // mochi.mail.pickup 的结果：{ ok, via, error, tooSoon }
+  async pickupResult(r = {}) {
+    const sender = this.senderName();
+    if (r.tooSoon) {
+      this.say(i18n.t('pet.pickup.tooSoon', { sender }), { id: 'pickup', priority: 'high', interrupt: true, duration: 4000 });
+      return;
+    }
+    if (!r.ok) {
+      this.sayWithSettings(i18n.t('pet.pickup.failed', { sender, error: isolate(r.error || '') }), 'pickup');
+      this.sound.play('boop');
+      return;
+    }
+    // 发出去了；邮件和推送有一样没成功时（error 不为空），也说一下原因，给个「去设置」
+    if (r.error) this.sayWithSettings(i18n.t('pet.pickup.doneWithIssue', { sender, error: isolate(r.error) }), 'pickup');
+    else this.say(i18n.t('pet.pickup.done', { sender }), { id: 'pickup', priority: 'high', interrupt: true, duration: 5000 });
+    this.sound.play('sparkle');
+    if (this.mode === 'sleeping') await this.wakeUp({ quick: true });
+    if (this.mode !== 'awake') return;
+    const t = this.begin('pickup', PRI.user);
+    if (!t) return;
+    const v = this.view;
+    const h = this.head();
+    v.setPose('jump');
+    v.setPaws('cheer');
+    v.setFace('heart', 'open');
+    v.setFlag('excited', true);
+    this.fx.hearts(h, 4, 1.2);
+    this.fx.sparkles(h, 5, 60);
+    if (!(await this.hold(t, 900))) return;
+    // 抱着一辆小汽车晃一晃
+    v.setPose('bounce');
+    v.setPaws('hold');
+    v.setFace('happy', 'cat');
+    v.setProp('🚗', { y: 150, size: 32 });
+    await this.hold(t, 1600);
+    this.end(t);
   }
 
   async fortune() {
@@ -1323,7 +1404,7 @@ export class Brain {
     const d = this.data;
     if (this.mode === 'sleeping') await this.wakeUp({ quick: true });
     if (this.mode === 'focus') {
-      this.say('专注结束再吃吧～（其实有点想吃）', { duration: 2800 });
+      this.say(i18n.t('pet.inFocus.feed'), { duration: 2800 });
       return;
     }
     if (d.stats.fullness >= 96) {
@@ -1371,7 +1452,7 @@ export class Brain {
   async play() {
     if (this.mode === 'sleeping') await this.wakeUp({ quick: true });
     if (this.mode === 'focus') {
-      this.say('等专注完再玩～', { duration: 2400 });
+      this.say(i18n.t('pet.inFocus.play'), { duration: 2400 });
       return;
     }
     const t = this.begin('play', PRI.user);
@@ -1448,7 +1529,7 @@ export class Brain {
     if (this.physical) return;
     if (this.mode === 'sleeping') await this.wakeUp({ quick: true });
     if (this.mode === 'focus') {
-      this.say('（小声）等专注完再哄你～', { duration: 2400 });
+      this.say(i18n.t('pet.inFocus.coax'), { duration: 2400 });
       return;
     }
     const kinds = ['kneel', 'bow', 'flower', 'heart', 'hug', 'kiss', 'tea', 'cute', 'roll', 'dance', 'praise'];
@@ -1592,9 +1673,9 @@ export class Brain {
     v.setFlag('sweat', round > 1);
     v.lookAt(0, 0, false);
     this.gazeLock = true;
-    const signs = ['我错了', '原谅我', '最爱你', '等你原谅'];
+    const signs = ['sorry', 'forgiveMe', 'loveYou', 'waiting'];
     // 只收自己这块牌子：被打断的上一次下跪醒过来时，不能把新举起的牌子收掉
-    const sign = this.fx.sign(this.signPos(), signs[Math.min(round, 4) - 1], round >= 4 ? 22000 : 60000);
+    const sign = this.fx.sign(this.signPos(), i18n.t(`pet.kneel.sign.${signs[Math.min(round, 4) - 1]}`), round >= 4 ? 22000 : 60000);
     const d = this.data;
     let text;
     if (round === 1) {
@@ -1613,7 +1694,7 @@ export class Brain {
       id: 'kneel-ask',
       priority: 'high',
       interrupt: true,
-      buttons: [{ label: '原谅你啦 💗', value: 'yes', primary: true }, { label: '哼！', value: 'no' }],
+      buttons: [{ label: i18n.t('pet.kneel.forgive'), value: 'yes', primary: true }, { label: i18n.t('pet.kneel.hmph'), value: 'no' }],
       onButton: (val) => {
         answer = val;
       },

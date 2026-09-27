@@ -42,6 +42,16 @@
   --font: var(--font-zh-cn);
   --num: ui-rounded, 'SF Pro Rounded', 'Arial Rounded MT Bold', -apple-system, 'Segoe UI', 'PingFang SC', 'Microsoft YaHei UI', sans-serif;
   --emoji: 'Apple Color Emoji', 'Segoe UI Emoji', 'Noto Color Emoji', sans-serif;
+  /* 左右方向：边距、位置、对齐都用逻辑属性（inline-start/end），从右往左的语言里自动镜像。
+     逻辑属性管不到的两样用这两个变量：横向渐变朝哪边（--to-end），横向位移的正负（--flip-x） */
+  --to-end: 90deg;
+  --flip-x: 1;
+}
+
+/* 从右往左的语言（阿拉伯文，<html dir="rtl">）：整个小窝左右镜像 */
+:root[dir='rtl'] {
+  --to-end: 270deg;
+  --flip-x: -1;
 }
 
 /* 按界面语言（<html lang>，home.js 跟着设置）换字体；--num 里夹着的中日文字也换成对应的字体 */
@@ -107,9 +117,11 @@ button:focus-visible,
   outline-offset: 2px;
 }
 
+/* 宠物本身不跟着从右往左镜像 */
 mochi-pet {
   display: block;
   flex: none;
+  direction: ltr;
 }
 
 mochi-pet > svg {
@@ -122,6 +134,16 @@ mochi-pet > svg {
   width: 16px;
   height: 16px;
   flex: none;
+}
+
+/* 表示方向的小图标（‹ ›）和文字里的箭头（→）：从右往左时翻过来 */
+:root[dir='rtl'] .ico-dir {
+  transform: scaleX(-1);
+}
+
+:root[dir='rtl'] .arrow {
+  display: inline-block;
+  transform: scaleX(-1);
 }
 
 .fatal {
@@ -165,7 +187,7 @@ html.blurred .st-new .env-seal {
 .blobs .b1 {
   width: 560px;
   height: 560px;
-  left: -180px;
+  inset-inline-start: -180px;
   top: 90px;
   background: radial-gradient(circle, rgba(var(--th-ffd6e4-rgb), 0.95) 0%, rgba(var(--th-ffd6e4-rgb), 0) 68%);
 }
@@ -173,7 +195,7 @@ html.blurred .st-new .env-seal {
 .blobs .b2 {
   width: 660px;
   height: 660px;
-  right: -220px;
+  inset-inline-end: -220px;
   top: 200px;
   background: radial-gradient(circle, rgba(230, 221, 255, 0.95) 0%, rgba(230, 221, 255, 0) 68%);
 }
@@ -181,7 +203,7 @@ html.blurred .st-new .env-seal {
 .blobs .b3 {
   width: 520px;
   height: 520px;
-  left: 30%;
+  inset-inline-start: 30%;
   bottom: -260px;
   background: radial-gradient(circle, rgba(216, 245, 234, 0.95) 0%, rgba(216, 245, 234, 0) 68%);
 }
@@ -202,6 +224,7 @@ html.blurred .st-new .env-seal {
   -webkit-app-region: drag;
 }
 
+/* 给系统的窗口按钮留位置。按钮不跟着界面镜像（macOS 红绿灯总在左边，Windows 的按钮总在右边），所以这里用物理方向 */
 html[data-platform='darwin'] .titlebar {
   padding-left: 84px;
 }
@@ -249,7 +272,8 @@ html[data-platform='win32'] .titlebar {
   display: flex;
   flex-direction: column;
   width: 208px;
-  margin: 0 0 14px 14px;
+  margin: 0 0 14px;
+  margin-inline-start: 14px;
   padding: 12px 10px;
   border-radius: 22px;
   background: rgba(255, 255, 255, 0.62);
@@ -322,7 +346,8 @@ html[data-platform='win32'] .titlebar {
   align-items: center;
   gap: 5px;
   height: 21px;
-  padding: 0 10px 0 8px;
+  padding-block: 0;
+  padding-inline: 8px 10px;
   border-radius: 999px;
   font-size: 11.5px;
   font-weight: 700;
@@ -405,14 +430,15 @@ html[data-platform='win32'] .titlebar {
   gap: 10px;
   flex: none;
   height: 36px;
-  padding: 0 10px 0 12px;
+  padding-block: 0;
+  padding-inline: 12px 10px;
   border: 0;
   border-radius: 12px;
   background: transparent;
   color: var(--text);
   font-size: 14px;
   font-weight: 600;
-  text-align: left;
+  text-align: start;
   cursor: pointer;
   transition: background-color 0.18s, color 0.18s, transform 0.12s, box-shadow 0.2s;
 }
@@ -470,7 +496,7 @@ html[data-platform='win32'] .titlebar {
 .nav-dot {
   width: 8px;
   height: 8px;
-  margin-right: 4px;
+  margin-inline-end: 4px;
   border-radius: 50%;
   background: var(--th-ff5c8d);
   box-shadow: 0 0 0 3px rgba(var(--th-ff5c8d-rgb), 0.18);
@@ -707,7 +733,7 @@ html[data-platform='win32'] .titlebar {
   border-radius: 14px;
   font-size: 13px;
   color: #7462c7;
-  background: linear-gradient(90deg, #f3eeff, var(--th-fff0f6));
+  background: linear-gradient(var(--to-end), #f3eeff, var(--th-fff0f6));
   box-shadow: inset 0 0 0 1px rgba(160, 140, 255, 0.25);
 }
 
@@ -947,7 +973,7 @@ html[data-platform='win32'] .titlebar {
 .toggle .knob {
   position: absolute;
   top: 3px;
-  left: 3px;
+  inset-inline-start: 3px;
   width: 20px;
   height: 20px;
   border-radius: 999px;
@@ -965,7 +991,7 @@ html[data-platform='win32'] .titlebar {
 }
 
 .toggle.on .knob {
-  transform: translateX(18px);
+  transform: translateX(calc(18px * var(--flip-x)));
 }
 
 .toggle:active:not(:disabled) .knob {
@@ -973,7 +999,7 @@ html[data-platform='win32'] .titlebar {
 }
 
 .toggle.on:active:not(:disabled) .knob {
-  transform: translateX(14px);
+  transform: translateX(calc(14px * var(--flip-x)));
 }
 
 .toggle:disabled {
@@ -998,12 +1024,12 @@ html[data-platform='win32'] .titlebar {
   z-index: -1;
   top: 3px;
   bottom: 3px;
-  left: 3px;
+  inset-inline-start: 3px;
   width: calc((100% - 6px) / var(--n));
   border-radius: 999px;
   background: #fff;
   box-shadow: 0 2px 8px rgba(var(--th-e678a0-rgb), 0.25);
-  transform: translateX(calc(var(--i) * 100%));
+  transform: translateX(calc(var(--i) * 100% * var(--flip-x)));
   transition: transform 0.3s cubic-bezier(0.3, 1.25, 0.5, 1);
 }
 
@@ -1210,6 +1236,11 @@ html[data-platform='win32'] .titlebar {
   font-variant-numeric: tabular-nums;
 }
 
+/* 时间在从右往左的语言里也写成「时:分」 */
+.timepick {
+  direction: ltr;
+}
+
 .datepick select {
   font-size: 13px;
   font-weight: 600;
@@ -1244,7 +1275,7 @@ html[data-platform='win32'] .titlebar {
   border-radius: 999px;
   outline: none;
   appearance: none;
-  background: linear-gradient(90deg, var(--pink-2) 0, var(--pink) var(--p, 50%), var(--th-f3dfe7) var(--p, 50%));
+  background: linear-gradient(var(--to-end), var(--pink-2) 0, var(--pink) var(--p, 50%), var(--th-f3dfe7) var(--p, 50%));
   cursor: pointer;
 }
 
@@ -1301,7 +1332,7 @@ html[data-platform='win32'] .titlebar {
 }
 
 .bar.xp > i {
-  background: linear-gradient(90deg, #c3b4ff, var(--th-ff9cc0));
+  background: linear-gradient(var(--to-end), #c3b4ff, var(--th-ff9cc0));
 }
 
 .bar.lg {
@@ -1316,11 +1347,11 @@ html[data-platform='win32'] .titlebar {
 }
 
 .bar.full > i {
-  background: linear-gradient(90deg, #ffe08a, #ffb46b);
+  background: linear-gradient(var(--to-end), #ffe08a, #ffb46b);
 }
 
 .bar.mood > i {
-  background: linear-gradient(90deg, var(--th-ffb3cb), var(--th-ff7ea8) 60%, #b79cff);
+  background: linear-gradient(var(--to-end), var(--th-ffb3cb), var(--th-ff7ea8) 60%, #b79cff);
 }
 
 .bar.mini {
@@ -1333,7 +1364,7 @@ html[data-platform='win32'] .titlebar {
 
 .toast {
   position: fixed;
-  left: calc(var(--sidebar) + (100% - var(--sidebar)) / 2);
+  inset-inline-start: calc(var(--sidebar) + (100% - var(--sidebar)) / 2);
   bottom: 22px;
   z-index: 1000;
   max-width: calc(100vw - var(--sidebar) - 40px);
@@ -1349,14 +1380,14 @@ html[data-platform='win32'] .titlebar {
   border: 1px solid var(--card-border);
   box-shadow: 0 10px 30px rgba(var(--th-e678a0-rgb), 0.28);
   opacity: 0;
-  transform: translate(-50%, 16px) scale(0.96);
+  transform: translate(calc(-50% * var(--flip-x)), 16px) scale(0.96);
   pointer-events: none;
   transition: opacity 0.22s ease, transform 0.32s cubic-bezier(0.3, 1.4, 0.5, 1);
 }
 
 .toast.show {
   opacity: 1;
-  transform: translate(-50%, 0) scale(1);
+  transform: translate(calc(-50% * var(--flip-x)), 0) scale(1);
 }
 
 .toast.err {
@@ -1760,7 +1791,8 @@ html[data-platform='win32'] .titlebar {
   display: flex;
   align-items: center;
   gap: 16px;
-  padding: 16px 22px 16px 12px;
+  padding-block: 16px;
+  padding-inline: 12px 22px;
   overflow: hidden;
   background: linear-gradient(120deg, rgba(var(--th-fff4f9-rgb), 0.95) 0%, rgba(255, 255, 255, 0.92) 45%, rgba(250, 246, 255, 0.92) 100%);
 }
@@ -1813,12 +1845,12 @@ html[data-platform='win32'] .titlebar {
 
 .hs-spark.s1 {
   top: 26px;
-  left: 24px;
+  inset-inline-start: 24px;
 }
 
 .hs-spark.s2 {
   top: 38px;
-  right: 14px;
+  inset-inline-end: 14px;
   font-size: 17px;
   color: #c3b4ff;
   animation-delay: -0.9s;
@@ -1826,7 +1858,7 @@ html[data-platform='win32'] .titlebar {
 
 .hs-spark.s3 {
   bottom: 52px;
-  left: 8px;
+  inset-inline-start: 8px;
   font-size: 11px;
   color: #ffcf5a;
   animation-delay: -1.7s;
@@ -1882,7 +1914,8 @@ html[data-platform='win32'] .titlebar {
 
 .bubble {
   position: relative;
-  margin: 12px 0 14px 6px;
+  margin-block: 12px 14px;
+  margin-inline: 6px 0;
   padding: 8px 14px;
   border-radius: 14px;
   font-size: 13px;
@@ -1896,13 +1929,14 @@ html[data-platform='win32'] .titlebar {
   content: '';
   position: absolute;
   top: 13px;
-  left: -5px;
+  inset-inline-start: -5px;
   width: 10px;
   height: 10px;
   background: var(--th-fff3f8);
   border-left: 1px solid rgba(var(--th-ffaac8-rgb), 0.4);
   border-bottom: 1px solid rgba(var(--th-ffaac8-rgb), 0.4);
-  transform: rotate(45deg);
+  /* 尖角朝着宠物：从右往左时宠物在右边，左右翻过来 */
+  transform: scaleX(var(--flip-x)) rotate(45deg);
 }
 
 .hero-level {
@@ -2041,7 +2075,7 @@ html[data-platform='win32'] .titlebar {
   border-radius: 14px;
   font-size: 12.5px;
   line-height: 1.5;
-  text-align: left;
+  text-align: start;
   color: var(--text);
   background: rgba(255, 255, 255, 0.88);
   box-shadow: inset 0 0 0 1px rgba(var(--th-ffaac8-rgb), 0.38);
@@ -2118,7 +2152,8 @@ html[data-platform='win32'] .titlebar {
 }
 
 .meter-val b {
-  margin: 0 1px 0 6px;
+  margin-block: 0;
+  margin-inline: 6px 1px;
   font-family: var(--num);
   font-size: 14px;
   color: var(--ink);
@@ -2155,7 +2190,8 @@ html[data-platform='win32'] .titlebar {
   display: inline-flex;
   align-items: center;
   gap: 4px;
-  padding: 3px 9px 3px 6px;
+  padding-block: 3px;
+  padding-inline: 6px 9px;
   border-radius: 999px;
   font-size: 11.5px;
   color: var(--text);
@@ -2191,6 +2227,21 @@ html[data-platform='win32'] .titlebar {
   }
 }
 
+/* 别的语言的字长：每行固定在卡片宽度里（不把卡片撑宽），水杯放不下就折行（中文排版保持原样） */
+:root:not(:lang(zh)) .today-list {
+  grid-template-columns: minmax(0, 1fr);
+}
+
+@container today (min-width: 520px) {
+  :root:not(:lang(zh)) .today-list {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+:root:not(:lang(zh)) .cups {
+  flex-wrap: wrap;
+}
+
 .td-row {
   display: flex;
   align-items: center;
@@ -2203,7 +2254,7 @@ html[data-platform='win32'] .titlebar {
   border-radius: 12px;
   background: none;
   font: inherit;
-  text-align: left;
+  text-align: start;
 }
 
 .td-row.link {
@@ -2268,7 +2319,8 @@ html[data-platform='win32'] .titlebar {
 .cups {
   display: flex;
   gap: 5px;
-  margin: 5px 0 1px 2px;
+  margin-block: 5px 1px;
+  margin-inline: 2px 0;
 }
 
 .cups i {
@@ -2363,6 +2415,8 @@ html[data-platform='win32'] .titlebar {
 .wx-temp {
   display: flex;
   align-items: flex-start;
+  /* 「24°」的度数符号在从右往左的语言里也跟在数字后面 */
+  direction: ltr;
 }
 
 .wx-temp b {
@@ -2384,7 +2438,7 @@ html[data-platform='win32'] .titlebar {
   display: flex;
   flex-direction: column;
   min-width: 0;
-  margin-left: 2px;
+  margin-inline-start: 2px;
   line-height: 1.35;
 }
 
@@ -2528,7 +2582,7 @@ html[data-platform='win32'] .titlebar {
 .fav-tag {
   position: absolute;
   top: -6px;
-  right: -4px;
+  inset-inline-end: -4px;
   padding: 1px 6px;
   border-radius: 999px;
   font-size: 10px;
@@ -2678,7 +2732,7 @@ html[data-platform='win32'] .titlebar {
 
 .opt-grid.acc .opt-check {
   top: 4px;
-  right: 4px;
+  inset-inline-end: 4px;
   width: 16px;
   height: 16px;
 }
@@ -2768,7 +2822,7 @@ html[data-platform='win32'] .titlebar {
 
 .opt-check {
   top: 6px;
-  right: 6px;
+  inset-inline-end: 6px;
   width: 18px;
   height: 18px;
   box-shadow: 0 2px 6px rgba(var(--th-ff7ea8-rgb), 0.4);
@@ -2837,7 +2891,7 @@ html[data-platform='win32'] .titlebar {
 }
 
 .sw-check {
-  right: -5px;
+  inset-inline-end: -5px;
   bottom: -5px;
   z-index: 1;
   width: 17px;
@@ -3008,7 +3062,8 @@ html[data-platform='win32'] .titlebar {
   display: flex;
   align-items: center;
   gap: 12px;
-  padding: 7px 8px 7px 14px;
+  padding-block: 7px;
+  padding-inline: 14px 8px;
   border-radius: 14px;
   background: var(--th-fff8fb);
   box-shadow: inset 0 0 0 1px rgba(var(--th-f2d3de-rgb), 0.6);
@@ -3390,7 +3445,8 @@ html[data-platform='win32'] .titlebar {
   display: flex;
   align-items: center;
   gap: 12px;
-  padding: 11px 6px 11px 8px;
+  padding-block: 11px;
+  padding-inline: 8px 6px;
   border-bottom: 1.5px dashed var(--dash);
   transition: background-color 0.15s;
 }
@@ -3400,7 +3456,7 @@ html[data-platform='win32'] .titlebar {
 }
 
 .todo:hover {
-  background: linear-gradient(90deg, rgba(var(--th-fff0f6-rgb), 0.7), rgba(var(--th-fff0f6-rgb), 0));
+  background: linear-gradient(var(--to-end), rgba(var(--th-fff0f6-rgb), 0.7), rgba(var(--th-fff0f6-rgb), 0));
 }
 
 .todo-check {
@@ -3600,7 +3656,7 @@ html[data-platform='win32'] .titlebar {
 }
 
 .lv-date {
-  margin-left: auto;
+  margin-inline-start: auto;
   font-size: 11.5px;
   color: var(--muted);
 }
@@ -3664,7 +3720,8 @@ html[data-platform='win32'] .titlebar {
 }
 
 .an-del {
-  margin: -4px -6px -4px 0;
+  margin-block: -4px;
+  margin-inline: 0 -6px;
   opacity: 0;
 }
 
@@ -3725,7 +3782,7 @@ html[data-platform='win32'] .titlebar {
 }
 
 .an-extra {
-  margin-left: auto;
+  margin-inline-start: auto;
   padding: 1px 8px;
   border-radius: 999px;
   font-size: 11px;
@@ -3922,7 +3979,7 @@ html[data-platform='win32'] .titlebar {
 .env-new {
   z-index: 5;
   top: -9px;
-  right: -12px;
+  inset-inline-end: -12px;
   padding: 2px 8px;
   border-radius: 999px;
   font-size: 11px;
@@ -3930,7 +3987,7 @@ html[data-platform='win32'] .titlebar {
   color: #fff;
   background: linear-gradient(135deg, var(--th-ff94b8), var(--th-ff5c8d));
   box-shadow: 0 3px 8px rgba(var(--th-ff5c8d-rgb), 0.4);
-  transform: rotate(10deg);
+  transform: rotate(calc(10deg * var(--flip-x)));
 }
 
 .st-read .env-flap {
@@ -4033,7 +4090,7 @@ html[data-platform='win32'] .titlebar {
 .lc-more {
   position: absolute;
   top: 8px;
-  right: 8px;
+  inset-inline-end: 8px;
   z-index: 2;
   width: 30px;
   height: 26px;
@@ -4077,7 +4134,7 @@ html[data-platform='win32'] .titlebar {
   border-radius: 10px;
   font: inherit;
   font-size: 13px;
-  text-align: left;
+  text-align: start;
   color: var(--ink);
   background: none;
   cursor: pointer;
@@ -4107,7 +4164,7 @@ html[data-platform='win32'] .titlebar {
   width: min(560px, calc(100vw - 40px));
   max-height: calc(100vh - 40px);
   overflow: auto;
-  text-align: left;
+  text-align: start;
 }
 
 .modal.letter-editor .modal-title {
@@ -4199,7 +4256,7 @@ html[data-platform='win32'] .titlebar {
 .cal-today {
   position: absolute;
   top: 22px;
-  right: 60px;
+  inset-inline-end: 60px;
 }
 
 .cal-week,
@@ -4264,7 +4321,7 @@ html[data-platform='win32'] .titlebar {
 .cal-cell.has .cal-num {
   position: absolute;
   top: 3px;
-  left: 5px;
+  inset-inline-start: 5px;
   font-size: 10px;
   color: color-mix(in srgb, var(--mc) 60%, var(--th-5a3e4f));
 }
@@ -4453,7 +4510,7 @@ html[data-platform='win32'] .titlebar {
 }
 
 .sl b {
-  margin-left: auto;
+  margin-inline-start: auto;
   font-family: var(--num);
   color: var(--ink);
 }
@@ -4495,6 +4552,16 @@ html[data-platform='win32'] .titlebar {
   color: var(--muted);
 }
 
+/* 必填的项还没填好：提示变成红色，输入框描一圈 */
+.field-hint.err {
+  color: #e5484d;
+}
+
+.field.bad .input,
+.field.bad .datepick {
+  border-color: #ffb3b8;
+}
+
 .note-add {
   display: flex;
   flex-direction: column;
@@ -4530,7 +4597,8 @@ html[data-platform='win32'] .titlebar {
   flex: 1;
   min-width: 0;
   padding: 9px 14px;
-  border-radius: 16px 16px 16px 6px;
+  border-radius: 16px;
+  border-end-start-radius: 6px;
   font-size: 13.5px;
   line-height: 1.6;
   color: var(--ink);
@@ -4582,7 +4650,7 @@ html[data-platform='win32'] .titlebar {
   width: 38px;
   font-family: var(--num);
   font-size: 12px;
-  text-align: right;
+  text-align: end;
   color: var(--muted);
 }
 
@@ -4659,7 +4727,7 @@ html[data-platform='win32'] .titlebar {
   padding: 8px 10px;
   border: 0;
   border-radius: 10px;
-  text-align: left;
+  text-align: start;
   color: var(--ink);
   background: none;
   cursor: pointer;
@@ -4736,7 +4804,8 @@ html[data-platform='win32'] .titlebar {
   display: flex;
   align-items: center;
   gap: 7px;
-  padding: 5px 12px 5px 5px;
+  padding-block: 5px;
+  padding-inline: 5px 12px;
   border-radius: 999px;
   font-size: 12.5px;
   color: var(--text);
@@ -4816,7 +4885,7 @@ html.blurred .nav-dot {
   width: min(520px, calc(100vw - 40px));
   max-height: calc(100vh - 40px);
   overflow: auto;
-  text-align: left;
+  text-align: start;
 }
 
 .modal.profile-editor .modal-title {
@@ -4889,7 +4958,7 @@ html.blurred .nav-dot {
 }
 
 .mem b {
-  margin-left: auto;
+  margin-inline-start: auto;
   font-family: var(--num);
   font-size: 15px;
   color: var(--ink);
@@ -4906,6 +4975,10 @@ html.blurred .nav-dot {
   grid-template-columns: repeat(auto-fill, minmax(86px, 1fr));
   gap: 8px;
   margin-top: 12px;
+}
+
+.theme-grid.rows {
+  grid-template-columns: repeat(var(--cols), minmax(0, 1fr));
 }
 
 .theme-opt {
@@ -4949,7 +5022,7 @@ html.blurred .nav-dot {
 
 .theme-check {
   position: absolute;
-  right: -5px;
+  inset-inline-end: -5px;
   bottom: -5px;
   display: grid;
   place-items: center;
@@ -5065,4 +5138,200 @@ html.blurred .nav-dot {
   width: 10px;
   height: 10px;
   stroke-width: 3.2;
+}
+
+/* 设置：邮件 */
+.mail-form {
+  margin-top: 4px;
+}
+
+.mail-form .field {
+  margin-bottom: 12px;
+}
+
+.mail-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0 14px;
+}
+
+.mail-form .input {
+  width: 100%;
+}
+
+.mail-form select.input {
+  padding-inline: 10px;
+  cursor: pointer;
+}
+
+.mail-servers {
+  margin: -4px 0 12px;
+}
+
+.mail-detected,
+.mail-help,
+.mail-warn,
+.mail-result,
+.mail-status {
+  margin: 0;
+  font-size: 12px;
+  line-height: 1.6;
+}
+
+.mail-detected {
+  color: var(--muted);
+  overflow-wrap: anywhere;
+}
+
+.mail-help {
+  margin-top: 4px;
+  padding: 8px 12px;
+  border-radius: 12px;
+  color: var(--text);
+  background: var(--pink-50);
+}
+
+.mail-help.custom {
+  margin: 4px 0 12px;
+}
+
+.mail-warn {
+  margin-top: 6px;
+  color: #e5484d;
+}
+
+.field-label .mail-saved {
+  margin-inline-start: 8px;
+  padding: 1px 8px;
+  border-radius: 999px;
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--mint-deep);
+  background: var(--mint-100);
+}
+
+/* 一行里：输入框占满，后面跟按钮（端口、SSL 开关） */
+.ms-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.ms-row > .input {
+  flex: 1 1 auto;
+  min-width: 0;
+}
+
+.ms-row > .input[type='number'] {
+  flex: 0 0 84px;
+}
+
+.ms-ssl {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  flex: none;
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--muted);
+}
+
+.mail-oauth {
+  margin-bottom: 12px;
+}
+
+.mail-ms {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 10px;
+  margin-top: 8px;
+  font-size: 13px;
+  color: var(--ink);
+}
+
+.mail-ms.waiting {
+  flex-direction: column;
+  align-items: stretch;
+}
+
+.ms-code-row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 10px;
+}
+
+.ms-code {
+  padding: 4px 14px;
+  border-radius: 12px;
+  font-family: var(--num);
+  font-size: 24px;
+  letter-spacing: 0.12em;
+  color: var(--ink);
+  background: #fff;
+  box-shadow: inset 0 0 0 1.5px var(--line);
+  user-select: all;
+  direction: ltr;
+}
+
+.mail-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  padding-top: 12px;
+  border-top: 1.5px dashed var(--dash);
+}
+
+.mail-test {
+  margin-top: 10px;
+}
+
+.mail-result {
+  color: var(--mint-deep);
+}
+
+.mail-result.bad {
+  color: #e5484d;
+}
+
+.mail-status {
+  margin-top: 10px;
+  color: var(--muted);
+}
+
+/* 待办页：「两个人的小事」点一下就加成待办（按钮用 .btn.soft.sm，这里只管排版；只用 inline/block 方向的属性，RTL 也对） */
+.todo-ideas {
+  margin-top: 14px;
+}
+
+.ti-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+}
+
+.ti-title {
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--ink);
+}
+
+.ti-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 8px;
+}
+
+/* 窄的时候长的一条自己换行，不撑出卡片 */
+.btn.todo-idea {
+  max-width: 100%;
+  height: auto;
+  min-height: 30px;
+  padding-block: 5px;
+  line-height: 1.35;
+  white-space: normal;
+  text-align: start;
 }

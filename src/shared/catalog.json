@@ -93,6 +93,39 @@
       "theme": "butter"
     },
     {
+      "id": "avocado",
+      "body": "#EEF5D1",
+      "body2": "#D8E2A7",
+      "line": "#B2C279",
+      "belly": "#FAFCF2",
+      "inner": "#FFC0CE",
+      "blush": "#FF93AE",
+      "nose": "#EC8CA8",
+      "theme": "matcha"
+    },
+    {
+      "id": "matcha",
+      "body": "#E8F6D9",
+      "body2": "#CFE4B6",
+      "line": "#A5C58A",
+      "belly": "#F9FCF5",
+      "inner": "#FFC0CE",
+      "blush": "#FF93AE",
+      "nose": "#EC8CA8",
+      "theme": "matcha"
+    },
+    {
+      "id": "apple",
+      "body": "#DEF9D8",
+      "body2": "#BDEAB3",
+      "line": "#8DCC89",
+      "belly": "#F6FDF4",
+      "inner": "#FFC0CE",
+      "blush": "#FF93AE",
+      "nose": "#EC8CA8",
+      "theme": "apple"
+    },
+    {
       "id": "mint",
       "body": "#E0F6EA",
       "body2": "#BDE6D1",
@@ -102,6 +135,17 @@
       "blush": "#FF93AE",
       "nose": "#EC8CA8",
       "theme": "mint"
+    },
+    {
+      "id": "lake",
+      "body": "#D8F8F4",
+      "body2": "#B0E8E2",
+      "line": "#79CAC5",
+      "belly": "#F4FDFC",
+      "inner": "#FFC0CE",
+      "blush": "#FF93AE",
+      "nose": "#EC8CA8",
+      "theme": "lake"
     },
     {
       "id": "mist",

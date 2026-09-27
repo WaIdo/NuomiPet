@@ -18,6 +18,10 @@ for (const { id } of core.LANGS) {
 // 各处共用的台词对象，切换语言时就地替换
 const phrases = {};
 const i18n = core.createI18n(bundles, { phrases, catalog, festivals, themes });
+// common.js 的 fill 按当前语言选单复数
+const { setLang: setPluralLang } = require('../shared/common');
+setPluralLang(i18n.lang);
+i18n.onChange((lang) => setPluralLang(lang));
 
 function systemLangs() {
   const { app } = require('electron');
@@ -31,6 +35,9 @@ function systemLangs() {
     return [];
   }
 }
+
+// 只按系统语言选（不看设置）。建数据之前用它，第一次启动时的默认内容就是系统语言
+const detect = () => core.resolveLang('auto', systemLangs());
 
 // 按设置和系统语言定下当前语言，写进 runtime.lang。返回当前语言
 function sync(store) {
@@ -49,6 +56,7 @@ module.exports = {
   petName,
   nickname,
   phrases,
+  detect,
   sync,
   t: i18n.t,
   has: i18n.has,

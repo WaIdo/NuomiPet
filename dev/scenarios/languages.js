@@ -18,13 +18,13 @@ const BG = 'linear-gradient(#8fb6de,#c3d8ee)';
 
 // 示例数据（名字、纪念日、悄悄话、待办）用各自的语言写，英文界面才能检查有没有漏翻的汉字
 const SAMPLE = {
-  'zh-CN': { nickname: '小橘子', sender: '豪豪', event: '第一次约会', note: '今天也要好好吃饭哦', todo: '买草莓蛋糕', letter: ['一周年快乐', '谢谢你一直在我身边。'] },
-  'zh-TW': { nickname: '小橘子', sender: '豪豪', event: '第一次約會', note: '今天也要好好吃飯喔', todo: '買草莓蛋糕', letter: ['一週年快樂', '謝謝你一直在我身邊。'] },
-  en: { nickname: 'Lily', sender: 'Haohao', event: 'First date', note: 'Remember to eat well today', todo: 'Buy strawberry cake', letter: ['Happy first anniversary', 'Thank you for always being here.'] },
-  ja: { nickname: 'みかん', sender: '豪豪', event: '初デート', note: '今日もちゃんとごはん食べてね', todo: 'いちごケーキを買う', letter: ['一周年おめでとう', 'いつもそばにいてくれてありがとう。'] },
-  ko: { nickname: '귤이', sender: '하오하오', event: '첫 데이트', note: '오늘도 밥 잘 챙겨 먹어', todo: '딸기 케이크 사기', letter: ['1주년 축하해', '항상 곁에 있어 줘서 고마워.'] },
-  fr: { nickname: 'Lily', sender: 'Haohao', event: 'Premier rendez-vous', note: 'Pense à bien manger aujourd’hui', todo: 'Acheter un gâteau aux fraises', letter: ['Joyeux premier anniversaire', 'Merci d’être toujours là.'] },
-  ar: { nickname: 'ليلى', sender: 'هاوهاو', event: 'أول موعد', note: 'لا تنسي أن تأكلي جيدًا اليوم', todo: 'شراء كعكة الفراولة', letter: ['عيد سعيد لذكرانا الأولى', 'شكرًا لأنكِ دائمًا بجانبي.'] },
+  'zh-CN': { nickname: '', sender: '豪豪', event: '第一次约会', note: '今天也要好好吃饭哦', todo: '买草莓蛋糕', letter: ['一周年快乐', '谢谢你一直在我身边。'] },
+  'zh-TW': { nickname: '', sender: '豪豪', event: '第一次約會', note: '今天也要好好吃飯喔', todo: '買草莓蛋糕', letter: ['一週年快樂', '謝謝你一直在我身邊。'] },
+  en: { nickname: '', sender: 'WaIdo', event: 'First date', note: 'Remember to eat well today', todo: 'Buy strawberry cake', letter: ['Happy first anniversary', 'Thank you for always being here.'] },
+  ja: { nickname: '', sender: 'WaIdo', event: '初デート', note: '今日もちゃんとごはん食べてね', todo: 'いちごケーキを買う', letter: ['一周年おめでとう', 'いつもそばにいてくれてありがとう。'] },
+  ko: { nickname: '', sender: 'WaIdo', event: '첫 데이트', note: '오늘도 밥 잘 챙겨 먹어', todo: '딸기 케이크 사기', letter: ['1주년 축하해', '항상 곁에 있어 줘서 고마워.'] },
+  fr: { nickname: '', sender: 'WaIdo', event: 'Premier rendez-vous', note: 'Pense à bien manger aujourd’hui', todo: 'Acheter un gâteau aux fraises', letter: ['Joyeux premier anniversaire', 'Merci d’être toujours là.'] },
+  ar: { nickname: '', sender: 'WaIdo', event: 'أول موعد', note: 'لا تنسي أن تأكلي جيدًا اليوم', todo: 'شراء كعكة الفراولة', letter: ['عيد سعيد لذكرانا الأولى', 'شكرًا لأنكِ دائمًا بجانبي.'] },
 };
 
 module.exports = async ({ app, store, scheduler, pet, pomodoro, openHome, petCommand, capture }) => {
@@ -34,7 +34,7 @@ module.exports = async ({ app, store, scheduler, pet, pomodoro, openHome, petCom
   store.set('runtime.welcomed', true);
   store.set('runtime.profileDone', true);
   store.set('love.togetherSince', '2026-09-25');
-  store.set('love.birthday', '1999-10-09');
+  store.set('love.birthday', '2002-06-08');
   store.set('stats.counters', { pets: 128, feeds: 36, plays: 21, waters: 87, pomodoros: 14, todos: 42 });
   store.set('stats.xp', 60);
   scheduler.goAway = () => {};

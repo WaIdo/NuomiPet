@@ -1,5 +1,6 @@
 // 在应用里写的信：校验、保存、删除，以及导出成文件带到另一台电脑再导入。
 const { parseKey, uid } = require('../shared/common');
+const i18n = require('./i18n');
 
 const LIMITS = { title: 30, from: 16, body: 5000 };
 const FILE_KIND = 'nuomi-letters';
@@ -19,15 +20,17 @@ function validUnlock(v) {
  */
 function saveLetter(list, input, now = Date.now()) {
   const cur = Array.isArray(list) ? list : [];
-  if (!input || typeof input !== 'object') return { ok: false, error: '信的内容不对' };
+  if (!input || typeof input !== 'object') return { ok: false, error: i18n.t('main.letter.error.invalid') };
   const unlock = validUnlock(input.unlock);
-  if (unlock === null) return { ok: false, error: '拆开的日期不对' };
+  if (unlock === null) return { ok: false, error: i18n.t('main.letter.error.badDate') };
   const existing = input.id ? cur.find((l) => l.id === String(input.id)) : null;
   const body = input.body === undefined && existing ? existing.body : clean(input.body, LIMITS.body);
-  if (!body) return { ok: false, error: '信里还什么都没写呢' };
+  if (!body) return { ok: false, error: i18n.t('main.letter.error.empty') };
   const letter = {
+    // 改的时候留着原来的其他字段（比如邮件来的信的 source、mailFrom）
+    ...(existing || {}),
     id: existing ? existing.id : 'my-' + uid(),
-    title: clean(input.title, LIMITS.title) || '一封信',
+    title: clean(input.title, LIMITS.title) || i18n.t('main.letter.untitled'),
     from: clean(input.from, LIMITS.from),
     unlock,
     body,
@@ -43,14 +46,17 @@ function deleteLetter(list, id) {
   return { ok: next.length !== cur.length, list: next };
 }
 
-// 导出文件里的正文用 base64 存，打开文件不会一眼看到内容
+// 在这里写的信（不算邮件寄来的）
+const writtenHere = (list) => (Array.isArray(list) ? list : []).filter((l) => l && l.source !== 'mail');
+
+// 导出文件里的正文用 base64 存，打开文件不会一眼看到内容。邮件寄来的信不导出
 function exportLetters(list) {
   return JSON.stringify(
     {
       kind: FILE_KIND,
       version: 1,
       exportedAt: new Date().toISOString(),
-      letters: (list || []).map((l) => ({ ...l, body: Buffer.from(String(l.body), 'utf8').toString('base64') })),
+      letters: writtenHere(list).map((l) => ({ ...l, body: Buffer.from(String(l.body), 'utf8').toString('base64') })),
     },
     null,
     2,
@@ -62,9 +68,9 @@ function importLetters(list, text) {
   try {
     data = JSON.parse(text);
   } catch {
-    return { ok: false, error: '这个文件打不开' };
+    return { ok: false, error: i18n.t('main.letter.error.badFile') };
   }
-  if (!data || data.kind !== FILE_KIND || !Array.isArray(data.letters)) return { ok: false, error: '这不是信件文件' };
+  if (!data || data.kind !== FILE_KIND || !Array.isArray(data.letters)) return { ok: false, error: i18n.t('main.letter.error.notLetters') };
   let next = Array.isArray(list) ? [...list] : [];
   let count = 0;
   for (const raw of data.letters) {
@@ -83,7 +89,7 @@ function importLetters(list, text) {
     next = [...withoutOld, letter];
     count++;
   }
-  return count ? { ok: true, list: next, count } : { ok: false, error: '文件里没有能导入的信' };
+  return count ? { ok: true, list: next, count } : { ok: false, error: i18n.t('main.letter.error.nothingToImport') };
 }
 
-module.exports = { saveLetter, deleteLetter, exportLetters, importLetters, LIMITS };
+module.exports = { saveLetter, deleteLetter, exportLetters, importLetters, writtenHere, LIMITS };

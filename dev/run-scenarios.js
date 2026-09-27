@@ -8,7 +8,9 @@ const path = require('path');
 const electron = require('electron');
 
 const ROOT = path.join(__dirname, '..');
-const TIMEOUT_MS = 240000;
+// 多语言场景要把 7 种语言各走一遍，时间长得多
+const TIMEOUT_MS = { languages: 1200000, readme: 2400000 };
+const timeoutOf = (name) => TIMEOUT_MS[name] || 240000;
 
 const args = process.argv.slice(2);
 const outArg = args.find((a) => a.startsWith('--out='));
@@ -37,7 +39,7 @@ function run(name) {
     const timer = setTimeout(() => {
       log += '\n[runner] TIMEOUT\n';
       child.kill();
-    }, TIMEOUT_MS);
+    }, timeoutOf(name));
     child.on('exit', (code) => {
       clearTimeout(timer);
       fs.writeFileSync(path.join(dir, 'run.log'), log);

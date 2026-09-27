@@ -3,7 +3,7 @@ const { app, BrowserWindow, ipcMain, Tray, nativeImage, dialog, screen, Menu, No
 const fs = require('fs');
 const path = require('path');
 const { Store } = require('./store');
-const { createDefaults } = require('./defaults');
+const { createDefaults, migrateLegacyNames, fillFromGift, upgradeData } = require('./defaults');
 const { loadGift } = require('./gift');
 const { PetWindow } = require('./petWindow');
 const windows = require('./windows');
@@ -12,6 +12,7 @@ const { Scheduler } = require('./scheduler');
 const { Pomodoro } = require('./pomodoro');
 const weather = require('./weather');
 const letters = require('./letters');
+const { createMail, stripSecrets } = require('./mail');
 const C = require('../shared/common');
 const catalog = require('../shared/catalog.json');
 const i18n = require('./i18n');
@@ -37,11 +38,13 @@ let pet;
 let scheduler;
 let pomodoro;
 let tray;
+let mail;
 let greeted = false;
 
-const petName = () => store?.get('pet.name') || '糯米';
-// 名字、昵称会拼进默认文件名：Windows 文件名里不能有 \ / : * ? " < > |，结尾也不能是点或空格
-const safeFileName = (name) => String(name).replace(/[\\/:*?"<>|\u0000-\u001f]/g, '_').replace(/[. ]+$/, '');
+const petName = () => i18n.petName(store?.data);
+const trayTip = () => i18n.t('main.tray.title', { pet: petName() });
+// 名字、昵称会拼进默认文件名：Windows 文件名里不能有 \ / : * ? " < > |，结尾也不能是点或空格（\x22 就是双引号）
+const safeFileName = (name) => String(name).replace(/[\\/:*?\x22<>|\u0000-\u001f]/g, '_').replace(/[. ]+$/, '');
 
 if (!app.requestSingleInstanceLock()) {
   app.quit();
@@ -62,7 +65,10 @@ if (!app.requestSingleInstanceLock()) {
   app.on('window-all-closed', () => {
     // 托盘应用：窗口都关了也不退出
   });
-  app.on('before-quit', () => store?.saveNow());
+  app.on('before-quit', () => {
+    mail?.stop();
+    store?.saveNow();
+  });
 
   app.whenReady().then(init);
 }
@@ -79,7 +85,11 @@ function debugConsole(contents) {
 function init() {
   app.on('web-contents-created', (_e, contents) => debugConsole(contents));
   gift = loadGift();
+  // 第一次启动时的默认内容（悄悄话等）用系统语言；读好数据后再按设置定语言
+  i18n.setLang(i18n.detect());
   store = new Store(path.join(app.getPath('userData'), 'mochi-data.json'), createDefaults(gift));
+  // 老数据：以前默认的名字、称呼改成空（跟着语言走）；送礼配置里的署名和在一起的日子还空着就补上（都只做一次）
+  if (upgradeData(store, gift)) store.saveNow();
   i18n.sync(store);
   if (isMac) {
     app.dock?.hide();
@@ -89,13 +99,17 @@ function init() {
   pomodoro = new Pomodoro(store);
   pet = new PetWindow(store);
   scheduler = new Scheduler({ store, pet, gift });
+  // 邮件：收到新信以后马上让宠物把信递过去
+  mail = createMail({ store, version: app.getVersion(), msClientId: gift.mailMsClientId || '', onLetters: () => scheduler.newLetters() });
 
   registerIpc();
   wireStoreBroadcast();
   wirePomodoro();
   pet.create();
   createTray();
+  i18n.onChange(onLangChange);
   scheduler.start();
+  mail.start();
 
   const devScript = !app.isPackaged && argValue('dev-script');
   if (devScript) {
@@ -111,7 +125,7 @@ function init() {
       return img.getSize();
     };
     setTimeout(() => {
-      require(path.resolve(devScript))({ app, store, pet, scheduler, pomodoro, windows, capture, petCommand, bumpStats, openHome })
+      require(path.resolve(devScript))({ app, store, pet, scheduler, pomodoro, mail, windows, capture, petCommand, bumpStats, openHome })
         .catch((err) => console.error('[dev-script]', err))
         .finally(() => console.log('[dev-script] done'));
     }, 1500);
@@ -138,7 +152,7 @@ function wireStoreBroadcast() {
   store.on('change', (p) => {
     pending.add(p);
     if (p === '*' || p === 'settings' || p === 'settings.language') i18n.sync(store);
-    if (p === 'pet.name' || p === '*') tray?.setToolTip(`${petName()}的桌面小窝`);
+    if (p === 'pet.name' || p === '*') tray?.setToolTip(trayTip());
     if (p === '*' || p.startsWith('settings') || p.startsWith('pet')) windows.setHomeTheme(C.resolveTheme(store.data, catalog));
     if (timer) return;
     timer = setTimeout(() => {
@@ -146,10 +160,17 @@ function wireStoreBroadcast() {
       const paths = [...pending];
       pending.clear();
       for (const w of BrowserWindow.getAllWindows()) {
-        if (!w.isDestroyed()) w.webContents.send('store:changed', store.data, paths);
+        if (!w.isDestroyed()) w.webContents.send('store:changed', mail.redact(store.data), paths);
       }
     }, 30);
   });
+}
+
+// 换了语言：一次性建好的东西重新设一遍（右键菜单和托盘菜单每次打开时现建，不用管）
+function onLangChange() {
+  if (isMac) Menu.setApplicationMenu(menus.appMenu());
+  tray?.setToolTip(trayTip());
+  windows.setTitles(petName(), (id) => scheduler.lettersState().find((l) => l.id === id)?.title);
 }
 
 function bumpStats(delta = {}) {
@@ -205,7 +226,7 @@ function wirePomodoro() {
   });
   pomodoro.on('phase', ({ phase }) => {
     if (phase === 'focus') pet.sendEvent({ type: 'focus-start', text: scheduler.line('focusStart') });
-    else pet.sendEvent({ type: 'break-start', phase, text: phase === 'long' ? '长休息时间！去走走，喝口水～' : '休息一下，活动活动～' });
+    else pet.sendEvent({ type: 'break-start', phase, text: phase === 'long' ? i18n.t('main.say.longBreak') : i18n.t('main.say.shortBreak') });
   });
   pomodoro.on('focus-done', ({ minutes, skipped }) => {
     if (skipped) return;
@@ -235,7 +256,7 @@ function trayImage() {
 
 function createTray() {
   tray = new Tray(trayImage());
-  tray.setToolTip(`${petName()}的桌面小窝`);
+  tray.setToolTip(trayTip());
   const popup = () => tray.popUpContextMenu(menus.trayMenu({ store, pet, pomodoro, openHome, petCommand, setLoginItem }));
   tray.on('click', popup);
   tray.on('right-click', popup);
@@ -247,8 +268,15 @@ function openHome(page) {
 
 // ---------- IPC ----------
 function registerIpc() {
-  ipcMain.handle('store:get', () => store.data);
+  // 页面拿到的数据里没有加密存的授权码、推送网址和微软的登录凭据（mail.hasPass、hasPush、hasMsToken 表示有没有）
+  ipcMain.handle('store:get', () => mail.redact(store.data));
   ipcMain.handle('store:set', (_e, p, value) => {
+    // 授权码、推送网址、微软的登录凭据只能通过 mail:save、mail:msLogin* 改；整个 mail 一起写时保留原来的
+    if (/^mail\.(passEnc|pushEnc|msTokenEnc|hasPass|hasPush|hasMsToken)$/.test(String(p))) return false;
+    if (p === 'mail' && value && typeof value === 'object') {
+      const { hasPass, hasPush, hasMsToken, ...rest } = value;
+      value = { ...rest, passEnc: store.get('mail.passEnc') || '', pushEnc: store.get('mail.pushEnc') || '', msTokenEnc: store.get('mail.msTokenEnc') || '' };
+    }
     store.set(p, value);
     return true;
   });
@@ -347,18 +375,19 @@ function registerIpc() {
   });
   ipcMain.handle('letters:delete', (_e, id) => {
     const r = letters.deleteLetter(store.get('letters.custom'), id);
-    if (!r.ok) return { ok: false, error: '只能删除在这里写的信' };
+    if (!r.ok) return { ok: false, error: i18n.t('main.letter.error.notMine') };
     store.set('letters.custom', r.list);
     return { ok: true };
   });
   ipcMain.handle('letters:export', async (e) => {
-    const list = store.get('letters.custom') || [];
-    if (!list.length) return { ok: false, error: '还没有在这里写过信' };
+    // 只导出在这里写的信（邮件寄来的不算）
+    const list = letters.writtenHere(store.get('letters.custom'));
+    if (!list.length) return { ok: false, error: i18n.t('main.letter.error.nothingToExport') };
     const win = BrowserWindow.fromWebContents(e.sender);
     const { canceled, filePath } = await dialog.showSaveDialog(win, {
-      title: '导出写好的信',
-      defaultPath: path.join(app.getPath('desktop'), safeFileName(`写给${store.get('owner.nickname') || 'TA'}的信`) + '.nuomi-letters.json'),
-      filters: [{ name: '信件', extensions: ['json'] }],
+      title: i18n.t('main.letter.exportTitle'),
+      defaultPath: path.join(app.getPath('desktop'), safeFileName(i18n.t('main.letter.exportName', { nick: i18n.nickname(store.data) })) + '.nuomi-letters.json'),
+      filters: [{ name: i18n.t('main.letter.fileType'), extensions: ['json'] }],
     });
     if (canceled || !filePath) return { ok: false };
     try {
@@ -371,9 +400,9 @@ function registerIpc() {
   ipcMain.handle('letters:import', async (e) => {
     const win = BrowserWindow.fromWebContents(e.sender);
     const { canceled, filePaths } = await dialog.showOpenDialog(win, {
-      title: '导入信件',
+      title: i18n.t('main.letter.importTitle'),
       properties: ['openFile'],
-      filters: [{ name: '信件', extensions: ['json'] }],
+      filters: [{ name: i18n.t('main.letter.fileType'), extensions: ['json'] }],
     });
     if (canceled || !filePaths?.[0]) return { ok: false };
     try {
@@ -390,6 +419,17 @@ function registerIpc() {
     if (l && l.unlocked) windows.openLetter(l.id);
   });
 
+  // 邮件（接口说明见 preload.js）
+  ipcMain.handle('mail:get', () => mail.get());
+  ipcMain.handle('mail:save', (_e, patch) => mail.save(patch || {}));
+  ipcMain.handle('mail:test', () => mail.test());
+  ipcMain.handle('mail:check', () => mail.check());
+  ipcMain.handle('mail:pickup', (_e, opts) => mail.pickup(opts || {}));
+  ipcMain.handle('mail:sendGuide', () => mail.sendGuide());
+  ipcMain.handle('mail:msLoginStart', () => mail.msLoginStart());
+  ipcMain.handle('mail:msLogout', () => mail.msLogout());
+  ipcMain.handle('mail:msOpen', () => mail.msOpen());
+
   // 窗口与应用
   ipcMain.on('home:open', (_e, page) => openHome(typeof page === 'string' ? page : 'overview'));
   ipcMain.handle('app:info', () => ({
@@ -405,13 +445,14 @@ function registerIpc() {
   ipcMain.handle('data:export', async (e) => {
     const win = BrowserWindow.fromWebContents(e.sender);
     const { canceled, filePath } = await dialog.showSaveDialog(win, {
-      title: '导出数据',
-      defaultPath: path.join(app.getPath('documents'), safeFileName(`${petName()}-备份-${C.dateKey()}`) + '.json'),
+      title: i18n.t('main.data.exportTitle'),
+      defaultPath: path.join(app.getPath('documents'), safeFileName(i18n.t('main.data.backupName', { pet: petName(), date: C.dateKey() })) + '.json'),
       filters: [{ name: 'JSON', extensions: ['json'] }],
     });
     if (canceled || !filePath) return { ok: false };
     try {
-      fs.writeFileSync(filePath, JSON.stringify(store.data, null, 2));
+      // 授权码、推送网址、微软的登录凭据不导出
+      fs.writeFileSync(filePath, JSON.stringify(stripSecrets(JSON.parse(JSON.stringify(store.data))), null, 2));
       return { ok: true, path: filePath };
     } catch (err) {
       return { ok: false, error: err.message };
@@ -420,15 +461,18 @@ function registerIpc() {
   ipcMain.handle('data:import', async (e) => {
     const win = BrowserWindow.fromWebContents(e.sender);
     const { canceled, filePaths } = await dialog.showOpenDialog(win, {
-      title: '导入数据',
+      title: i18n.t('main.data.importTitle'),
       properties: ['openFile'],
       filters: [{ name: 'JSON', extensions: ['json'] }],
     });
     if (canceled || !filePaths?.[0]) return { ok: false };
     try {
       const data = JSON.parse(fs.readFileSync(filePaths[0], 'utf8'));
-      if (!data || typeof data !== 'object' || !data.pet || !data.stats) return { ok: false, error: '这不是糯米桌宠的备份文件' };
+      if (!data || typeof data !== 'object' || !data.pet || !data.stats) return { ok: false, error: i18n.t('main.data.notBackup', { app: i18n.t('app.name') }) };
+      // 旧版的备份和启动时一样处理：默认名字、称呼改成空，署名和在一起的日子还空着就补上（备份里记着做过的就不再做）
+      migrateLegacyNames(data);
       store.replaceAll(data);
+      fillFromGift(store.data, gift);
       pet.resize();
       return { ok: true, path: filePaths[0] };
     } catch (err) {
@@ -438,6 +482,9 @@ function registerIpc() {
   ipcMain.handle('data:reset', () => {
     const fresh = createDefaults(gift);
     fresh.runtime.welcomed = true;
+    // 新数据：名字不用迁移，送礼配置里的值也已经带上了，以后都不再做
+    fresh.runtime.namesMigrated = true;
+    fresh.runtime.giftFilled = true;
     store.replaceAll(fresh);
     pet.resize();
     return { ok: true };

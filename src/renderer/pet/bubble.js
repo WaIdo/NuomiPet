@@ -1,8 +1,8 @@
 // 对话气泡：排队显示，可带按钮（提醒、心情打卡、信件）。
-import { em } from '../shared/i18n.mjs';
+import { em, t } from '../shared/i18n.mjs';
 
 // 颜文字（括号里的一小串符号）不要被折成两行
-const KAOMOJI = /([（(][^（()）\n]{1,10}[)）][ﾉ♡✧~～]*)/;
+const KAOMOJI = /([（(][^（()）\n]{1,10}[)）][ﾉ♡✧~～]*)/; // i18n-ignore: 正则，匹配颜文字的括号和符号
 function appendText(el, text) {
   for (const part of String(text).split(KAOMOJI)) {
     if (!part) continue;
@@ -134,7 +134,7 @@ export class Bubble {
     const close = document.createElement('button');
     close.className = 'close';
     close.textContent = '×';
-    close.title = '关闭';
+    close.title = t('common.close');
     close.addEventListener('click', (e) => {
       e.stopPropagation();
       const cb = item.onButton;

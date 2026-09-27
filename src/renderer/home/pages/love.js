@@ -163,7 +163,13 @@ function birthdayCard(app) {
     'section',
     { class: 'card lv-card birthday', key: 'birthday' },
     cardHead('🎂', t('home.love.birthday.title'), bd && h('button', { type: 'button', class: 'link-btn', onclick: () => app.set('love.birthday', '') }, t('home.love.clear'))),
-    datePicker('birthday', bd, (v) => app.set('love.birthday', v), { noYear: true, yearMin: 1950, yearMax: new Date().getFullYear(), onPartial: app.rerender }),
+    // 年份要选。老数据里只有月日的生日照样显示在选择器里（年份空着）；改了一半时交给选择器自己记着
+    datePicker(
+      'birthday',
+      bd,
+      (v) => app.set('love.birthday', v),
+      { yearMin: 1950, yearMax: new Date().getFullYear() },
+    ),
     h('div', { class: 'lv-body' }, body),
   );
 }

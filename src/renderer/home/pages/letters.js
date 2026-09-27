@@ -1,6 +1,6 @@
 // 信箱：一封封信封。解锁未读的有发光的火漆爱心和「新」，已读的是拆开的信封，没到日子的上了锁。
 // 也可以在这里写信：定好拆开的日子，封好之后没到日子谁都看不到正文。
-import { h, s, cx, pageHead, cardHead, emptyState, icon, fmtDate, toast, shake, modal, morph, datePicker, segmented, popover, closePopover } from '../ui.js';
+import { h, s, cx, pageHead, cardHead, emptyState, icon, fmtDate, toast, shake, modal, morph, datePicker, segmented, popover, closePopover, rich } from '../ui.js';
 import { t, petName, nickname } from '../../shared/i18n.mjs';
 
 function heart() {
@@ -222,6 +222,90 @@ async function importLetters(app) {
   } else if (r && r.error) toast(r.error, 'err');
 }
 
+/* ---------------- 邮件 ---------------- */
+
+// ready（收信、发确认邮件要的都填齐了）只有 mail.get() 算得出来：进页面、邮件设置变了的时候重新取。
+// known：取到过一次（在那之前先不显示邮件卡片，免得闪一下「去设置」）；busy：正在「立即收信」
+const mailUi = { key: null, known: false, ready: false, busy: false };
+
+function syncMail(app) {
+  const api = app.mochi.mail;
+  const m = app.state.mail || {};
+  const key = JSON.stringify([m.enabled, m.address, m.server, m.imap, m.smtp, m.hasPass, m.hasMsToken, m.msClientId, m.ms && m.ms.state]);
+  if (!api || key === mailUi.key) return;
+  mailUi.key = key;
+  api.get().then(
+    (info) => {
+      if (mailUi.key !== key) return;
+      mailUi.known = true;
+      mailUi.ready = !!(info && info.ready);
+      app.rerender();
+    },
+    (err) => console.error('[letters] mail.get failed', err),
+  );
+}
+
+async function checkMail(app) {
+  if (mailUi.busy) return;
+  mailUi.busy = true;
+  app.rerender();
+  let r = null;
+  try {
+    r = await app.mochi.mail.check();
+  } catch (err) {
+    console.error('[letters] mail.check failed', err);
+  }
+  mailUi.busy = false;
+  app.rerender();
+  if (!r || !r.ok) toast((r && r.error) || t('home.letters.mail.checkFailed'), 'err');
+  else if (r.added) {
+    toast(t('home.letters.mail.received', { n: r.added }));
+    app.refreshLetters();
+  } else if (r.error) toast(r.error, 'err');
+  else toast(t('home.letters.mail.noNew'));
+}
+
+// 「今天 14:05」「昨天 21:30」「9月20日 08:00」
+function when(app, ms) {
+  const { C } = app;
+  const d = new Date(ms);
+  const key = C.dateKey(d);
+  const diff = C.daysUntil(key);
+  const day = diff === 0 ? t('home.letters.mail.today') : diff === -1 ? t('home.letters.mail.yesterday') : fmtDate(key, { withYear: false });
+  return t('home.letters.mail.at', { day, time: C.hm(d) });
+}
+
+function mailCard(app) {
+  syncMail(app);
+  if (!mailUi.known) return null;
+  const st = app.state;
+  const m = st.mail || {};
+  // 名字和邮箱地址用 <bdi> 隔开，从右往左的语言里也不会被打乱
+  const sender = h('bdi', String(st.owner?.sender || '').trim() || t('home.letters.mail.him'));
+  if (!mailUi.ready) {
+    return h(
+      'section',
+      { class: 'card letter-tools letter-mail', key: 'mail' },
+      cardHead('📮', t('home.letters.mail.title'), null, rich('home.letters.mail.guide', {}, { sender })),
+      h('div', { class: 'lt-btns' }, h('button', { type: 'button', class: 'btn soft', onclick: () => app.go('settings') }, t('home.letters.mail.toSettings'))),
+    );
+  }
+  const last = m.lastCheck ? t('home.letters.mail.lastCheck', { time: when(app, m.lastCheck) }) : t('home.letters.mail.never');
+  const auto = m.enabled ? t('home.letters.mail.auto', { n: m.interval || 5 }) : t('home.letters.mail.autoOff');
+  return h(
+    'section',
+    { class: 'card letter-tools letter-mail', key: 'mail' },
+    cardHead('📮', t('home.letters.mail.title'), null, rich('home.letters.mail.sendTo', {}, { sender, address: h('bdi', m.address || '') })),
+    h('p', { class: 'card-sub lm-status' }, t('home.letters.mail.status', { last, auto })),
+    m.lastError && h('p', { class: 'card-sub lm-error' }, t('home.letters.mail.error', { error: m.lastError })),
+    h(
+      'div',
+      { class: 'lt-btns' },
+      h('button', { type: 'button', class: 'btn soft', disabled: mailUi.busy, onclick: () => checkMail(app) }, mailUi.busy ? t('home.letters.mail.checking') : t('home.letters.mail.check')),
+    ),
+  );
+}
+
 /* ---------------- 信封卡片 ---------------- */
 
 function card(app, l) {
@@ -230,6 +314,11 @@ function card(app, l) {
     st === 'locked'
       ? [h('span', { class: 'lm-lock' }, icon('lock')), l.daysLeft > 0 ? t('home.letters.card.unlockIn', { n: l.daysLeft }) : t('home.letters.card.unlockSoon'), l.unlock && h('span', { class: 'lm-date' }, fmtDate(l.unlock))]
       : [l.from ? t('home.letters.card.from', { name: l.from }) : t('home.letters.aLetter'), l.unlock && h('span', { class: 'lm-date' }, fmtDate(l.unlock))];
+  // 邮件寄来的信：小标记，鼠标放上去显示寄信地址（列表里没有的话从数据里找）
+  if (l.source === 'mail') {
+    const mailFrom = l.mailFrom || (app.state.letters?.custom || []).find((x) => x.id === l.id)?.mailFrom || '';
+    meta.push(h('span', { class: 'muted-chip lm-mail', title: mailFrom || null }, t('home.letters.mail.badge')));
+  }
   return h(
     'div',
     { class: 'letter-item', key: l.id },
@@ -268,11 +357,13 @@ export default {
   icon: '💌',
   enter(app) {
     app.refreshLetters();
+    syncMail(app);
   },
   render(app) {
     const list = [...(app.letters || [])].sort((a, b) => ORDER[stateOf(a)] - ORDER[stateOf(b)] || (a.daysLeft || 0) - (b.daysLeft || 0));
     const fresh = list.filter((l) => stateOf(l) === 'new').length;
-    const mine = list.filter((l) => l.mine).length;
+    // 能导出的只有在这里写的信（邮件寄来的不导出）
+    const mine = list.filter((l) => l.mine && l.source !== 'mail').length;
     const sub = !list.length ? t('home.letters.sub.empty') : fresh ? t('home.letters.sub.fresh', { n: fresh }) : t('home.letters.sub.all');
     return h(
       'div',
@@ -283,6 +374,7 @@ export default {
         : app.lettersLoaded
           ? h('section', { class: 'card', key: 'empty' }, emptyState(app.look(), t('home.letters.empty.text'), t('home.letters.empty.sub')))
           : h('div', { class: 'letter-grid', key: 'loading' }),
+      mailCard(app),
       h(
         'section',
         { class: 'card letter-tools', key: 'tools' },

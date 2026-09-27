@@ -1,1 +1,153 @@
-{}
+{
+  "pet": {
+    "panel": {
+      "main": {
+        "food": "餵食",
+        "coax": "哄我",
+        "play": "玩耍",
+        "focus": "專注",
+        "mood": "心情",
+        "home": "小窩"
+      },
+      "coax": {
+        "kneel": "跪洗衣板",
+        "flower": "送花",
+        "heart": "比愛心",
+        "hug": "抱抱",
+        "kiss": "親親",
+        "tea": "珍奶",
+        "bow": "鞠躬",
+        "cute": "撒嬌",
+        "roll": "打滾",
+        "dance": "跳舞",
+        "praise": "誇誇",
+        "random": "隨便哄"
+      },
+      "title": {
+        "food": "要吃什麼呢",
+        "coax": "要我怎麼哄你？",
+        "mood": "今天心情怎麼樣？",
+        "moodRecorded": "今天的心情（可以改喔）"
+      },
+      "stat": {
+        "full": "飽足 {n}",
+        "mood": "心情 {n}"
+      },
+      "level": "Lv.{n}",
+      "collapse": "收起",
+      "focus": {
+        "idle": "番茄鐘 · 今天 {n} 個",
+        "phase": {
+          "focus": "專注中",
+          "short": "短休息",
+          "long": "長休息"
+        },
+        "running": "{phase} {time}",
+        "paused": "{phase} （暫停）{time}",
+        "start": "專注 {n} 分鐘",
+        "resume": "繼續",
+        "pause": "暫停",
+        "skip": "跳過",
+        "stop": "結束",
+        "settings": "設定"
+      }
+    },
+    "chatter": {
+      "note": "悄悄話時間💌 {note}"
+    },
+    "remind": {
+      "done": {
+        "water": "喝完了 💧",
+        "stretch": "動過了 🙆",
+        "eyes": "好喔 👀",
+        "sleep": "這就去睡 🌙",
+        "custom": "知道了 ✓"
+      },
+      "snoozeSleep": "再玩一下",
+      "snoozeMinutes": "{n} 分鐘後",
+      "snoozed": "好喔，那我等一下再提醒你～",
+      "goodNight": "晚安{nick}，做個好夢～🌙",
+      "doneCustom": "收到！",
+      "doneGood": "真乖～"
+    },
+    "hungry": {
+      "feed": "餵牠 🍓"
+    },
+    "letter": {
+      "withTitle": "{text}\n「{title}」",
+      "open": "點開看看 💌",
+      "later": "好喔，想看的時候去「小窩 → 信箱」找它～"
+    },
+    "profile": {
+      "yes": "好呀 ✏️",
+      "later": "以後再說",
+      "laterReply": "好喔，想跟我說的時候，去「小窩 → 設定 → 我們的資料」就可以～"
+    },
+    "inFocus": {
+      "poke": "（小小聲）專注中喔～加油！",
+      "feed": "專注結束再吃吧～（其實有點想吃）",
+      "play": "等專注完再玩～",
+      "coax": "（小小聲）等專注完再哄你～"
+    },
+    "breakDone": {
+      "text": "休息結束囉～",
+      "again": "再來一個 🍅",
+      "no": "先不要"
+    },
+    "fall": "哇啊啊——",
+    "kneel": {
+      "sign": {
+        "sorry": "我錯了",
+        "forgiveMe": "原諒我",
+        "loveYou": "最愛你",
+        "waiting": "等你原諒"
+      },
+      "forgive": "原諒你啦 💗",
+      "hmph": "哼！"
+    },
+    "pickup": {
+      "button": "來接我",
+      "title": "叫{sender}來接你？",
+      "when": {
+        "now": "現在就來",
+        "30": "半小時後",
+        "60": "一小時後"
+      },
+      "noteLabel": "想跟{sender}說的話",
+      "placeholder": "例如：在公司樓下等你",
+      "send": "送出 🚗",
+      "sending": "送出中……",
+      "done": "已經跟{sender}說囉，等他來接你～💕",
+      "doneWithIssue": "已經跟{sender}說囉，等他來接你～💕\n不過有一點小問題：{error}",
+      "tooSoon": "剛剛已經叫過囉，{sender}在路上了～",
+      "failed": "哎呀，沒叫到{sender}：{error}",
+      "notReady": "要先在小窩的「設定 → 郵件」裡填好電子信箱，我才能幫你叫{sender}喔～",
+      "settings": "去設定 ⚙️"
+    }
+  },
+  "letter": {
+    "untitled": "一封信",
+    "closeHint": "關閉（Esc）",
+    "openAria": "拆開這封信",
+    "from": "來自 {name} 的信",
+    "forYou": "有一封給你的信",
+    "open": "拆開看看 💌",
+    "readAgain": "再讀一次 💌",
+    "locked": {
+      "notYet": "還沒到拆開的時間喔～",
+      "seeYouOn": "{date} 見",
+      "seeYouLater": "到時候見",
+      "daysLeft": "還要再等 {n} 天，偷偷期待一下吧",
+      "ok": "好，我等著"
+    },
+    "missing": {
+      "huh": "咦？",
+      "title": "這封信好像走丟了……",
+      "close": "關上"
+    },
+    "to": "💌 給{nick}的信",
+    "toYou": "💌 給你的信",
+    "signature": "—— {name}",
+    "keep": "收好囉 💗"
+  }
+}

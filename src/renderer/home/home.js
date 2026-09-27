@@ -256,6 +256,7 @@ function renderNow() {
     void els.page.offsetWidth;
     els.page.classList.add('enter');
   }
+  if (anchor) requestAnimationFrame(scrollToAnchor);
 }
 
 function titlebar() {
@@ -315,7 +316,18 @@ function sidebar() {
   );
 }
 
-function go(id) {
+// 页面后面可以带 #卡片，比如 'settings#mail'：打开页面后滚到那张卡片（id 为「卡片-card」的元素）
+let anchor = '';
+
+function scrollToAnchor() {
+  const el = anchor && document.getElementById(anchor + '-card');
+  if (!el) return;
+  anchor = '';
+  el.scrollIntoView({ block: 'start', behavior: 'smooth' });
+}
+
+function go(target) {
+  const [id, card = ''] = String(target).split('#');
   // 'profile' 不是页面，是「认识一下」资料弹窗
   if (id === 'profile') {
     if (app.state) openProfile(app, { first: !app.state.runtime?.profileDone });
@@ -323,7 +335,11 @@ function go(id) {
   }
   if (!PAGE[id]) return;
   closePopover();
-  if (id === app.page) return;
+  anchor = card;
+  if (id === app.page) {
+    rerender();
+    return;
+  }
   PAGE[app.page]?.leave?.(app);
   app.page = id;
   PAGE[id].enter?.(app);
@@ -389,8 +405,9 @@ async function boot() {
   els.main = document.getElementById('main');
   els.page = document.getElementById('page');
 
-  const q = new URLSearchParams(location.search).get('page');
+  const [q, card = ''] = String(new URLSearchParams(location.search).get('page') || '').split('#');
   if (q && PAGE[q]) app.page = q;
+  anchor = card;
   const wantProfile = q === 'profile';
 
   // 先订阅再读取，读取期间发生的变化也不会漏掉

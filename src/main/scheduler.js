@@ -2,10 +2,12 @@
 // 这里只决定「什么时候说什么」，具体的动作和气泡由宠物窗口完成。
 const { powerMonitor, Notification } = require('electron');
 const C = require('../shared/common');
-const { phrases } = require('./i18n');
+const i18n = require('./i18n');
 const catalog = require('../shared/catalog.json');
 const festivals = require('../shared/festivals.json');
 const weather = require('./weather');
+
+const { phrases } = i18n;
 
 const AWAY_AFTER = 5 * 60; // 秒：多久没操作算离开
 const MIN = 60 * 1000;
@@ -15,6 +17,8 @@ const toMin = (t) => {
   return m ? +m[1] * 60 + +m[2] : null;
 };
 const nowMin = (d) => d.getHours() * 60 + d.getMinutes();
+// 自定义提醒到点时说的话
+const customText = (r) => `⏰ ${r.text || i18n.t('main.say.reminder')}`;
 
 class Scheduler {
   constructor({ store, pet, gift }) {
@@ -35,12 +39,12 @@ class Scheduler {
   vars(extra = {}) {
     const d = this.s;
     return {
-      nick: d.owner.nickname || '宝贝',
-      pet: d.pet.name || '糯米',
+      nick: i18n.nickname(d),
+      pet: i18n.petName(d),
       sender: d.owner.sender || '',
       days: C.dayNumber(d.love.togetherSince) || '',
       knownDays: C.diffDays(C.todayParts(new Date(d.createdAt)), C.todayParts()) + 1,
-      love: d.owner.sender ? `${d.owner.sender}让我告诉你：我爱你` : '有人很爱很爱你哦',
+      love: d.owner.sender ? i18n.t('main.say.loveFrom', { sender: d.owner.sender }) : i18n.t('main.say.love'),
       ...extra,
     };
   }
@@ -124,7 +128,9 @@ class Scheduler {
   fortuneText() {
     const v = this.vars();
     const f = C.fortune(C.dateKey() + v.nick, phrases.fortuneGood, phrases.fortuneBad);
-    return C.fill(`🔮 今日运势 ${f.stars}\n宜：${f.good.join('、')}\n忌：${f.bad.join('、')}`, v);
+    const sep = i18n.t('main.say.fortuneSep');
+    // 宜忌里的词可能带 {pet} 这类占位符，拼好以后再填一次
+    return C.fill(i18n.t('main.say.fortune', { stars: f.stars, good: f.good.join(sep), bad: f.bad.join(sep) }), v);
   }
 
   async morningGreeting() {
@@ -136,8 +142,9 @@ class Scheduler {
     if (this.s.weather.enabled && this.s.weather.lat != null) {
       const w = await weather.current(this.s.weather);
       if (w.ok) {
-        const t = `${w.emoji} ${this.line('weatherIntro', { city: w.city || '', desc: w.desc, min: w.min, max: w.max })}${w.advice}`;
-        setTimeout(() => this.emit({ type: 'weather', text: t, emoji: w.emoji }), 9000);
+        const intro = this.line('weatherIntro', { city: w.city || '', desc: w.desc, min: w.min, max: w.max });
+        const text = i18n.t('main.say.weather', { emoji: w.emoji, intro, advice: w.advice });
+        setTimeout(() => this.emit({ type: 'weather', text, emoji: w.emoji }), 9000);
       }
     }
   }
@@ -334,7 +341,7 @@ class Scheduler {
       if (r.repeat === 'weekends' && dow !== 0 && dow !== 6) return r;
       if (r.repeat === 'once' && r.date && r.date !== today) return r;
       changed = true;
-      this.emit({ type: 'remind', kind: 'custom', id: r.id, text: `⏰ ${r.text || '提醒时间到啦'}` }, { urgent: true });
+      this.emit({ type: 'remind', kind: 'custom', id: r.id, text: customText(r) }, { urgent: true });
       return { ...r, lastFired: today, enabled: r.repeat === 'once' ? false : r.enabled };
     });
     if (changed) this.store.set('reminders.custom', next);
@@ -426,10 +433,20 @@ class Scheduler {
     return false;
   }
 
-  // 打包进来的信（gift.config.json）+ 在应用里写的信
+  // 内置的自我介绍信：按当前语言取，填好宠物的名字
+  helloLetter() {
+    const l = i18n.data('letters.hello');
+    if (!l) return null;
+    const v = this.vars();
+    return { id: 'hello', title: C.fill(l.title || '', v), from: C.fill(l.from || '', v), unlock: '', body: C.fill(l.body || '', v) };
+  }
+
+  // 内置的自我介绍信（送礼配置里有 id 为 hello 的信就用配置里的）+ 打包进来的信（gift.config.json）+ 在应用里写的信
   allLetters() {
+    const giftLetters = this.gift.letters || [];
+    const hello = giftLetters.some((l) => l.id === 'hello') ? null : this.helloLetter();
     const custom = (this.s.letters?.custom || []).map((l) => ({ ...l, mine: true }));
-    return [...(this.gift.letters || []), ...custom];
+    return [...(hello ? [hello] : []), ...giftLetters, ...custom];
   }
 
   findLetter(id) {
@@ -443,7 +460,7 @@ class Scheduler {
       const unlocked = left == null || left <= 0;
       return {
         id: l.id,
-        title: l.title || '一封信',
+        title: l.title || i18n.t('main.letter.untitled'),
         from: l.from || '',
         unlock: l.unlock || '',
         unlocked,
@@ -452,9 +469,17 @@ class Scheduler {
         body: unlocked ? l.body : undefined,
         preview: unlocked ? String(l.body).replace(/\s+/g, ' ').slice(0, 40) : '',
         mine: !!l.mine,
+        // 'mail'：他用邮件寄来的（信箱里加个标记）
+        source: l.source === 'mail' ? 'mail' : '',
+        mailFrom: l.source === 'mail' ? l.mailFrom || '' : '',
         createdAt: l.createdAt || 0,
       };
     });
+  }
+
+  // 邮件寄来了新信：马上检查一次，宠物把信递过去，不等下一轮
+  newLetters() {
+    return this.checkLetters(new Date());
   }
 
   checkLetters(d) {
@@ -475,7 +500,7 @@ class Scheduler {
       else if (id === 'sleep') this.runtime('lastSleepNag', Date.now() - 20 * MIN);
       else {
         const r = (this.s.reminders.custom || []).find((x) => x.id === id);
-        if (r) setTimeout(() => this.emit({ type: 'remind', kind: 'custom', id: r.id, text: `⏰ ${r.text || '提醒时间到啦'}` }, { urgent: true }), 10 * MIN);
+        if (r) setTimeout(() => this.emit({ type: 'remind', kind: 'custom', id: r.id, text: customText(r) }, { urgent: true }), 10 * MIN);
       }
     }
     return action;

@@ -67,7 +67,29 @@
         "exported": "导出了 {n} 封信 ✓",
         "imported": "导入了 {n} 封信 💌"
       },
-      "hint": "💌 信可以提前写好、定好拆开的日子。到了那天，信会自己解锁。"
+      "hint": "💌 信可以提前写好、定好拆开的日子。到了那天，信会自己解锁。",
+      "mail": {
+        "title": "用邮件寄信",
+        "badge": "📮 邮件",
+        "him": "他",
+        "sendTo": "{sender}也可以把信寄到 {address}",
+        "guide": "去「设置 → 邮件」设置后，{sender}就能用邮件寄信",
+        "toSettings": "去设置",
+        "check": "立即收信",
+        "checking": "正在收信…",
+        "received": "收到 {n} 封新的信 💌",
+        "noNew": "没有新信",
+        "checkFailed": "没收成，再试一次吧",
+        "status": "{last} · {auto}",
+        "lastCheck": "上次收信：{time}",
+        "never": "还没收过信",
+        "today": "今天",
+        "yesterday": "昨天",
+        "at": "{day} {time}",
+        "auto": "每 {n} 分钟自动收一次",
+        "autoOff": "自动收信没打开",
+        "error": "⚠️ {error}"
+      }
     },
     "love": {
       "title": "纪念日",
@@ -196,9 +218,9 @@
         "nickPlaceholder": "比如：宝贝",
         "nickHint": "{pet}会这样叫她：「晚上好呀，{nick}」",
         "sender": "你的署名",
-        "senderPlaceholder": "可以不填",
-        "senderHint": "说悄悄话时会说：「{sender}让我偷偷告诉你…」",
-        "senderEmpty": "留空的话，就不说是谁让它说的"
+        "senderPlaceholder": "比如：豪豪",
+        "senderHint": "说悄悄话时会说：「{sender}让我偷偷告诉你……」",
+        "senderEmpty": "填上你的名字，{pet}说悄悄话时会说：「豪豪让我偷偷告诉你……」"
       },
       "talk": {
         "title": "说话方式",
@@ -279,7 +301,7 @@
       "saved": "记下啦：{emoji} {name}",
       "pick": {
         "title": "{date} · {week}",
-        "placeholder": "想说点什么吗？（可以不写）",
+        "placeholder": "今天发生了什么？写几句记下来吧～",
         "save": "记下来"
       },
       "cal": {
@@ -323,7 +345,12 @@
       "empty": "今天没有待办，休息一下吧～",
       "emptySub": "想到要做的事，就写在上面吧",
       "noneDone": "还没有完成的事项，加油鸭～",
-      "hint": "💡 每完成一件，{pet}都会在桌面上为你加油，亲密度 +2"
+      "hint": "💡 每完成一件，{pet}都会在桌面上为你加油，亲密度 +2",
+      "ideas": {
+        "title": "💞 两个人的小事",
+        "more": "换一批",
+        "him": "他"
+      }
     }
   }
 }

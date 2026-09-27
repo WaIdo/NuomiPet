@@ -319,9 +319,11 @@ const ICONS = {
 
 export function icon(name, cls = '') {
   const filled = name === 'play' || name === 'stop' || name === 'skip';
+  // ‹ › 表示前后，从右往左的语言里要翻过来（.ico-dir）；播放、快进这类媒体图标按惯例不翻
+  const dir = name === 'left' || name === 'right';
   return s(
     'svg',
-    { class: cx('ico', cls), viewBox: '0 0 24 24', 'aria-hidden': 'true' },
+    { class: cx('ico', cls, { 'ico-dir': dir }), viewBox: '0 0 24 24', 'aria-hidden': 'true' },
     s('path', {
       d: ICONS[name] || '',
       fill: filled ? 'currentColor' : 'none',
@@ -344,6 +346,11 @@ export function pawGlyph() {
     s('ellipse', { cx: 14.4, cy: 6.6, rx: 2.2, ry: 2.8, transform: 'rotate(6 14.4 6.6)' }),
     s('ellipse', { cx: 18.4, cy: 10.4, rx: 2.2, ry: 2.7, transform: 'rotate(18 18.4 10.4)' }),
   );
+}
+
+// 文字里的「→」（去某个页面）：单独放一个元素，从右往左的语言里用 CSS 翻成朝左。和 rich() 一起用：{ arrow: arrow() }
+export function arrow() {
+  return h('span', { class: 'arrow', 'aria-hidden': 'true' }, '→');
 }
 
 /* ============================== 布局小件 ============================== */
@@ -489,20 +496,22 @@ export function timePicker(value, onChange, o = {}) {
 const daysIn = (y, m) => new Date(y, m, 0).getDate();
 const partialDates = new Map();
 
-// 年/月/日三个下拉框。noYear：允许不填年份（生日），这时写回 'MM-DD'。
+// 年/月/日三个下拉框，三个都选了才回调。
 // 选到一半（还没选全）的状态记在 partialDates 里，id 用来区分不同的选择器。
+// 年份必选的选择器拿到只有月日的老值（MM-DD）时也当成选到一半：月、日照旧显示，等她选好年份才回调。
 export function datePicker(id, value, onChange, o = {}) {
   const now = new Date();
   const yMax = o.yearMax || now.getFullYear() + 10;
   const yMin = o.yearMin || 1950;
   const parsed = parseKey(value);
-  const cur = parsed ? { ...parsed } : { y: null, m: null, d: null, ...(partialDates.get(id) || {}) };
+  const complete = parsed && parsed.y;
+  const cur = complete ? { ...parsed } : { y: null, m: null, d: null, ...(parsed || {}), ...(partialDates.get(id) || {}) };
   const commit = (next) => {
     if (next.m && next.d) next.d = Math.min(next.d, daysIn(next.y || 2000, next.m));
-    const done = next.m && next.d && (next.y || o.noYear);
+    const done = next.y && next.m && next.d;
     if (done) {
       partialDates.delete(id);
-      onChange(next.y ? `${next.y}-${pad2(next.m)}-${pad2(next.d)}` : `${pad2(next.m)}-${pad2(next.d)}`);
+      onChange(`${next.y}-${pad2(next.m)}-${pad2(next.d)}`);
     } else {
       partialDates.set(id, next);
       if (o.onPartial) o.onPartial();
@@ -519,12 +528,12 @@ export function datePicker(id, value, onChange, o = {}) {
       h(
         'select',
         {
-          class: val == null && !(key === 'y' && o.noYear && cur.m) ? 'ph' : null,
+          class: val == null ? 'ph' : null,
           value: val == null ? '' : String(val),
           'aria-label': label,
           onchange: (e) => commit({ ...cur, [key]: e.target.value === '' ? null : +e.target.value }),
         },
-        h('option', { value: '', disabled: key !== 'y' || !o.noYear ? !!val : false }, first),
+        h('option', { value: '', disabled: !!val }, first),
         opts,
       ),
     );
@@ -534,7 +543,7 @@ export function datePicker(id, value, onChange, o = {}) {
   return h(
     'span',
     { class: cx('datepick', o.cls), key: o.key || id },
-    sel(yl, cur.y, years.map((y) => h('option', { value: String(y) }, t('date.year', { y }))), 'y', o.noYear ? t('date.noYear') : yl),
+    sel(yl, cur.y, years.map((y) => h('option', { value: String(y) }, t('date.year', { y }))), 'y', yl),
     sel(ml, cur.m, Array.from({ length: 12 }, (_, i) => h('option', { value: String(i + 1) }, t('date.month', { m: i + 1, mon: mon(i + 1) }))), 'm', ml),
     sel(dl, cur.d, Array.from({ length: dim }, (_, i) => h('option', { value: String(i + 1) }, t('date.day', { d: i + 1 }))), 'd', dl),
   );
@@ -647,7 +656,9 @@ export function popover(anchor, content, o = {}) {
     below = false;
   }
   top = Math.max(10, Math.min(top, innerHeight - ht - 10));
-  let left = o.align === 'start' ? r.left : r.left + r.width / 2 - w / 2;
+  // align: 'start' 对齐到按钮开头的那一边（从右往左的语言里是右边）
+  const rtl = getComputedStyle(anchor).direction === 'rtl';
+  let left = o.align === 'start' ? (rtl ? r.right - w : r.left) : r.left + r.width / 2 - w / 2;
   left = Math.max(10, Math.min(left, innerWidth - w - 10));
   el.style.top = top + 'px';
   el.style.left = left + 'px';

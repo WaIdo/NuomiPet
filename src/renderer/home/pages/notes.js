@@ -104,7 +104,7 @@ export default {
             { class: 'field' },
             h('span', { class: 'field-label' }, t('home.notes.names.sender')),
             textInput(app, 'owner.sender', owner.sender, { placeholder: t('home.notes.names.senderPlaceholder'), label: t('home.notes.names.sender') }),
-            h('span', { class: 'field-hint' }, sender ? t('home.notes.names.senderHint', { sender }) : t('home.notes.names.senderEmpty')),
+            h('span', { class: 'field-hint' }, sender ? t('home.notes.names.senderHint', { sender }) : t('home.notes.names.senderEmpty', { pet })),
           ),
         ),
         h(

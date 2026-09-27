@@ -1,1 +1,457 @@
-{}
+{
+  "hello": [
+    "Coucou\u00a0! Moi, c'est {pet}. À partir de maintenant, j'habite sur ton bureau~",
+    "Ding\u00a0! {pet} vient de débarquer\u00a0! Prends bien soin de moi (｡･ω･｡)ﾉ♡"
+  ],
+  "startup": [
+    "Coucou {nick}, me revoilà\u00a0! Encore une belle journée ensemble~",
+    "{pet} est en ligne\u00a0! Je suis là, avec toi",
+    "Hé hé, on se retrouve~",
+    "Fin de la sieste pour {pet}\u00a0! Aujourd'hui encore, on se donne à fond ensemble\u00a0!"
+  ],
+  "morning": [
+    "Bonjour {nick}~ Une nouvelle journée pleine d'énergie commence\u00a0! ☀️",
+    "Bonjour\u00a0! Tu as bien dormi\u00a0?",
+    "Debout, debout~ Ça fait longtemps que {pet} t'attend\u00a0!",
+    "Bonjour\u00a0! N'oublie pas ton petit-déj, pas question de partir le ventre vide",
+    "Une nouvelle journée commence, et {pet} reste avec toi du début à la fin~",
+    "Bonjour\u00a0! Ce matin encore, tu es trop mignonne\u00a0!"
+  ],
+  "noon": [
+    "C'est l'heure du déjeuner\u00a0! Mange bien pour avoir des forces~ 🍱",
+    "Il est midi\u00a0! Après le repas, tu peux faire une petite sieste, {pet} monte la garde~",
+    "À table, {nick}\u00a0! Et un bubble tea, ça ne compte pas comme repas\u00a0!",
+    "À la soupe\u00a0! Tu as envie de manger quoi aujourd'hui\u00a0?"
+  ],
+  "evening": [
+    "Voilà le soir, tu as bien travaillé aujourd'hui~ 🌇",
+    "Qu'est-ce qu'on mange ce soir\u00a0? {pet} vote pour du poisson séché\u00a0!",
+    "Après une journée bien remplie, fais-toi plaisir, tu le mérites",
+    "La nuit tombe… Tu as bien pris soin de toi aujourd'hui\u00a0?"
+  ],
+  "night": [
+    "Il est tard, c'est l'heure de faire dodo 🌙",
+    "À veiller trop tard, tu vas avoir des yeux de panda\u00a0! Allez, au lit~",
+    "{pet} a sommeil… On va se coucher ensemble, d'accord\u00a0?",
+    "Bonne nuit {nick}, fais de beaux rêves tout doux 💤",
+    "Si tu ne vas pas dormir tout de suite, {pet} va se fâcher\u00a0! (｀へ´)",
+    "Ton téléphone et ton ordi ont besoin de repos aussi, on reprendra demain~"
+  ],
+  "welcomeBack": [
+    "Tu es rentrée\u00a0! Tu as tellement manqué à {pet}~",
+    "Bon retour\u00a0! Tu étais partie faire quoi\u00a0?",
+    "Enfin, te voilà\u00a0! (saute dans tes bras)",
+    "Je t'ai attendue tellement longtemps~",
+    "Te revoilà\u00a0! {pet} t'a attendue ici bien sagement"
+  ],
+  "stroke": [
+    "Hé hé~ C'est trop agréable",
+    "Encore un peu, s'il te plaît~",
+    "Ronron…",
+    "J'adore tes caresses, {nick}\u00a0!",
+    "Hihi (〃'▽'〃)",
+    "Je me blottis contre toi~",
+    "Que du bonheur~",
+    "Une caresse sur la tête, et hop, plus de soucis"
+  ],
+  "poke": [
+    "Hmm\u00a0? Tu me cherches\u00a0?",
+    "Oh là là\u00a0!",
+    "Pourquoi tu me tapotes~ (,,•́ . •̀,,)",
+    "Hé\u00a0!",
+    "Zut, ma cachette est découverte\u00a0!",
+    "Je suis là, je suis là\u00a0!",
+    "Coucou\u00a0! (｡･ω･｡)ﾉ♡",
+    "Un petit tapotement, un petit bonheur~",
+    "Tu veux un câlin\u00a0?"
+  ],
+  "pokeMany": [
+    "Arrête de me tapoter >_<",
+    "La tête me tourne…",
+    "Encore une fois et je te mords\u00a0! (air terrible… pour de faux)",
+    "Snif… tous ces petits coups m'ont donné le tournis"
+  ],
+  "wakeByPoke": [
+    "Mmh… tu as interrompu ma sieste…",
+    "Mmh… encore cinq minutes…",
+    "(se frotte les yeux) Il fait déjà jour\u00a0?",
+    "Bon, d'accord, je me lève pour jouer avec toi~"
+  ],
+  "drag": [
+    "Waaaah\u00a0!",
+    "Pose-moi par terre\u00a0!",
+    "C'est haut, trop haut\u00a0!",
+    "Tu m'emmènes où\u00a0?",
+    "Je m'envole~"
+  ],
+  "land": [
+    "Atterrissage réussi\u00a0!",
+    "Hop là\u00a0!",
+    "Je retombe sur mes pattes~",
+    "Boum\u00a0!"
+  ],
+  "dizzy": [
+    "Tout tourne…",
+    "Je vois trente-six chandelles @_@",
+    "Le monde tourne, tourne…",
+    "La prochaine fois, plus doucement…"
+  ],
+  "idle": [
+    "Tu es encore super mignonne aujourd'hui\u00a0!",
+    "Tu es si belle quand tu te concentres",
+    "Si tu es fatiguée, fais une pause, {pet} reste avec toi",
+    "Pense à bien boire de l'eau 💧",
+    "Si quelque chose te tracasse, tu peux en parler à {pet}",
+    "Tu es la meilleure, {nick}\u00a0!",
+    "Je suis dans la lune…",
+    "Tu as bien mangé aujourd'hui\u00a0?",
+    "Quand tu souris, {pet} sourit aussi",
+    "Courage, courage\u00a0! Tu vas y arriver\u00a0!",
+    "Je serai toujours là, avec toi",
+    "J'ai envie d'un fraisier… 🍰",
+    "(te regarde en cachette)",
+    "Qui est cette petite fée devant l'écran\u00a0? Mais c'est toi, {nick}\u00a0!",
+    "J'espère que la vie sera douce avec toi aujourd'hui",
+    "Ne te surmène pas, ta santé passe avant tout",
+    "Hé hé, rien de spécial, j'avais juste envie de t'appeler~",
+    "Ça fait déjà {knownDays} {knownDays|jour|jours} qu'on se connaît\u00a0!",
+    "Aujourd'hui encore, tu brilles de mille feux ✨",
+    "Tiens-toi un peu plus droite, ton dos te dira merci~",
+    "Psst… quelqu'un pense très fort à toi 💕",
+    "Si tu es fatiguée, fais-moi une caresse~"
+  ],
+  "together": [
+    "Aujourd'hui, c'est le jour {days} de votre histoire à deux 💕",
+    "Déjà {days} {days|jour|jours} ensemble, et ce n'est que le début\u00a0!",
+    "Jour {days}\u00a0: encore une journée où tu es aimée~"
+  ],
+  "hungry": [
+    "Mon ventre gargouille…",
+    "{pet} a un petit creux… Tu veux bien me donner à manger\u00a0?",
+    "J'ai envie de poisson séché… (fait les yeux du Chat potté)",
+    "J'ai faim, j'ai faim~ Double-clique sur moi pour me nourrir"
+  ],
+  "full": [
+    "Je n'en peux plus~ J'ai le ventre tout rond",
+    "Miam, le ventre bien plein\u00a0! Merci, {nick}\u00a0!",
+    "Encore une bouchée et je vais devenir une boule~"
+  ],
+  "favorite": [
+    "{food}\u00a0!! C'est ce que je préfère au monde entier\u00a0!",
+    "Waouh\u00a0! {food}\u00a0! Tu me connais par cœur, {nick} 💕"
+  ],
+  "play": [
+    "Viens jouer, viens jouer\u00a0!",
+    "Regarde bien\u00a0!",
+    "Trop drôle\u00a0! Encore une fois\u00a0!",
+    "Reviens, pelote de laine~"
+  ],
+  "water": [
+    "C'est l'heure de boire un peu d'eau\u00a0! 💧 Glou glou~",
+    "Un verre d'eau, {nick}\u00a0! Bien s'hydrater, c'est bon pour la peau",
+    "Allez, santé\u00a0! 🥤 (à l'eau, bien sûr)",
+    "On s'hydrate\u00a0! Juste un petit verre~",
+    "{pet} boit un verre d'eau avec toi~"
+  ],
+  "waterDone": [
+    "Bravo\u00a0! Tu as déjà bu {n} {n|verre|verres} d'eau aujourd'hui 💧",
+    "Glou glou~ Verre n°\u00a0{n}, c'est fait\u00a0!",
+    "Super\u00a0! Continue comme ça~"
+  ],
+  "stretch": [
+    "Tu es assise depuis trop longtemps, lève-toi et étire-toi~",
+    "Lève-toi, marche un peu et fais rouler tes épaules\u00a0!",
+    "On s'étire ensemble\u00a0: hmmmmmm\u00a0!",
+    "Ton dos n'est pas trop raide\u00a0? Allez, bouge un peu"
+  ],
+  "eyes": [
+    "Regarde au loin pour reposer tes yeux pendant 20 secondes 👀",
+    "Cligne des yeux, puis ferme-les un petit moment~",
+    "Tu fixes l'écran depuis longtemps, tes yeux méritent des vacances"
+  ],
+  "todoNudge": [
+    "Il te reste {n} {n|tâche|tâches} à faire, courage, on s'y met ensemble\u00a0!",
+    "Encore {n} {n|tâche|tâches} sur ta liste\u00a0! Une de terminée, une petite récompense~"
+  ],
+  "todoDone": [
+    "Génial\u00a0! Encore une de faite\u00a0! 🎉",
+    "Trop forte\u00a0! Tiens, une petite fleur pour toi 🌸",
+    "Quelle efficacité\u00a0!",
+    "Terminé\u00a0! Tu assures, {nick}~"
+  ],
+  "todoAllDone": [
+    "Toutes tes tâches du jour sont faites\u00a0! Tu es la meilleure\u00a0! 🎉"
+  ],
+  "focusStart": [
+    "C'est parti pour la concentration\u00a0! {pet} reste sagement à côté de toi 📖",
+    "Mode concentration activé\u00a0! Courage~",
+    "On se concentre un moment ensemble\u00a0!"
+  ],
+  "focusCheer": [
+    "(tout bas) Courage…",
+    "(te tient compagnie en silence)",
+    "Tu es trop classe quand tu te concentres\u00a0!"
+  ],
+  "focusEnd": [
+    "Pomodoro terminé\u00a0! Fais une petite pause~ 🍅",
+    "Bravo, encore un pomodoro de fait\u00a0!",
+    "Beau travail\u00a0! Bouge un peu avant de reprendre~"
+  ],
+  "breakEnd": [
+    "La pause est finie\u00a0! Prête à reprendre\u00a0?"
+  ],
+  "moodAsk": [
+    "Comment tu te sens aujourd'hui\u00a0?"
+  ],
+  "moodReply": {
+    "great": [
+      "Trop bien\u00a0! {pet} saute de joie aussi\u00a0!",
+      "Tu es la plus belle quand tu es heureuse~"
+    ],
+    "good": [
+      "Hé hé, du moment que tu es contente~",
+      "Encore une belle journée, alors\u00a0!"
+    ],
+    "calm": [
+      "Une journée tranquille, c'est bien aussi\u00a0! Et demain sera encore mieux\u00a0!",
+      "Le calme, ça fait du bien aussi~"
+    ],
+    "tired": [
+      "Tu as bien travaillé, couche-toi tôt ce soir~",
+      "Si tu es fatiguée, viens te reposer un peu contre {pet}"
+    ],
+    "sad": [
+      "Un gros câlin… Les moments tristes finissent toujours par passer 💗",
+      "{pet} est là, avec toi. Tu as le droit de pleurer"
+    ],
+    "angry": [
+      "Qui t'a mise en colère\u00a0? {pet} va lui mordre les mollets\u00a0! (｀Д´)",
+      "Respire, respire… Ça ne vaut pas la peine de te rendre malade~"
+    ]
+  },
+  "birthday": [
+    "Joyeux anniversaire\u00a0!! 🎂 Une année de plus, {nick}, et toujours aussi adorable\u00a0!",
+    "C'est ton anniversaire aujourd'hui, {nick}\u00a0! Le monde entier fait la fête pour toi 🎉"
+  ],
+  "birthdaySoon": [
+    "Psst… plus que {n} {n|jour|jours} avant ton anniversaire 🎂"
+  ],
+  "anniversary": [
+    "Aujourd'hui, ça fait {years} {years|an|ans} que vous êtes ensemble\u00a0! 💕",
+    "Joyeux anniversaire à vous deux\u00a0! Déjà {years} {years|an|ans}, et encore plein, plein d'autres à venir\u00a0!"
+  ],
+  "milestone": [
+    "Aujourd'hui, c'est votre {days}e jour ensemble\u00a0! Ça se fête 💕"
+  ],
+  "eventToday": [
+    "Aujourd'hui, c'est «\u00a0{name}\u00a0»\u00a0! 🎉",
+    "Ding\u00a0! C'est le grand jour\u00a0: «\u00a0{name}\u00a0»~"
+  ],
+  "eventSoon": [
+    "Plus que {n} {n|jour|jours} avant «\u00a0{name}\u00a0»\u00a0!"
+  ],
+  "levelUp": [
+    "Notre complicité passe au niveau {level}\u00a0! «\u00a0{title}\u00a0» 💕"
+  ],
+  "letter": [
+    "Quelqu'un m'a confié une lettre pour toi 💌",
+    "Ding dong~ Une nouvelle lettre vient d'être débloquée 💌"
+  ],
+  "note": [
+    "{sender} m'a demandé de te glisser à l'oreille\u00a0: {note}",
+    "C'est l'heure des mots doux 💌 {note}",
+    "{note}"
+  ],
+  "sleepy": [
+    "Ouaaah… (bâillement)…",
+    "J'ai un peu sommeil…"
+  ],
+  "goSleep": [
+    "Bon, je fais une petite sieste… 💤",
+    "Zzz…"
+  ],
+  "weatherIntro": [
+    "{desc} aujourd'hui à {city}, entre {min} et {max}\u00a0°C."
+  ],
+  "fortuneGood": [
+    "manger sucré",
+    "recevoir des compliments",
+    "se coucher tôt",
+    "boire un bubble tea",
+    "sortir prendre le soleil",
+    "s'offrir des fleurs",
+    "papoter avec quelqu'un qu'on aime",
+    "buller dix minutes",
+    "bien manger",
+    "écouter sa chanson préférée",
+    "porter une jolie tenue",
+    "prendre des photos",
+    "rire aux éclats trois fois",
+    "caresser {pet}",
+    "manger une fondue",
+    "apprendre un truc nouveau",
+    "rêvasser",
+    "faire des câlins",
+    "se faire chouchouter",
+    "se promener",
+    "boire beaucoup d'eau",
+    "ranger son bureau",
+    "regarder un film",
+    "manger des fraises"
+  ],
+  "fortuneBad": [
+    "veiller tard",
+    "bouder",
+    "boire du café à jeun",
+    "rester assise trop longtemps",
+    "se prendre la tête",
+    "tout garder pour soi",
+    "sauter le petit-déjeuner",
+    "être trop dure avec soi-même",
+    "scroller jusqu'à minuit",
+    "voir tout en noir",
+    "oublier de boire de l'eau"
+  ],
+  "helloFrom": [
+    "Coucou {nick}\u00a0! Moi, c'est {pet}. C'est {sender} qui m'envoie te tenir compagnie~ Désormais, j'habite sur ton bureau",
+    "Ding\u00a0! {pet}, en mission spéciale pour {sender}, vient de débarquer\u00a0! Prends bien soin de moi, {nick} (｡･ω･｡)ﾉ♡"
+  ],
+  "tips": [
+    "Petite astuce\u00a0: fais des allers-retours avec la souris sur ma tête, c'est comme une caresse~",
+    "Petite astuce\u00a0: double-clique sur moi pour ouvrir le menu rapide (nourrir, jouer, pomodoro, humeur…)",
+    "Petite astuce\u00a0: maintiens le clic sur moi pour me soulever\u00a0; quand tu lâches, je tombe (vas-y doucement, hein\u00a0!)",
+    "Petite astuce\u00a0: fais un clic droit sur moi pour voir le menu complet\u00a0; dans le «\u00a0Nid\u00a0», tu peux changer ma tenue~",
+    "Petite astuce\u00a0: appuie sur {hotkey} pour me cacher, et encore une fois pour me faire revenir"
+  ],
+  "profileAsk": [
+    "Et si on faisait connaissance\u00a0? Dis-moi comment t'appeler et quand tombe ton anniversaire, je m'en souviendrai~",
+    "Tu veux bien me parler un peu de toi\u00a0? Ton anniversaire, par exemple 🎂"
+  ],
+  "kneel": [
+    "Pardon, j'ai eu tort… Tu me pardonnes\u00a0? 🥺",
+    "Me voilà à genoux sur la planche à laver\u00a0! Elle en est toute chaude… Pardonne-moi~",
+    "Pardon, pardon, tout est de ma faute 🙇"
+  ],
+  "kneelFor": [
+    "C'est {sender} qui t'a fâchée\u00a0? Je me mets à genoux sur la planche à laver à sa place 🙇",
+    "{sender} m'envoie m'excuser\u00a0: promis, la leçon est retenue… Tu pardonnes, pour cette fois\u00a0? 🥺",
+    "{sender} est au coin à réfléchir à ses bêtises\u00a0; en attendant, je me mets à genoux à sa place 🙇"
+  ],
+  "kneelAngry": [
+    "Qui t'a mise en colère\u00a0? Je me mets à genoux à sa place pour demander pardon 🙇",
+    "Ne sois pas fâchée… Je me mets à genoux sur la planche à laver pour me faire pardonner 🥺"
+  ],
+  "kneelPoke": [
+    "Arrête de me tapoter\u00a0! J'avoue, j'ai eu tort, d'accord\u00a0? 🥺",
+    "Voilà, je suis à genoux\u00a0! Arrête de me tapoter~"
+  ],
+  "kneelAgain": [
+    "Snif… Bon, je reste à genoux encore un peu 😭",
+    "D'accord, hmpf si tu veux… Je reste à genoux jusqu'à ce que tu me pardonnes 🥺"
+  ],
+  "kneelGift": [
+    "Des fleurs et un bubble tea pour toi… Tu me pardonnes, cette fois\u00a0? 🥺"
+  ],
+  "kneelForever": [
+    "D'accord… Je resterai à genoux ici, jusqu'à ce que tu me pardonnes 😭"
+  ],
+  "forgiveAsk": [
+    "Tu me pardonnes\u00a0?",
+    "Alors… tu me pardonnes\u00a0? 🥺"
+  ],
+  "forgiven": [
+    "Youpi\u00a0! Je savais que tu étais la meilleure 💕",
+    "Hé hé, je t'aime trop\u00a0!",
+    "Merci de me pardonner~ Promis, je serai sage"
+  ],
+  "kneelWaiting": [
+    "Pardonne-moi, s'il te plaît 🥺",
+    "Une caresse sur ma tête, et on n'en parle plus~"
+  ],
+  "bow": [
+    "Pardon~ Je m'incline bien bas 🙇",
+    "C'est ma faute… Je m'incline devant toi, {nick} 🙇"
+  ],
+  "flower": [
+    "Pour toi, {nick}, la plus merveilleuse du monde 🌹",
+    "Des fleurs pour toi, ne sois plus fâchée 💐",
+    "Aucune fleur n'est aussi jolie que toi aujourd'hui 🌷"
+  ],
+  "flowerFor": [
+    "{sender} m'a demandé de t'apporter des fleurs 💐",
+    "Voici les fleurs que {sender} m'a demandé de t'apporter 🌹 Avec ce message\u00a0: tu es la plus belle"
+  ],
+  "heart": [
+    "Un cœur avec les doigts ❤️ Je t'aime~",
+    "Un petit cœur rien que pour toi 💗",
+    "Mon cœur est tout à toi~"
+  ],
+  "hug": [
+    "Câlin~ Tous les petits chagrins finissent par passer",
+    "Viens là, un gros câlin\u00a0!",
+    "Je te serre fort et je ne te lâche plus~"
+  ],
+  "kiss": [
+    "Bisou~ 😘",
+    "Un petit bisou, et on oublie la colère~",
+    "Un bisou en douce 😚"
+  ],
+  "tea": [
+    "Je t'offre un bubble tea 🧋 Et après, plus de bouderie, promis\u00a0?",
+    "Bien sucré, sans glaçons, exactement comme tu l'aimes 🧋",
+    "Et voilà ton bubble tea\u00a0! Tout doux et sucré, comme toi"
+  ],
+  "cute": [
+    "Snif snif~ Ne sois plus fâchée~",
+    "J'ai compris la leçon, promis~",
+    "Hmm hmm~ Occupe-toi un peu de moi~"
+  ],
+  "roll": [
+    "Je fais des roulades pour que tu me pardonnes~",
+    "Je roule, je roule… Pardonne-moi"
+  ],
+  "danceCoax": [
+    "Je danse rien que pour toi, allez, un petit sourire~ 💃",
+    "Regarde-moi, regarde-moi\u00a0! Souris un peu~"
+  ],
+  "praise": [
+    "Tu es superbe aujourd'hui\u00a0!",
+    "Tu es la personne la plus adorable du monde",
+    "Quelle chance de t'avoir",
+    "Quand tu te concentres, tu rayonnes ✨",
+    "Tu es la meilleure, {nick}, et de loin\u00a0!",
+    "Quand tu souris, même le ciel s'éclaircit"
+  ],
+  "todoIdeas": [
+    "Dire «\u00a0tu me manques\u00a0» à {sender}",
+    "Dire bonne nuit à {sender}",
+    "Regarder un film avec {sender}",
+    "Prendre une photo de nous deux",
+    "Préparer notre prochain rencard",
+    "Voir un coucher de soleil à deux",
+    "Faire un gros câlin à {sender}",
+    "Partager le top de ma journée",
+    "Complimenter {sender} trois fois",
+    "10 min de visio avec {sender}",
+    "Balade main dans la main",
+    "Faire le plein de snacks à deux",
+    "Tester une recette avec {sender}",
+    "Petite surprise pour {sender}",
+    "Planifier un voyage à deux",
+    "Se coucher tôt avec {sender}",
+    "Dire merci à {sender}",
+    "Écrire une lettre à {sender}",
+    "Revoir nos anciennes photos",
+    "Une chanson, un écouteur chacun",
+    "Un nouveau resto avec {sender}",
+    "Photomaton avec {sender}",
+    "Noter les envies de {sender}",
+    "Adopter une plante à deux",
+    "Admirer les étoiles avec {sender}",
+    "Offrir un bubble tea à {sender}",
+    "Jouer une partie ensemble",
+    "Noter nos dates dans le Nid",
+    "Pique-nique au parc avec {sender}",
+    "Parler de mes soucis à {sender}"
+  ]
+}

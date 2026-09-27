@@ -1,5 +1,6 @@
 // 信件窗口：信封飘进来 → 点一下拆开（火漆弹开、封口翻起、信纸抽出）→ 展开成可以读的信纸。
 // 窗口本身是透明的，所有阴影都画在页面里。
+import { t, fmtDate, syncLang, nickname, dirOf, getLang } from '../shared/i18n.mjs'; // 要最先执行：按语言填好名字和台词
 const mochi = window.mochi;
 const id = new URLSearchParams(location.search).get('id') || '';
 
@@ -8,13 +9,40 @@ const petals = document.getElementById('petals');
 const SVG_NS = 'http://www.w3.org/2000/svg';
 
 let letter = null;
-let nickname = '';
+let state = null; // 应用数据：语言、对她的称呼
 let opened = false;
 
+// 界面文字：记下元素和取文字的函数，换了语言（或称呼）时就地更新，不重建页面，拆信的动画和进度都不受影响
+const texts = [];
+function setText({ node, fn, attr }) {
+  const v = fn();
+  if (attr) {
+    if (node.getAttribute(attr) !== v) node.setAttribute(attr, v);
+  } else if (node.textContent !== v) node.textContent = v;
+}
+function bindText(node, fn, attr) {
+  const b = { node, fn, attr };
+  texts.push(b);
+  setText(b);
+  return node;
+}
+const pageTitle = () => (letter && letter.title) || t('letter.untitled');
+function refreshTexts() {
+  texts.forEach(setText);
+  const title = pageTitle();
+  if (document.title !== title) document.title = title;
+}
+
+// 从右往左的界面（阿拉伯文）里，署名、称呼这些她写的内容用 Unicode 隔离符（FSI … PDI）包起来，
+// 里面的标点、数字不会跑到句子另一头。从左往右的界面里原样返回
+const isolate = (s) => (s && dirOf(getLang()) === 'rtl' ? `\u2068${s}\u2069` : s);
+
+// text 可以是函数：界面文字，换语言时跟着变
 function el(tag, cls, text) {
   const e = document.createElement(tag);
   if (cls) e.className = cls;
-  if (text != null) e.textContent = text;
+  if (typeof text === 'function') bindText(e, text);
+  else if (text != null) e.textContent = text;
   return e;
 }
 
@@ -40,14 +68,20 @@ function svgLock(cls) {
   return s;
 }
 
-function fmtDate(key) {
+// 'YYYY-MM-DD' → { y, m, d }
+function dateParts(key) {
   const m = /^(\d{4})-(\d{1,2})-(\d{1,2})$/.exec(key || '');
-  return m ? `${+m[1]}年${+m[2]}月${+m[3]}日` : '';
+  return m ? { y: +m[1], m: +m[2], d: +m[3] } : null;
+}
+
+function fmtYMD(key) {
+  const p = dateParts(key);
+  return p ? fmtDate(p) : '';
 }
 
 function fmtMD(key) {
-  const m = /^(\d{4})-(\d{1,2})-(\d{1,2})$/.exec(key || '');
-  return m ? `${+m[2]}月${+m[3]}日` : '';
+  const p = dateParts(key);
+  return p ? fmtDate(p, { withYear: false }) : '';
 }
 
 function close() {
@@ -73,12 +107,12 @@ function intro() {
   const holder = el('div', 'env-holder');
   const btnEnv = el('button', 'env-btn');
   btnEnv.type = 'button';
-  btnEnv.setAttribute('aria-label', '拆开这封信');
+  bindText(btnEnv, () => t('letter.openAria'), 'aria-label');
   btnEnv.append(envelope(false));
   holder.append(btnEnv, el('span', 'env-shadow'));
   const cap = el('div', 'caption');
-  cap.append(el('p', 'cap-from', letter.from ? `来自 ${letter.from} 的信` : '有一封给你的信'), el('h2', 'cap-title', letter.title || '一封信'));
-  const open = el('button', 'btn primary', letter.read ? '再读一遍 💌' : '拆开看看 💌');
+  cap.append(el('p', 'cap-from', () => (letter.from ? t('letter.from', { name: isolate(letter.from) }) : t('letter.forYou'))), el('h2', 'cap-title', pageTitle));
+  const open = el('button', 'btn primary', () => (letter.read ? t('letter.readAgain') : t('letter.open')));
   open.type = 'button';
   btnEnv.addEventListener('click', openLetter);
   open.addEventListener('click', openLetter);
@@ -94,10 +128,10 @@ function lockedView() {
   box.append(envelope(true));
   holder.append(box, el('span', 'env-shadow'));
   const cap = el('div', 'caption');
-  const when = letter.unlock ? `${fmtMD(letter.unlock)} 见` : '到时候见';
-  cap.append(el('p', 'cap-from', '还没到拆开的时间哦～'), el('h2', 'cap-title', when));
-  if (letter.daysLeft > 0) cap.append(el('p', 'cap-sub', `还要再等 ${letter.daysLeft} 天，悄悄期待一下吧`));
-  const ok = el('button', 'btn ghost', '好的，我等着');
+  const when = () => (letter.unlock ? t('letter.locked.seeYouOn', { date: fmtMD(letter.unlock) }) : t('letter.locked.seeYouLater'));
+  cap.append(el('p', 'cap-from', () => t('letter.locked.notYet')), el('h2', 'cap-title', when));
+  if (letter.daysLeft > 0) cap.append(el('p', 'cap-sub', () => t('letter.locked.daysLeft', { n: letter.daysLeft })));
+  const ok = el('button', 'btn ghost', () => t('letter.locked.ok'));
   ok.type = 'button';
   ok.addEventListener('click', close);
   wrap.append(holder, cap, ok);
@@ -112,8 +146,8 @@ function missingView() {
   box.append(envelope(false));
   holder.append(box, el('span', 'env-shadow'));
   const cap = el('div', 'caption');
-  cap.append(el('p', 'cap-from', '咦？'), el('h2', 'cap-title', '这封信好像走丢了……'));
-  const ok = el('button', 'btn ghost', '关上');
+  cap.append(el('p', 'cap-from', () => t('letter.missing.huh')), el('h2', 'cap-title', () => t('letter.missing.title')));
+  const ok = el('button', 'btn ghost', () => t('letter.missing.close'));
   ok.type = 'button';
   ok.addEventListener('click', close);
   wrap.append(holder, cap, ok);
@@ -134,18 +168,21 @@ function paperCard() {
   card.setAttribute('aria-hidden', 'true');
   card.append(el('span', 'washi'));
   const head = el('header', 'l-head');
-  head.append(el('p', 'l-kicker', nickname ? `💌 给${nickname}的信` : '💌 给你的信'), el('h1', 'l-title', letter.title || '一封信'));
-  const date = fmtDate(letter.unlock);
-  if (date) head.append(el('p', 'l-date', date));
+  const kicker = () => {
+    const nick = nickname(state);
+    return nick ? t('letter.to', { nick: isolate(nick) }) : t('letter.toYou');
+  };
+  head.append(el('p', 'l-kicker', kicker), el('h1', 'l-title', pageTitle));
+  if (dateParts(letter.unlock)) head.append(el('p', 'l-date', () => fmtYMD(letter.unlock)));
   const body = el('div', 'l-body');
   body.tabIndex = 0;
   const fade = () => body.classList.toggle('more', body.scrollTop + body.clientHeight < body.scrollHeight - 6);
   body.addEventListener('scroll', fade, { passive: true });
   body.__fade = fade;
-  body.append(el('div', 'l-text', letter.body || ''));
-  if (letter.from) body.append(el('p', 'l-sign', `—— ${letter.from}`));
+  body.append(el('div', 'l-text', () => letter.body || ''));
+  if (letter.from) body.append(el('p', 'l-sign', () => t('letter.signature', { name: isolate(letter.from) })));
   const foot = el('footer', 'l-foot');
-  const keep = el('button', 'btn primary', '收好啦 💗');
+  const keep = el('button', 'btn primary', () => t('letter.keep'));
   keep.type = 'button';
   keep.addEventListener('click', close);
   foot.append(keep);
@@ -192,7 +229,8 @@ function startPetals() {
 
 async function boot() {
   document.documentElement.dataset.platform = mochi?.platform || '';
-  document.getElementById('close').addEventListener('click', close);
+  const closeBtn = document.getElementById('close');
+  closeBtn.addEventListener('click', close);
   window.addEventListener('keydown', (e) => {
     if (e.key === 'Escape') close();
     if ((e.key === 'Enter' || e.key === ' ') && !opened && letter?.unlocked && document.activeElement === document.body) openLetter();
@@ -200,16 +238,28 @@ async function boot() {
   try {
     const [list, data] = await Promise.all([mochi.letters.list(), mochi.getData().catch(() => null)]);
     letter = (list || []).find((l) => String(l.id) === String(id)) || null;
-    nickname = data?.owner?.nickname || '';
+    state = data;
   } catch (err) {
     console.error('[letter] load failed', err);
   }
+  // 先定下语言再画界面
+  syncLang(state);
+  bindText(closeBtn, () => t('letter.closeHint'), 'title');
+  bindText(closeBtn, () => t('common.close'), 'aria-label');
   if (!letter) missingView();
-  else {
-    document.title = letter.title || '一封信';
-    if (!letter.unlocked) lockedView();
-    else intro();
-  }
+  else if (!letter.unlocked) lockedView();
+  else intro();
+  refreshTexts();
+  // 在小窝里换了语言或称呼：文字跟着换。自带的信（宠物的自我介绍）也跟着语言，重新取一下标题、署名和正文
+  mochi?.onData?.(async (d) => {
+    state = d;
+    if (syncLang(d) && letter) {
+      const list = await Promise.resolve(mochi.letters.list()).catch(() => null);
+      const fresh = (list || []).find((l) => String(l.id) === String(letter.id));
+      if (fresh) Object.assign(letter, { title: fresh.title, from: fresh.from, body: fresh.body ?? letter.body });
+    }
+    refreshTexts();
+  });
   requestAnimationFrame(() => document.body.classList.add('ready'));
 }
 

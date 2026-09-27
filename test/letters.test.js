@@ -6,7 +6,7 @@ const { saveLetter, deleteLetter, exportLetters, importLetters } = require('../s
 test('新建一封信，空正文和错误日期会被拒绝', () => {
   assert.equal(saveLetter([], { title: 'x', body: '   ' }).ok, false);
   assert.equal(saveLetter([], { title: 'x', body: '你好', unlock: '2027-13-40' }).ok, false);
-  const r = saveLetter([], { title: '  生日快乐  ', from: '阿杰', unlock: '2027-3-21', body: '第一行\r\n第二行' });
+  const r = saveLetter([], { title: '  生日快乐  ', from: '豪豪', unlock: '2027-3-21', body: '第一行\r\n第二行' });
   assert.equal(r.ok, true);
   assert.equal(r.letter.title, '生日快乐');
   assert.equal(r.letter.unlock, '2027-03-21');
@@ -34,7 +34,7 @@ test('删除', () => {
 });
 
 test('导出的文件看不到明文，导入后内容一致，同 id 覆盖不重复', () => {
-  const a = saveLetter([], { title: '给你', from: '阿杰', unlock: '2030-02-14', body: '我喜欢你' });
+  const a = saveLetter([], { title: '给你', from: '豪豪', unlock: '2030-02-14', body: '我喜欢你' });
   const text = exportLetters(a.list);
   assert.doesNotMatch(text, /我喜欢你/);
   const r = importLetters([], text);

@@ -1,1 +1,356 @@
-{}
+{
+  "home": {
+    "letters": {
+      "title": "Letters",
+      "sub": {
+        "empty": "Special letters will arrive here",
+        "fresh": "{n} new {n|letter|letters} waiting to be opened 💗",
+        "all": "Every one is safely kept"
+      },
+      "write": "✍️ Write a letter",
+      "empty": {
+        "text": "Nothing here yet~",
+        "sub": "Click “Write a letter” at the top right to leave a letter for someone special"
+      },
+      "aLetter": "A letter",
+      "card": {
+        "unlockIn": "Unlocks in {n} {n|day|days}",
+        "unlockSoon": "Unlocking soon",
+        "from": "From {name}",
+        "locked": "Not time to open yet",
+        "lockedToast": "It's not time to open this yet~",
+        "lockedToastDate": "It's not time to open this yet~ See you on {date}",
+        "open": "Open it",
+        "new": "New",
+        "tapToOpen": "Tap to open~",
+        "more": "Edit or delete"
+      },
+      "menu": {
+        "edit": "✏️ Edit title or date",
+        "remove": "🗑️ Delete this letter"
+      },
+      "editor": {
+        "newTitle": "Write a letter 💌",
+        "editTitle": "Edit envelope",
+        "seal": "Seal it 💌",
+        "title": "Title",
+        "titlePlaceholder": "e.g. Happy birthday",
+        "from": "Signed",
+        "fromPlaceholder": "Who's writing",
+        "when": "When can it be opened?",
+        "now": "Right away",
+        "onDate": "On a set day",
+        "hintDate": "On that day, {pet} will carry the letter to {nick}",
+        "hintNow": "It can be opened as soon as it's sealed. {pet} will deliver it shortly",
+        "sealed": "🔒 This letter is sealed, so its text can't be seen or changed. If something's wrong, delete it and write a new one.",
+        "body": "Letter",
+        "bodyPlaceholder": "What you want to tell {nick}…",
+        "tip": "Once sealed, no one can read the letter before its open date (not even the writer).",
+        "emptyBody": "The letter is still empty",
+        "pickDate": "Pick the day it opens",
+        "saveFailed": "Couldn't save. Try again",
+        "edited": "Updated ✓",
+        "sealedToast": "Letter sealed 💌"
+      },
+      "remove": {
+        "title": "Delete this letter?",
+        "text": "Once “{title}” is deleted, it can't be recovered.",
+        "ok": "Delete",
+        "done": "Deleted",
+        "failed": "Couldn't delete"
+      },
+      "tools": {
+        "title": "Letters written on another computer",
+        "sub": "Export letters to a file, then import them on another computer. They stay sealed just as they were.",
+        "export": "Export letters written here",
+        "import": "Import letters",
+        "exported": "Exported {n} {n|letter|letters} ✓",
+        "imported": "Imported {n} {n|letter|letters} 💌"
+      },
+      "hint": "💌 Letters can be written ahead of time with a day to open. When that day comes, the letter unlocks by itself.",
+      "mail": {
+        "title": "Send letters by email",
+        "badge": "📮 Email",
+        "him": "him",
+        "sendTo": "Letters from {sender} can also be emailed to {address}",
+        "guide": "Set up Settings → Email so letters from {sender} can arrive by email",
+        "toSettings": "Settings",
+        "check": "Check now",
+        "checking": "Checking…",
+        "received": "{n} new {n|letter|letters} arrived 💌",
+        "noNew": "No new letters",
+        "checkFailed": "Couldn't check. Try again",
+        "status": "{last} · {auto}",
+        "lastCheck": "Last checked: {time}",
+        "never": "Not checked yet",
+        "today": "Today",
+        "yesterday": "Yesterday",
+        "at": "{day} {time}",
+        "auto": "Checks every {n} {n|minute|minutes}",
+        "autoOff": "Auto-check is off",
+        "error": "⚠️ {error}"
+      }
+    },
+    "love": {
+      "title": "Dates",
+      "sub": "{pet} keeps track of all your special days",
+      "kinds": {
+        "yearly": "Every year",
+        "countdown": "Countdown",
+        "since": "Days since",
+        "other": "Anniversary"
+      },
+      "count": {
+        "sinceDays": "{n} {n|day|days} so far",
+        "startsIn": "Starts in {n} {n|day|days}",
+        "daysLeft": "{n} {n|day|days} left",
+        "daysPast": "{n} {n|day|days} ago",
+        "badDate": "That date doesn't look right",
+        "today": "It's today!",
+        "years": "Year {n}"
+      },
+      "events": {
+        "birthday": "Birthday",
+        "together": "{n} {n|year|years} together",
+        "milestone": "Day {n} together"
+      },
+      "together": {
+        "title": "Our days together",
+        "hint": "Pick a date, and {pet} will count every day you've been together 💕",
+        "dayN": "Day {n} together",
+        "toMilestone": "{n} {n|day|days} until day {ms}",
+        "anniversaryToday": "Today is your {n}-year anniversary!",
+        "toAnniversary": "{n} {n|day|days} until your {years}-year anniversary"
+      },
+      "birthday": {
+        "title": "Her birthday",
+        "hint": "Add her birthday, and {pet} will be the first to wish her a happy birthday that day 🎂",
+        "happyAge": "Happy birthday! {n} today!",
+        "happy": "Happy birthday!",
+        "dateAge": "{date} · turns {n}",
+        "date": "Birthday: {date}"
+      },
+      "clear": "Clear",
+      "remove": {
+        "title": "Delete “{name}”?",
+        "text": "Once deleted, you won't be reminded of this day anymore.",
+        "keep": "Keep it"
+      },
+      "list": {
+        "title": "Our dates",
+        "count": "{n} {n|date|dates}",
+        "empty": "No custom dates yet. Add one below~"
+      },
+      "add": {
+        "placeholder": "Name, e.g. First date",
+        "needName": "Give this day a name first~",
+        "needDate": "Now pick a date"
+      }
+    },
+    "reminders": {
+      "title": "Reminders",
+      "sub": "{pet} will gently remind you at just the right times~",
+      "dnd": "Do Not Disturb is on: only custom reminders will pop up for now",
+      "toSettings": "Settings",
+      "interval": "Every (minutes)",
+      "water": {
+        "title": "Drink water",
+        "desc": "A glass of water every {n} {n|minute|minutes}"
+      },
+      "stretch": {
+        "title": "Stand up and move",
+        "desc": "After sitting a while, you'll get a nudge to stretch"
+      },
+      "eyes": {
+        "title": "Eye rest",
+        "desc": "Look into the distance and give your eyes a break"
+      },
+      "sleep": {
+        "title": "Early bedtime",
+        "desc": "A nudge to go to bed at {time}",
+        "time": "Bedtime"
+      },
+      "meals": {
+        "title": "Regular meals",
+        "desc": "A reminder to eat properly at mealtimes",
+        "lunch": "Lunch",
+        "dinner": "Dinner"
+      },
+      "active": {
+        "title": "Active hours",
+        "desc": "Water, stretch and eye-rest reminders only show up during these hours",
+        "start": "Start",
+        "to": "to",
+        "end": "End"
+      },
+      "repeat": {
+        "daily": "Every day",
+        "weekdays": "Weekdays",
+        "weekends": "Weekends",
+        "once": "Once"
+      },
+      "custom": {
+        "title": "Custom reminders",
+        "count": "{n} {n|reminder|reminders}",
+        "sub": "{pet} will pop up right on time, even in Do Not Disturb mode",
+        "empty": "No custom reminders yet. Try “10:00 Meeting” or “21:30 Face mask”~",
+        "time": "Time",
+        "placeholder": "What should I remind you of? e.g. Call Mom",
+        "add": "Add reminder",
+        "onceOn": "Once · {date}",
+        "expired": "Past",
+        "toggle": "On/off",
+        "needText": "Write what to remind you of~",
+        "past": "That time has already passed. Pick another one"
+      }
+    },
+    "notes": {
+      "title": "Whispers",
+      "sub": "Every now and then, {pet} will quietly whisper these to her",
+      "required": "This can't be empty",
+      "spoken": "{sender} asked me to whisper this to you: {text}",
+      "said": "{pet} is whispering it to her on the desktop",
+      "added": "Tucked away 💌",
+      "removed": "Deleted",
+      "names": {
+        "title": "Names",
+        "nick": "Her nickname",
+        "nickPlaceholder": "e.g. baby",
+        "nickHint": "{pet} will call her this: “Good evening, {nick}”",
+        "sender": "Your name",
+        "senderPlaceholder": "e.g. WaIdo",
+        "senderHint": "Whispers will begin: “{sender} asked me to whisper this to you…”",
+        "senderEmpty": "Add your name, and {pet} will say: “WaIdo asked me to whisper this to you…”"
+      },
+      "talk": {
+        "title": "Chattiness",
+        "chatty": "How chatty",
+        "chattyDesc": "How often it talks",
+        "levels": {
+          "low": "Less",
+          "normal": "Medium",
+          "high": "More"
+        },
+        "builtin": "Built-in lines",
+        "builtinDesc": "Besides your whispers, cute everyday lines too"
+      },
+      "list": {
+        "count": "{n} {n|whisper|whispers}",
+        "sub": "Up to {max} {max|character|characters} each. Click “Say it” to hear one on the desktop right away",
+        "placeholder": "Write something for it to pass on, e.g. Missing you today",
+        "newLabel": "New whisper",
+        "from": "{sender} asked me to whisper this to you:",
+        "say": "Say it",
+        "sayTitle": "Have the pet on the desktop say it",
+        "empty": "No whispers yet. Write the first one~"
+      }
+    },
+    "focus": {
+      "title": "Focus",
+      "sub": "One thing at a time. {pet} will keep you quiet company",
+      "phase": {
+        "idle": "Ready",
+        "focus": "Focusing",
+        "short": "Short break",
+        "long": "Long break"
+      },
+      "paused": "Paused",
+      "stuck": "The Pomodoro timer seems stuck. Try again",
+      "pet": {
+        "idle": "Start whenever you're ready~",
+        "paused": "It's okay to take a breather",
+        "focus": "(quietly focusing with you…)",
+        "long": "Rest up, drink some water and stretch~",
+        "short": "A quick breather, then back to it~"
+      },
+      "dots": "Long break every {n} {n|Pomodoro|Pomodoros}",
+      "btn": {
+        "start": "Start focusing",
+        "resume": "Resume",
+        "pause": "Pause",
+        "skip": "Skip",
+        "skipBreak": "Skip break",
+        "stop": "End"
+      },
+      "today": {
+        "title": "Today",
+        "count": "{n} {n|Pomodoro|Pomodoros} done today 🍅",
+        "none": "No Pomodoros yet. Start the first one~",
+        "minutes": "{n} {n|minute|minutes} of focus in total"
+      },
+      "set": {
+        "title": "Pomodoro settings",
+        "sub": "Changes apply from the next Pomodoro",
+        "focus": "Focus length",
+        "longEvery": "Long break every",
+        "longEveryDesc": "How many Pomodoros before a long break",
+        "autoBreak": "Start breaks automatically",
+        "autoBreakDesc": "Go straight into a break when focus ends",
+        "minutes": "min",
+        "pomodoros": "Pomodoros"
+      }
+    },
+    "moods": {
+      "title": "Mood",
+      "sub": "Log your mood every day, and {pet} will remember it",
+      "today": "Today's mood",
+      "todayNote": "“{note}”",
+      "noNote": "No note",
+      "change": "Change",
+      "ask": "What kind of day was it? Tap to log it",
+      "saved": "Saved: {emoji} {name}",
+      "pick": {
+        "title": "{date} · {week}",
+        "placeholder": "What happened today? Jot down a few words~",
+        "save": "Save"
+      },
+      "cal": {
+        "note": "{name}: {note}",
+        "tap": "Tap to log your mood",
+        "prev": "Previous month",
+        "next": "Next month",
+        "thisMonth": "This month"
+      },
+      "month": {
+        "title": "Moods in {month}",
+        "recorded": "{n} {n|day|days} logged",
+        "bar": "{name} · {n} {n|day|days}",
+        "top": "Most common this month: {mood}, {n} {n|day|days}",
+        "none": "Nothing logged this month yet. Start today~"
+      }
+    },
+    "todos": {
+      "title": "To-dos",
+      "sub": "{done} done, {left} to go",
+      "subEmpty": "Leave your to-dos with {pet}",
+      "filter": {
+        "all": "All",
+        "open": "Open",
+        "done": "Done"
+      },
+      "today": "Today",
+      "yesterday": "Yesterday",
+      "createdAt": "{day} {time}",
+      "doneAt": "Done {day} {time}",
+      "placeholder": "What's next? Press Enter to add",
+      "newLabel": "New to-do",
+      "added": "Added ✓",
+      "oneDone": "Another one done. Amazing! 🎉",
+      "allDone": "All done! You're the best 🎉",
+      "removed": "Deleted",
+      "clearDone": "Clear completed",
+      "cleared": "Cleared {n} completed {n|to-do|to-dos} ✨",
+      "markDone": "Mark as done",
+      "markUndone": "Mark as not done",
+      "empty": "No to-dos today. Take a breather~",
+      "emptySub": "When something comes up, add it above",
+      "noneDone": "Nothing finished yet. You've got this~",
+      "hint": "💡 Each time you finish one, {pet} cheers you on from the desktop. Closeness +2",
+      "ideas": {
+        "title": "💞 Little things for two",
+        "more": "Shuffle",
+        "him": "him"
+      }
+    }
+  }
+}

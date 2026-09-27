@@ -18,7 +18,7 @@ module.exports = async ({ app, store, scheduler, openHome, capture }) => {
   await js(`(() => {
     const set = (el, v) => { el.value = v; el.dispatchEvent(new Event('input', { bubbles: true })); };
     const inputs = document.querySelectorAll('.pf-form input');
-    set(inputs[0], '团子'); set(inputs[1], '小橘子'); set(inputs[2], '豪豪');
+    set(inputs[0], '团子'); set(inputs[1], '宝贝'); set(inputs[2], '豪豪');
     const sel = document.querySelectorAll('.pf-form select');
     const pick = (el, v) => { el.value = v; el.dispatchEvent(new Event('change', { bubbles: true })); };
     pick(sel[0], '1999'); 

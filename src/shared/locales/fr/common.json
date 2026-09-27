@@ -1,1 +1,55 @@
-{}
+{
+  "app": {
+    "name": "NuomiPet"
+  },
+  "common": {
+    "ok": "OK",
+    "cancel": "Annuler",
+    "confirm": "Confirmer",
+    "save": "Enregistrer",
+    "delete": "Supprimer",
+    "add": "Ajouter",
+    "edit": "Modifier",
+    "close": "Fermer",
+    "back": "Retour",
+    "later": "Plus tard",
+    "done": "Terminé",
+    "retry": "Réessayer",
+    "notSet": "Non renseigné"
+  },
+  "date": {
+    "md": "{d} {mon}",
+    "ymd": "{d} {mon} {y}",
+    "months": [
+      "janv.",
+      "févr.",
+      "mars",
+      "avr.",
+      "mai",
+      "juin",
+      "juil.",
+      "août",
+      "sept.",
+      "oct.",
+      "nov.",
+      "déc."
+    ],
+    "week": [
+      "dim.",
+      "lun.",
+      "mar.",
+      "mer.",
+      "jeu.",
+      "ven.",
+      "sam."
+    ],
+    "year": "{y}",
+    "month": "{mon}",
+    "day": "{d}"
+  },
+  "lang": {
+    "title": "Langue",
+    "auto": "Suivre le système",
+    "autoNow": "Suivre le système (actuellement {name})"
+  }
+}

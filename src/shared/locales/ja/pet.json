@@ -1,1 +1,153 @@
-{}
+{
+  "pet": {
+    "panel": {
+      "main": {
+        "food": "ごはん",
+        "coax": "なだめる",
+        "play": "あそぶ",
+        "focus": "集中",
+        "mood": "気分",
+        "home": "おうち"
+      },
+      "coax": {
+        "kneel": "土下座",
+        "flower": "お花",
+        "heart": "指ハート",
+        "hug": "ぎゅー",
+        "kiss": "ちゅー",
+        "tea": "タピオカ",
+        "bow": "おじぎ",
+        "cute": "甘える",
+        "roll": "ごろごろ",
+        "dance": "ダンス",
+        "praise": "ほめる",
+        "random": "おまかせ"
+      },
+      "title": {
+        "food": "なに食べよっか",
+        "coax": "どうやってごきげん取ろうか？",
+        "mood": "今日の気分はどう？",
+        "moodRecorded": "今日の気分（変えてもいいよ）"
+      },
+      "stat": {
+        "full": "満腹度 {n}",
+        "mood": "気分 {n}"
+      },
+      "level": "Lv.{n}",
+      "collapse": "たたむ",
+      "focus": {
+        "idle": "ポモドーロ · 今日{n}個",
+        "phase": {
+          "focus": "集中タイム",
+          "short": "小休憩",
+          "long": "長めの休憩"
+        },
+        "running": "{phase} {time}",
+        "paused": "{phase}（一時停止）{time}",
+        "start": "{n}分集中する",
+        "resume": "再開",
+        "pause": "一時停止",
+        "skip": "スキップ",
+        "stop": "終了",
+        "settings": "設定"
+      }
+    },
+    "chatter": {
+      "note": "ないしょ話タイム💌 {note}"
+    },
+    "remind": {
+      "done": {
+        "water": "飲んだよ 💧",
+        "stretch": "動いたよ 🙆",
+        "eyes": "はーい 👀",
+        "sleep": "もう寝るね 🌙",
+        "custom": "わかった ✓"
+      },
+      "snoozeSleep": "もうちょっと遊ぶ",
+      "snoozeMinutes": "{n}分後",
+      "snoozed": "わかった、じゃあ少ししたらまた声をかけるね～",
+      "goodNight": "おやすみ、{nick}。いい夢見てね～🌙",
+      "doneCustom": "はーい！",
+      "doneGood": "えらいね～"
+    },
+    "hungry": {
+      "feed": "ごはんをあげる 🍓"
+    },
+    "letter": {
+      "withTitle": "{text}\n「{title}」",
+      "open": "開けてみる 💌",
+      "later": "わかった。読みたくなったら「おうち → お手紙」から見てね～"
+    },
+    "profile": {
+      "yes": "いいよ ✏️",
+      "later": "またこんどね",
+      "laterReply": "わかった。教えてくれる気になったら「おうち → 設定 → プロフィール」からどうぞ～"
+    },
+    "inFocus": {
+      "poke": "（小声で）集中タイムだよ～がんばって！",
+      "feed": "集中が終わってから食べよ～（ほんとはちょっと食べたい）",
+      "play": "集中が終わったら遊ぼ～",
+      "coax": "（小声で）集中が終わったら、ごきげん取ってあげるね～"
+    },
+    "breakDone": {
+      "text": "休憩おしまい～",
+      "again": "もう1回 🍅",
+      "no": "今はいいや"
+    },
+    "fall": "わあああ——",
+    "kneel": {
+      "sign": {
+        "sorry": "ごめんね",
+        "forgiveMe": "ゆるして",
+        "loveYou": "だいすき",
+        "waiting": "まってるね"
+      },
+      "forgive": "ゆるしてあげる 💗",
+      "hmph": "ふんっ！"
+    },
+    "pickup": {
+      "button": "お迎え",
+      "title": "{sender}にお迎えを頼む？",
+      "when": {
+        "now": "今すぐ",
+        "30": "30分後",
+        "60": "1時間後"
+      },
+      "noteLabel": "{sender}へのひとこと",
+      "placeholder": "例：会社の前で待ってるね",
+      "send": "送信 🚗",
+      "sending": "送信中……",
+      "done": "{sender}に伝えたよ。お迎えを待っててね～💕",
+      "doneWithIssue": "{sender}に伝えたよ。お迎えを待っててね～💕\nでも、ちょっと問題があったみたい：{error}",
+      "tooSoon": "さっき呼んだばかりだよ。{sender}はいま向かってるところ～",
+      "failed": "あれれ、{sender}を呼べなかった：{error}",
+      "notReady": "先におうちの「設定 → メール」でメールアドレスを入力してね。そうしたら{sender}を呼んであげられるよ～",
+      "settings": "設定へ ⚙️"
+    }
+  },
+  "letter": {
+    "untitled": "お手紙",
+    "closeHint": "閉じる（Esc）",
+    "openAria": "このお手紙を開ける",
+    "from": "{name}からのお手紙",
+    "forYou": "きみにお手紙が届いてるよ",
+    "open": "開けてみる 💌",
+    "readAgain": "もう一度読む 💌",
+    "locked": {
+      "notYet": "まだ開ける日じゃないよ～",
+      "seeYouOn": "{date}に会おうね",
+      "seeYouLater": "その日にまたね",
+      "daysLeft": "あと{n}日。楽しみに待っててね",
+      "ok": "わかった、待ってるね"
+    },
+    "missing": {
+      "huh": "あれ？",
+      "title": "このお手紙、迷子になっちゃったみたい……",
+      "close": "閉じる"
+    },
+    "to": "💌 {nick}へのお手紙",
+    "toYou": "💌 きみへのお手紙",
+    "signature": "—— {name}",
+    "keep": "大事にしまっておくね 💗"
+  }
+}

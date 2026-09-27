@@ -1,1 +1,153 @@
-{}
+{
+  "pet": {
+    "panel": {
+      "main": {
+        "food": "먹이",
+        "coax": "달래기",
+        "play": "놀기",
+        "focus": "집중",
+        "mood": "기분",
+        "home": "보금자리"
+      },
+      "coax": {
+        "kneel": "무릎 꿇기",
+        "flower": "꽃 선물",
+        "heart": "손하트",
+        "hug": "안아 주기",
+        "kiss": "뽀뽀",
+        "tea": "밀크티",
+        "bow": "폴더 인사",
+        "cute": "애교",
+        "roll": "데굴데굴",
+        "dance": "춤추기",
+        "praise": "칭찬",
+        "random": "아무거나"
+      },
+      "title": {
+        "food": "뭘 먹여 볼까?",
+        "coax": "내가 어떻게 달래 줄까?",
+        "mood": "오늘 기분은 어때?",
+        "moodRecorded": "오늘의 기분 (바꿀 수 있어)"
+      },
+      "stat": {
+        "full": "포만감 {n}",
+        "mood": "기분 {n}"
+      },
+      "level": "Lv.{n}",
+      "collapse": "접기",
+      "focus": {
+        "idle": "뽀모도로 · 오늘 {n}개",
+        "phase": {
+          "focus": "집중 중",
+          "short": "짧은 휴식",
+          "long": "긴 휴식"
+        },
+        "running": "{phase} {time}",
+        "paused": "{phase} (일시정지) {time}",
+        "start": "{n}분 집중",
+        "resume": "계속",
+        "pause": "일시정지",
+        "skip": "건너뛰기",
+        "stop": "끝내기",
+        "settings": "설정"
+      }
+    },
+    "chatter": {
+      "note": "속삭임 타임💌 {note}"
+    },
+    "remind": {
+      "done": {
+        "water": "다 마셨어 💧",
+        "stretch": "움직였어 🙆",
+        "eyes": "알겠어 👀",
+        "sleep": "이제 잘게 🌙",
+        "custom": "알겠어 ✓"
+      },
+      "snoozeSleep": "조금만 더 놀래",
+      "snoozeMinutes": "{n}분 뒤에",
+      "snoozed": "알았어, 조금 있다가 다시 알려 줄게~",
+      "goodNight": "잘 자, {nick}. 좋은 꿈 꿔~🌙",
+      "doneCustom": "좋아!",
+      "doneGood": "착하다~"
+    },
+    "hungry": {
+      "feed": "밥 주기 🍓"
+    },
+    "letter": {
+      "withTitle": "{text}\n‘{title}’",
+      "open": "열어 볼래 💌",
+      "later": "알았어. 보고 싶을 땐 ‘보금자리 → 편지함’에서 찾아봐~"
+    },
+    "profile": {
+      "yes": "좋아 ✏️",
+      "later": "다음에",
+      "laterReply": "알았어. 알려 주고 싶을 땐 ‘보금자리 → 설정 → 우리 프로필’로 가면 돼~"
+    },
+    "inFocus": {
+      "poke": "(작은 목소리로) 지금 집중 중이야~ 파이팅!",
+      "feed": "집중 끝나고 먹을게~ (사실 좀 먹고 싶어)",
+      "play": "집중 끝나면 놀자~",
+      "coax": "(작은 목소리로) 집중 끝나고 달래 줄게~"
+    },
+    "breakDone": {
+      "text": "쉬는 시간 끝~",
+      "again": "하나 더 🍅",
+      "no": "이따가"
+    },
+    "fall": "으아아아—",
+    "kneel": {
+      "sign": {
+        "sorry": "잘못했어",
+        "forgiveMe": "용서해 줘",
+        "loveYou": "사랑해",
+        "waiting": "기다릴게"
+      },
+      "forgive": "용서해 줄게 💗",
+      "hmph": "흥!"
+    },
+    "pickup": {
+      "button": "마중",
+      "title": "{sender}한테 데리러 와 달라고 할까?",
+      "when": {
+        "now": "지금 바로",
+        "30": "30분 뒤",
+        "60": "1시간 뒤"
+      },
+      "noteLabel": "{sender}한테 하고 싶은 말",
+      "placeholder": "예: 회사 앞에서 기다릴게",
+      "send": "보내기 🚗",
+      "sending": "보내는 중…",
+      "done": "{sender}한테 말해 뒀어. 곧 데리러 올 거야~💕",
+      "doneWithIssue": "{sender}한테 말해 뒀어. 곧 데리러 올 거야~💕\n그런데 작은 문제가 있었어: {error}",
+      "tooSoon": "방금 불렀잖아. {sender} 지금 오는 중이야~",
+      "failed": "앗, {sender}한테 연락이 안 됐어: {error}",
+      "notReady": "먼저 보금자리의 ‘설정 → 메일’에서 메일을 설정해야 {sender}한테 연락해 줄 수 있어~",
+      "settings": "설정하러 가기 ⚙️"
+    }
+  },
+  "letter": {
+    "untitled": "편지 한 통",
+    "closeHint": "닫기 (Esc)",
+    "openAria": "이 편지 열기",
+    "from": "{name}의 편지",
+    "forYou": "너에게 온 편지가 있어",
+    "open": "열어 보기 💌",
+    "readAgain": "다시 읽기 💌",
+    "locked": {
+      "notYet": "아직 열어 볼 수 없어~",
+      "seeYouOn": "{date}에 만나",
+      "seeYouLater": "그때 만나",
+      "daysLeft": "{n}일만 더 기다려 줘. 두근두근~",
+      "ok": "알았어, 기다릴게"
+    },
+    "missing": {
+      "huh": "어라?",
+      "title": "이 편지가 길을 잃었나 봐…",
+      "close": "닫기"
+    },
+    "to": "💌 {nick}에게 쓴 편지",
+    "toYou": "💌 너에게 쓴 편지",
+    "signature": "—— {name}",
+    "keep": "잘 간직할게 💗"
+  }
+}

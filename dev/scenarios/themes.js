@@ -8,7 +8,7 @@ const themes = require('../../src/shared/themes.json');
 module.exports = async ({ app, store, scheduler, openHome, pet, capture }) => {
   store.set('runtime.welcomed', true);
   store.set('runtime.profileDone', true);
-  store.set('owner.nickname', '小橘子');
+  store.set('owner.nickname', '宝贝');
   store.set('love.togetherSince', '2025-08-10');
   store.set('stats.counters', { pets: 128, feeds: 36, plays: 21, waters: 87, pomodoros: 14, todos: 42 });
   scheduler.goAway = () => {};

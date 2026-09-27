@@ -1,0 +1,37 @@
+{
+  "zh-CN": {
+    "pet": ["醒来打招呼", "吃小鱼干", "吃饱啦", "喝水提醒", "喝完一杯", "心情打卡", "回应心情", "生日撒花", "叼来一封信", "睡着了"],
+    "coax": ["鞠躬", "送花", "比心", "抱抱", "亲亲", "递奶茶", "撒娇", "打滚", "跳舞", "夸夸"],
+    "kneel": ["跪下认错", "点「哼！」接着跪", "第三次先送花和奶茶", "举着「最爱你」", "原谅啦，撒花跳舞", "她心情不好时自己跪下"]
+  },
+  "zh-TW": {
+    "pet": ["醒來打招呼", "吃小魚乾", "吃飽啦", "喝水提醒", "喝完一杯", "心情打卡", "回應心情", "生日撒花", "叼來一封信", "睡著了"],
+    "coax": ["鞠躬", "送花", "比愛心", "抱抱", "親親", "遞珍奶", "撒嬌", "打滾", "跳舞", "誇誇"],
+    "kneel": ["跪下認錯", "點「哼！」接著跪", "第三次先送花和珍奶", "舉著「最愛你」", "原諒啦，撒花跳舞", "她心情不好時自己跪下"]
+  },
+  "en": {
+    "pet": ["Wakes up to say hi", "Eating fish treats", "All full", "Water reminder", "One glass down", "Log my mood", "Replying to your mood", "Birthday confetti", "Brings you a letter", "Fast asleep"],
+    "coax": ["Bow", "Flowers", "Heart", "Hug", "Kiss", "Bubble tea", "Act cute", "Roll", "Dance", "Praise"],
+    "kneel": ["Kneels to apologize", "Tap “Hmph!” and it kneels on", "Round three: flowers and tea first", "Holding up “Love you”", "Forgiven: confetti and a dance", "Kneels on its own when she’s upset"]
+  },
+  "ja": {
+    "pet": ["起きてごあいさつ", "にぼしを食べる", "おなかいっぱい", "お水のリマインド", "一杯飲んだよ", "気分を記録", "気分にこたえる", "誕生日の紙吹雪", "手紙を届ける", "おやすみ中"],
+    "coax": ["おじぎ", "お花", "指ハート", "ぎゅー", "ちゅー", "タピオカ", "甘える", "ごろごろ", "ダンス", "ほめる"],
+    "kneel": ["土下座であやまる", "「ふんっ！」でまだ続ける", "3回目はお花とタピオカから", "「だいすき」の札を掲げる", "ゆるされて紙吹雪とダンス", "彼女の機嫌が悪いと自分から土下座"]
+  },
+  "ko": {
+    "pet": ["깨어나서 인사", "생선 먹기", "배불러", "물 마시기 알림", "한 잔 다 마셨어", "기분 기록", "기분에 답하기", "생일 꽃가루", "편지 물어 오기", "쿨쿨 잠들기"],
+    "coax": ["폴더 인사", "꽃 선물", "손하트", "안아 주기", "뽀뽀", "밀크티", "애교", "데굴데굴", "춤추기", "칭찬"],
+    "kneel": ["무릎 꿇고 사과", "「흥!」을 누르면 계속 꿇기", "세 번째엔 꽃과 밀크티 먼저", "「사랑해」 팻말 들기", "용서받고 꽃가루와 춤", "그녀 기분이 안 좋으면 알아서 무릎 꿇기"]
+  },
+  "fr": {
+    "pet": ["Réveil et bonjour", "Poisson séché", "Le ventre plein", "Rappel pour boire", "Un verre de bu", "Humeur du jour", "Réponse à ton humeur", "Confettis d’anniversaire", "Apporte une lettre", "Endormi"],
+    "coax": ["Courbette", "Fleurs", "Cœur", "Câlin", "Bisou", "Bubble tea", "Yeux doux", "Roulade", "Danse", "Éloges"],
+    "kneel": ["À genoux pour s’excuser", "« Hmpf ! » : il reste à genoux", "3e fois : fleurs et bubble tea", "Pancarte « Je t’aime »", "Pardonné : confettis et danse", "À genoux tout seul quand elle est fâchée"]
+  },
+  "ar": {
+    "pet": ["يستيقظ ويُلقي التحية", "يأكل السمك المجفف", "شبعتُ", "تذكير بشرب الماء", "كوب ماء آخر", "تسجيل المزاج", "الرد على المزاج", "قصاصات عيد الميلاد", "يحمل إليكِ رسالة", "نائم"],
+    "coax": ["انحناءة", "ورود", "قلب", "عناق", "قبلة", "شاي بالحليب", "دلع", "تدحرج", "رقص", "مديح"],
+    "kneel": ["يركع ليعتذر", "«أفّ!» فيواصل الركوع", "في المرة الثالثة: ورود وشاي أولًا", "يرفع لافتة «أحبكِ»", "سامحتُه: قصاصات ورقص", "يركع وحده حين تكون منزعجة"]
+  }
+}

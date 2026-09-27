@@ -1,1 +1,224 @@
-{}
+{
+  "main": {
+    "menu": {
+      "feedPet": "🍓  餵{pet}吃東西",
+      "coax": "🥺  哄你開心",
+      "coaxRandom": "🎲  隨便哄哄",
+      "play": "🧶  陪牠玩",
+      "wake": "☀️  叫牠起床",
+      "sleep": "💤  哄牠睡覺",
+      "pomodoro": "🍅  番茄鐘",
+      "mood": "🌈  心情打卡",
+      "fortune": "🔮  今日運勢",
+      "home": "🏠  開啟小窩",
+      "todos": "📝  待辦清單",
+      "reminders": "⏰  提醒設定",
+      "dress": "🎀  換個裝扮",
+      "letters": "💌  信箱",
+      "size": "大小",
+      "walkAround": "自由走動",
+      "followMouse": "跟著滑鼠走",
+      "alwaysOnTop": "永遠在最上層",
+      "dnd": "勿擾模式",
+      "sound": "聲音",
+      "hidePet": "把{pet}藏起來",
+      "quit": "結束"
+    },
+    "coax": {
+      "kneel": "🙇  跪洗衣板認錯",
+      "bow": "🙏  鞠躬道歉",
+      "flower": "💐  送花花",
+      "heart": "❤️  比愛心",
+      "hug": "🤗  抱抱",
+      "kiss": "😘  親親",
+      "tea": "🧋  請喝珍奶",
+      "cute": "🥺  撒嬌",
+      "roll": "🌀  打滾",
+      "dance": "💃  跳舞逗你笑",
+      "praise": "🌟  誇誇你"
+    },
+    "pomodoro": {
+      "start": "開始專注",
+      "resume": "繼續",
+      "pause": "暫停",
+      "skip": "跳過這一段",
+      "stop": "結束番茄鐘"
+    },
+    "tray": {
+      "title": "{pet}的桌面小窩",
+      "hide": "藏起{pet}",
+      "show": "叫{pet}出來",
+      "summon": "叫{pet}過來",
+      "feed": "🍓  餵牠吃東西",
+      "coax": "🥺  哄哄我",
+      "launchAtLogin": "開機時自動啟動"
+    },
+    "appMenu": {
+      "about": "關於",
+      "hide": "隱藏",
+      "edit": "編輯",
+      "undo": "還原",
+      "redo": "重做",
+      "cut": "剪下",
+      "copy": "拷貝",
+      "paste": "貼上",
+      "selectAll": "全選",
+      "window": "視窗",
+      "minimize": "縮到最小"
+    },
+    "window": {
+      "home": "{pet}的小窩"
+    },
+    "say": {
+      "shortBreak": "休息一下，動一動～",
+      "longBreak": "長休息時間！去走走，喝口水～",
+      "fortune": "🔮 今日運勢 {stars}\n宜：{good}\n忌：{bad}",
+      "fortuneSep": "、",
+      "love": "有人很愛很愛你喔",
+      "loveFrom": "{sender}要我跟你說：我愛你",
+      "reminder": "提醒時間到囉",
+      "weather": "{emoji} {intro}{advice}"
+    },
+    "weather": {
+      "noCity": "還沒有設定城市",
+      "failed": "天氣資料取得失敗：{error}"
+    },
+    "letter": {
+      "untitled": "一封信",
+      "exportTitle": "匯出寫好的信",
+      "importTitle": "匯入信件",
+      "fileType": "信件",
+      "exportName": "寫給{nick}的信",
+      "error": {
+        "nothingToExport": "還沒有在這裡寫過信",
+        "notMine": "只能刪除在這裡寫的信",
+        "invalid": "信的內容不正確",
+        "badDate": "拆信的日期不正確",
+        "empty": "信裡還什麼都沒寫呢",
+        "badFile": "這個檔案打不開",
+        "notLetters": "這不是信件檔案",
+        "nothingToImport": "檔案裡沒有可以匯入的信"
+      }
+    },
+    "data": {
+      "exportTitle": "匯出資料",
+      "importTitle": "匯入資料",
+      "backupName": "{pet}-備份-{date}",
+      "notBackup": "這不是{app}的備份檔案"
+    },
+    "mail": {
+      "him": "他",
+      "menuPickup": "🚗  叫{sender}來接我",
+      "listSep": "、",
+      "receipt": {
+        "subject": "💌 {pet}收到你的信「{title}」囉",
+        "body": "{pet}收到你的信「{title}」囉，已經放進{nick}的信箱💌",
+        "bodyLater": "{pet}收到你的信「{title}」囉，已經放進{nick}的信箱💌\n會在 {date} 那天交給她。"
+      },
+      "pickup": {
+        "subjectNow": "🚗 {nick}下班囉，來接她吧",
+        "subject30": "🚗 {nick}半小時後下班，記得來接她",
+        "subject60": "🚗 {nick}一小時後下班，記得來接她",
+        "body": "{nick}在 {time} 叫你來接她。\n\n——{pet}",
+        "bodyNote": "{nick}在 {time} 叫你來接她。\n她說：{note}\n\n——{pet}"
+      },
+      "guide": {
+        "subject": "📮 怎麼寄信到{nick}的信箱",
+        "intro": "把信寄到{pet}的電子信箱：{address}\n{pet}收到以後會放進{nick}的信箱，再把信交給她。",
+        "from": "要用這個電子信箱寄：{list}",
+        "format": "郵件的主旨就是信的標題，內文就是信的內容。",
+        "date": "想讓她到某一天才能拆開，有兩種寫法：\n· 主旨開頭寫上日期，例如「【{date}】生日快樂」\n· 內文第一行寫「拆開日期：{date}」\n日期請寫完整的年、月、日。沒寫日期的信，她一收到就能拆開。",
+        "secret": "別忘了在主旨或內文裡寫上暗號「{secret}」，沒有暗號的信{pet}不會收。",
+        "receipt": "{pet}收到信以後，會回一封確認郵件給你。",
+        "sign": "——{pet}"
+      },
+      "error": {
+        "notReady": "郵件還沒設定好：要填寵物的電子信箱地址和授權碼",
+        "unknownServer": "認不出這個電子信箱：請在清單裡選出你的信箱服務商，或選「其他電子信箱」自己填收信和寄信伺服器",
+        "auth": "登入失敗：請檢查電子信箱地址和授權碼。授權碼不是信箱的登入密碼，QQ、163 信箱要在網頁版的設定裡開啟 IMAP/SMTP 服務並產生授權碼",
+        "unsafe": "網易信箱拒絕了登入（Unsafe Login）：請在網頁版信箱的設定裡開啟 IMAP/SMTP 服務、用授權碼登入，稍後再試",
+        "connect": "連不上郵件伺服器：請檢查網路（公司網路可能擋掉了 993/465 連接埠）",
+        "tls": "安全連線出錯：請檢查伺服器、連接埠和 SSL 設定，也可能是伺服器的憑證有問題",
+        "timeout": "連線到郵件伺服器逾時：請檢查網路，稍後再試",
+        "http": "伺服器回傳了錯誤（{status}）",
+        "other": "出錯了：{error}",
+        "noRecipient": "還不知道要通知誰：請在「設定 → 郵件」裡填上他的電子信箱",
+        "noAllow": "還沒填他的電子信箱（允許寄信的信箱）",
+        "tooSoon": "剛剛已經跟他說過囉，過一分鐘再叫吧",
+        "pushUrl": "推播網址不對，要以 http:// 或 https:// 開頭",
+        "mailFailed": "郵件沒寄出去：{error}",
+        "pushFailed": "推播沒送出去：{error}",
+        "noSecret": "有一封信沒寫暗號，沒有放進信箱",
+        "emptyBody": "「{title}」的內文是空的，沒有放進信箱",
+        "receipt": "信已經收到了，但確認郵件沒寄出去：{error}",
+        "authGmail": "登入失敗：Gmail 要用「應用程式密碼」。請先在 Google 帳戶裡開啟兩步驟驗證，再產生應用程式密碼填進來（不是 Google 帳戶的登入密碼）",
+        "msAuth": "微軟信箱拒絕了登入：請確認登入的微軟帳號就是這裡填的電子信箱，而且註冊的應用程式有加上 IMAP 和 SMTP 的權限",
+        "msNoClientId": "Outlook 信箱要用微軟帳號登入：請先填上你在微軟註冊的應用程式 ID（用戶端 ID）",
+        "msLogin": "Outlook 信箱還沒登入：請點「用微軟帳號登入」",
+        "msRelogin": "微軟帳號的登入失效了（可能改了密碼或取消了授權），請重新登入一次",
+        "msExpired": "登入代碼過期了，請重新開始登入",
+        "msDenied": "在微軟的頁面上沒有同意授權，請重新登入，並點「接受」",
+        "msFailed": "用微軟帳號登入沒有成功：{error}"
+      },
+      "provider": {
+        "139": {
+          "name": "139 郵箱",
+          "help": "在 139 郵箱網頁版的「設定 → 用戶端設定」裡開啟 IMAP/SMTP 服務，依提示取得授權碼填在這裡。"
+        },
+        "auto": {
+          "name": "自動偵測",
+          "help": "依電子信箱地址自動選擇伺服器。企業信箱用的是公司自己的網域，認不出來，請在清單裡選出你的信箱。"
+        },
+        "qq": {
+          "name": "QQ 郵箱",
+          "help": "在 QQ 郵箱網頁版的「設定 → 帳號」裡開啟「IMAP/SMTP 服務」，依提示產生授權碼，把授權碼填在這裡（不是 QQ 密碼）。"
+        },
+        "exmail": {
+          "name": "騰訊企業郵箱",
+          "help": "在騰訊企業郵箱網頁版的「設定 → 用戶端設定」裡開啟 IMAP/SMTP 服務；如果開啟了安全登入，就產生一組用戶端專用密碼填在這裡。"
+        },
+        "netease": {
+          "name": "網易郵箱（163、126、yeah.net、188）",
+          "help": "在網易郵箱網頁版的「設定 → POP3/SMTP/IMAP」裡開啟 IMAP/SMTP 服務，依提示產生授權碼，把授權碼填在這裡（不是信箱的登入密碼）。"
+        },
+        "qiye163": {
+          "name": "網易企業郵箱",
+          "help": "在網易企業郵箱網頁版的「設定 → 用戶端設定」裡開啟 IMAP/SMTP 服務；如果開啟了用戶端授權密碼，就把授權密碼填在這裡。"
+        },
+        "gmail": {
+          "name": "Gmail",
+          "help": "先在 Google 帳戶裡開啟兩步驟驗證，再到「安全性 → 應用程式密碼」產生一組 16 位數的密碼填在這裡（不是 Google 帳戶的登入密碼）。"
+        },
+        "outlook": {
+          "name": "Outlook / Hotmail / Microsoft 365",
+          "help": "微軟的信箱要用微軟帳號登入授權：填好應用程式 ID 後點「用微軟帳號登入」，在瀏覽器裡開啟微軟的網址，輸入頁面上的代碼並同意。公司或學校的 Microsoft 365 信箱也選這一項。",
+          "register": "註冊應用程式 ID：用微軟帳號登入 Azure 入口網站（portal.azure.com），開啟「應用程式註冊 → 新增註冊」，名稱隨便取，支援的帳戶類型選「任何組織目錄中的帳戶及個人 Microsoft 帳戶」；註冊好後在「驗證」裡開啟「允許公用用戶端流程」，在「API 權限」裡新增 IMAP.AccessAsUser.All 和 SMTP.Send。最後把概觀頁上的「應用程式 (用戶端) 識別碼」填到這裡。"
+        },
+        "icloud": {
+          "name": "iCloud 郵件",
+          "help": "先為 Apple 帳號開啟雙重認證，再到 account.apple.com 的「App 專用密碼」裡產生一組密碼填在這裡。"
+        },
+        "yahoo": {
+          "name": "Yahoo 信箱",
+          "help": "到 Yahoo 帳戶的「帳戶安全性」裡產生一組「應用程式密碼」填在這裡。"
+        },
+        "sina": {
+          "name": "新浪郵箱",
+          "help": "在新浪郵箱網頁版的「設定 → 用戶端 POP/IMAP/SMTP」裡開啟服務，依提示取得授權碼填在這裡。"
+        },
+        "sohu": {
+          "name": "搜狐郵箱",
+          "help": "在搜狐郵箱網頁版的「設定 → POP3/SMTP/IMAP」裡開啟服務，設定一組獨立密碼填在這裡。"
+        },
+        "aliyun": {
+          "name": "阿里郵箱",
+          "help": "在阿里郵箱網頁版的設定裡開啟 IMAP/SMTP 服務，把信箱密碼填在這裡；如果開啟了安全登入，就填第三方用戶端安全密碼。"
+        },
+        "custom": {
+          "name": "其他電子信箱（自己填伺服器）",
+          "help": "把信箱服務商提供的收信（IMAP）和寄信（SMTP）伺服器、連接埠和加密方式填在下面，通常在信箱網頁版的說明裡找得到。"
+        }
+      }
+    }
+  }
+}

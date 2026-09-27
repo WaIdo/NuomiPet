@@ -1,5 +1,5 @@
 // 首页：宠物大卡片、在一起、状态、今天、天气（便当盒布局）。
-import { h, s, cx, petEl, bar, cardHead, popover, closePopover, burst, hearts, toast, icon, fmtDate, dateWeek, rich } from '../ui.js';
+import { h, s, cx, petEl, bar, cardHead, popover, closePopover, burst, hearts, toast, icon, fmtDate, dateWeek, rich, arrow } from '../ui.js';
 import { upcomingEvents } from './love.js';
 import { em, phrases, t, petName, nickname, onLangChange } from '../../shared/i18n.mjs';
 
@@ -134,7 +134,8 @@ function loveCard(app) {
           { class: 'love-empty', key: 'empty' },
           heartIcon('le-heart'),
           h('p', t('home.overview.love.empty', { pet: petName(app.state) })),
-          h('button', { type: 'button', class: 'btn soft sm', onclick: () => app.go('love') }, t('home.overview.love.setDate')),
+          // 文字和箭头包在一个 span 里：按钮是 flex，分开放会多出 gap
+          h('button', { type: 'button', class: 'btn soft sm', onclick: () => app.go('love') }, h('span', rich('home.overview.love.setDate', {}, { arrow: arrow() }))),
         ),
     h(
       'button',
@@ -415,7 +416,7 @@ function weatherCard(app) {
       { class: 'wx-state', key: 'nocity' },
       h('span', { class: 'wx-state-ico' }, '🏙️'),
       h('p', t('home.overview.weather.noCity')),
-      h('button', { type: 'button', class: 'btn soft xs', onclick: () => app.go('settings') }, t('home.overview.weather.pickCity')),
+      h('button', { type: 'button', class: 'btn soft xs', onclick: () => app.go('settings') }, h('span', rich('home.overview.weather.pickCity', {}, { arrow: arrow() }))),
     );
   } else if (d && w.status !== 'error') {
     const tmr = d.tomorrow;

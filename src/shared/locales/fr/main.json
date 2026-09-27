@@ -1,1 +1,224 @@
-{}
+{
+  "main": {
+    "menu": {
+      "feedPet": "🍓  Nourrir {pet}",
+      "coax": "🥺  Te remonter le moral",
+      "coaxRandom": "🎲  Câlin au hasard",
+      "play": "🧶  Jouer ensemble",
+      "wake": "☀️  Debout\u00a0!",
+      "sleep": "💤  Au dodo",
+      "pomodoro": "🍅  Pomodoro",
+      "mood": "🌈  Humeur du jour",
+      "fortune": "🔮  Horoscope du jour",
+      "home": "🏠  Ouvrir le Nid",
+      "todos": "📝  À faire",
+      "reminders": "⏰  Rappels",
+      "dress": "🎀  Changer de tenue",
+      "letters": "💌  Lettres",
+      "size": "Taille",
+      "walkAround": "Balade libre",
+      "followMouse": "Suivre la souris",
+      "alwaysOnTop": "Toujours au premier plan",
+      "dnd": "Ne pas déranger",
+      "sound": "Son",
+      "hidePet": "Cacher {pet}",
+      "quit": "Quitter"
+    },
+    "coax": {
+      "kneel": "🙇  À genoux sur la planche à laver",
+      "bow": "🙏  Faire une courbette d'excuse",
+      "flower": "💐  Offrir des fleurs",
+      "heart": "❤️  Cœur avec les doigts",
+      "hug": "🤗  Câlin",
+      "kiss": "😘  Bisou",
+      "tea": "🧋  Offrir un bubble tea",
+      "cute": "🥺  Faire les yeux doux",
+      "roll": "🌀  Faire des roulades",
+      "dance": "💃  Danser pour te faire rire",
+      "praise": "🌟  Te couvrir de compliments"
+    },
+    "pomodoro": {
+      "start": "Commencer la concentration",
+      "resume": "Reprendre",
+      "pause": "Pause",
+      "skip": "Passer cette étape",
+      "stop": "Arrêter le pomodoro"
+    },
+    "tray": {
+      "title": "Le petit nid de {pet}",
+      "hide": "Cacher {pet}",
+      "show": "Faire revenir {pet}",
+      "summon": "Appeler {pet}",
+      "feed": "🍓  Donner à manger",
+      "coax": "🥺  Câlins",
+      "launchAtLogin": "Lancer au démarrage"
+    },
+    "appMenu": {
+      "about": "À propos",
+      "hide": "Masquer",
+      "edit": "Édition",
+      "undo": "Annuler",
+      "redo": "Rétablir",
+      "cut": "Couper",
+      "copy": "Copier",
+      "paste": "Coller",
+      "selectAll": "Tout sélectionner",
+      "window": "Fenêtre",
+      "minimize": "Réduire"
+    },
+    "window": {
+      "home": "Le Nid de {pet}"
+    },
+    "say": {
+      "shortBreak": "Petite pause, bouge un peu~",
+      "longBreak": "C'est la grande pause\u00a0! Va marcher un peu et bois une gorgée d'eau~",
+      "fortune": "🔮 Horoscope du jour {stars}\nConseillé\u00a0: {good}\nDéconseillé\u00a0: {bad}",
+      "fortuneSep": ", ",
+      "love": "Quelqu'un t'aime très, très fort",
+      "loveFrom": "{sender} m'a demandé de te dire\u00a0: je t'aime",
+      "reminder": "C'est l'heure de ton rappel\u00a0!",
+      "weather": "{emoji} {intro} {advice}"
+    },
+    "weather": {
+      "noCity": "Aucune ville choisie pour l'instant",
+      "failed": "Impossible d'obtenir la météo\u00a0: {error}"
+    },
+    "letter": {
+      "untitled": "Une lettre",
+      "exportTitle": "Exporter les lettres écrites",
+      "importTitle": "Importer des lettres",
+      "fileType": "Lettres",
+      "exportName": "Lettres pour {nick}",
+      "error": {
+        "nothingToExport": "Aucune lettre n'a encore été écrite ici",
+        "notMine": "Seules les lettres écrites ici peuvent être supprimées",
+        "invalid": "Le contenu de la lettre n'est pas valide",
+        "badDate": "La date d'ouverture n'est pas valide",
+        "empty": "La lettre est encore vide",
+        "badFile": "Impossible d'ouvrir ce fichier",
+        "notLetters": "Ce n'est pas un fichier de lettres",
+        "nothingToImport": "Aucune lettre à importer dans ce fichier"
+      }
+    },
+    "data": {
+      "exportTitle": "Exporter les données",
+      "importTitle": "Importer des données",
+      "backupName": "{pet}-sauvegarde-{date}",
+      "notBackup": "Ce n'est pas une sauvegarde de {app}"
+    },
+    "mail": {
+      "him": "ton chéri",
+      "menuPickup": "🚗  Dire à {sender} de venir te chercher",
+      "listSep": ", ",
+      "receipt": {
+        "subject": "💌 {pet} a bien reçu ta lettre «\u00a0{title}\u00a0»",
+        "body": "{pet} a bien reçu ta lettre «\u00a0{title}\u00a0» et l'a rangée dans la boîte aux lettres de {nick} 💌",
+        "bodyLater": "{pet} a bien reçu ta lettre «\u00a0{title}\u00a0» et l'a rangée dans la boîte aux lettres de {nick} 💌\nElle la recevra le {date}."
+      },
+      "pickup": {
+        "subjectNow": "🚗 Fin de journée pour {nick}\u00a0: viens la chercher",
+        "subject30": "🚗 Fin de journée pour {nick} dans une demi-heure\u00a0: pense à venir la chercher",
+        "subject60": "🚗 Fin de journée pour {nick} dans une heure\u00a0: pense à venir la chercher",
+        "body": "À {time}, {nick} t'a demandé de venir la chercher.\n\n— {pet}",
+        "bodyNote": "À {time}, {nick} t'a demandé de venir la chercher.\nSon message\u00a0: {note}\n\n— {pet}"
+      },
+      "guide": {
+        "subject": "📮 Comment écrire dans la boîte aux lettres de {nick}",
+        "intro": "Envoie tes lettres à l'adresse e-mail de {pet}\u00a0: {address}\nÀ leur arrivée, {pet} les range dans la boîte aux lettres de {nick} et les lui apporte.",
+        "from": "Envoie-les depuis cette adresse\u00a0: {list}",
+        "format": "L'objet de l'e-mail devient le titre de la lettre, et le texte du message son contenu.",
+        "date": "Pour qu'elle ne puisse ouvrir la lettre qu'à partir d'un jour précis, deux possibilités\u00a0:\n· commence l'objet par la date entre crochets, par exemple «\u00a0[{date}] Joyeux anniversaire\u00a0»\n· ou écris en première ligne du message «\u00a0Ouverture\u00a0: {date}\u00a0»\nIndique la date complète (année, mois et jour). Une lettre sans date peut être ouverte dès son arrivée.",
+        "secret": "N'oublie pas d'écrire le code secret «\u00a0{secret}\u00a0» dans l'objet ou dans le message\u00a0: sans lui, {pet} refusera la lettre.",
+        "receipt": "Dès que {pet} aura reçu ta lettre, tu recevras un e-mail de confirmation.",
+        "sign": "— {pet}"
+      },
+      "error": {
+        "notReady": "L'e-mail n'est pas encore configuré\u00a0: il faut l'adresse e-mail du compagnon et le code d'autorisation",
+        "unknownServer": "Adresse non reconnue\u00a0: choisis ton fournisseur dans la liste, ou «\u00a0Autre messagerie\u00a0» pour saisir toi-même les serveurs de réception et d'envoi",
+        "auth": "Échec de la connexion\u00a0: vérifie l'adresse e-mail et le code d'autorisation. Ce code n'est pas le mot de passe de la messagerie\u00a0: pour QQ Mail ou NetEase (163), active le service IMAP/SMTP dans les paramètres de la version web et génère un code d'autorisation",
+        "unsafe": "NetEase a refusé la connexion (Unsafe Login)\u00a0: active le service IMAP/SMTP dans les paramètres de la messagerie web, connecte-toi avec le code d'autorisation, puis réessaie un peu plus tard",
+        "connect": "Impossible de joindre le serveur de messagerie\u00a0: vérifie ta connexion (un réseau d'entreprise peut bloquer les ports 993/465)",
+        "tls": "Erreur de connexion sécurisée\u00a0: vérifie le serveur, le port et le réglage SSL\u00a0; le certificat du serveur pose peut-être problème",
+        "timeout": "Le serveur de messagerie ne répond pas\u00a0: vérifie ta connexion et réessaie un peu plus tard",
+        "http": "Le serveur a renvoyé une erreur ({status})",
+        "other": "Une erreur s'est produite\u00a0: {error}",
+        "noRecipient": "On ne sait pas encore à qui envoyer l'alerte\u00a0: renseigne son adresse e-mail dans «\u00a0Réglages → E-mail\u00a0»",
+        "noAllow": "Son adresse e-mail (celle qui a le droit d'envoyer des lettres) n'est pas encore renseignée",
+        "tooSoon": "Il vient déjà d'être prévenu, attends une minute avant de le rappeler",
+        "pushUrl": "L'adresse de notification n'est pas valide\u00a0: elle doit commencer par http:// ou https://",
+        "mailFailed": "L'e-mail n'est pas parti\u00a0: {error}",
+        "pushFailed": "La notification n'est pas partie\u00a0: {error}",
+        "noSecret": "Une lettre n'avait pas le code secret, elle n'a pas été rangée dans la boîte aux lettres",
+        "emptyBody": "La lettre «\u00a0{title}\u00a0» est vide, elle n'a pas été rangée dans la boîte aux lettres",
+        "receipt": "La lettre est bien arrivée, mais l'e-mail de confirmation n'est pas parti\u00a0: {error}",
+        "authGmail": "Échec de la connexion\u00a0: Gmail demande un «\u00a0mot de passe d'application\u00a0». Active d'abord la validation en deux étapes sur ton compte Google, puis génère un mot de passe d'application et colle-le ici (ce n'est pas le mot de passe de ton compte Google)",
+        "msAuth": "Microsoft a refusé la connexion\u00a0: vérifie que le compte Microsoft utilisé est bien l'adresse saisie ici, et que l'application inscrite a les autorisations IMAP et SMTP",
+        "msNoClientId": "Outlook se connecte avec un compte Microsoft\u00a0: saisis d'abord l'ID de l'application (ID client) que tu as inscrite chez Microsoft",
+        "msLogin": "Outlook n'est pas encore connecté\u00a0: clique sur «\u00a0Se connecter avec Microsoft\u00a0»",
+        "msRelogin": "La connexion au compte Microsoft a expiré (mot de passe changé ou autorisation retirée)\u00a0: reconnecte-toi",
+        "msExpired": "Le code de connexion a expiré, recommence la connexion",
+        "msDenied": "L'autorisation n'a pas été accordée sur la page Microsoft\u00a0: reconnecte-toi et clique sur «\u00a0Accepter\u00a0»",
+        "msFailed": "La connexion avec le compte Microsoft a échoué\u00a0: {error}"
+      },
+      "provider": {
+        "139": {
+          "name": "139 Mail",
+          "help": "Dans la version web de 139 Mail, active le service IMAP/SMTP dans «\u00a0Paramètres → Paramètres du client\u00a0», puis suis les instructions pour obtenir un code d'autorisation et colle-le ici."
+        },
+        "auto": {
+          "name": "Détection automatique",
+          "help": "Les serveurs sont choisis d'après l'adresse e-mail. Une messagerie d'entreprise utilise le nom de domaine de la société et ne peut pas être reconnue\u00a0: choisis ton fournisseur dans la liste."
+        },
+        "qq": {
+          "name": "QQ Mail",
+          "help": "Dans la version web de QQ Mail, active le «\u00a0service IMAP/SMTP\u00a0» dans «\u00a0Paramètres → Compte\u00a0», génère un code d'autorisation en suivant les instructions et colle ce code ici (ce n'est pas ton mot de passe QQ)."
+        },
+        "exmail": {
+          "name": "Tencent Exmail",
+          "help": "Dans la version web de Tencent Exmail, active le service IMAP/SMTP dans «\u00a0Paramètres → Paramètres du client\u00a0»\u00a0; si la connexion sécurisée est activée, génère un mot de passe dédié au client et colle-le ici."
+        },
+        "netease": {
+          "name": "NetEase Mail (163, 126, yeah.net, 188)",
+          "help": "Dans la version web de NetEase Mail, active le service IMAP/SMTP dans «\u00a0Paramètres → POP3/SMTP/IMAP\u00a0», génère un code d'autorisation en suivant les instructions et colle ce code ici (ce n'est pas le mot de passe de la messagerie)."
+        },
+        "qiye163": {
+          "name": "NetEase Mail Entreprise",
+          "help": "Dans la version web de NetEase Mail Entreprise, active le service IMAP/SMTP dans «\u00a0Paramètres → Paramètres du client\u00a0»\u00a0; si le mot de passe d'autorisation du client est activé, colle-le ici."
+        },
+        "gmail": {
+          "name": "Gmail",
+          "help": "Active d'abord la validation en deux étapes sur ton compte Google, puis va dans «\u00a0Sécurité → Mots de passe des applications\u00a0» pour générer un mot de passe de 16 caractères et colle-le ici (ce n'est pas le mot de passe de ton compte Google)."
+        },
+        "outlook": {
+          "name": "Outlook / Hotmail / Microsoft 365",
+          "help": "Les messageries Microsoft se connectent avec un compte Microsoft\u00a0: saisis l'ID de l'application, clique sur «\u00a0Se connecter avec Microsoft\u00a0», ouvre l'adresse Microsoft dans le navigateur, entre le code affiché et accepte. Choisis aussi cette option pour une adresse Microsoft 365 d'entreprise ou d'école.",
+          "register": "Pour obtenir un ID d'application\u00a0: connecte-toi au portail Azure (portal.azure.com) avec un compte Microsoft, ouvre «\u00a0Inscriptions d'applications → Nouvelle inscription\u00a0», donne-lui le nom que tu veux et choisis comme types de comptes pris en charge «\u00a0Comptes dans un annuaire d'organisation et comptes Microsoft personnels\u00a0»\u00a0; une fois l'application inscrite, active «\u00a0Autoriser les flux de clients publics\u00a0» dans «\u00a0Authentification\u00a0», puis ajoute IMAP.AccessAsUser.All et SMTP.Send dans «\u00a0Autorisations d'API\u00a0». Enfin, copie ici l'«\u00a0ID d'application (client)\u00a0» affiché sur la page Vue d'ensemble."
+        },
+        "icloud": {
+          "name": "iCloud Mail",
+          "help": "Active d'abord l'identification à deux facteurs sur ton compte Apple, puis génère un mot de passe dans «\u00a0Mots de passe pour app\u00a0» sur account.apple.com et colle-le ici."
+        },
+        "yahoo": {
+          "name": "Yahoo Mail",
+          "help": "Dans «\u00a0Sécurité du compte\u00a0» de ton compte Yahoo, génère un «\u00a0mot de passe d'application\u00a0» et colle-le ici."
+        },
+        "sina": {
+          "name": "Sina Mail",
+          "help": "Dans la version web de Sina Mail, active le service dans «\u00a0Paramètres → Client POP/IMAP/SMTP\u00a0», puis suis les instructions pour obtenir un code d'autorisation et colle-le ici."
+        },
+        "sohu": {
+          "name": "Sohu Mail",
+          "help": "Dans la version web de Sohu Mail, active le service dans «\u00a0Paramètres → POP3/SMTP/IMAP\u00a0», définis un mot de passe indépendant et colle-le ici."
+        },
+        "aliyun": {
+          "name": "Alibaba Mail",
+          "help": "Dans les paramètres de la version web d'Alibaba Mail, active le service IMAP/SMTP et saisis ici le mot de passe de la messagerie\u00a0; si la connexion sécurisée est activée, saisis plutôt le mot de passe de sécurité pour clients tiers."
+        },
+        "custom": {
+          "name": "Autre messagerie (serveurs à saisir)",
+          "help": "Saisis ci-dessous les serveurs de réception (IMAP) et d'envoi (SMTP), les ports et le chiffrement indiqués par ton fournisseur\u00a0; ces informations se trouvent en général dans l'aide de la messagerie web."
+        }
+      }
+    }
+  }
+}

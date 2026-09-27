@@ -1,1 +1,356 @@
-{}
+{
+  "home": {
+    "letters": {
+      "title": "편지함",
+      "sub": {
+        "empty": "특별한 편지가 이곳으로 도착합니다",
+        "fresh": "새 편지 {n}통이 기다리고 있습니다 💗",
+        "all": "한 통 한 통 소중히 간직하고 있습니다"
+      },
+      "write": "✍️ 편지 쓰기",
+      "empty": {
+        "text": "편지함이 텅 비었습니다~",
+        "sub": "오른쪽 위 ‘편지 쓰기’를 눌러 소중한 사람에게 편지를 남겨 보세요"
+      },
+      "aLetter": "편지 한 통",
+      "card": {
+        "unlockIn": "{n}일 후 열림",
+        "unlockSoon": "곧 열림",
+        "from": "보낸 사람: {name}",
+        "locked": "아직 열어 볼 수 없습니다",
+        "lockedToast": "아직 열어 볼 수 없습니다~",
+        "lockedToastDate": "아직 열어 볼 수 없습니다. {date}에 만나요~",
+        "open": "열어 보기",
+        "new": "새 편지",
+        "tapToOpen": "눌러서 열어 보세요~",
+        "more": "수정 또는 삭제"
+      },
+      "menu": {
+        "edit": "✏️ 제목이나 날짜 수정",
+        "remove": "🗑️ 이 편지 삭제"
+      },
+      "editor": {
+        "newTitle": "편지 쓰기 💌",
+        "editTitle": "봉투 수정",
+        "seal": "봉인하기 💌",
+        "title": "제목",
+        "titlePlaceholder": "예: 생일 축하해",
+        "from": "보내는 사람",
+        "fromPlaceholder": "편지를 쓰는 사람",
+        "when": "언제 열어 볼 수 있나요",
+        "now": "바로",
+        "onDate": "날짜 지정",
+        "hintDate": "그날이 되면 {pet}의 배달로 {nick}에게 전해집니다",
+        "hintNow": "봉인하면 바로 열어 볼 수 있습니다. 곧 {pet}의 배달로 전해집니다",
+        "sealed": "🔒 이미 봉인된 편지라 본문을 보거나 고칠 수 없습니다. 잘못 썼다면 삭제하고 다시 쓰세요.",
+        "body": "본문",
+        "bodyPlaceholder": "{nick}에게 하고 싶은 말…",
+        "tip": "봉인하면 열어 볼 날짜 전에는 아무도 본문을 볼 수 없습니다(쓴 사람 포함).",
+        "emptyBody": "편지에 아직 아무것도 쓰지 않았습니다",
+        "pickDate": "열어 볼 날짜를 골라 주세요",
+        "saveFailed": "저장하지 못했습니다. 다시 시도해 주세요",
+        "edited": "수정 완료 ✓",
+        "sealedToast": "편지 봉인 완료 💌"
+      },
+      "remove": {
+        "title": "이 편지를 삭제할까요?",
+        "text": "‘{title}’ 편지는 삭제하면 되돌릴 수 없습니다.",
+        "ok": "삭제",
+        "done": "삭제됨",
+        "failed": "삭제하지 못했습니다"
+      },
+      "tools": {
+        "title": "다른 컴퓨터에서 쓴 편지",
+        "sub": "쓴 편지를 파일로 내보내 다른 컴퓨터에서 가져오면, 봉인된 그대로 옮겨집니다.",
+        "export": "여기서 쓴 편지 내보내기",
+        "import": "편지 가져오기",
+        "exported": "편지 {n}통 내보내기 완료 ✓",
+        "imported": "편지 {n}통 가져오기 완료 💌"
+      },
+      "hint": "💌 편지를 미리 써 두고 열어 볼 날짜를 정할 수 있습니다. 그날이 되면 편지가 저절로 열립니다.",
+      "mail": {
+        "title": "메일로 편지 보내기",
+        "badge": "📮 메일",
+        "him": "남친",
+        "sendTo": "{sender}도 이 주소로 편지를 보낼 수 있습니다: {address}",
+        "guide": "‘설정 → 메일’을 설정하면 {sender}도 메일로 편지를 보낼 수 있습니다",
+        "toSettings": "설정으로 이동",
+        "check": "지금 받기",
+        "checking": "받는 중…",
+        "received": "새 편지 {n}통 도착 💌",
+        "noNew": "새 편지 없음",
+        "checkFailed": "받지 못했습니다. 다시 시도해 주세요",
+        "status": "{last} · {auto}",
+        "lastCheck": "마지막 확인: {time}",
+        "never": "아직 받은 적 없음",
+        "today": "오늘",
+        "yesterday": "어제",
+        "at": "{day} {time}",
+        "auto": "{n}분마다 자동 확인",
+        "autoOff": "자동 확인 꺼짐",
+        "error": "⚠️ {error}"
+      }
+    },
+    "love": {
+      "title": "기념일",
+      "sub": "소중한 날들은 {pet}에게 맡겨 주세요",
+      "kinds": {
+        "yearly": "매년",
+        "countdown": "디데이",
+        "since": "누적 일수",
+        "other": "기념일"
+      },
+      "count": {
+        "sinceDays": "{n}일째",
+        "startsIn": "{n}일 후 시작",
+        "daysLeft": "{n}일 남음",
+        "daysPast": "{n}일 지남",
+        "badDate": "날짜가 올바르지 않습니다",
+        "today": "바로 오늘!",
+        "years": "{n}주년"
+      },
+      "events": {
+        "birthday": "생일",
+        "together": "함께한 지 {n}주년",
+        "milestone": "함께한 지 {n}일째"
+      },
+      "together": {
+        "title": "함께한 날",
+        "hint": "날짜를 고르면 두 사람이 함께한 하루하루를 {pet}도 같이 세어 갑니다 💕",
+        "dayN": "함께한 지 {n}일째",
+        "toMilestone": "{ms}일째까지 {n}일 남음",
+        "anniversaryToday": "오늘은 {n}주년 기념일!",
+        "toAnniversary": "{years}주년까지 {n}일 남음"
+      },
+      "birthday": {
+        "title": "생일",
+        "hint": "생일을 입력해 두면 그날 가장 먼저 {pet}의 생일 축하를 받게 됩니다 🎂",
+        "happyAge": "{n}살 생일을 축하합니다!",
+        "happy": "생일을 축하합니다!",
+        "dateAge": "{date} · {n}살 생일",
+        "date": "{date} 생일"
+      },
+      "clear": "지우기",
+      "remove": {
+        "title": "‘{name}’ 삭제할까요?",
+        "text": "삭제하면 이 날짜는 더 이상 알려 드리지 않습니다.",
+        "keep": "남겨 두기"
+      },
+      "list": {
+        "title": "우리의 기념일",
+        "count": "{n}개",
+        "empty": "아직 직접 추가한 기념일이 없습니다. 아래에서 추가해 보세요~"
+      },
+      "add": {
+        "placeholder": "이름, 예: 첫 데이트",
+        "needName": "먼저 이 날의 이름을 지어 주세요~",
+        "needDate": "날짜도 골라 주세요"
+      }
+    },
+    "reminders": {
+      "title": "알림",
+      "sub": "때가 되면 {pet}의 알림이 살며시 찾아갑니다~",
+      "dnd": "방해 금지 모드가 켜져 있습니다. 지금은 사용자 지정 알림만 표시됩니다",
+      "toSettings": "설정으로 이동",
+      "interval": "간격(분)",
+      "water": {
+        "title": "물 마시기",
+        "desc": "{n}분마다 물 한 잔"
+      },
+      "stretch": {
+        "title": "스트레칭",
+        "desc": "오래 앉아 있으면 일어나라고 불러 줍니다"
+      },
+      "eyes": {
+        "title": "눈 휴식",
+        "desc": "먼 곳을 보며 눈을 쉬게 합니다"
+      },
+      "sleep": {
+        "title": "일찍 자기",
+        "desc": "{time}에 잘 시간이라고 알려 줍니다",
+        "time": "잘 시간"
+      },
+      "meals": {
+        "title": "제때 밥 먹기",
+        "desc": "식사 시간이 되면 밥 챙겨 먹으라고 알려 줍니다",
+        "lunch": "점심",
+        "dinner": "저녁"
+      },
+      "active": {
+        "title": "활동 시간대",
+        "desc": "물 마시기, 스트레칭, 눈 휴식 알림은 이 시간대에만 나타납니다",
+        "start": "시작",
+        "to": "~",
+        "end": "종료"
+      },
+      "repeat": {
+        "daily": "매일",
+        "weekdays": "평일",
+        "weekends": "주말",
+        "once": "한 번만"
+      },
+      "custom": {
+        "title": "사용자 지정 알림",
+        "count": "{n}개",
+        "sub": "정한 시간이 되면 {pet}의 알림이 톡 튀어나옵니다. 방해 금지 모드에서도 울립니다",
+        "empty": "아직 사용자 지정 알림이 없습니다. 예: ‘10:00 회의’, ‘21:30 마스크팩’~",
+        "time": "알림 시간",
+        "placeholder": "무엇을 알려 드릴까요? 예: 엄마한테 전화하기",
+        "add": "알림 추가",
+        "onceOn": "한 번만 · {date}",
+        "expired": "지남",
+        "toggle": "켜기/끄기",
+        "needText": "무엇을 알려 드릴지 적어 주세요~",
+        "past": "이미 지난 시간입니다. 다른 시간을 골라 주세요"
+      }
+    },
+    "notes": {
+      "title": "속삭임",
+      "sub": "여기 적은 말은 가끔 {pet}의 목소리로 살짝 전해집니다",
+      "required": "꼭 입력해 주세요",
+      "spoken": "{sender} 대신 몰래 전할게: {text}",
+      "said": "바탕화면에서 {pet}의 목소리로 전했습니다",
+      "added": "살짝 적어 두었습니다 💌",
+      "removed": "삭제됨",
+      "names": {
+        "title": "호칭",
+        "nick": "애칭",
+        "nickPlaceholder": "예: 자기",
+        "nickHint": "{pet}의 인사 예: ‘좋은 저녁, {nick}~’",
+        "sender": "보내는 사람 이름",
+        "senderPlaceholder": "예: WaIdo",
+        "senderHint": "속삭일 때 이렇게 말합니다: ‘{sender} 대신 몰래 전할게…’",
+        "senderEmpty": "이름을 입력하면 속삭일 때 {pet}의 말이 이렇게 바뀝니다: ‘WaIdo 대신 몰래 전할게…’"
+      },
+      "talk": {
+        "title": "말하는 방식",
+        "chatty": "수다 정도",
+        "chattyDesc": "얼마나 자주 말할지",
+        "levels": {
+          "low": "적게",
+          "normal": "보통",
+          "high": "많이"
+        },
+        "builtin": "기본 대사",
+        "builtinDesc": "직접 쓴 속삭임 말고도 귀여운 일상 대사를 말합니다"
+      },
+      "list": {
+        "count": "{n}개",
+        "sub": "하나에 최대 {max}자까지. ‘말해 보기’를 누르면 바탕화면에서 바로 들을 수 있습니다",
+        "placeholder": "전해 주고 싶은 말을 적어 보세요. 예: 오늘도 보고 싶어",
+        "newLabel": "새 속삭임",
+        "from": "{sender} 대신 몰래 전할게:",
+        "say": "말해 보기",
+        "sayTitle": "바탕화면의 펫이 한 번 말하게 하기",
+        "empty": "아직 속삭임이 없습니다. 첫 문장을 적어 보세요~"
+      }
+    },
+    "focus": {
+      "title": "집중",
+      "sub": "한 번에 한 가지만. {pet}도 옆에서 조용히 함께합니다",
+      "phase": {
+        "idle": "시작 준비",
+        "focus": "집중 중",
+        "short": "짧은 휴식",
+        "long": "긴 휴식"
+      },
+      "paused": "일시정지됨",
+      "stuck": "뽀모도로가 멈춘 것 같습니다. 다시 시도해 주세요",
+      "pet": {
+        "idle": "준비되면 시작하자~",
+        "paused": "잠깐 쉬어도 괜찮아",
+        "focus": "(조용히 옆에서 같이 집중 중…)",
+        "long": "푹 쉬어. 물도 마시고 기지개도 켜고~",
+        "short": "잠깐 쉬고 금방 돌아오자~"
+      },
+      "dots": "뽀모도로 {n}개마다 긴 휴식",
+      "btn": {
+        "start": "집중 시작",
+        "resume": "계속",
+        "pause": "일시정지",
+        "skip": "건너뛰기",
+        "skipBreak": "휴식 건너뛰기",
+        "stop": "끝내기"
+      },
+      "today": {
+        "title": "오늘",
+        "count": "오늘 완료한 뽀모도로 {n}개🍅",
+        "none": "아직 뽀모도로가 없습니다. 첫 번째를 시작해 보세요~",
+        "minutes": "총 {n}분 집중"
+      },
+      "set": {
+        "title": "뽀모도로 설정",
+        "sub": "다음 뽀모도로부터 적용됩니다",
+        "focus": "집중 시간",
+        "longEvery": "긴 휴식 간격",
+        "longEveryDesc": "뽀모도로 몇 개마다 길게 쉴지",
+        "autoBreak": "휴식 자동 시작",
+        "autoBreakDesc": "집중이 끝나면 바로 휴식을 시작합니다",
+        "minutes": "분",
+        "pomodoros": "개"
+      }
+    },
+    "moods": {
+      "title": "기분",
+      "sub": "매일 기분을 기록하면 {pet}도 잘 기억해 둡니다",
+      "today": "오늘의 기분",
+      "todayNote": "‘{note}’",
+      "noNote": "메모 없음",
+      "change": "바꾸기",
+      "ask": "오늘은 어떤 하루였나요? 눌러서 기록해 보세요",
+      "saved": "기록 완료: {emoji} {name}",
+      "pick": {
+        "title": "{date} · {week}",
+        "placeholder": "오늘 무슨 일이 있었나요? 몇 줄 적어 보세요~",
+        "save": "기록하기"
+      },
+      "cal": {
+        "note": "{name}: {note}",
+        "tap": "눌러서 기분 기록",
+        "prev": "지난달",
+        "next": "다음 달",
+        "thisMonth": "이번 달로"
+      },
+      "month": {
+        "title": "{month}의 기분",
+        "recorded": "{n}일 기록",
+        "bar": "{name} {n}일",
+        "top": "이번 달 가장 많았던 기분은 {mood}, 모두 {n}일",
+        "none": "이번 달은 아직 기록이 없습니다. 오늘부터 시작해 보세요~"
+      }
+    },
+    "todos": {
+      "title": "할 일",
+      "sub": "{done}개 완료, {left}개 남음",
+      "subEmpty": "할 일은 {pet}에게 맡겨 두세요",
+      "filter": {
+        "all": "전체",
+        "open": "미완료",
+        "done": "완료"
+      },
+      "today": "오늘",
+      "yesterday": "어제",
+      "createdAt": "{day} {time}",
+      "doneAt": "{day} {time} 완료",
+      "placeholder": "다음에 할 일은? Enter로 추가",
+      "newLabel": "새 할 일",
+      "added": "추가 완료 ✓",
+      "oneDone": "또 하나 해냈습니다! 🎉",
+      "allDone": "전부 완료! 최고입니다 🎉",
+      "removed": "삭제됨",
+      "clearDone": "완료한 항목 지우기",
+      "cleared": "완료한 할 일 {n}개 정리 ✨",
+      "markDone": "완료로 표시",
+      "markUndone": "미완료로 표시",
+      "empty": "오늘은 할 일이 없습니다. 좀 쉬어 가세요~",
+      "emptySub": "할 일이 생각나면 위에 적어 보세요",
+      "noneDone": "아직 완료한 항목이 없습니다. 파이팅~",
+      "hint": "💡 하나 끝낼 때마다 바탕화면에서 {pet}의 응원이 날아옵니다. 친밀도 +2",
+      "ideas": {
+        "title": "💞 둘이 함께하는 작은 일",
+        "more": "다른 거 보기",
+        "him": "남친"
+      }
+    }
+  }
+}

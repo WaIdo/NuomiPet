@@ -9,6 +9,34 @@
   --pink: #ff7ea8;
 }
 
+/* 按界面语言换字体（<html lang> 由 syncLang 设置）。信的标题和正文（--hand）后面都接中文字体：信可能是用中文写的 */
+:root:lang(zh-TW) {
+  --font: -apple-system, 'PingFang TC', 'Microsoft JhengHei UI', 'Microsoft JhengHei', system-ui, sans-serif;
+  --hand: 'Kaiti TC', 'BiauKai', 'DFKai-SB', 'Kaiti SC', 'STKaiti', 'KaiTi', 'Songti TC', 'STSong', serif;
+}
+
+:root:lang(ja) {
+  --font: -apple-system, 'Hiragino Sans', 'Hiragino Kaku Gothic ProN', 'Yu Gothic UI', 'Meiryo', system-ui, sans-serif;
+  --hand: 'Hiragino Mincho ProN', 'Yu Mincho', 'YuMincho', 'Kaiti SC', 'STKaiti', 'KaiTi', serif;
+}
+
+:root:lang(ko) {
+  --font: -apple-system, 'Apple SD Gothic Neo', 'Malgun Gothic', 'Noto Sans KR', system-ui, sans-serif;
+  --hand: 'AppleMyungjo', 'Batang', 'Kaiti SC', 'STKaiti', 'KaiTi', serif;
+}
+
+:root:lang(en),
+:root:lang(fr) {
+  --font: -apple-system, 'Segoe UI', system-ui, 'PingFang SC', 'Microsoft YaHei UI', 'Microsoft YaHei', 'Hiragino Sans GB', sans-serif;
+  --hand: Georgia, 'Kaiti SC', 'STKaiti', 'KaiTi', 'BiauKai', 'Songti SC', 'STSong', 'SimSun', serif;
+}
+
+:root:lang(ar) {
+  --font: -apple-system, 'SF Arabic', 'Geeza Pro', 'Segoe UI', 'Tahoma', system-ui, sans-serif;
+  /* 信里的英文用 Georgia（和英文界面一样，Damascus 的拉丁字母和感叹号不好看）；阿拉伯文落到 Damascus、Traditional Arabic 这类誊抄体（Naskh），像手写的信 */
+  --hand: Georgia, 'Damascus', 'Baghdad', 'Traditional Arabic', 'Geeza Pro', 'Kaiti SC', 'STKaiti', 'KaiTi', serif;
+}
+
 * {
   box-sizing: border-box;
 }
@@ -726,6 +754,30 @@ button:focus-visible {
   stroke: #c07896;
   stroke-width: 2.4;
   stroke-linecap: round;
+}
+
+/* ---------------- 从右往左的语言（阿拉伯文，<html dir="rtl"> 由 syncLang 设置） ----------------
+   文字方向和正文对齐跟着 dir 自动变；这里补上左右不对称的地方。信封、信纸的装饰不镜像。 */
+
+html[dir='rtl'] .close {
+  right: auto;
+  left: 16px;
+}
+
+html[dir='rtl'] .l-sign {
+  text-align: left;
+}
+
+/* 信的标题和正文是她自己写的，可能是英文、中文：每一段按自己的文字定方向，标点不会跑到另一头 */
+html[dir='rtl'] .l-title,
+html[dir='rtl'] .l-text,
+html[dir='rtl'] .intro:not(.locked):not(.missing) .cap-title {
+  unicode-bidi: plaintext;
+}
+
+/* 阿拉伯文是连写的，字母之间不能加间距 */
+:lang(ar) .l-kicker {
+  letter-spacing: 0;
 }
 
 @media (prefers-reduced-motion: reduce) {

@@ -24,7 +24,7 @@ jobs:
         # windows-2022 的 emoji 字体和 Windows 10 一样旧；windows-2025 和 Windows 11 一样
         os: [windows-2022, windows-2025, macos-latest]
     runs-on: ${{ matrix.os }}
-    timeout-minutes: 45
+    timeout-minutes: 60
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4

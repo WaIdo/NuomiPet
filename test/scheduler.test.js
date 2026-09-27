@@ -138,7 +138,8 @@ test('信件：未到日期锁着，到了解锁并通知一次', () => {
     { id: 'now', title: '马上看', unlock: '', body: '你好' },
     { id: 'later', title: '以后看', unlock: '2099-01-01', body: '秘密' },
   ];
-  const { s, events } = setup({}, { letters });
+  // 内置的自我介绍信排在最前，这里当它已经读过
+  const { s, events } = setup({ 'letters.read': { hello: 1 } }, { letters });
   const list = s.lettersState(at('2026-09-26T10:00:00'));
   assert.equal(list.find((l) => l.id === 'now').unlocked, true);
   const later = list.find((l) => l.id === 'later');
@@ -147,6 +148,64 @@ test('信件：未到日期锁着，到了解锁并通知一次', () => {
   assert.equal(s.checkLetters(at('2026-09-26T10:00:00')), true);
   assert.equal(events[0].id, 'now');
   assert.equal(s.checkLetters(at('2026-09-26T10:05:00')), false);
+});
+
+test('内置的自我介绍信：送礼配置里没有 hello 就加上，排在最前，填好宠物的名字', () => {
+  const { s, store } = setup({}, { letters: [{ id: 'x', title: '另一封', unlock: '', body: '你好' }] });
+  const list = s.lettersState(at('2026-09-26T10:00:00'));
+  assert.deepEqual(list.map((l) => l.id), ['hello', 'x']);
+  const hello = list[0];
+  assert.equal(hello.title, '糯米的自我介绍');
+  assert.equal(hello.from, '糯米');
+  assert.equal(hello.unlocked, true);
+  assert.match(hello.body, /^你好呀！\n\n我是糯米，一只软乎乎的小团子。/);
+  assert.doesNotMatch(hello.body, /\{\w+\}/);
+  // 改了名字，信里的名字跟着变
+  store.set('pet.name', '团子');
+  const renamed = s.findLetter('hello');
+  assert.equal(renamed.title, '团子的自我介绍');
+  assert.equal(renamed.from, '团子');
+  assert.match(renamed.body, /我是团子，/);
+});
+
+test('内置的自我介绍信：送礼配置里写了 id 为 hello 的信，就用配置里的', () => {
+  const { s } = setup({}, { letters: [{ id: 'hello', title: '我自己写的', from: '豪豪', unlock: '', body: '你好' }] });
+  const list = s.lettersState(at('2026-09-26T10:00:00'));
+  assert.equal(list.length, 1);
+  assert.equal(list[0].title, '我自己写的');
+  assert.equal(list[0].body, '你好');
+});
+
+test('内置的自我介绍信：已读、已递送的状态照样生效', () => {
+  const d = at('2026-09-26T10:00:00');
+  const { s, events } = setup();
+  assert.equal(s.checkLetters(d), true);
+  assert.equal(events[0].id, 'hello');
+  assert.equal(events[0].title, '糯米的自我介绍');
+  assert.equal(s.checkLetters(d), false);
+  const { s: s2 } = setup({ 'letters.read': { hello: 1 } });
+  assert.equal(s2.lettersState(d)[0].read, true);
+  assert.equal(s2.checkLetters(d), false);
+  // 老用户以前已经收到过（还没读）：不再递一次
+  const { s: s3 } = setup({ 'letters.notified': { hello: 1 } });
+  assert.equal(s3.lettersState(d)[0].read, false);
+  assert.equal(s3.checkLetters(d), false);
+});
+
+test('打包的 gift.config.json：名字、称呼、悄悄话和信用内置的，署名、在一起的日子和生日有默认值', () => {
+  const gift = JSON.parse(require('fs').readFileSync(path.join(__dirname, '../gift.config.json'), 'utf8'));
+  const { s, store } = setup({}, gift);
+  assert.equal(store.get('pet.name'), '');
+  assert.equal(store.get('owner.nickname'), '');
+  assert.equal(s.vars().pet, '糯米');
+  assert.equal(s.vars().nick, '宝贝');
+  assert.equal(store.get('love.notes').length, 5);
+  assert.deepEqual(s.lettersState().map((l) => l.id), ['hello']);
+  assert.equal(store.get('owner.sender'), '豪豪');
+  assert.equal(store.get('love.togetherSince'), '2026-09-25');
+  assert.equal(store.get('love.birthday'), '2002-06-08');
+  assert.equal(s.vars().sender, '豪豪');
+  assert.equal(C.dayNumber(store.get('love.togetherSince'), at('2026-09-27T10:00:00')), 3);
 });
 
 test('饥饿提醒只在饱腹低于 30 时出现，并且间隔 90 分钟', () => {

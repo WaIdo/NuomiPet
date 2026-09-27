@@ -1,1 +1,356 @@
-{}
+{
+  "home": {
+    "letters": {
+      "title": "信箱",
+      "sub": {
+        "empty": "這裡會收到特別的信",
+        "fresh": "有 {n} 封新的信在等你拆開 💗",
+        "all": "每一封都好好收著呢"
+      },
+      "write": "✍️ 寫一封信",
+      "empty": {
+        "text": "信箱空空的～",
+        "sub": "點右上角的「寫一封信」，留一封信給重要的人吧"
+      },
+      "aLetter": "一封信",
+      "card": {
+        "unlockIn": "{n} 天後解鎖",
+        "unlockSoon": "快要解鎖囉",
+        "from": "來自 {name}",
+        "locked": "還沒到拆開的時間喔",
+        "lockedToast": "還沒到拆開的時間喔～",
+        "lockedToastDate": "還沒到拆開的時間喔～{date} 見",
+        "open": "拆開看看",
+        "new": "新",
+        "tapToOpen": "點開看看吧～",
+        "more": "修改或刪除"
+      },
+      "menu": {
+        "edit": "✏️ 改標題或日期",
+        "remove": "🗑️ 刪掉這封信"
+      },
+      "editor": {
+        "newTitle": "寫一封信 💌",
+        "editTitle": "修改信封",
+        "seal": "封好 💌",
+        "title": "標題",
+        "titlePlaceholder": "例如：生日快樂",
+        "from": "署名",
+        "fromPlaceholder": "寫信的人",
+        "when": "什麼時候可以拆開",
+        "now": "馬上",
+        "onDate": "到某一天",
+        "hintDate": "到了那天，{pet}會把信叼給{nick}",
+        "hintNow": "封好就能拆開，{pet}很快會把信送過去",
+        "sealed": "🔒 信已經封好了，內文看不到也改不了。寫錯了可以刪掉重寫。",
+        "body": "內文",
+        "bodyPlaceholder": "想跟{nick}說的話……",
+        "tip": "封好之後，還沒到拆開的日子，誰都看不到內文（寫信的人也看不到）。",
+        "emptyBody": "信裡還什麼都沒寫呢",
+        "pickDate": "選一下拆開的日子吧",
+        "saveFailed": "沒儲存成功，再試一次吧",
+        "edited": "改好囉 ✓",
+        "sealedToast": "信封好囉 💌"
+      },
+      "remove": {
+        "title": "刪掉這封信？",
+        "text": "「{title}」刪掉之後就找不回來了。",
+        "ok": "刪掉",
+        "done": "刪掉了",
+        "failed": "沒刪掉"
+      },
+      "tools": {
+        "title": "在別台電腦上寫好的信",
+        "sub": "寫好的信可以匯出成檔案，拿到另一台電腦上匯入，信會原封不動地封好。",
+        "export": "匯出在這裡寫的信",
+        "import": "匯入信件",
+        "exported": "匯出了 {n} 封信 ✓",
+        "imported": "匯入了 {n} 封信 💌"
+      },
+      "hint": "💌 信可以提前寫好、定好拆開的日子。到了那天，信會自己解鎖。",
+      "mail": {
+        "title": "用郵件寄信",
+        "badge": "📮 郵件",
+        "him": "他",
+        "sendTo": "{sender}也可以把信寄到 {address}",
+        "guide": "到「設定 → 郵件」設定好之後，{sender}就能用郵件寄信",
+        "toSettings": "去設定",
+        "check": "立即收信",
+        "checking": "正在收信…",
+        "received": "收到 {n} 封新的信 💌",
+        "noNew": "沒有新的信",
+        "checkFailed": "沒收成功，再試一次吧",
+        "status": "{last} · {auto}",
+        "lastCheck": "上次收信：{time}",
+        "never": "還沒收過信",
+        "today": "今天",
+        "yesterday": "昨天",
+        "at": "{day} {time}",
+        "auto": "每 {n} 分鐘自動收一次",
+        "autoOff": "自動收信沒有開啟",
+        "error": "⚠️ {error}"
+      }
+    },
+    "love": {
+      "title": "紀念日",
+      "sub": "重要的日子，{pet}都幫你們記著",
+      "kinds": {
+        "yearly": "每年紀念",
+        "countdown": "倒數日",
+        "since": "累計天數",
+        "other": "紀念日"
+      },
+      "count": {
+        "sinceDays": "已經{n}天",
+        "startsIn": "還有{n}天開始",
+        "daysLeft": "還有{n}天",
+        "daysPast": "已經過了{n}天",
+        "badDate": "日期不對喔",
+        "today": "就是今天！",
+        "years": "第 {n} 週年"
+      },
+      "events": {
+        "birthday": "生日",
+        "together": "在一起 {n} 週年",
+        "milestone": "在一起第 {n} 天"
+      },
+      "together": {
+        "title": "在一起的日子",
+        "hint": "選一個日子，{pet}會幫你們數著在一起的每一天 💕",
+        "dayN": "在一起的第{n}天",
+        "toMilestone": "距離第 {ms} 天還有 {n} 天",
+        "anniversaryToday": "今天是 {n} 週年紀念日！",
+        "toAnniversary": "離 {years} 週年還有 {n} 天"
+      },
+      "birthday": {
+        "title": "她的生日",
+        "hint": "填上生日，那天{pet}會第一個跟她說生日快樂 🎂",
+        "happyAge": "{n} 歲生日快樂！",
+        "happy": "生日快樂！",
+        "dateAge": "{date} · {n} 歲生日",
+        "date": "{date} 生日"
+      },
+      "clear": "清除",
+      "remove": {
+        "title": "刪除「{name}」？",
+        "text": "刪掉之後就不會再提醒這個日子了喔。",
+        "keep": "留著"
+      },
+      "list": {
+        "title": "我們的紀念日",
+        "count": "{n} 個",
+        "empty": "還沒有自訂的紀念日，在下面新增一個吧～"
+      },
+      "add": {
+        "placeholder": "名稱，例如：第一次約會",
+        "needName": "先幫這個日子取個名字吧～",
+        "needDate": "再選一下日期喔"
+      }
+    },
+    "reminders": {
+      "title": "提醒",
+      "sub": "{pet}會在適當的時候，輕輕地提醒你～",
+      "dnd": "勿擾模式開著：現在只會跳出自訂提醒喔",
+      "toSettings": "去設定",
+      "interval": "間隔（分鐘）",
+      "water": {
+        "title": "喝水",
+        "desc": "每 {n} 分鐘喝一杯水"
+      },
+      "stretch": {
+        "title": "久坐起來動一動",
+        "desc": "坐太久了，叫你起來伸伸腰"
+      },
+      "eyes": {
+        "title": "護眼",
+        "desc": "看看遠方，讓眼睛休息一下"
+      },
+      "sleep": {
+        "title": "早點睡",
+        "desc": "到了 {time} 就催你去睡覺",
+        "time": "睡覺時間"
+      },
+      "meals": {
+        "title": "按時吃飯",
+        "desc": "到了吃飯時間提醒你好好吃飯",
+        "lunch": "午餐",
+        "dinner": "晚餐"
+      },
+      "active": {
+        "title": "活躍時段",
+        "desc": "喝水、久坐和護眼提醒只在這段時間裡出現",
+        "start": "開始",
+        "to": "至",
+        "end": "結束"
+      },
+      "repeat": {
+        "daily": "每天",
+        "weekdays": "平日",
+        "weekends": "週末",
+        "once": "僅一次"
+      },
+      "custom": {
+        "title": "自訂提醒",
+        "count": "{n} 個",
+        "sub": "時間到了{pet}會跳出來提醒你，勿擾模式下也會照常提醒",
+        "empty": "還沒有自訂提醒，例如「10:00 開會」「21:30 敷面膜」～",
+        "time": "提醒時間",
+        "placeholder": "要提醒什麼呢？例如：記得打電話給媽媽",
+        "add": "新增提醒",
+        "onceOn": "僅一次 · {date}",
+        "expired": "已過期",
+        "toggle": "開關",
+        "needText": "寫一下要提醒什麼吧～",
+        "past": "這個時間已經過了，換一個吧"
+      }
+    },
+    "notes": {
+      "title": "悄悄話",
+      "sub": "{pet}會不時把這些話，悄悄地說給她聽",
+      "required": "這個不能空著喔",
+      "spoken": "{sender}要我偷偷跟你說：{text}",
+      "said": "{pet}去桌面上說給她聽囉",
+      "added": "偷偷記下囉 💌",
+      "removed": "刪掉囉",
+      "names": {
+        "title": "稱呼",
+        "nick": "她的暱稱",
+        "nickPlaceholder": "例如：寶貝",
+        "nickHint": "{pet}會這樣叫她：「晚上好呀，{nick}」",
+        "sender": "你的署名",
+        "senderPlaceholder": "例如：豪豪",
+        "senderHint": "說悄悄話時會說：「{sender}要我偷偷跟你說……」",
+        "senderEmpty": "填上你的名字，{pet}說悄悄話時會說：「豪豪要我偷偷跟你說……」"
+      },
+      "talk": {
+        "title": "說話方式",
+        "chatty": "話多程度",
+        "chattyDesc": "多久說一次話",
+        "levels": {
+          "low": "少",
+          "normal": "適中",
+          "high": "多"
+        },
+        "builtin": "內建語錄",
+        "builtinDesc": "除了你寫的悄悄話，也會說些可愛的日常句子"
+      },
+      "list": {
+        "count": "{n} 則",
+        "sub": "每則最多 {max} 個字，點「讓牠說」可以馬上在桌面上聽一次",
+        "placeholder": "寫一句想請牠轉告的話，例如：今天也很想你",
+        "newLabel": "新的悄悄話",
+        "from": "{sender}要我偷偷跟你說：",
+        "say": "讓牠說",
+        "sayTitle": "讓桌面上的寵物說一次",
+        "empty": "還沒有悄悄話，寫下第一句吧～"
+      }
+    },
+    "focus": {
+      "title": "專注",
+      "sub": "一次只做一件事，{pet}在旁邊安安靜靜地陪著你",
+      "phase": {
+        "idle": "準備開始",
+        "focus": "專注中",
+        "short": "短休息",
+        "long": "長休息"
+      },
+      "paused": "已暫停",
+      "stuck": "番茄鐘好像卡住了，再試一次吧",
+      "pet": {
+        "idle": "準備好了就開始吧～",
+        "paused": "休息一下也沒關係喔",
+        "focus": "（安靜陪你專注中……）",
+        "long": "好好休息，喝口水、伸個懶腰～",
+        "short": "稍微休息一下，馬上回來～"
+      },
+      "dots": "每 {n} 個番茄長休息一次",
+      "btn": {
+        "start": "開始專注",
+        "resume": "繼續",
+        "pause": "暫停",
+        "skip": "跳過",
+        "skipBreak": "跳過休息",
+        "stop": "結束"
+      },
+      "today": {
+        "title": "今天",
+        "count": "今天完成 {n} 個番茄🍅",
+        "none": "還沒有番茄，開始第一個吧～",
+        "minutes": "總共專注了 {n} 分鐘"
+      },
+      "set": {
+        "title": "番茄鐘設定",
+        "sub": "修改會從下一個番茄開始生效",
+        "focus": "專注時長",
+        "longEvery": "長休息間隔",
+        "longEveryDesc": "每幾個番茄長休息一次",
+        "autoBreak": "自動開始休息",
+        "autoBreakDesc": "專注結束後直接開始休息",
+        "minutes": "分鐘",
+        "pomodoros": "個番茄"
+      }
+    },
+    "moods": {
+      "title": "心情",
+      "sub": "每天記一下心情，{pet}會好好記住的",
+      "today": "今天的心情",
+      "todayNote": "「{note}」",
+      "noNote": "沒有寫備註",
+      "change": "改一下",
+      "ask": "今天是什麼樣的一天呀？點一下記下來吧",
+      "saved": "記下囉：{emoji} {name}",
+      "pick": {
+        "title": "{date} · {week}",
+        "placeholder": "今天發生了什麼？寫幾句記下來吧～",
+        "save": "記下來"
+      },
+      "cal": {
+        "note": "{name}：{note}",
+        "tap": "點一下記錄心情",
+        "prev": "上個月",
+        "next": "下個月",
+        "thisMonth": "回到本月"
+      },
+      "month": {
+        "title": "{month}的心情",
+        "recorded": "記錄了 {n} 天",
+        "bar": "{name} {n} 天",
+        "top": "這個月最多的是 {mood}，總共 {n} 天",
+        "none": "這個月還沒有記錄，從今天開始吧～"
+      }
+    },
+    "todos": {
+      "title": "待辦",
+      "sub": "完成了 {done} 件，還剩 {left} 件",
+      "subEmpty": "把要做的事交給{pet}記著吧",
+      "filter": {
+        "all": "全部",
+        "open": "未完成",
+        "done": "已完成"
+      },
+      "today": "今天",
+      "yesterday": "昨天",
+      "createdAt": "{day} {time}",
+      "doneAt": "{day} {time} 完成",
+      "placeholder": "接下來要做什麼呢？按 Enter 新增",
+      "newLabel": "新的待辦",
+      "added": "記下囉 ✓",
+      "oneDone": "又完成一件，真厲害！🎉",
+      "allDone": "全部完成囉！你最棒 🎉",
+      "removed": "刪掉囉",
+      "clearDone": "清除已完成",
+      "cleared": "清掉了 {n} 件已完成的待辦 ✨",
+      "markDone": "標記為完成",
+      "markUndone": "標記為未完成",
+      "empty": "今天沒有待辦，休息一下吧～",
+      "emptySub": "想到要做的事，就寫在上面吧",
+      "noneDone": "還沒有完成的事項，加油喔～",
+      "hint": "💡 每完成一件，{pet}都會在桌面上幫你加油，親密度 +2",
+      "ideas": {
+        "title": "💞 兩個人的小事",
+        "more": "換一批",
+        "him": "他"
+      }
+    }
+  }
+}

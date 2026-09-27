@@ -1,9 +1,11 @@
 // 待办：添加、勾选（小彩纸 + 桌面宠物加油）、删除、筛选、清除已完成。
 import { h, cx, pageHead, segmented, emptyState, toast, icon, burst, shake, bar, fmtDate } from '../ui.js';
-import { t, petName } from '../../shared/i18n.mjs';
+import { t, petName, lines, fill } from '../../shared/i18n.mjs';
 
 const FILTERS = ['all', 'open', 'done'];
-const ui = { filter: 'all' };
+// ideas：「两个人的小事」这一批抽到的是第几条（重新渲染时不变，只在「换一批」和用掉一条时换）
+const ui = { filter: 'all', ideas: null };
+const IDEAS = 4;
 
 function when(app, todo) {
   const { C } = app;
@@ -31,6 +33,73 @@ function add(app, e) {
   input.value = '';
   input.focus();
   toast(t('home.todos.added'));
+}
+
+/* ---------------- 两个人的小事 ---------------- */
+
+// 每一条填好 {sender} 以后的文字
+function ideaTexts(app) {
+  const sender = String(app.state.owner?.sender || '').trim() || t('home.todos.ideas.him');
+  return lines('todoIdeas').map((tpl) => fill(tpl, { sender }));
+}
+
+const shuffle = (arr) => {
+  for (let i = arr.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [arr[i], arr[j]] = [arr[j], arr[i]];
+  }
+  return arr;
+};
+
+// 抽 n 条：和没完成的待办重复的不抽；avoid 里的（比如上一批）尽量不抽，不够时才用
+function drawIdeas(app, texts, avoid, n) {
+  const open = new Set((app.state.todos || []).filter((x) => !x.done).map((x) => x.text));
+  const ok = texts.map((_, i) => i).filter((i) => !open.has(texts[i]));
+  return [...shuffle(ok.filter((i) => !avoid.includes(i))), ...shuffle(ok.filter((i) => avoid.includes(i)))].slice(0, n);
+}
+
+function useIdea(app, texts, i) {
+  const text = texts[i].slice(0, 60);
+  const item = { id: app.C.uid(), text, done: false, createdAt: Date.now(), doneAt: null, idea: true };
+  if (ui.filter === 'done') ui.filter = 'all';
+  app.set('todos', [...(app.state.todos || []), item], { quiet: true });
+  toast(t('home.todos.added'));
+  // 用掉的这条换成一条这一批里没有的；一条都没有了就少显示一个
+  const next = drawIdeas(app, texts, ui.ideas, texts.length).find((k) => !ui.ideas.includes(k));
+  ui.ideas = next === undefined ? ui.ideas.filter((k) => k !== i) : ui.ideas.map((k) => (k === i ? next : k));
+  app.rerender();
+}
+
+function ideas(app) {
+  const texts = ideaTexts(app);
+  if (!texts.length) return null;
+  if (!ui.ideas || ui.ideas.some((i) => i >= texts.length)) ui.ideas = drawIdeas(app, texts, [], IDEAS);
+  return h(
+    'div',
+    { class: 'todo-ideas', key: 'ideas' },
+    h(
+      'div',
+      { class: 'ti-head' },
+      h('span', { class: 'ti-title' }, t('home.todos.ideas.title')),
+      h(
+        'button',
+        {
+          type: 'button',
+          class: 'link-btn',
+          onclick: () => {
+            ui.ideas = drawIdeas(app, texts, ui.ideas, IDEAS);
+            app.rerender();
+          },
+        },
+        t('home.todos.ideas.more'),
+      ),
+    ),
+    h(
+      'div',
+      { class: 'ti-list', role: 'group', 'aria-label': t('home.todos.ideas.title') },
+      ui.ideas.map((i) => h('button', { type: 'button', class: 'btn soft sm todo-idea', key: 'idea-' + i, 'data-idea': i, onclick: () => useIdea(app, texts, i) }, texts[i])),
+    ),
+  );
 }
 
 function toggleDone(app, todo, e) {
@@ -123,6 +192,7 @@ export default {
           }),
           h('button', { type: 'button', class: 'btn primary', onclick: (e) => add(app, e) }, icon('plus'), t('common.add')),
         ),
+        ideas(app),
         all.length > 0 &&
           h(
             'div',
