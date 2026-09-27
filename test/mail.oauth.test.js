@@ -290,6 +290,7 @@ test('重新开始登录会停掉上一次的等待；退出登录清掉凭据�
   assert.ok(after.every((q) => q.form.device_code === second), `还在问 ${first}`);
   // 退出：不再问，状态回到 idle
   assert.deepEqual(mail.msLogout(), { ok: true });
+  await wait(50); // 退出前已经发出去的那一次可能还会回来（慢的机器上）
   const stopped = ms.requests.length;
   await wait(60);
   assert.equal(ms.requests.length, stopped);
