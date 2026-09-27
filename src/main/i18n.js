@@ -25,6 +25,8 @@ i18n.onChange((lang) => setPluralLang(lang));
 
 function systemLangs() {
   const { app } = require('electron');
+  // 测试用：假装系统是某种语言（CI 的机器系统是英文，场景脚本按中文界面写）
+  if (!app.isPackaged && process.env.NUOMI_SYSTEM_LANG) return [process.env.NUOMI_SYSTEM_LANG];
   try {
     const list = app.getPreferredSystemLanguages();
     if (list && list.length) return list;

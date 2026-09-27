@@ -31,7 +31,8 @@ function run(name) {
     const started = Date.now();
     const child = spawn(electron, ['.', `--data-dir=${dataDir}`, `--dev-script=dev/scenarios/${name}.js`], {
       cwd: ROOT,
-      env: { ...process.env, SNAP_DIR: dir },
+      // 场景按简体中文界面写：不管这台机器的系统语言是什么，都当成中文系统（多语言场景自己切语言）
+      env: { NUOMI_SYSTEM_LANG: 'zh-CN', ...process.env, SNAP_DIR: dir },
     });
     let log = '';
     child.stdout.on('data', (d) => (log += d));
