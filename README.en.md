@@ -47,7 +47,11 @@ The pet appears at the bottom of the screen, and there's a little kitty-head ico
 - 6 little animals: Kitty, Bunny, Teddy, Puppy, Hamster and Chick. 15 colors (including 5 light greens: Avocado, Matcha, Green apple, Mint and Lake green), 9 accessories (Bow, Flower, Sprout, Crown, Party hat, Heart clip, Berry hat, Santa hat, Glasses), 4 markings (Solid, White belly, Stripes, Eye patch) and 4 sizes.
 - It walks around on its own, daydreams, yawns, stretches and spins; its eyes follow the mouse. If you're away from the computer for 5 minutes it falls asleep (with a snot bubble), and it greets you when you come back.
 - Interactions:
-  - Move the mouse back and forth over it: head pats, with little hearts
+  - Head pats: without pressing any mouse button, move the pointer onto the pet and quickly rub it left and right a few times
+    - Moving slowly across it doesn't count, and pressing and dragging picks it up instead
+    - Once you've rubbed enough, it closes its eyes, blushes and hearts pop from its head; keep rubbing and they keep coming. When you stop, it responds happily
+    - Clicking the big picture of the pet on Nest → Home also counts as a pat
+    - Each pat adds a little closeness and mood (at most once every 8 seconds); patting it while it kneels on the washboard means you forgive it
   - Click: a poke (poke it too many times and it gets dizzy)
   - Double-click: opens the quick panel (Feed, Coax, Play, Focus, Mood, Nest, Pickup)
   - Right-click: the full menu

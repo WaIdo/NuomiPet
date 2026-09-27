@@ -47,7 +47,11 @@ Le compagnon apparaît en bas de l'écran, et une petite tête de chat dans la b
 - 6 petits animaux : Minou, Lapinou, Nounours, Toutou, Hamster, Poussin ; 15 couleurs (dont 5 verts tendres : Avocat, Matcha, Pomme verte, Menthe, Vert d'eau), 9 accessoires (nœud, fleur, pousse, couronne, chapeau de fête, barrette cœur, bonnet fraise, bonnet de Père Noël, lunettes rondes), 4 motifs (Uni, Ventre blanc, Rayures, Cache-œil) et 4 tailles.
 - Il se promène tout seul, rêvasse, bâille, s'étire, fait des tours sur lui-même ; ses yeux suivent la souris ; si vous quittez l'ordinateur 5 minutes, il s'endort (avec une bulle au nez) et vous accueille à votre retour.
 - Interactions :
-  - Allers-retours de la souris sur lui : une caresse sur la tête, avec des petits cœurs
+  - Caresse : sans appuyer sur aucun bouton, placez le pointeur sur le compagnon et faites quelques allers-retours rapides de gauche à droite
+    - Passer lentement dessus ne suffit pas, et cliquer-glisser le soulève au lieu de le caresser
+    - Au bout de quelques allers-retours, il ferme les yeux, rougit et des cœurs sortent de sa tête ; ils continuent tant que vous caressez. Quand vous arrêtez, il vous répond tout content
+    - Cliquer sur la grande image du compagnon dans « Nid → Accueil » compte aussi comme une caresse
+    - Chaque caresse fait un peu monter la complicité et l'humeur (une fois toutes les 8 secondes au plus) ; le caresser pendant qu'il est à genoux sur la planche à laver, c'est lui pardonner
   - Clic : un petit tapotement (à force, il a le tournis)
   - Double-clic : ouvre le menu rapide (Nourrir, Câlins, Jouer, Focus, Humeur, Nid, Viens !)
   - Clic droit : le menu complet
