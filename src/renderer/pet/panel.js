@@ -280,6 +280,35 @@ export class Panel {
     }
     el.append(body);
     this.tick(this.getPomodoro());
+    // 面板这时可能还没显示（open() 里先 render 再显示），等到下一帧再量
+    requestAnimationFrame(() => this.fitLabels());
+  }
+
+  // 按钮上的字一行放不下：先缩小字号（最小 9px），还不行就折成两行
+  fitLabels() {
+    // 用小数宽度量（scrollWidth 是取整的，会差不到 1px）
+    const range = document.createRange();
+    const textWidth = (el) => {
+      range.selectNodeContents(el);
+      return range.getBoundingClientRect().width;
+    };
+    for (const lbl of this.el.querySelectorAll('.pbtn .lbl')) {
+      lbl.classList.remove('wrap');
+      lbl.style.fontSize = '';
+      const room = lbl.getBoundingClientRect().width;
+      const w = textWidth(lbl);
+      if (!room || w <= room) continue;
+      let size = Math.floor(((10.5 * room) / w) * 4) / 4;
+      while (size >= 9) {
+        lbl.style.fontSize = size + 'px';
+        if (textWidth(lbl) <= room) break;
+        size -= 0.25;
+      }
+      if (size < 9) {
+        lbl.style.fontSize = '';
+        lbl.classList.add('wrap');
+      }
+    }
   }
 
   // 「来接我」：三个时间、一句话、发送

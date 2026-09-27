@@ -14,10 +14,10 @@
 
 | 파일 | 대상 |
 | --- | --- |
-| `NuomiPet-1.1.0-win-setup.exe` | Windows 10 / 11(64비트), 설치 버전, 추천 |
-| `NuomiPet-1.1.0-win-portable.exe` | Windows 10 / 11(64비트), 설치 없이 더블클릭으로 실행 |
-| `NuomiPet-1.1.0-mac-arm64.dmg` | Apple 칩 Mac(M1 이후), macOS 13 이상 |
-| `NuomiPet-1.1.0-mac-x64.dmg` | Intel 칩 Mac, macOS 13 이상 |
+| `NuomiPet-1.1.1-win-setup.exe` | Windows 10 / 11(64비트), 설치 버전, 추천 |
+| `NuomiPet-1.1.1-win-portable.exe` | Windows 10 / 11(64비트), 설치 없이 더블클릭으로 실행 |
+| `NuomiPet-1.1.1-mac-arm64.dmg` | Apple 칩 Mac(M1 이후), macOS 13 이상 |
+| `NuomiPet-1.1.1-mac-x64.dmg` | Intel 칩 Mac, macOS 13 이상 |
 
 Mac의 칩 종류를 모르겠다면: 화면 왼쪽 위 Apple 메뉴 → ‘이 Mac에 관하여’를 열어 ‘칩’ 항목이 Apple M…이면 arm64, Intel이면 x64를 고르세요.
 
@@ -25,7 +25,7 @@ Mac의 칩 종류를 모르겠다면: 화면 왼쪽 위 Apple 메뉴 → ‘이 
 
 **Windows**
 
-1. `NuomiPet-1.1.0-win-setup.exe`를 실행하고 안내에 따라 설치합니다(관리자 권한은 필요 없습니다). 설치 없는 버전은 더블클릭으로 바로 실행합니다.
+1. `NuomiPet-1.1.1-win-setup.exe`를 실행하고 안내에 따라 설치합니다(관리자 권한은 필요 없습니다). 설치 없는 버전은 더블클릭으로 바로 실행합니다.
 2. 설치 파일에 코드 서명 인증서가 없어서, 처음 실행할 때 ‘Windows의 PC 보호’ 창이 뜰 수 있습니다. ‘추가 정보’ → ‘실행’을 누르세요. 백신 프로그램이 막으면 허용하거나 신뢰로 설정하세요.
 3. 펫이 화면 오른쪽 아래에 나타납니다. 작업 표시줄 오른쪽 트레이에 분홍색 고양이 아이콘이 있고(`^` 안에 숨어 있을 수 있습니다), 누르면 메뉴가 열립니다.
 

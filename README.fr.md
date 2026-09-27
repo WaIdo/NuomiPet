@@ -14,10 +14,10 @@ Téléchargez le fichier qui vous convient sur la page [Releases](https://github
 
 | Fichier | Pour |
 | --- | --- |
-| `NuomiPet-1.1.0-win-setup.exe` | Windows 10 / 11 (64 bits), version à installer, recommandée |
-| `NuomiPet-1.1.0-win-portable.exe` | Windows 10 / 11 (64 bits), version portable, un double-clic suffit |
-| `NuomiPet-1.1.0-mac-arm64.dmg` | Mac avec puce Apple (M1 et suivantes), macOS 13 ou plus récent |
-| `NuomiPet-1.1.0-mac-x64.dmg` | Mac avec puce Intel, macOS 13 ou plus récent |
+| `NuomiPet-1.1.1-win-setup.exe` | Windows 10 / 11 (64 bits), version à installer, recommandée |
+| `NuomiPet-1.1.1-win-portable.exe` | Windows 10 / 11 (64 bits), version portable, un double-clic suffit |
+| `NuomiPet-1.1.1-mac-arm64.dmg` | Mac avec puce Apple (M1 et suivantes), macOS 13 ou plus récent |
+| `NuomiPet-1.1.1-mac-x64.dmg` | Mac avec puce Intel, macOS 13 ou plus récent |
 
 Pour savoir quelle puce a votre Mac : menu Pomme en haut à gauche de l'écran → « À propos de ce Mac ». Si la ligne « Puce » indique Apple M…, prenez arm64 ; si elle indique Intel, prenez x64.
 
@@ -25,7 +25,7 @@ Pour savoir quelle puce a votre Mac : menu Pomme en haut à gauche de l'écran 
 
 **Windows**
 
-1. Lancez `NuomiPet-1.1.0-win-setup.exe` et suivez les instructions (aucun droit administrateur nécessaire). La version portable se lance directement d'un double-clic.
+1. Lancez `NuomiPet-1.1.1-win-setup.exe` et suivez les instructions (aucun droit administrateur nécessaire). La version portable se lance directement d'un double-clic.
 2. Le programme n'a pas de certificat de signature de code payant : au premier lancement, le message « Windows a protégé votre ordinateur » peut apparaître. Cliquez sur « Informations complémentaires » → « Exécuter quand même ». Si votre antivirus le bloque, choisissez d'autoriser ou de faire confiance.
 3. Le compagnon apparaît en bas à droite de l'écran. Dans la zone de notification, en bas à droite de la barre des tâches, une petite icône de chat rose (parfois cachée sous `^`) ouvre le menu d'un clic.
 

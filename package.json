@@ -1,7 +1,7 @@
 {
   "name": "mochi-pet",
   "productName": "糯米桌宠",
-  "version": "1.1.0",
+  "version": "1.1.1",
   "description": "一只超可爱的桌面宠物，陪她工作、学习、喝水、休息。",
   "main": "src/main/main.js",
   "author": "WaIdo",

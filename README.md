@@ -14,10 +14,10 @@
 
 | 文件 | 适用于 |
 | --- | --- |
-| `NuomiPet-1.1.0-win-setup.exe` | Windows 10 / 11（64 位），安装版，推荐 |
-| `NuomiPet-1.1.0-win-portable.exe` | Windows 10 / 11（64 位），免安装，双击就能用 |
-| `NuomiPet-1.1.0-mac-arm64.dmg` | Apple 芯片的 Mac（M1 及之后），macOS 13 或更新 |
-| `NuomiPet-1.1.0-mac-x64.dmg` | Intel 芯片的 Mac，macOS 13 或更新 |
+| `NuomiPet-1.1.1-win-setup.exe` | Windows 10 / 11（64 位），安装版，推荐 |
+| `NuomiPet-1.1.1-win-portable.exe` | Windows 10 / 11（64 位），免安装，双击就能用 |
+| `NuomiPet-1.1.1-mac-arm64.dmg` | Apple 芯片的 Mac（M1 及之后），macOS 13 或更新 |
+| `NuomiPet-1.1.1-mac-x64.dmg` | Intel 芯片的 Mac，macOS 13 或更新 |
 
 不知道 Mac 是哪种芯片：点屏幕左上角苹果菜单 →「关于本机」，「芯片」一栏写着 Apple M… 的选 arm64，写着 Intel 的选 x64。
 
@@ -25,7 +25,7 @@
 
 **Windows**
 
-1. 运行 `NuomiPet-1.1.0-win-setup.exe`，按提示安装（不需要管理员权限）。免安装版直接双击运行。
+1. 运行 `NuomiPet-1.1.1-win-setup.exe`，按提示安装（不需要管理员权限）。免安装版直接双击运行。
 2. 安装包没有购买代码签名证书，第一次运行时可能出现「Windows 已保护你的电脑」：点「更多信息」→「仍要运行」。如果杀毒软件拦截，选择允许或信任。
 3. 宠物出现在屏幕右下角。任务栏右下角的托盘区有一个粉色小猫图标（可能藏在 `^` 里），点它打开菜单。
 

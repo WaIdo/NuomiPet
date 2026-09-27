@@ -14,10 +14,10 @@
 
 | 檔案 | 適用於 |
 | --- | --- |
-| `NuomiPet-1.1.0-win-setup.exe` | Windows 10 / 11（64 位元），安裝版，推薦 |
-| `NuomiPet-1.1.0-win-portable.exe` | Windows 10 / 11（64 位元），免安裝，按兩下就能用 |
-| `NuomiPet-1.1.0-mac-arm64.dmg` | Apple 晶片的 Mac（M1 及之後），macOS 13 或更新版本 |
-| `NuomiPet-1.1.0-mac-x64.dmg` | Intel 晶片的 Mac，macOS 13 或更新版本 |
+| `NuomiPet-1.1.1-win-setup.exe` | Windows 10 / 11（64 位元），安裝版，推薦 |
+| `NuomiPet-1.1.1-win-portable.exe` | Windows 10 / 11（64 位元），免安裝，按兩下就能用 |
+| `NuomiPet-1.1.1-mac-arm64.dmg` | Apple 晶片的 Mac（M1 及之後），macOS 13 或更新版本 |
+| `NuomiPet-1.1.1-mac-x64.dmg` | Intel 晶片的 Mac，macOS 13 或更新版本 |
 
 不知道 Mac 是哪種晶片：點螢幕左上角的蘋果選單 →「關於這台 Mac」，「晶片」一欄寫著 Apple M… 的選 arm64，寫著 Intel 的選 x64。
 
@@ -25,7 +25,7 @@
 
 **Windows**
 
-1. 執行 `NuomiPet-1.1.0-win-setup.exe`，依提示安裝（不需要系統管理員權限）。免安裝版直接按兩下執行。
+1. 執行 `NuomiPet-1.1.1-win-setup.exe`，依提示安裝（不需要系統管理員權限）。免安裝版直接按兩下執行。
 2. 安裝檔沒有購買程式碼簽章憑證，第一次執行時可能會出現「Windows 已保護您的電腦」：點「其他資訊」→「仍要執行」。如果防毒軟體攔截，請選擇允許或信任。
 3. 寵物會出現在螢幕右下角。工作列右下角的系統匣裡有一個粉紅色小貓圖示（可能藏在 `^` 裡），點它開啟選單。
 

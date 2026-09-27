@@ -287,7 +287,8 @@ body.dragging #pet .hit {
 }
 .pbody {
   display: grid;
-  grid-template-columns: repeat(6, 1fr);
+  /* minmax(0, 1fr)：格子宽度固定，字长了也不把面板撑宽（字由 panel.js 缩小或折行） */
+  grid-template-columns: repeat(6, minmax(0, 1fr));
   gap: 4px 2px;
 }
 .pbtn {
@@ -301,6 +302,7 @@ body.dragging #pet .hit {
   color: var(--text);
   font: inherit;
   cursor: pointer;
+  min-width: 0;
 }
 .pbtn .ico {
   display: grid;
@@ -315,22 +317,23 @@ body.dragging #pet .hit {
   transition: transform 0.15s cubic-bezier(0.3, 1.6, 0.5, 1), box-shadow 0.15s;
 }
 .pbtn .lbl {
+  display: block;
+  max-width: 100%;
   font-size: 10.5px;
   color: var(--th-8a6b7c);
   white-space: nowrap;
+  text-align: center;
   font-variant-numeric: tabular-nums;
 }
-/* 中文、日文以外的语言（日文和中文一样四个字放得下，折行会从词中间断开），按钮文字可能比格子宽：折成两行（最多两行），放不下的长单词在格子边上断开，不挤到旁边的按钮上。
-   左右各借 3px，和中文一样，四个字（或八九个字母）的词还能放在一行 */
-.pbtn .lbl:not(:lang(zh)):not(:lang(ja)) {
+/* 一行放不下：panel.js 先把字号缩到 9px，还放不下才加 .wrap 折成两行（最多两行，长单词在格子边上断开）。
+   各系统的字体宽窄不一样（Windows 的韩文、法文比 Mac 宽），所以在显示时量，不按语言写死 */
+.pbtn .lbl.wrap {
   display: -webkit-box;
   -webkit-box-orient: vertical;
   -webkit-line-clamp: 2;
   overflow: hidden;
-  margin: 0 -3px;
   white-space: normal;
   overflow-wrap: anywhere;
-  text-align: center;
   line-height: 1.2;
 }
 .pbtn:hover .ico {
@@ -360,9 +363,13 @@ body.dragging #pet .hit {
   border-radius: 18px;
 }
 
-/* 主页 7 个按钮排一行：格子窄一点，图标跟着小一点 */
+/* 主页 7 个按钮排一行：面板宽一点（窗口 300 宽，留出 panel.js 要的 12px），按钮之间不留空，图标小一点 */
+.panel:has(.view-main) {
+  width: 288px;
+}
 .pbody.view-main {
-  grid-template-columns: repeat(7, 1fr);
+  grid-template-columns: repeat(7, minmax(0, 1fr));
+  column-gap: 0;
 }
 .view-main .pbtn .ico {
   width: 32px;

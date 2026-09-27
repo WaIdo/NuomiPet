@@ -14,10 +14,10 @@ Download the right file from the [Releases](https://github.com/WaIdo/NuomiPet/re
 
 | File | For |
 | --- | --- |
-| `NuomiPet-1.1.0-win-setup.exe` | Windows 10 / 11 (64-bit), installer, recommended |
-| `NuomiPet-1.1.0-win-portable.exe` | Windows 10 / 11 (64-bit), portable, just double-click to run |
-| `NuomiPet-1.1.0-mac-arm64.dmg` | Macs with Apple silicon (M1 and later), macOS 13 or later |
-| `NuomiPet-1.1.0-mac-x64.dmg` | Macs with an Intel chip, macOS 13 or later |
+| `NuomiPet-1.1.1-win-setup.exe` | Windows 10 / 11 (64-bit), installer, recommended |
+| `NuomiPet-1.1.1-win-portable.exe` | Windows 10 / 11 (64-bit), portable, just double-click to run |
+| `NuomiPet-1.1.1-mac-arm64.dmg` | Macs with Apple silicon (M1 and later), macOS 13 or later |
+| `NuomiPet-1.1.1-mac-x64.dmg` | Macs with an Intel chip, macOS 13 or later |
 
 Not sure which chip your Mac has? Click the Apple menu at the top left of the screen → "About This Mac". If "Chip" says Apple M…, pick arm64; if it says Intel, pick x64.
 
@@ -25,7 +25,7 @@ Not sure which chip your Mac has? Click the Apple menu at the top left of the sc
 
 **Windows**
 
-1. Run `NuomiPet-1.1.0-win-setup.exe` and follow the steps (no administrator rights needed). The portable version runs with a double-click.
+1. Run `NuomiPet-1.1.1-win-setup.exe` and follow the steps (no administrator rights needed). The portable version runs with a double-click.
 2. The installer isn't signed with a paid code-signing certificate, so the first time you run it you may see "Windows protected your PC": click "More info" → "Run anyway". If your antivirus blocks it, choose to allow or trust it.
 3. The pet appears at the bottom right of the screen. In the tray area at the bottom right of the taskbar there's a pink kitty icon (it may be hidden under `^`); click it to open the menu.
 

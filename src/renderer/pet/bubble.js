@@ -163,6 +163,8 @@ export class Bubble {
     const stage = this.el.parentElement.getBoundingClientRect();
     const { left: minX, right: maxX } = this.visible ? this.visible() : { left: 0, right: stage.width };
     this.el.style.maxWidth = Math.max(120, Math.min(240, maxX - minX - 12)) + 'px';
+    // 先放到最左边再量：不然宽度会受上一个气泡的位置限制，右边空间不够时被挤窄（表情按钮排成两行）
+    this.el.style.left = '0px';
     const w = this.el.offsetWidth;
     const left = Math.max(minX + 6, Math.min(maxX - w - 6, x - w / 2));
     this.el.style.left = left + 'px';
